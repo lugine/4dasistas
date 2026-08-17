@@ -12,183 +12,169 @@ collections:
 
   - name: "sports"
     label: "Sports"
-    label_singular: "Sport Event"
-    file: "data/sports.json"
-    extension: "json"
-    format: "json"
-    fields:
-      - label: "Items"
-        name: "items"
-        widget: "list"
-        root: true
-        allow_add: true
+    files:
+      - file: "data/sports.json"
+        label: "Sports"
+        name: "sports"
         fields:
-          - { label: "ID (no spaces, unique)", name: "id", widget: "string" }
-          - { label: "Title", name: "title", widget: "string" }
-          - { label: "Tag (e.g. Badminton)", name: "tag", widget: "string" }
-          - { label: "Sport Key (lowercase, e.g. badminton)", name: "sportKey", widget: "string" }
-          - { label: "Date text (shown on card)", name: "date", widget: "string" }
-          - label: "Recurring weekdays (leave empty if none)"
-            name: "days"
-            widget: "select"
-            multiple: true
-            required: false
-            options: ["sun","mon","tue","wed","thu","fri","sat"]
-          - { label: "Specific calendar date (YYYY-MM-DD, optional)", name: "calDate", widget: "string", required: false }
-          - { label: "Location", name: "location", widget: "string", required: false }
-          - { label: "Organizer name", name: "organizer", widget: "string", required: false }
-          - { label: "Contact", name: "contact", widget: "string", required: false }
-          - { label: "Price", name: "price", widget: "string", required: false }
-          - { label: "Registration info", name: "registration", widget: "string", required: false }
-          - { label: "Description", name: "desc", widget: "text", required: false }
-          - { label: "WhatsApp link", name: "whatsapp", widget: "string", required: false }
-          - { label: "Instagram link", name: "instagram", widget: "string", required: false }
-          - { label: "Website link", name: "website", widget: "string", required: false }
-          - { label: "Email", name: "email", widget: "string", required: false }
+          - label: "Items"
+            name: "items"
+            widget: "list"
+            fields:
+              - { label: "ID (no spaces, unique)", name: "id", widget: "string" }
+              - { label: "Title", name: "title", widget: "string" }
+              - { label: "Tag (e.g. Badminton)", name: "tag", widget: "string" }
+              - { label: "Sport Key (lowercase, e.g. badminton)", name: "sportKey", widget: "string" }
+              - { label: "Date text (shown on card)", name: "date", widget: "string" }
+              - label: "Recurring weekdays (leave empty if none)"
+                name: "days"
+                widget: "select"
+                multiple: true
+                required: false
+                options: ["sun","mon","tue","wed","thu","fri","sat"]
+              - { label: "Specific calendar date (YYYY-MM-DD, optional)", name: "calDate", widget: "string", required: false }
+              - { label: "Location", name: "location", widget: "string", required: false }
+              - { label: "Organizer name", name: "organizer", widget: "string", required: false }
+              - { label: "Contact", name: "contact", widget: "string", required: false }
+              - { label: "Price", name: "price", widget: "string", required: false }
+              - { label: "Registration info", name: "registration", widget: "string", required: false }
+              - { label: "Description", name: "desc", widget: "text", required: false }
+              - { label: "WhatsApp link", name: "whatsapp", widget: "string", required: false }
+              - { label: "Instagram link", name: "instagram", widget: "string", required: false }
+              - { label: "Website link", name: "website", widget: "string", required: false }
+              - { label: "Email", name: "email", widget: "string", required: false }
 
   - name: "gatherings"
     label: "Gatherings"
-    label_singular: "Gathering"
-    file: "data/gatherings.json"
-    extension: "json"
-    format: "json"
-    fields:
-      - label: "Items"
-        name: "items"
-        widget: "list"
-        root: true
-        allow_add: true
+    files:
+      - file: "data/gatherings.json"
+        label: "Gatherings"
+        name: "gatherings"
         fields:
-          - { label: "ID (no spaces, unique)", name: "id", widget: "string" }
-          - { label: "Title", name: "title", widget: "string" }
-          - { label: "Tag", name: "tag", widget: "string", default: "Gathering" }
-          - { label: "Date text", name: "date", widget: "string" }
-          - label: "Recurring weekdays (optional)"
-            name: "days"
-            widget: "select"
-            multiple: true
-            required: false
-            options: ["sun","mon","tue","wed","thu","fri","sat"]
-          - { label: "Specific calendar date (YYYY-MM-DD, optional)", name: "calDate", widget: "string", required: false }
-          - { label: "Location", name: "location", widget: "string", required: false }
-          - label: "Hijab-off confirmed?"
-            name: "hijabOff"
-            widget: "select"
-            options: ["Not specified", "Yes", "No"]
-            default: "Not specified"
-            required: false
-          - { label: "Description", name: "desc", widget: "text", required: false }
-          - { label: "Instagram link", name: "instagram", widget: "string", required: false }
-          - { label: "Website link", name: "website", widget: "string", required: false }
-          - { label: "Email", name: "email", widget: "string", required: false }
+          - label: "Items"
+            name: "items"
+            widget: "list"
+            fields:
+              - { label: "ID (no spaces, unique)", name: "id", widget: "string" }
+              - { label: "Title", name: "title", widget: "string" }
+              - { label: "Tag", name: "tag", widget: "string", default: "Gathering" }
+              - { label: "Date text", name: "date", widget: "string" }
+              - label: "Recurring weekdays (optional)"
+                name: "days"
+                widget: "select"
+                multiple: true
+                required: false
+                options: ["sun","mon","tue","wed","thu","fri","sat"]
+              - { label: "Specific calendar date (YYYY-MM-DD, optional)", name: "calDate", widget: "string", required: false }
+              - { label: "Location", name: "location", widget: "string", required: false }
+              - label: "Hijab-off confirmed?"
+                name: "hijabOff"
+                widget: "select"
+                options: ["Not specified", "Yes", "No"]
+                default: "Not specified"
+                required: false
+              - { label: "Description", name: "desc", widget: "text", required: false }
+              - { label: "Instagram link", name: "instagram", widget: "string", required: false }
+              - { label: "Website link", name: "website", widget: "string", required: false }
+              - { label: "Email", name: "email", widget: "string", required: false }
 
   - name: "dayactivities"
     label: "Day Activities"
-    label_singular: "Day Activity"
-    file: "data/dayactivities.json"
-    extension: "json"
-    format: "json"
-    fields:
-      - label: "Items"
-        name: "items"
-        widget: "list"
-        root: true
-        allow_add: true
+    files:
+      - file: "data/dayactivities.json"
+        label: "Day Activities"
+        name: "dayactivities"
         fields:
-          - { label: "ID (no spaces, unique)", name: "id", widget: "string" }
-          - { label: "Title", name: "title", widget: "string" }
-          - { label: "Tag", name: "tag", widget: "string", default: "Day Activity" }
-          - { label: "Date text", name: "date", widget: "string" }
-          - { label: "Calendar date (YYYY-MM-DD)", name: "calDate", widget: "string" }
-          - { label: "City", name: "city", widget: "select", options: ["Mississauga", "Oakville", "Toronto"] }
-          - { label: "Location", name: "location", widget: "string", required: false }
-          - { label: "Description", name: "desc", widget: "text", required: false }
+          - label: "Items"
+            name: "items"
+            widget: "list"
+            fields:
+              - { label: "ID (no spaces, unique)", name: "id", widget: "string" }
+              - { label: "Title", name: "title", widget: "string" }
+              - { label: "Tag", name: "tag", widget: "string", default: "Day Activity" }
+              - { label: "Date text", name: "date", widget: "string" }
+              - { label: "Calendar date (YYYY-MM-DD)", name: "calDate", widget: "string" }
+              - { label: "City", name: "city", widget: "select", options: ["Mississauga", "Oakville", "Toronto"] }
+              - { label: "Location", name: "location", widget: "string", required: false }
+              - { label: "Description", name: "desc", widget: "text", required: false }
 
   - name: "trips"
     label: "Trips"
-    label_singular: "Trip"
-    file: "data/trips.json"
-    extension: "json"
-    format: "json"
-    fields:
-      - label: "Items"
-        name: "items"
-        widget: "list"
-        root: true
-        allow_add: true
+    files:
+      - file: "data/trips.json"
+        label: "Trips"
+        name: "trips"
         fields:
-          - { label: "ID (no spaces, unique)", name: "id", widget: "string" }
-          - { label: "Title", name: "title", widget: "string" }
-          - { label: "Tag", name: "tag", widget: "string", default: "Trip" }
-          - { label: "Date text", name: "date", widget: "string" }
-          - { label: "Calendar date (YYYY-MM-DD)", name: "calDate", widget: "string" }
-          - { label: "Trip type", name: "tripType", widget: "select", options: ["domestic", "international"] }
-          - { label: "Location", name: "location", widget: "string", required: false }
-          - { label: "Price", name: "price", widget: "string", required: false }
-          - { label: "Description", name: "desc", widget: "text", required: false }
+          - label: "Items"
+            name: "items"
+            widget: "list"
+            fields:
+              - { label: "ID (no spaces, unique)", name: "id", widget: "string" }
+              - { label: "Title", name: "title", widget: "string" }
+              - { label: "Tag", name: "tag", widget: "string", default: "Trip" }
+              - { label: "Date text", name: "date", widget: "string" }
+              - { label: "Calendar date (YYYY-MM-DD)", name: "calDate", widget: "string" }
+              - { label: "Trip type", name: "tripType", widget: "select", options: ["domestic", "international"] }
+              - { label: "Location", name: "location", widget: "string", required: false }
+              - { label: "Price", name: "price", widget: "string", required: false }
+              - { label: "Description", name: "desc", widget: "text", required: false }
 
   - name: "clubs"
     label: "Clubs"
-    label_singular: "Club"
-    file: "data/clubs.json"
-    extension: "json"
-    format: "json"
-    fields:
-      - label: "Items"
-        name: "items"
-        widget: "list"
-        root: true
-        allow_add: true
+    files:
+      - file: "data/clubs.json"
+        label: "Clubs"
+        name: "clubs"
         fields:
-          - { label: "ID (no spaces, unique)", name: "id", widget: "string" }
-          - { label: "Title", name: "title", widget: "string" }
-          - { label: "Description", name: "desc", widget: "text" }
-          - { label: "Sign Up link", name: "signup", widget: "string" }
+          - label: "Items"
+            name: "items"
+            widget: "list"
+            fields:
+              - { label: "ID (no spaces, unique)", name: "id", widget: "string" }
+              - { label: "Title", name: "title", widget: "string" }
+              - { label: "Description", name: "desc", widget: "text" }
+              - { label: "Sign Up link", name: "signup", widget: "string" }
 
   - name: "organizations"
     label: "Resources — Organizations"
-    label_singular: "Organization"
-    file: "data/organizations.json"
-    extension: "json"
-    format: "json"
-    fields:
-      - label: "Items"
-        name: "items"
-        widget: "list"
-        root: true
-        allow_add: true
+    files:
+      - file: "data/organizations.json"
+        label: "Organizations"
+        name: "organizations"
         fields:
-          - { label: "ID (no spaces, unique)", name: "id", widget: "string" }
-          - { label: "Title", name: "title", widget: "string" }
-          - { label: "Category (leave as organizations)", name: "category", widget: "hidden", default: "organizations" }
-          - { label: "Location", name: "location", widget: "string" }
-          - { label: "Ownership / leadership note", name: "ownedBy", widget: "string" }
-          - { label: "Description", name: "desc", widget: "text" }
-          - { label: "Instagram link", name: "instagram", widget: "string", required: false }
-          - { label: "Website link", name: "website", widget: "string", required: false }
-          - { label: "Email", name: "email", widget: "string", required: false }
+          - label: "Items"
+            name: "items"
+            widget: "list"
+            fields:
+              - { label: "ID (no spaces, unique)", name: "id", widget: "string" }
+              - { label: "Title", name: "title", widget: "string" }
+              - { label: "Category (leave as organizations)", name: "category", widget: "hidden", default: "organizations" }
+              - { label: "Location", name: "location", widget: "string" }
+              - { label: "Ownership / leadership note", name: "ownedBy", widget: "string" }
+              - { label: "Description", name: "desc", widget: "text" }
+              - { label: "Instagram link", name: "instagram", widget: "string", required: false }
+              - { label: "Website link", name: "website", widget: "string", required: false }
+              - { label: "Email", name: "email", widget: "string", required: false }
 
   - name: "resources"
     label: "Resources — Shops & Food"
-    label_singular: "Shop or Food Spot"
-    file: "data/resources.json"
-    extension: "json"
-    format: "json"
-    fields:
-      - label: "Items"
-        name: "items"
-        widget: "list"
-        root: true
-        allow_add: true
+    files:
+      - file: "data/resources.json"
+        label: "Shops & Food"
+        name: "resources"
         fields:
-          - { label: "ID (no spaces, unique)", name: "id", widget: "string" }
-          - { label: "Title", name: "title", widget: "string" }
-          - { label: "Category", name: "category", widget: "select", options: ["shops", "food"] }
-          - { label: "Type (e.g. Boutique, Bakery & Café)", name: "type", widget: "string" }
-          - { label: "Location", name: "location", widget: "string" }
-          - { label: "Hours / date info", name: "date", widget: "string", required: false }
-          - { label: "Ownership note", name: "ownedBy", widget: "string" }
-          - { label: "Description", name: "desc", widget: "text" }
-          - { label: "Google Maps search text (optional)", name: "mapQuery", widget: "string", required: false }
-          - { label: "Instagram link", name: "instagram", widget: "string", required: false }
-          - { label: "Website link", name: "website", widget: "string", required: false }
+          - label: "Items"
+            name: "items"
+            widget: "list"
+            fields:
+              - { label: "ID (no spaces, unique)", name: "id", widget: "string" }
+              - { label: "Title", name: "title", widget: "string" }
+              - { label: "Category", name: "category", widget: "select", options: ["shops", "food"] }
+              - { label: "Type (e.g. Boutique, Bakery & Café)", name: "type", widget: "string" }
+              - { label: "Location", name: "location", widget: "string" }
+              - { label: "Hours / date info", name: "date", widget: "string", required: false }
+              - { label: "Ownership note", name: "ownedBy", widget: "string" }
+              - { label: "Description", name: "desc", widget: "text" }
+              - { label: "Google Maps search text (optional)", name: "mapQuery", widget: "string", required: false }
+              - { label: "Instagram link", name: "instagram", widget: "string", required: false }
+              - { label: "Website link", name: "website", widget: "string", required: false }
