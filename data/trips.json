@@ -1,35 +1,37 @@
-[
-  {
-    "id": "trip-niagara",
-    "title": "Niagara Day Trip (example)",
-    "tag": "Trip",
-    "date": "Sample date — edit me",
-    "calDate": "2026-08-24",
-    "tripType": "domestic",
-    "location": "Meet at 9:00 AM",
-    "price": "TBD",
-    "desc": "Placeholder — swap in your real trip details."
-  },
-  {
-    "id": "trip-muskoka",
-    "title": "Muskoka Weekend (example)",
-    "tag": "Trip",
-    "date": "Sample date — edit me",
-    "calDate": "2026-09-13",
-    "tripType": "domestic",
-    "location": "Fri – Sun",
-    "price": "TBD",
-    "desc": "Placeholder — swap in your real trip details."
-  },
-  {
-    "id": "trip-umrah",
-    "title": "Umrah Group Trip (example)",
-    "tag": "Trip",
-    "date": "Sample date — edit me",
-    "calDate": "2026-12-18",
-    "tripType": "international",
-    "location": "Makkah & Madinah",
-    "price": "TBD",
-    "desc": "Placeholder — swap in real dates, package cost, and sign-up details when you have them."
-  }
-]
+{
+  "items": [
+    {
+      "id": "trip-niagara",
+      "title": "Niagara Day Trip (example)",
+      "tag": "Trip",
+      "date": "Sample date — edit me",
+      "calDate": "2026-08-24",
+      "tripType": "domestic",
+      "location": "Meet at 9:00 AM",
+      "price": "TBD",
+      "desc": "Placeholder — swap in your real trip details."
+    },
+    {
+      "id": "trip-muskoka",
+      "title": "Muskoka Weekend (example)",
+      "tag": "Trip",
+      "date": "Sample date — edit me",
+      "calDate": "2026-09-13",
+      "tripType": "domestic",
+      "location": "Fri – Sun",
+      "price": "TBD",
+      "desc": "Placeholder — swap in your real trip details."
+    },
+    {
+      "id": "trip-umrah",
+      "title": "Umrah Group Trip (example)",
+      "tag": "Trip",
+      "date": "Sample date — edit me",
+      "calDate": "2026-12-18",
+      "tripType": "international",
+      "location": "Makkah & Madinah",
+      "price": "TBD",
+      "desc": "Placeholder — swap in real dates, package cost, and sign-up details when you have them."
+    }
+  ]
+}

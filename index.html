@@ -222,13 +222,13 @@ let EVENT_ITEMS = [];
 
 async function loadData(){
   const [sports, gatherings, dayactivities, trips, clubs, organizations, resources] = await Promise.all([
-    fetch('data/sports.json').then(r => r.json()),
-    fetch('data/gatherings.json').then(r => r.json()),
-    fetch('data/dayactivities.json').then(r => r.json()),
-    fetch('data/trips.json').then(r => r.json()),
-    fetch('data/clubs.json').then(r => r.json()),
-    fetch('data/organizations.json').then(r => r.json()),
-    fetch('data/resources.json').then(r => r.json()),
+    fetch('data/sports.json').then(r => r.json()).then(d => d.items),
+    fetch('data/gatherings.json').then(r => r.json()).then(d => d.items),
+    fetch('data/dayactivities.json').then(r => r.json()).then(d => d.items),
+    fetch('data/trips.json').then(r => r.json()).then(d => d.items),
+    fetch('data/clubs.json').then(r => r.json()).then(d => d.items),
+    fetch('data/organizations.json').then(r => r.json()).then(d => d.items),
+    fetch('data/resources.json').then(r => r.json()).then(d => d.items),
   ]);
   sportsData = sports;
   gatheringsData = gatherings;
