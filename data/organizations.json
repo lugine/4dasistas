@@ -1,0 +1,107 @@
+[
+  {
+    "id": "org-maa",
+    "title": "Muslimah Athletic Association (MAA)",
+    "category": "organizations",
+    "location": "Mississauga",
+    "ownedBy": "Founded & run by Muslim women (Zainab Gajani & Salma Abu Hattab)",
+    "desc": "Events, socials, trips, and sports — including a soccer league — for Muslim women 16+.",
+    "instagram": "https://www.instagram.com/maawomen/"
+  },
+  {
+    "id": "org-musfit",
+    "title": "MusFit",
+    "category": "organizations",
+    "location": "Oakville / Mississauga / Milton",
+    "ownedBy": "Run by Muslim women",
+    "desc": "Basketball league, kickboxing & self-defense classes, plus coffee socials and a seniors movement program.",
+    "instagram": "https://www.instagram.com/musfitcanada/",
+    "website": "https://musfit.ca"
+  },
+  {
+    "id": "org-isna",
+    "title": "ISNA Canada",
+    "category": "organizations",
+    "location": "2200 South Sheridan Way, Mississauga",
+    "ownedBy": "Women's programs led by Muslim women",
+    "desc": "Women's badminton, sisters' programs, and family socials.",
+    "instagram": "https://www.instagram.com/isna_canada/",
+    "website": "https://www.isnacanada.com"
+  },
+  {
+    "id": "org-mgt",
+    "title": "Muslim Girls Toronto",
+    "category": "organizations",
+    "location": "Downtown Toronto",
+    "ownedBy": "Run by Muslim women",
+    "desc": "Connecting Muslim girls in downtown Toronto through meetups and events.",
+    "instagram": "https://www.instagram.com/muslimgirlstoronto/",
+    "email": "muslimgirlstoronto@gmail.com"
+  },
+  {
+    "id": "org-tmuslimahs",
+    "title": "Toronto Muslimahs",
+    "category": "organizations",
+    "location": "GTA",
+    "ownedBy": "Run by Muslim women",
+    "desc": "Curated, intentional gatherings for Muslim women — including a space for new/young mothers.",
+    "instagram": "https://www.instagram.com/torontomuslimahs/",
+    "website": "https://www.torontomuslimahs.com"
+  },
+  {
+    "id": "org-connecther",
+    "title": "ConnectHER Canada",
+    "category": "organizations",
+    "location": "GTA",
+    "ownedBy": "Run by Muslim women",
+    "desc": "A badminton league plus recreational, social and confidence-building programs.",
+    "instagram": "https://www.instagram.com/connecthercanada/",
+    "website": "https://www.connecthercanada.com"
+  },
+  {
+    "id": "org-koraa",
+    "title": "KORAA",
+    "category": "organizations",
+    "location": "Kitchener–Waterloo–Cambridge",
+    "ownedBy": "Run by Muslim women",
+    "desc": "Sports + community programming — a bit further out than Mississauga/Oakville, but worth knowing about.",
+    "instagram": "https://www.instagram.com/koraa.ca/"
+  },
+  {
+    "id": "org-hockey",
+    "title": "Muslimah Hockey Club",
+    "category": "organizations",
+    "location": "Don Valley / East York, Toronto",
+    "ownedBy": "Run by a Muslim woman (contact: Humaira S.)",
+    "desc": "A hockey program creating a safe space for Muslim women and girls (ages 4–52+) to learn and play ice hockey.",
+    "instagram": "https://www.instagram.com/muslimahathleticclub/",
+    "email": "muslimahathleticclub@gmail.com"
+  },
+  {
+    "id": "org-wfs",
+    "title": "WomensFitSauga (WFS)",
+    "category": "organizations",
+    "location": "Mississauga",
+    "ownedBy": "Founded & run by Muslim women (Hannah Baron & Maysoun D.)",
+    "desc": "Mississauga's all-women run club — beginner-friendly, weekly runs.",
+    "instagram": "https://www.instagram.com/womensfitsauga/"
+  },
+  {
+    "id": "org-strong",
+    "title": "Strong Women Toronto",
+    "category": "organizations",
+    "location": "Toronto",
+    "ownedBy": "Run by Muslim women",
+    "desc": "A Toronto run/strength community — co-hosted the RUN4GAZA 5K fundraiser with WFS.",
+    "instagram": "https://www.instagram.com/strongwmnto/"
+  },
+  {
+    "id": "org-aura",
+    "title": "Aura Women Sports",
+    "category": "organizations",
+    "location": "GTA",
+    "ownedBy": "Run by Muslim women",
+    "desc": "Public details are limited — confirm current programs directly via Instagram.",
+    "instagram": "https://www.instagram.com/aurawomensports/"
+  }
+]

@@ -1,0 +1,130 @@
+[
+  {
+    "id": "bad-mon",
+    "title": "Monday Badminton",
+    "tag": "Badminton",
+    "sportKey": "badminton",
+    "date": "Every Monday · 6:00–8:00 PM",
+    "days": [
+      "mon"
+    ],
+    "calDate": null,
+    "location": "SU South Campus",
+    "organizer": "Bushra",
+    "contact": "+1 (905) 783-5154",
+    "price": "Est. $13",
+    "registration": "Prior registration required",
+    "desc": "Weekly Monday badminton run for the group.",
+    "whatsapp": "https://chat.whatsapp.com/LRe3ehsaFxDH2CTYuzAOXW?s=cl&p=i&ilr=2"
+  },
+  {
+    "id": "bad-tue",
+    "title": "Tuesday Badminton",
+    "tag": "Badminton",
+    "sportKey": "badminton",
+    "date": "Every Tuesday · Time TBD",
+    "days": [
+      "tue"
+    ],
+    "calDate": null,
+    "location": "TBD — shared in the groupchat",
+    "organizer": "",
+    "contact": "",
+    "price": "TBD",
+    "registration": "Details shared in the groupchat",
+    "desc": "Time and court details are shared directly in the Tuesday groupchat.",
+    "whatsapp": "https://chat.whatsapp.com/LEP4sxzt4qjJAOSgV0nbyi?s=cl&p=i&ilr=2"
+  },
+  {
+    "id": "bad-wed",
+    "title": "Wednesday Badminton",
+    "tag": "Badminton",
+    "sportKey": "badminton",
+    "date": "Every Wednesday · 8:00–10:00 PM (varies)",
+    "days": [
+      "wed"
+    ],
+    "calDate": null,
+    "location": "River Oaks Community Centre",
+    "organizer": "Asma",
+    "contact": "+1 (416) 721-4931",
+    "price": "Est. $8",
+    "registration": "Prior registration required",
+    "desc": "Midweek badminton at River Oaks — timing can shift week to week.",
+    "whatsapp": "https://chat.whatsapp.com/LZNIxPfCU9RCJGLiWPn7k9?s=cl&p=i&ilr=2"
+  },
+  {
+    "id": "bad-thu",
+    "title": "Thursday Badminton",
+    "tag": "Badminton",
+    "sportKey": "badminton",
+    "date": "Every Thursday · 6:00–8:00 PM",
+    "days": [
+      "thu"
+    ],
+    "calDate": null,
+    "location": "ISNA",
+    "organizer": "Lujane",
+    "contact": "647-292-4043",
+    "price": "$5",
+    "registration": "Drop-in",
+    "desc": "Drop-in badminton at ISNA — no sign-up needed, just show up.",
+    "whatsapp": "https://chat.whatsapp.com/JBbZDTEo45095qpNOwa9Fy?s=cl&p=i&ilr=2"
+  },
+  {
+    "id": "bad-frisat",
+    "title": "Friday & Saturday Badminton",
+    "tag": "Badminton",
+    "sportKey": "badminton",
+    "date": "Fridays & Saturdays · 9:00 PM–12:00 AM",
+    "days": [
+      "fri",
+      "sat"
+    ],
+    "calDate": null,
+    "location": "SU Badminton — North Campus",
+    "organizer": "",
+    "contact": "",
+    "price": "$13",
+    "registration": "Drop-in",
+    "desc": "Late-night weekend badminton — drop-in, no prior registration needed.",
+    "whatsapp": ""
+  },
+  {
+    "id": "bad-sun",
+    "title": "Sunday Badminton",
+    "tag": "Badminton",
+    "sportKey": "badminton",
+    "date": "Every Sunday · 6:00–8:00 PM",
+    "days": [
+      "sun"
+    ],
+    "calDate": null,
+    "location": "Oakville Trafalgar Community Centre",
+    "organizer": "",
+    "contact": "",
+    "price": "$6",
+    "registration": "Prior registration required",
+    "desc": "Sunday session at Oakville Trafalgar Community Centre.",
+    "whatsapp": ""
+  },
+  {
+    "id": "sport-softball",
+    "title": "Sisterhood Softball League",
+    "tag": "Softball",
+    "sportKey": "softball",
+    "date": "Sunday mornings · Summer–Fall season",
+    "days": [
+      "sun"
+    ],
+    "calDate": null,
+    "location": "Mississauga",
+    "organizer": "Sisterhood Softball League (SSL)",
+    "contact": "",
+    "price": "~$5 drop-in / league fees vary",
+    "registration": "Registration opens seasonally on Instagram",
+    "desc": "A Muslim women's slo-pitch softball league in Mississauga, running since 2016.",
+    "instagram": "https://www.instagram.com/sisterhoodsoftball/",
+    "website": "https://sisterhoodsoftball.com"
+  }
+]

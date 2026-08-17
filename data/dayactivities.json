@@ -1,0 +1,22 @@
+[
+  {
+    "id": "day-escape",
+    "title": "Escape Room Outing (example)",
+    "tag": "Day Activity",
+    "date": "Sample date — edit me",
+    "calDate": "2026-08-29",
+    "city": "Mississauga",
+    "location": "CUBE Challenges, Mississauga",
+    "desc": "Placeholder — swap in a real day activity (date, meeting point, cost, sign-up link)."
+  },
+  {
+    "id": "day-market",
+    "title": "Local Market Day (example)",
+    "tag": "Day Activity",
+    "date": "Sample date — edit me",
+    "calDate": "2026-09-05",
+    "city": "Oakville",
+    "location": "TBD",
+    "desc": "Placeholder — swap in a real day activity."
+  }
+]

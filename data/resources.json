@@ -1,0 +1,26 @@
+[
+  {
+    "id": "res-olivara",
+    "title": "Olivara Bakery & Café",
+    "category": "food",
+    "type": "Bakery & Café",
+    "location": "Inside Freshway Market, Oakville",
+    "date": "Mon–Sun · 10am–4pm",
+    "ownedBy": "Muslim woman-owned",
+    "desc": "A bakery & café spot for baked goods and drinks, tucked inside Freshway Market.",
+    "instagram": "https://www.instagram.com/olivarabakeryandcafe/",
+    "mapQuery": "Freshway Market Oakville ON"
+  },
+  {
+    "id": "res-thobe",
+    "title": "Majestic Thobe Boutique",
+    "category": "shops",
+    "type": "Boutique",
+    "location": "Free pickup — Mississauga & Oakville",
+    "date": "By appointment",
+    "ownedBy": "Muslim woman-owned",
+    "desc": "Luxury Palestinian thobes — bridal, traditional & modern styles. No returns.",
+    "instagram": "https://www.instagram.com/majestic_thobe/",
+    "website": "https://majestic-thobe.myshopify.com"
+  }
+]

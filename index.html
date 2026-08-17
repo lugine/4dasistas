@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>4DASISTAS</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:ital,wght@0,400;0,500;0,600;0,700;1,500&display=swap');
+
+  :root{
+    --cream: #F7F1E9;
+    --card: #FFFFFF;
+    --charcoal: #211E1C;
+    --rose: #C98A96;
+    --rose-deep: #96566A;
+    --pink: #E8578F;
+    --coral: #F2A488;
+    --blue: #8FB8E0;
+    --purple: #B7A6D9;
+    --gold: #E3B23C;
+    --muted: #6b665e;
+    --wa-green: #25D366;
+  }
+  *{ box-sizing:border-box; margin:0; padding:0; }
+  body{ background:var(--cream); color:var(--charcoal); font-family:'Inter',sans-serif; line-height:1.5; -webkit-font-smoothing:antialiased; }
+  button{ font-family:inherit; }
+  a{ color:inherit; }
+
+  header{ padding:40px 20px 20px; text-align:center; }
+  .wordmark{ font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:clamp(32px,7vw,52px); letter-spacing:-0.01em; }
+  .wordmark span{ color:var(--pink); }
+  .tagline{ font-family:'Inter',sans-serif; font-style:italic; font-weight:500; font-size:14.5px; color:var(--rose-deep); margin-top:6px; }
+
+  .wa-header-btn{
+    display:inline-flex; align-items:center; gap:9px;
+    background:var(--wa-green); color:white; text-decoration:none;
+    font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:14px; line-height:1;
+    padding:12px 22px; border-radius:999px; margin-top:16px;
+  }
+  .wa-header-btn svg{ width:19px; height:19px; flex-shrink:0; display:block; }
+
+  .tabs{ display:flex; justify-content:center; gap:6px; padding:22px 16px 0; overflow-x:auto; -webkit-overflow-scrolling:touch; scrollbar-width:none; }
+  .tabs::-webkit-scrollbar{ display:none; }
+  .tab-btn{
+    flex-shrink:0; font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:14px;
+    padding:9px 18px; border-radius:999px; border:2px solid var(--charcoal);
+    background:var(--cream); color:var(--charcoal); cursor:pointer; white-space:nowrap;
+  }
+  .tab-btn.active{ background:var(--charcoal); color:var(--cream); }
+  .tab-btn:focus-visible{ outline:3px solid var(--pink); outline-offset:2px; }
+
+  .category-row{ display:flex; gap:6px; padding:14px 20px 0; max-width:760px; margin:0 auto; overflow-x:auto; -webkit-overflow-scrolling:touch; scrollbar-width:none; }
+  .category-row::-webkit-scrollbar{ display:none; }
+  .cat-filter-btn{ flex-shrink:0; font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:13px; padding:8px 16px; border-radius:999px; border:1.5px solid var(--charcoal); background:white; color:var(--charcoal); cursor:pointer; white-space:nowrap; }
+  .cat-filter-btn.active{ background:var(--pink); border-color:var(--pink); color:white; }
+
+  .controls{ max-width:760px; margin:0 auto; padding:18px 20px 0; display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap; }
+  .view-toggle{ display:flex; background:white; border:2px solid var(--charcoal); border-radius:999px; overflow:hidden; }
+  .view-toggle button{ border:none; background:transparent; padding:7px 15px; font-size:13px; font-weight:600; font-family:'Space Grotesk',sans-serif; cursor:pointer; color:var(--charcoal); }
+  .view-toggle button.active{ background:var(--pink); color:white; }
+
+  .intro-line{ max-width:760px; margin:8px auto 0; padding:0 20px; font-size:13.5px; color:var(--muted); }
+
+  .subfilter-row{ max-width:760px; margin:14px auto 0; padding:0 20px; display:flex; gap:8px; flex-wrap:wrap; align-items:center; }
+  .filter-chip{ font-family:'Inter',sans-serif; font-size:12.5px; font-weight:600; padding:6px 14px; border-radius:999px; border:1.5px solid rgba(33,30,28,0.25); background:white; color:var(--charcoal); cursor:pointer; }
+  .filter-chip.active{ background:var(--charcoal); color:var(--cream); border-color:var(--charcoal); }
+  .filter-select{ font-family:'Inter',sans-serif; font-size:12.5px; font-weight:600; padding:7px 12px; border-radius:999px; border:1.5px solid rgba(33,30,28,0.25); background:white; color:var(--charcoal); }
+  .sort-dir-btn{ font-size:15px; padding:6px 10px; border-radius:999px; border:1.5px solid rgba(33,30,28,0.25); background:white; cursor:pointer; }
+  .sub-note{ font-size:11.5px; color:var(--muted); width:100%; margin-top:2px; }
+
+  main{ max-width:760px; margin:0 auto; padding:20px 20px 60px; }
+
+  .event-list{ display:flex; flex-direction:column; gap:12px; }
+  .event-card{ display:flex; gap:14px; align-items:center; background:var(--card); border-radius:14px; padding:15px 17px; border:2px solid var(--charcoal); box-shadow:3px 3px 0 var(--charcoal); }
+  .event-date-badge{ min-width:84px; font-size:12px; font-weight:600; color:var(--rose-deep); font-family:'Space Grotesk',sans-serif; line-height:1.3; }
+  .event-info{ flex:1; min-width:0; }
+  .event-info h4{ font-family:'Space Grotesk',sans-serif; font-size:16px; font-weight:600; margin-bottom:4px; }
+
+  .tag{ display:inline-block; font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:0.03em; padding:3px 9px; border-radius:999px; color:var(--charcoal); }
+  .cat-sports{ background:var(--coral); }
+  .cat-gathering{ background:var(--pink); color:white; }
+  .cat-dayactivity{ background:var(--blue); }
+  .cat-trip{ background:var(--purple); }
+  .cat-club{ background:var(--gold); }
+  .cat-resource{ background:#A9D6B8; }
+
+  .click-btn{ font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:12.5px; background:var(--charcoal); color:var(--cream); border:none; padding:9px 15px; border-radius:999px; cursor:pointer; white-space:nowrap; }
+  .empty{ text-align:center; padding:30px 20px; color:var(--muted); font-size:14px; }
+
+  /* ---- Apple-style month calendar ---- */
+  .cal-header{ display:flex; align-items:center; justify-content:center; gap:18px; margin-bottom:14px; }
+  .cal-nav-btn{ background:white; border:2px solid var(--charcoal); width:34px; height:34px; border-radius:50%; font-size:16px; font-weight:700; cursor:pointer; display:flex; align-items:center; justify-content:center; }
+  .cal-title{ font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:19px; min-width:170px; text-align:center; }
+
+  .weekday-row{ display:grid; grid-template-columns:repeat(7,1fr); margin-bottom:6px; }
+  .weekday-row div{ text-align:center; font-size:11px; font-weight:700; color:var(--rose-deep); text-transform:uppercase; }
+
+  .month-grid{ display:grid; grid-template-columns:repeat(7,1fr); gap:4px; }
+  .day-cell{ min-height:78px; border:1.5px solid rgba(33,30,28,0.15); border-radius:8px; background:white; padding:4px; overflow:hidden; }
+  .day-cell.empty{ border:none; background:transparent; }
+  .day-cell.today{ border:2px solid var(--pink); }
+  .day-num{ font-family:'Space Grotesk',sans-serif; font-size:12px; font-weight:700; color:var(--charcoal); }
+  .day-pip{ display:block; font-size:9.5px; font-weight:600; padding:2px 4px; border-radius:4px; margin-top:2px; cursor:pointer; line-height:1.25; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; color:var(--charcoal); }
+  .day-pip.cat-gathering{ color:white; }
+
+  @media (max-width:480px){
+    .day-cell{ min-height:56px; }
+    .day-pip{ font-size:8.5px; }
+  }
+
+  .ongoing-note{ font-size:13px; color:var(--muted); margin:20px 0 8px; }
+
+  /* ---- directory tabs (Clubs / Resources) ---- */
+  .cat-block{ margin-bottom:26px; }
+  .cat-block h3{ font-family:'Space Grotesk',sans-serif; font-size:17px; margin-bottom:4px; }
+  .cat-block .cat-desc{ font-size:13.5px; color:var(--muted); margin-bottom:14px; }
+
+  .panel-card{ background:var(--card); border:2px solid var(--charcoal); border-radius:16px; padding:18px; margin-bottom:16px; box-shadow:3px 3px 0 var(--charcoal); }
+  .panel-top{ display:flex; gap:14px; align-items:center; margin-bottom:10px; }
+  .monogram{ width:48px; height:48px; border-radius:12px; background:var(--charcoal); color:var(--cream); font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:18px; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+  .panel-top h4{ font-family:'Space Grotesk',sans-serif; font-size:17px; }
+  .panel-top .panel-type{ font-size:12px; color:var(--rose-deep); font-weight:600; }
+  .panel-desc{ font-size:14px; color:#4a4640; margin-bottom:10px; }
+  .panel-addr{ font-size:13px; color:var(--muted); margin-bottom:10px; }
+  .map-embed{ width:100%; height:160px; border:0; border-radius:10px; margin-bottom:10px; }
+  .panel-links{ display:flex; gap:8px; flex-wrap:wrap; }
+
+  /* ---- detail view ---- */
+  #detail-view{ display:none; }
+  .back-btn{ font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:14px; background:none; border:none; color:var(--rose-deep); cursor:pointer; margin-bottom:16px; padding:0; }
+  .detail-card{ background:white; border:2px solid var(--charcoal); border-radius:16px; padding:24px 22px; box-shadow:4px 4px 0 var(--charcoal); }
+  .detail-card h2{ font-family:'Space Grotesk',sans-serif; font-size:23px; margin:10px 0 4px; }
+  .detail-date{ font-size:14px; color:var(--rose-deep); font-weight:600; margin-bottom:12px; }
+  .detail-desc{ font-size:14.5px; color:#4a4640; margin-bottom:16px; }
+  .detail-facts{ display:flex; flex-direction:column; gap:7px; margin-bottom:18px; }
+  .detail-fact{ font-size:13.5px; }
+  .detail-fact b{ color:var(--charcoal); }
+  .detail-links{ display:flex; gap:9px; flex-wrap:wrap; }
+  .link-btn{ display:inline-block; font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:13px; padding:9px 16px; border-radius:999px; text-decoration:none; border:2px solid var(--charcoal); }
+  .link-btn.primary{ background:var(--charcoal); color:var(--cream); }
+  .link-btn.secondary{ background:white; color:var(--charcoal); }
+
+  footer{ text-align:center; padding:32px 20px 40px; border-top:1px solid rgba(33,30,28,0.12); margin-top:16px; }
+  .footer-btns{ display:flex; justify-content:center; flex-wrap:wrap; gap:10px; margin-bottom:14px; }
+  .wa-btn{ display:inline-flex; align-items:center; gap:9px; font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:14px; line-height:1; background:var(--wa-green); color:white; padding:12px 22px; border-radius:999px; text-decoration:none; }
+  .wa-btn svg{ width:18px; height:18px; flex-shrink:0; display:block; }
+  .ig-btn{ display:inline-flex; align-items:center; gap:9px; font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:14px; line-height:1; background:linear-gradient(135deg,#f58529,#dd2a7b,#8134af,#515bd4); color:white; padding:12px 22px; border-radius:999px; text-decoration:none; }
+  .ig-btn svg{ width:18px; height:18px; flex-shrink:0; display:block; }
+  .owned-badge{ display:inline-block; font-size:11px; font-weight:700; color:var(--rose-deep); background:rgba(201,138,150,0.16); padding:3px 10px; border-radius:999px; margin-bottom:8px; }
+  .disclaimer{ font-size:11px; color:var(--muted); max-width:440px; margin:0 auto; line-height:1.5; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wordmark">4DA<span>SISTAS</span></div>
+  <div class="tagline">Not a cult. Yet.</div>
+  <a class="wa-header-btn" href="https://chat.whatsapp.com/JgmuY1XU0jrGrDPUvuDPTS" target="_blank" rel="noopener">
+    <svg viewBox="0 0 32 32" fill="white"><path d="M16 5C9.4 5 4 9.9 4 16c0 3.2 1.5 6.1 3.9 8.1-.3 1.8-1.1 3.8-2.2 5.4 2.3-.4 4.6-1.3 6.4-2.6 1.2.3 2.5.5 3.9.5 6.6 0 12-4.9 12-11S22.6 5 16 5Z"/></svg>
+    Join the WhatsApp community
+  </a>
+</header>
+
+<nav class="tabs" id="tabs">
+  <button class="tab-btn active" data-tab="events">Events</button>
+  <button class="tab-btn" data-tab="clubs">Clubs</button>
+  <button class="tab-btn" data-tab="resources">Resources</button>
+</nav>
+
+<div class="category-row" id="categoryRow"></div>
+
+<div class="controls" id="controlsRow">
+  <div class="view-toggle" id="viewToggle">
+    <button class="active" data-view="list">List view</button>
+    <button data-view="calendar">Calendar view</button>
+  </div>
+</div>
+
+<p class="intro-line" id="introLine"></p>
+<div class="subfilter-row" id="subFilterRow"></div>
+
+<main>
+  <div id="list-view"></div>
+  <div id="calendar-view" style="display:none;"></div>
+  <div id="directory-view" style="display:none;"></div>
+
+  <div id="detail-view">
+    <button class="back-btn" id="backBtn">← Back</button>
+    <div class="detail-card" id="detailCard"></div>
+  </div>
+</main>
+
+<footer>
+  <div class="footer-btns">
+    <a class="wa-btn" href="https://chat.whatsapp.com/JgmuY1XU0jrGrDPUvuDPTS" target="_blank" rel="noopener">
+      <svg viewBox="0 0 32 32" fill="white"><path d="M16 5C9.4 5 4 9.9 4 16c0 3.2 1.5 6.1 3.9 8.1-.3 1.8-1.1 3.8-2.2 5.4 2.3-.4 4.6-1.3 6.4-2.6 1.2.3 2.5.5 3.9.5 6.6 0 12-4.9 12-11S22.6 5 16 5Z"/></svg>
+      Join the WhatsApp community
+    </a>
+    <a class="ig-btn" href="https://www.instagram.com/4dasistas.ca/" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.3" cy="6.7" r="1" fill="white" stroke="none"/></svg>
+      Follow @4dasistas.ca
+    </a>
+  </div>
+  <p class="disclaimer">4DASISTAS is an independent community resource — not officially run by the organizations listed. Details change often, so always confirm dates, prices, locations, and any "hijab-off"/private-space claims directly with the organizer before attending.</p>
+</footer>
+
+<script>
+/* ============================================================
+   DATA
+   ============================================================ */
+
+let sportsData = [];
+let gatheringsData = [];
+let dayActivitiesData = [];
+let tripsData = [];
+let clubsData = [];
+let organizationsData = [];
+let resourcesData = [];
+let allResourceItems = [];
+let ALL_ITEMS = [];
+let EVENT_ITEMS = [];
+
+async function loadData(){
+  const [sports, gatherings, dayactivities, trips, clubs, organizations, resources] = await Promise.all([
+    fetch('data/sports.json').then(r => r.json()),
+    fetch('data/gatherings.json').then(r => r.json()),
+    fetch('data/dayactivities.json').then(r => r.json()),
+    fetch('data/trips.json').then(r => r.json()),
+    fetch('data/clubs.json').then(r => r.json()),
+    fetch('data/organizations.json').then(r => r.json()),
+    fetch('data/resources.json').then(r => r.json()),
+  ]);
+  sportsData = sports;
+  gatheringsData = gatherings;
+  dayActivitiesData = dayactivities;
+  tripsData = trips;
+  clubsData = clubs;
+  organizationsData = organizations;
+  resourcesData = resources;
+  allResourceItems = [...organizationsData, ...resourcesData];
+  ALL_ITEMS = [...sportsData, ...gatheringsData, ...dayActivitiesData, ...tripsData, ...clubsData, ...organizationsData, ...resourcesData];
+  EVENT_ITEMS = [...sportsData, ...gatheringsData, ...dayActivitiesData, ...tripsData];
+}
+
+/* ============================================================
+   STATE
+   ============================================================ */
+const today = new Date(2026,7,16); // Aug 16 2026
+let state = {
+  tab:'events', categoryFilter:'all', view:'list',
+  sportFilter:'all', dayCity:'all',
+  gatherSort:'hijab', gatherDir:'asc',
+  tripType:'all', resourceFilter:'all',
+  calYear: today.getFullYear(), calMonth: today.getMonth(),
+};
+
+const introText = {
+  all: "Everything happening across sports, day activities and trips.",
+  sports: "Somehow there's badminton every single day of the week.",
+  dayactivities: "One-off outings and single-day plans.",
+  gatherings: "Dated social meetups will show up here as they're scheduled.",
+  trips: "Sample trips below — tell me the real ones and I'll swap them in.",
+  clubs: "Special-interest clubs the community runs together — sign up to join one.",
+  resources: "Muslim-woman-run organizations, shops and food spots the community supports."
+};
+
+const dayOrder = ['sun','mon','tue','wed','thu','fri','sat'];
+const dayLabelsShort = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+const monthNames = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+
+function pad(n){ return String(n).padStart(2,'0'); }
+function tagClass(item){
+  if(sportsData.includes(item)) return 'cat-sports';
+  if(gatheringsData.includes(item)) return 'cat-gathering';
+  if(dayActivitiesData.includes(item)) return 'cat-dayactivity';
+  if(tripsData.includes(item)) return 'cat-trip';
+  if(clubsData.includes(item)) return 'cat-club';
+  return 'cat-resource';
+}
+
+/* ============================================================
+   ITEM SETS PER TAB
+   ============================================================ */
+function itemsForCategory(cat){
+  if(cat === 'all') return EVENT_ITEMS;
+  if(cat === 'sports'){
+    return state.sportFilter === 'all' ? sportsData : sportsData.filter(e => e.sportKey === state.sportFilter);
+  }
+  if(cat === 'dayactivities'){
+    return state.dayCity === 'all' ? dayActivitiesData : dayActivitiesData.filter(e => e.city === state.dayCity);
+  }
+  if(cat === 'gatherings'){
+    let arr = [...gatheringsData];
+    arr.sort((a,b) => {
+      let av, bv;
+      if(state.gatherSort === 'hijab'){ av = a.hijabOff===null?2:(a.hijabOff?0:1); bv = b.hijabOff===null?2:(b.hijabOff?0:1); }
+      else if(state.gatherSort === 'location'){ av = a.location.toLowerCase(); bv = b.location.toLowerCase(); }
+      else { av = a.timingRank===null?9999:a.timingRank; bv = b.timingRank===null?9999:b.timingRank; }
+      if(av < bv) return state.gatherDir === 'asc' ? -1 : 1;
+      if(av > bv) return state.gatherDir === 'asc' ? 1 : -1;
+      return 0;
+    });
+    return arr;
+  }
+  if(cat === 'trips'){
+    return state.tripType === 'all' ? tripsData : tripsData.filter(e => e.tripType === state.tripType);
+  }
+  return [];
+}
+
+/* ============================================================
+   RENDER: LIST
+   ============================================================ */
+function renderList(){
+  const items = itemsForCategory(state.categoryFilter);
+  const el = document.getElementById('list-view');
+  if(items.length === 0){
+    const msg = state.categoryFilter === 'gatherings'
+      ? 'No dated gatherings yet — ongoing social groups have moved to Resources → Organizations.'
+      : 'Nothing here yet.';
+    el.innerHTML = `<div class="empty">${msg}</div>`;
+    return;
+  }
+  el.innerHTML = `<div class="event-list">${items.map(e => `
+    <div class="event-card">
+      <div class="event-date-badge">${e.date}</div>
+      <div class="event-info">
+        <h4>${e.title}</h4>
+        <span class="tag ${tagClass(e)}">${e.tag}</span>
+      </div>
+      <button class="click-btn" data-id="${e.id}">Click me →</button>
+    </div>`).join('')}</div>`;
+}
+
+/* ============================================================
+   RENDER: APPLE-STYLE MONTH CALENDAR
+   ============================================================ */
+function occurrencesInMonth(item, year, month){
+  if(item.calDate){
+    const d = new Date(item.calDate+'T00:00:00');
+    return (d.getFullYear()===year && d.getMonth()===month) ? [item.calDate] : [];
+  }
+  if(item.days && item.days.length){
+    const dayNums = item.days.map(d => dayOrder.indexOf(d));
+    const daysInMonth = new Date(year, month+1, 0).getDate();
+    const out = [];
+    for(let d=1; d<=daysInMonth; d++){
+      const dt = new Date(year, month, d);
+      if(dayNums.includes(dt.getDay())) out.push(`${year}-${pad(month+1)}-${pad(d)}`);
+    }
+    return out;
+  }
+  return [];
+}
+
+function buildDateMap(items, year, month){
+  const map = {};
+  items.forEach(item => {
+    occurrencesInMonth(item, year, month).forEach(dateStr => {
+      (map[dateStr] = map[dateStr] || []).push(item);
+    });
+  });
+  return map;
+}
+
+function renderCalendar(){
+  const items = itemsForCategory(state.categoryFilter);
+  const year = state.calYear, month = state.calMonth;
+  const dateMap = buildDateMap(items, year, month);
+  const dateless = items.filter(e => (!e.calDate) && (!e.days || !e.days.length));
+
+  const first = new Date(year, month, 1);
+  const startDay = first.getDay();
+  const daysInMonth = new Date(year, month+1, 0).getDate();
+  const todayStr = `${today.getFullYear()}-${pad(today.getMonth()+1)}-${pad(today.getDate())}`;
+
+  let html = `
+    <div class="cal-header">
+      <button class="cal-nav-btn" id="prevMonth">‹</button>
+      <div class="cal-title">${monthNames[month]} ${year}</div>
+      <button class="cal-nav-btn" id="nextMonth">›</button>
+    </div>
+    <div class="weekday-row">${dayLabelsShort.map(d=>`<div>${d}</div>`).join('')}</div>
+    <div class="month-grid">`;
+
+  for(let i=0;i<startDay;i++) html += `<div class="day-cell empty"></div>`;
+
+  for(let d=1; d<=daysInMonth; d++){
+    const dateStr = `${year}-${pad(month+1)}-${pad(d)}`;
+    const dayItems = dateMap[dateStr] || [];
+    const isToday = dateStr === todayStr;
+    html += `<div class="day-cell${isToday?' today':''}"><div class="day-num">${d}</div>`;
+    dayItems.forEach(e => {
+      html += `<span class="day-pip ${tagClass(e)}" data-id="${e.id}">${e.title}</span>`;
+    });
+    html += `</div>`;
+  }
+  html += `</div>`;
+
+  if(dateless.length){
+    html += `<div class="ongoing-note">Ongoing / no fixed date — check the list view or their Instagram:</div>`;
+    html += `<div class="event-list">${dateless.map(e => `
+      <div class="event-card">
+        <div class="event-date-badge">${e.date}</div>
+        <div class="event-info"><h4>${e.title}</h4><span class="tag ${tagClass(e)}">${e.tag}</span></div>
+        <button class="click-btn" data-id="${e.id}">Click me →</button>
+      </div>`).join('')}</div>`;
+  } else if(items.length === 0 && state.categoryFilter === 'gatherings'){
+    html += `<div class="ongoing-note">No dated gatherings yet — ongoing social groups have moved to Resources → Organizations.</div>`;
+  }
+
+  document.getElementById('calendar-view').innerHTML = html;
+
+  document.getElementById('prevMonth').addEventListener('click', () => {
+    state.calMonth--; if(state.calMonth<0){ state.calMonth=11; state.calYear--; }
+    renderCalendar();
+  });
+  document.getElementById('nextMonth').addEventListener('click', () => {
+    state.calMonth++; if(state.calMonth>11){ state.calMonth=0; state.calYear++; }
+    renderCalendar();
+  });
+}
+
+/* ============================================================
+   RENDER: SUB-FILTERS
+   ============================================================ */
+const sportFilterList = [
+  {key:'all',label:'All'},{key:'badminton',label:'Badminton'},{key:'soccer',label:'Soccer'},
+  {key:'basketball',label:'Basketball'},{key:'softball',label:'Softball'},{key:'hockey',label:'Hockey'},
+  {key:'running',label:'Running'},{key:'fitness',label:'Fitness'},
+];
+const cityFilterList = [
+  {key:'all',label:'All locations'},{key:'Mississauga',label:'Mississauga'},{key:'Oakville',label:'Oakville'},{key:'Toronto',label:'Toronto'},
+];
+
+const categoryList = [
+  {key:'all', label:'All Events'},
+  {key:'sports', label:'Sports Only'},
+  {key:'dayactivities', label:'Day Activities'},
+  {key:'gatherings', label:'Gatherings'},
+  {key:'trips', label:'Trips'},
+];
+
+const resourceFilterList = [
+  {key:'all', label:'All'},
+  {key:'organizations', label:'Organizations'},
+  {key:'shops', label:'Shops'},
+  {key:'food', label:'Food'},
+];
+
+function renderResourceFilters(){
+  const el = document.getElementById('subFilterRow');
+  el.innerHTML = resourceFilterList.map(f => `<button class="filter-chip ${state.resourceFilter===f.key?'active':''}" data-resourcefilter="${f.key}">${f.label}</button>`).join('');
+}
+
+function renderCategoryRow(){
+  const el = document.getElementById('categoryRow');
+  if(state.tab !== 'events'){ el.style.display = 'none'; el.innerHTML = ''; return; }
+  el.style.display = 'flex';
+  el.innerHTML = categoryList.map(c => `<button class="cat-filter-btn ${state.categoryFilter===c.key?'active':''}" data-catfilter="${c.key}">${c.label}</button>`).join('');
+}
+
+function renderSubFilters(){
+  const el = document.getElementById('subFilterRow');
+  el.innerHTML = '';
+
+  if(state.categoryFilter === 'sports'){
+    el.innerHTML = sportFilterList.map(f => `<button class="filter-chip ${state.sportFilter===f.key?'active':''}" data-sportfilter="${f.key}">${f.label}</button>`).join('');
+  } else if(state.categoryFilter === 'dayactivities'){
+    el.innerHTML = `<select class="filter-select" id="citySelect">${cityFilterList.map(c=>`<option value="${c.key}" ${state.dayCity===c.key?'selected':''}>${c.label}</option>`).join('')}</select>`;
+  } else if(state.categoryFilter === 'gatherings'){
+    const sorts = [{key:'hijab',label:'Hijab-off'},{key:'location',label:'Location'},{key:'timing',label:'Timing'}];
+    el.innerHTML = sorts.map(s => `<button class="filter-chip ${state.gatherSort===s.key?'active':''}" data-gathersort="${s.key}">${s.label}</button>`).join('')
+      + `<button class="sort-dir-btn" id="gatherDirBtn">${state.gatherDir==='asc'?'↑ Asc':'↓ Desc'}</button>`
+      + `<div class="sub-note">Sorted by ${state.gatherSort} · none of these have confirmed hijab-off status yet — always confirm with the organizer.</div>`;
+  } else if(state.categoryFilter === 'trips'){
+    const types = [{key:'all',label:'All'},{key:'domestic',label:'Domestic'},{key:'international',label:'International'}];
+    el.innerHTML = types.map(t => `<button class="filter-chip ${state.tripType===t.key?'active':''}" data-tripfilter="${t.key}">${t.label}</button>`).join('');
+  }
+}
+
+/* ============================================================
+   RENDER: DIRECTORY TABS (Clubs / Resources)
+   ============================================================ */
+function renderDirectory(){
+  const el = document.getElementById('directory-view');
+  if(state.tab === 'clubs'){
+    el.innerHTML = clubsData.map(c => `
+      <div class="panel-card">
+        <div class="panel-top">
+          <div class="monogram">${c.title.charAt(0)}</div>
+          <div><h4>${c.title}</h4></div>
+        </div>
+        <div class="panel-desc">${c.desc}</div>
+        <div class="panel-links">
+          <a class="link-btn primary" href="${c.signup}" target="_blank" rel="noopener">Sign Up</a>
+        </div>
+      </div>`).join('');
+  } else if(state.tab === 'resources'){
+    const filtered = state.resourceFilter === 'all' ? allResourceItems : allResourceItems.filter(r => r.category === state.resourceFilter);
+    if(filtered.length === 0){ el.innerHTML = '<div class="empty">Nothing here yet.</div>'; return; }
+    el.innerHTML = filtered.map(r => `
+      <div class="panel-card">
+        <div class="panel-top">
+          <div class="monogram">${r.title.charAt(0)}</div>
+          <div>
+            <h4>${r.title}</h4>
+            <div class="panel-type">${r.type || 'Organization'}</div>
+          </div>
+        </div>
+        ${r.ownedBy ? `<div class="owned-badge">${r.ownedBy}</div>` : ''}
+        <div class="panel-desc">${r.desc}</div>
+        <div class="panel-addr">📍 ${r.location}${r.date ? ' · ' + r.date : ''}</div>
+        ${r.mapQuery ? `<iframe class="map-embed" loading="lazy" src="https://www.google.com/maps?q=${encodeURIComponent(r.mapQuery)}&output=embed"></iframe>` : ''}
+        <div class="panel-links">
+          ${r.instagram ? `<a class="link-btn secondary" href="${r.instagram}" target="_blank" rel="noopener">Follow on Instagram</a>` : ''}
+          ${r.website ? `<a class="link-btn secondary" href="${r.website}" target="_blank" rel="noopener">Visit Website</a>` : ''}
+          ${r.email ? `<a class="link-btn secondary" href="mailto:${r.email}">Email</a>` : ''}
+        </div>
+      </div>`).join('');
+  }
+}
+
+/* ============================================================
+   DETAIL VIEW
+   ============================================================ */
+function findItem(id){ return ALL_ITEMS.find(e => e.id === id); }
+
+function renderDetail(id){
+  const e = findItem(id);
+  if(!e) return;
+
+  let facts = '';
+  if(e.location) facts += `<div class="detail-fact"><b>Location:</b> ${e.location}</div>`;
+  if(e.organizer) facts += `<div class="detail-fact"><b>Organizer:</b> ${e.organizer}${e.contact ? ' · ' + e.contact : ''}</div>`;
+  if(e.price) facts += `<div class="detail-fact"><b>Price:</b> ${e.price}</div>`;
+  if(e.registration) facts += `<div class="detail-fact"><b>Registration:</b> ${e.registration}</div>`;
+  if(e.type) facts += `<div class="detail-fact"><b>Type:</b> ${e.type}</div>`;
+  if(e.tripType) facts += `<div class="detail-fact"><b>Trip type:</b> ${e.tripType}</div>`;
+  if(e.email) facts += `<div class="detail-fact"><b>Email:</b> ${e.email}</div>`;
+
+  let links = '';
+  if(e.whatsapp) links += `<a class="link-btn primary" href="${e.whatsapp}" target="_blank" rel="noopener">Join WhatsApp Group</a>`;
+  if(e.instagram) links += `<a class="link-btn secondary" href="${e.instagram}" target="_blank" rel="noopener">Follow on Instagram</a>`;
+  if(e.website) links += `<a class="link-btn secondary" href="${e.website}" target="_blank" rel="noopener">Visit Website</a>`;
+
+  document.getElementById('detailCard').innerHTML = `
+    <span class="tag ${tagClass(e)}">${e.tag}</span>
+    <h2>${e.title}</h2>
+    <div class="detail-date">${e.date}</div>
+    <div class="detail-desc">${e.desc || ''}</div>
+    <div class="detail-facts">${facts}</div>
+    <div class="detail-links">${links}</div>
+  `;
+
+  ['list-view','calendar-view','directory-view'].forEach(id => document.getElementById(id).style.display='none');
+  document.getElementById('detail-view').style.display = 'block';
+  document.getElementById('controlsRow').style.display = 'none';
+  document.getElementById('introLine').style.display = 'none';
+  document.getElementById('subFilterRow').style.display = 'none';
+  document.getElementById('categoryRow').style.display = 'none';
+  document.getElementById('tabs').style.display = 'none';
+}
+
+function closeDetail(){
+  document.getElementById('detail-view').style.display = 'none';
+  document.getElementById('tabs').style.display = 'flex';
+  document.getElementById('introLine').style.display = 'block';
+  document.getElementById('subFilterRow').style.display = 'flex';
+  render();
+  location.hash = '';
+}
+
+/* ============================================================
+   MAIN RENDER
+   ============================================================ */
+const DIRECTORY_TABS = ['clubs','resources'];
+
+function render(){
+  renderCategoryRow();
+
+  const isDirectory = DIRECTORY_TABS.includes(state.tab);
+  document.getElementById('introLine').textContent = isDirectory ? introText[state.tab] : introText[state.categoryFilter];
+
+  if(state.tab === 'resources'){
+    renderResourceFilters();
+  } else if(!isDirectory){
+    renderSubFilters();
+  } else {
+    document.getElementById('subFilterRow').innerHTML = '';
+  }
+
+  document.getElementById('controlsRow').style.display = isDirectory ? 'none' : 'flex';
+  document.getElementById('list-view').style.display = 'none';
+  document.getElementById('calendar-view').style.display = 'none';
+  document.getElementById('directory-view').style.display = 'none';
+
+  if(isDirectory){
+    document.getElementById('directory-view').style.display = 'block';
+    renderDirectory();
+  } else if(state.view === 'list'){
+    document.getElementById('list-view').style.display = 'block';
+    renderList();
+  } else {
+    document.getElementById('calendar-view').style.display = 'block';
+    renderCalendar();
+  }
+}
+
+/* ============================================================
+   EVENTS
+   ============================================================ */
+document.getElementById('tabs').addEventListener('click', e => {
+  const btn = e.target.closest('.tab-btn');
+  if(!btn) return;
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  state.tab = btn.dataset.tab;
+  render();
+});
+
+document.getElementById('viewToggle').addEventListener('click', e => {
+  const btn = e.target.closest('button');
+  if(!btn) return;
+  document.querySelectorAll('.view-toggle button').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  state.view = btn.dataset.view;
+  render();
+});
+
+document.getElementById('categoryRow').addEventListener('click', e => {
+  const btn = e.target.closest('[data-catfilter]');
+  if(!btn) return;
+  state.categoryFilter = btn.dataset.catfilter;
+  render();
+});
+
+document.getElementById('subFilterRow').addEventListener('click', e => {
+  const sportBtn = e.target.closest('[data-sportfilter]');
+  const gatherBtn = e.target.closest('[data-gathersort]');
+  const tripBtn = e.target.closest('[data-tripfilter]');
+  const resourceBtn = e.target.closest('[data-resourcefilter]');
+  const dirBtn = e.target.closest('#gatherDirBtn');
+  if(sportBtn){ state.sportFilter = sportBtn.dataset.sportfilter; render(); }
+  if(gatherBtn){ state.gatherSort = gatherBtn.dataset.gathersort; render(); }
+  if(tripBtn){ state.tripType = tripBtn.dataset.tripfilter; render(); }
+  if(resourceBtn){ state.resourceFilter = resourceBtn.dataset.resourcefilter; render(); }
+  if(dirBtn){ state.gatherDir = state.gatherDir==='asc'?'desc':'asc'; render(); }
+});
+document.getElementById('subFilterRow').addEventListener('change', e => {
+  if(e.target.id === 'citySelect'){ state.dayCity = e.target.value; render(); }
+});
+
+document.body.addEventListener('click', e => {
+  const trigger = e.target.closest('[data-id]');
+  if(!trigger) return;
+  location.hash = '#/event/' + trigger.dataset.id;
+});
+
+document.getElementById('backBtn').addEventListener('click', closeDetail);
+
+window.addEventListener('hashchange', () => {
+  const match = location.hash.match(/^#\/event\/(.+)$/);
+  if(match) renderDetail(match[1]);
+  else closeDetail();
+});
+
+/* ============================================================
+   INIT
+   ============================================================ */
+document.getElementById('list-view').innerHTML = '<div class="empty">Loading…</div>';
+loadData().then(() => {
+  render();
+  const initMatch = location.hash.match(/^#\/event\/(.+)$/);
+  if(initMatch) renderDetail(initMatch[1]);
+}).catch(err => {
+  document.getElementById('list-view').innerHTML = '<div class="empty">Could not load content — check your connection and refresh.</div>';
+  console.error(err);
+});
+</script>
+
+</body>
+</html>
