@@ -157,10 +157,10 @@ collections:
               - { label: "Email", name: "email", widget: "string", required: false }
 
   - name: "resources"
-    label: "Resources — Shops & Food"
+    label: "Resources — Shops, Food & Misc"
     files:
       - file: "data/resources.json"
-        label: "Shops & Food"
+        label: "Shops, Food & Misc"
         name: "resources"
         fields:
           - label: "Items"
@@ -169,12 +169,15 @@ collections:
             fields:
               - { label: "ID (no spaces, unique)", name: "id", widget: "string" }
               - { label: "Title", name: "title", widget: "string" }
-              - { label: "Category", name: "category", widget: "select", options: ["shops", "food"] }
+              - { label: "Category", name: "category", widget: "select", options: ["shops", "food", "misc"] }
               - { label: "Type (e.g. Boutique, Bakery & Café)", name: "type", widget: "string" }
               - { label: "Location", name: "location", widget: "string" }
               - { label: "Hours / date info", name: "date", widget: "string", required: false }
-              - { label: "Ownership note", name: "ownedBy", widget: "string" }
+              - { label: "Ownership note", name: "ownedBy", widget: "string", required: false }
               - { label: "Description", name: "desc", widget: "text" }
-              - { label: "Google Maps search text (optional)", name: "mapQuery", widget: "string", required: false }
+              - { label: "Latitude (for map)", name: "lat", widget: "number", value_type: "float", required: false }
+              - { label: "Longitude (for map)", name: "lng", widget: "number", value_type: "float", required: false }
+              - { label: "Google Maps link", name: "mapsUrl", widget: "string", required: false }
+              - { label: "Phone", name: "phone", widget: "string", required: false }
               - { label: "Instagram link", name: "instagram", widget: "string", required: false }
               - { label: "Website link", name: "website", widget: "string", required: false }
