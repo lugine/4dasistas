@@ -54,7 +54,7 @@ collections:
               - { label: "Recurring: starts on (optional — leave blank for always)", name: "recurStart", widget: "date", required: false }
               - { label: "Recurring: ends on (optional — leave blank for indefinite)", name: "recurEnd", widget: "date", required: false }
               - { label: "Specific calendar date (YYYY-MM-DD, legacy field — prefer the simple date above)", name: "calDate", widget: "string", required: false }
-              - { label: "Location", name: "location", widget: "string", required: false }
+              - { label: "Location", name: "location", widget: "location-autocomplete", required: false }
               - { label: "Organizer name", name: "organizer", widget: "string", required: false }
               - { label: "Contact", name: "contact", widget: "string", required: false }
               - { label: "Price", name: "price", widget: "string", required: false }
@@ -95,7 +95,7 @@ collections:
               - { label: "Recurring: starts on (optional)", name: "recurStart", widget: "date", required: false }
               - { label: "Recurring: ends on (optional)", name: "recurEnd", widget: "date", required: false }
               - { label: "Specific calendar date (YYYY-MM-DD, legacy field — prefer the simple date above)", name: "calDate", widget: "string", required: false }
-              - { label: "Location", name: "location", widget: "string", required: false }
+              - { label: "Location", name: "location", widget: "location-autocomplete", required: false }
               - { label: "Registration deadline", name: "registrationDeadline", widget: "date", required: false }
               - label: "Hijab-off confirmed?"
                 name: "hijabOff"
@@ -130,7 +130,7 @@ collections:
               - { label: "Date text (only needed if not using the simple date above)", name: "date", widget: "string", required: false }
               - { label: "Calendar date (YYYY-MM-DD, legacy field — prefer the simple date above)", name: "calDate", widget: "string", required: false }
               - { label: "City", name: "city", widget: "select", options: ["Mississauga", "Oakville", "Toronto", "Burlington", "Milton"] }
-              - { label: "Location", name: "location", widget: "string", required: false }
+              - { label: "Location", name: "location", widget: "location-autocomplete", required: false }
               - { label: "Registration deadline", name: "registrationDeadline", widget: "date", required: false }
               - { label: "Description", name: "desc", widget: "text", required: false }
 
@@ -156,7 +156,7 @@ collections:
               - { label: "Date text (only needed if not using the simple date above)", name: "date", widget: "string", required: false }
               - { label: "Calendar date (YYYY-MM-DD, legacy field — prefer the simple date above)", name: "calDate", widget: "string", required: false }
               - { label: "Trip type", name: "tripType", widget: "select", options: ["domestic", "international"] }
-              - { label: "Location", name: "location", widget: "string", required: false }
+              - { label: "Location", name: "location", widget: "location-autocomplete", required: false }
               - { label: "Price", name: "price", widget: "string", required: false }
               - { label: "Registration deadline", name: "registrationDeadline", widget: "date", required: false }
               - { label: "Description", name: "desc", widget: "text", required: false }
@@ -191,7 +191,7 @@ collections:
               - { label: "Category (leave as organizations)", name: "category", widget: "hidden", default: "organizations" }
               - { label: "ID (no spaces, unique)", name: "id", widget: "string" }
               - { label: "Title", name: "title", widget: "string" }
-              - { label: "Location", name: "location", widget: "string" }
+              - { label: "Location", name: "location", widget: "location-autocomplete" }
               - { label: "Ownership / leadership note", name: "ownedBy", widget: "string" }
               - { label: "Description", name: "desc", widget: "text" }
               - { label: "Instagram link", name: "instagram", widget: "string", required: false }
@@ -213,7 +213,7 @@ collections:
               - { label: "ID (no spaces, unique)", name: "id", widget: "string" }
               - { label: "Title", name: "title", widget: "string" }
               - { label: "Type (e.g. Boutique, Bakery & Café)", name: "type", widget: "string" }
-              - { label: "Location", name: "location", widget: "string" }
+              - { label: "Location", name: "location", widget: "location-autocomplete" }
               - { label: "Hours / date info", name: "date", widget: "string", required: false }
               - { label: "Ownership note", name: "ownedBy", widget: "string", required: false }
               - { label: "Description", name: "desc", widget: "text" }
