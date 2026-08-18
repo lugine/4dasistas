@@ -1155,6 +1155,76 @@
       "lng": -79.7699651,
       "mapsUrl": "https://www.google.com/maps/search/?api=1&query=43.3847506,-79.7699651&query_place_id=ChIJoeaqoYxhK4gRGh_XulrusQk",
       "phone": "+1 289-938-9313"
+    },
+    {
+      "id": "cafe-jabal",
+      "title": "Jabal Coffee House",
+      "category": "cafes",
+      "type": "Coffee Shop",
+      "location": "3515 Odyssey Dr Unit 63, Mississauga (Ridgeway Plaza)",
+      "date": "See Google Maps for hours",
+      "ownedBy": "Halal / Islamic-identified on Google Maps",
+      "desc": "Popular Ridgeway coffee spot — frappes, pistachio treats, sports on TV.",
+      "lat": 43.5369602,
+      "lng": -79.7246073,
+      "mapsUrl": "https://www.google.com/maps/search/?api=1&query=43.5369602,-79.7246073&query_place_id=ChIJLZMkOABDK4gRjU1DQvy7mvo",
+      "phone": "+1 905-828-9800"
+    },
+    {
+      "id": "cafe-sewarhouse",
+      "title": "Sewar House",
+      "category": "cafes",
+      "type": "Coffee Shop",
+      "location": "3545 Odyssey Dr Unit 5, Mississauga (Ridgeway Plaza)",
+      "date": "See Google Maps for hours",
+      "ownedBy": "Halal / Islamic-identified on Google Maps",
+      "desc": "Elegant cafe with coffee, desserts, and a perfume/jewelry corner.",
+      "lat": 43.5368878,
+      "lng": -79.7268109,
+      "mapsUrl": "https://www.google.com/maps/search/?api=1&query=43.5368878,-79.7268109&query_place_id=ChIJgQFVonVDK4gR4i8vBWAXx2U",
+      "phone": "+1 905-607-4004"
+    },
+    {
+      "id": "cafe-matari",
+      "title": "Matari Coffee Co.",
+      "category": "cafes",
+      "type": "Coffee Shop",
+      "location": "3465 Platinum Dr Unit 97, Mississauga (Ridgeway Plaza)",
+      "date": "See Google Maps for hours",
+      "ownedBy": "Halal / Islamic-identified on Google Maps",
+      "desc": "Yemeni coffee shop with Yemeni Latte, Matari, and Middle Eastern flavours.",
+      "lat": 43.5379529,
+      "lng": -79.7272471,
+      "mapsUrl": "https://www.google.com/maps/search/?api=1&query=43.5379529,-79.7272471&query_place_id=ChIJWbQIh55DK4gR14LdSwKYXiU",
+      "phone": "+1 905-569-8111"
+    },
+    {
+      "id": "cafe-chachees",
+      "title": "Chachee's Chai Cafe",
+      "category": "cafes",
+      "type": "Coffee & Chai Cafe",
+      "location": "3450 Platinum Dr Unit 13, Mississauga (Ridgeway Plaza)",
+      "date": "See Google Maps for hours",
+      "ownedBy": "Halal / Islamic-identified on Google Maps",
+      "desc": "Cozy chai cafe — Pink Chai, Karak Chai, and light bites.",
+      "lat": 43.5380466,
+      "lng": -79.7264344,
+      "mapsUrl": "https://www.google.com/maps/search/?api=1&query=43.5380466,-79.7264344&query_place_id=ChIJ2XsiQE1DK4gR1hQsve6f008",
+      "phone": "+1 905-607-0064"
+    },
+    {
+      "id": "food-samirkabab",
+      "title": "Samir Kabab House",
+      "category": "restaurants",
+      "type": "Halal Afghan/Kebab",
+      "location": "699 Guelph Line, Burlington",
+      "date": "See Google Maps for hours",
+      "ownedBy": "Halal / Islamic-identified on Google Maps",
+      "desc": "Halal Afghan kebab house — Chapli kabob, Waziri dinner.",
+      "lat": 43.3448052,
+      "lng": -79.7934185,
+      "mapsUrl": "https://www.google.com/maps/search/?api=1&query=43.3448052,-79.7934185&query_place_id=ChIJBRF98xFhK4gR7MQd-u-bFb4",
+      "phone": "+1 905-634-1000"
     }
   ]
 }
