@@ -35,7 +35,6 @@
   header{ padding:40px 20px 20px; text-align:center; }
   .wordmark{ font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:clamp(32px,7vw,52px); letter-spacing:-0.01em; }
   .wordmark span{ color:var(--pink); }
-  .tagline{ font-family:'Inter',sans-serif; font-style:italic; font-weight:500; font-size:14.5px; color:var(--rose-deep); margin-top:6px; }
   .header-disclaimer{ font-size:11px; color:var(--muted); max-width:440px; margin:8px auto 0; line-height:1.5; text-align:center; }
 
   .wa-fixed-btn{
@@ -57,10 +56,11 @@
   .tab-btn.active{ background:var(--charcoal); color:var(--cream); }
   .tab-btn:focus-visible{ outline:3px solid var(--pink); outline-offset:2px; }
 
-  .category-row{ display:flex; justify-content:center; gap:6px; padding:14px 20px 0; max-width:760px; margin:0 auto; overflow-x:auto; -webkit-overflow-scrolling:touch; scrollbar-width:none; }
+  .category-row{ display:flex; justify-content:center; gap:10px; padding:18px 20px 0; max-width:760px; margin:0 auto; overflow-x:auto; -webkit-overflow-scrolling:touch; scrollbar-width:none; }
   .category-row::-webkit-scrollbar{ display:none; }
-  .cat-filter-btn{ flex-shrink:0; font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:13px; padding:8px 16px; border-radius:999px; border:1.5px solid var(--charcoal); background:white; color:var(--charcoal); cursor:pointer; white-space:nowrap; }
-  .cat-filter-btn.active{ background:var(--pink); border-color:var(--pink); color:white; }
+  .cat-filter-btn{ flex-shrink:0; font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:14px; padding:16px 30px; border-radius:14px; border:2px solid var(--charcoal); cursor:pointer; white-space:nowrap; box-shadow:3px 3px 0 var(--charcoal); transition:transform 0.12s ease, box-shadow 0.12s ease; }
+  .cat-filter-btn:hover{ transform:translate(-1px,-1px); box-shadow:4px 4px 0 var(--charcoal); }
+  .cat-filter-btn.active{ box-shadow:1px 1px 0 var(--charcoal); transform:translate(2px,2px); }
 
   .controls{ max-width:760px; margin:0 auto; padding:18px 20px 0; display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap; }
   .controls-center{ justify-content:center; }
@@ -140,6 +140,7 @@
     .week-pill{ font-size:13px; padding:8px 9px; }
 
     .wa-fixed-btn{ width:34px; height:34px; top:10px; right:10px; }
+    .cat-filter-btn{ padding:12px 20px; font-size:13px; }
     .wa-fixed-btn svg{ width:16px; height:16px; }
     header{ padding-top:54px; }
     .header-disclaimer{ font-size:10.5px; padding:0 30px; }
@@ -209,7 +210,6 @@
 
 <header>
   <div class="wordmark">4DA<span>SISTAS</span></div>
-  <div class="tagline">Not a cult. Yet.</div>
   <div class="header-disclaimer">4DASISTAS is an independent community resource — not officially run by the organizations listed.</div>
 </header>
 
@@ -541,11 +541,11 @@ const cityFilterList = [
 ];
 
 const categoryList = [
-  {key:'all', label:'All Events'},
-  {key:'sports', label:'Sports Only'},
-  {key:'dayactivities', label:'Day Activities'},
-  {key:'gatherings', label:'Gatherings'},
-  {key:'trips', label:'Trips'},
+  {key:'all', label:'All Events', bg:'#373d3b', fg:'#fff7e6'},
+  {key:'sports', label:'Sports Only', bg:'#ef601e', fg:'#fff7e6'},
+  {key:'dayactivities', label:'Day Activities', bg:'#aabecf', fg:'#373d3b'},
+  {key:'gatherings', label:'Gatherings', bg:'#caaacd', fg:'#373d3b'},
+  {key:'trips', label:'Trips', bg:'#cb962e', fg:'#373d3b'},
 ];
 
 const resourceFilterList = [
@@ -572,7 +572,7 @@ function renderCategoryRow(){
   const el = document.getElementById('categoryRow');
   if(state.tab !== 'events'){ el.style.display = 'none'; el.innerHTML = ''; return; }
   el.style.display = 'flex';
-  el.innerHTML = categoryList.map(c => `<button class="cat-filter-btn ${state.categoryFilter===c.key?'active':''}" data-catfilter="${c.key}">${c.label}</button>`).join('');
+  el.innerHTML = categoryList.map(c => `<button class="cat-filter-btn ${state.categoryFilter===c.key?'active':''}" style="background:${c.bg};color:${c.fg};" data-catfilter="${c.key}">${c.label}</button>`).join('');
 }
 
 function renderSubFilters(){
