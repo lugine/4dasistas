@@ -35,23 +35,31 @@ collections:
             name: "items"
             widget: "list"
             fields:
+              - { label: "Tag / Type (e.g. Badminton) — change this to switch category", name: "tag", widget: "string" }
               - { label: "ID (no spaces, unique)", name: "id", widget: "string" }
               - { label: "Title", name: "title", widget: "string" }
-              - { label: "Tag (e.g. Badminton)", name: "tag", widget: "string" }
               - { label: "Sport Key (lowercase, e.g. badminton)", name: "sportKey", widget: "string" }
-              - { label: "Date text (shown on card)", name: "date", widget: "string" }
-              - label: "Recurring weekdays (leave empty if none)"
+              - label: "Simple one-off date (optional — use this OR the recurring fields below, not both)"
+                name: "eventDate"
+                widget: "date"
+                required: false
+                hint: "Pick a date — the site automatically builds the display text and places it on the calendar. Leave blank for recurring events."
+              - { label: "Date text (shown on card — only needed if not using the simple date above)", name: "date", widget: "string", required: false }
+              - label: "Recurring weekdays (leave empty if one-off)"
                 name: "days"
                 widget: "select"
                 multiple: true
                 required: false
                 options: ["sun","mon","tue","wed","thu","fri","sat"]
-              - { label: "Specific calendar date (YYYY-MM-DD, optional)", name: "calDate", widget: "string", required: false }
+              - { label: "Recurring: starts on (optional — leave blank for always)", name: "recurStart", widget: "date", required: false }
+              - { label: "Recurring: ends on (optional — leave blank for indefinite)", name: "recurEnd", widget: "date", required: false }
+              - { label: "Specific calendar date (YYYY-MM-DD, legacy field — prefer the simple date above)", name: "calDate", widget: "string", required: false }
               - { label: "Location", name: "location", widget: "string", required: false }
               - { label: "Organizer name", name: "organizer", widget: "string", required: false }
               - { label: "Contact", name: "contact", widget: "string", required: false }
               - { label: "Price", name: "price", widget: "string", required: false }
               - { label: "Registration info", name: "registration", widget: "string", required: false }
+              - { label: "Registration deadline", name: "registrationDeadline", widget: "date", required: false }
               - { label: "Description", name: "desc", widget: "text", required: false }
               - { label: "WhatsApp link", name: "whatsapp", widget: "string", required: false }
               - { label: "Instagram link", name: "instagram", widget: "string", required: false }
@@ -59,7 +67,7 @@ collections:
               - { label: "Email", name: "email", widget: "string", required: false }
 
   - name: "gatherings"
-    label: "Gatherings"
+    label: "Activities & Gatherings — Gatherings"
     files:
       - file: "data/gatherings.json"
         label: "Gatherings"
@@ -69,18 +77,26 @@ collections:
             name: "items"
             widget: "list"
             fields:
+              - { label: "Tag / Type — change this to switch category", name: "tag", widget: "string", default: "Gathering" }
               - { label: "ID (no spaces, unique)", name: "id", widget: "string" }
               - { label: "Title", name: "title", widget: "string" }
-              - { label: "Tag", name: "tag", widget: "string", default: "Gathering" }
-              - { label: "Date text", name: "date", widget: "string" }
-              - label: "Recurring weekdays (optional)"
+              - label: "Simple one-off date (optional — use this OR the recurring fields below, not both)"
+                name: "eventDate"
+                widget: "date"
+                required: false
+                hint: "Pick a date — the site automatically builds the display text and places it on the calendar. Leave blank for recurring or ongoing."
+              - { label: "Date text (shown on card — only needed if not using the simple date above)", name: "date", widget: "string", required: false }
+              - label: "Recurring weekdays (leave empty if one-off/ongoing)"
                 name: "days"
                 widget: "select"
                 multiple: true
                 required: false
                 options: ["sun","mon","tue","wed","thu","fri","sat"]
-              - { label: "Specific calendar date (YYYY-MM-DD, optional)", name: "calDate", widget: "string", required: false }
+              - { label: "Recurring: starts on (optional)", name: "recurStart", widget: "date", required: false }
+              - { label: "Recurring: ends on (optional)", name: "recurEnd", widget: "date", required: false }
+              - { label: "Specific calendar date (YYYY-MM-DD, legacy field — prefer the simple date above)", name: "calDate", widget: "string", required: false }
               - { label: "Location", name: "location", widget: "string", required: false }
+              - { label: "Registration deadline", name: "registrationDeadline", widget: "date", required: false }
               - label: "Hijab-off confirmed?"
                 name: "hijabOff"
                 widget: "select"
@@ -93,7 +109,7 @@ collections:
               - { label: "Email", name: "email", widget: "string", required: false }
 
   - name: "dayactivities"
-    label: "Day Activities"
+    label: "Activities & Gatherings — Day Activities"
     files:
       - file: "data/dayactivities.json"
         label: "Day Activities"
@@ -103,13 +119,19 @@ collections:
             name: "items"
             widget: "list"
             fields:
+              - { label: "Tag / Type — change this to switch category", name: "tag", widget: "string", default: "Day Activity" }
               - { label: "ID (no spaces, unique)", name: "id", widget: "string" }
               - { label: "Title", name: "title", widget: "string" }
-              - { label: "Tag", name: "tag", widget: "string", default: "Day Activity" }
-              - { label: "Date text", name: "date", widget: "string" }
-              - { label: "Calendar date (YYYY-MM-DD)", name: "calDate", widget: "string" }
-              - { label: "City", name: "city", widget: "select", options: ["Mississauga", "Oakville", "Toronto"] }
+              - label: "Simple one-off date"
+                name: "eventDate"
+                widget: "date"
+                required: false
+                hint: "Pick a date — the site automatically builds the display text and places it on the calendar."
+              - { label: "Date text (only needed if not using the simple date above)", name: "date", widget: "string", required: false }
+              - { label: "Calendar date (YYYY-MM-DD, legacy field — prefer the simple date above)", name: "calDate", widget: "string", required: false }
+              - { label: "City", name: "city", widget: "select", options: ["Mississauga", "Oakville", "Toronto", "Burlington", "Milton"] }
               - { label: "Location", name: "location", widget: "string", required: false }
+              - { label: "Registration deadline", name: "registrationDeadline", widget: "date", required: false }
               - { label: "Description", name: "desc", widget: "text", required: false }
 
   - name: "trips"
@@ -123,18 +145,24 @@ collections:
             name: "items"
             widget: "list"
             fields:
+              - { label: "Tag / Type — change this to switch category", name: "tag", widget: "string", default: "Trip" }
               - { label: "ID (no spaces, unique)", name: "id", widget: "string" }
               - { label: "Title", name: "title", widget: "string" }
-              - { label: "Tag", name: "tag", widget: "string", default: "Trip" }
-              - { label: "Date text", name: "date", widget: "string" }
-              - { label: "Calendar date (YYYY-MM-DD)", name: "calDate", widget: "string" }
+              - label: "Simple one-off date"
+                name: "eventDate"
+                widget: "date"
+                required: false
+                hint: "Pick a date — the site automatically builds the display text and places it on the calendar."
+              - { label: "Date text (only needed if not using the simple date above)", name: "date", widget: "string", required: false }
+              - { label: "Calendar date (YYYY-MM-DD, legacy field — prefer the simple date above)", name: "calDate", widget: "string", required: false }
               - { label: "Trip type", name: "tripType", widget: "select", options: ["domestic", "international"] }
               - { label: "Location", name: "location", widget: "string", required: false }
               - { label: "Price", name: "price", widget: "string", required: false }
+              - { label: "Registration deadline", name: "registrationDeadline", widget: "date", required: false }
               - { label: "Description", name: "desc", widget: "text", required: false }
 
   - name: "clubs"
-    label: "Clubs"
+    label: "Gals Clubs"
     files:
       - file: "data/clubs.json"
         label: "Clubs"
@@ -160,9 +188,9 @@ collections:
             name: "items"
             widget: "list"
             fields:
+              - { label: "Category (leave as organizations)", name: "category", widget: "hidden", default: "organizations" }
               - { label: "ID (no spaces, unique)", name: "id", widget: "string" }
               - { label: "Title", name: "title", widget: "string" }
-              - { label: "Category (leave as organizations)", name: "category", widget: "hidden", default: "organizations" }
               - { label: "Location", name: "location", widget: "string" }
               - { label: "Ownership / leadership note", name: "ownedBy", widget: "string" }
               - { label: "Description", name: "desc", widget: "text" }
@@ -181,9 +209,9 @@ collections:
             name: "items"
             widget: "list"
             fields:
+              - { label: "Category — change this to switch type", name: "category", widget: "select", options: ["mosques", "cafes", "shops", "restaurants", "misc"] }
               - { label: "ID (no spaces, unique)", name: "id", widget: "string" }
               - { label: "Title", name: "title", widget: "string" }
-              - { label: "Category", name: "category", widget: "select", options: ["mosques", "cafes", "shops", "restaurants", "misc"] }
               - { label: "Type (e.g. Boutique, Bakery & Café)", name: "type", widget: "string" }
               - { label: "Location", name: "location", widget: "string" }
               - { label: "Hours / date info", name: "date", widget: "string", required: false }
