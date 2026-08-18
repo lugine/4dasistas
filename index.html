@@ -59,6 +59,11 @@
   .view-toggle button{ border:none; background:transparent; padding:7px 15px; font-size:13px; font-weight:600; font-family:'Space Grotesk',sans-serif; cursor:pointer; color:var(--charcoal); }
   .view-toggle button.active{ background:var(--pink); color:white; }
 
+  .pagination{ display:flex; align-items:center; justify-content:center; gap:14px; margin-top:20px; }
+  .page-btn{ font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:13px; background:white; border:2px solid var(--charcoal); padding:8px 16px; border-radius:999px; cursor:pointer; }
+  .page-btn:disabled{ opacity:0.35; cursor:default; }
+  .page-info{ font-size:13px; color:var(--muted); font-weight:600; }
+
   .intro-line{ max-width:760px; margin:8px auto 0; padding:0 20px; font-size:13.5px; color:var(--muted); }
 
   .subfilter-row{ max-width:760px; margin:14px auto 0; padding:0 20px; display:flex; gap:8px; flex-wrap:wrap; align-items:center; }
@@ -189,6 +194,10 @@
     <button class="active" data-view="list">List view</button>
     <button data-view="calendar">Calendar view</button>
   </div>
+  <div class="view-toggle" id="timeToggle">
+    <button class="active" data-time="upcoming">Upcoming</button>
+    <button data-time="past">Past events</button>
+  </div>
 </div>
 
 <p class="intro-line" id="introLine"></p>
@@ -196,6 +205,7 @@
 
 <main>
   <div id="list-view"></div>
+  <div id="pagination"></div>
   <div id="calendar-view" style="display:none;"></div>
   <div id="directory-view" style="display:none;"></div>
 
@@ -266,6 +276,7 @@ let state = {
   sportFilter:'all', dayCity:'all',
   gatherSort:'hijab', gatherDir:'asc',
   tripType:'all', resourceFilter:'all',
+  timeFilter:'upcoming', page:1,
   calYear: today.getFullYear(), calMonth: today.getMonth(),
 };
 
@@ -296,7 +307,7 @@ function tagClass(item){
 /* ============================================================
    ITEM SETS PER TAB
    ============================================================ */
-function itemsForCategory(cat){
+function itemsForCategoryBase(cat){
   if(cat === 'all') return EVENT_ITEMS;
   if(cat === 'sports'){
     return state.sportFilter === 'all' ? sportsData : sportsData.filter(e => e.sportKey === state.sportFilter);
@@ -323,20 +334,44 @@ function itemsForCategory(cat){
   return [];
 }
 
+function isPastItem(item){
+  // Only items with a specific calendar date can be "past" — recurring
+  // weekly items and dateless/ongoing items are always treated as upcoming.
+  if(!item.calDate) return false;
+  const todayStr = `${today.getFullYear()}-${pad(today.getMonth()+1)}-${pad(today.getDate())}`;
+  return item.calDate < todayStr;
+}
+
+function itemsForCategory(cat){
+  const base = itemsForCategoryBase(cat);
+  return base.filter(e => state.timeFilter === 'past' ? isPastItem(e) : !isPastItem(e));
+}
+
 /* ============================================================
    RENDER: LIST
    ============================================================ */
 function renderList(){
+  const PAGE_SIZE = 6;
   const items = itemsForCategory(state.categoryFilter);
   const el = document.getElementById('list-view');
+  const pagEl = document.getElementById('pagination');
+
   if(items.length === 0){
-    const msg = state.categoryFilter === 'gatherings'
+    const msg = state.categoryFilter === 'gatherings' && state.timeFilter === 'upcoming'
       ? 'No dated gatherings yet — ongoing social groups have moved to Resources → Organizations.'
       : 'Nothing here yet.';
     el.innerHTML = `<div class="empty">${msg}</div>`;
+    pagEl.innerHTML = '';
     return;
   }
-  el.innerHTML = `<div class="event-list">${items.map(e => `
+
+  const totalPages = Math.ceil(items.length / PAGE_SIZE);
+  if(state.page > totalPages) state.page = totalPages;
+  if(state.page < 1) state.page = 1;
+  const start = (state.page - 1) * PAGE_SIZE;
+  const pageItems = items.slice(start, start + PAGE_SIZE);
+
+  el.innerHTML = `<div class="event-list">${pageItems.map(e => `
     <div class="event-card">
       <div class="event-date-badge">${e.date}</div>
       <div class="event-info">
@@ -345,6 +380,18 @@ function renderList(){
       </div>
       <button class="click-btn" data-id="${e.id}">Click me →</button>
     </div>`).join('')}</div>`;
+
+  if(totalPages <= 1){
+    pagEl.innerHTML = '';
+  } else {
+    pagEl.innerHTML = `
+      <button class="page-btn" id="prevPage" ${state.page===1?'disabled':''}>← Prev</button>
+      <span class="page-info">Page ${state.page} of ${totalPages}</span>
+      <button class="page-btn" id="nextPage" ${state.page===totalPages?'disabled':''}>Next →</button>
+    `;
+    document.getElementById('prevPage').addEventListener('click', () => { state.page--; renderList(); window.scrollTo({top:0, behavior:'smooth'}); });
+    document.getElementById('nextPage').addEventListener('click', () => { state.page++; renderList(); window.scrollTo({top:0, behavior:'smooth'}); });
+  }
 }
 
 /* ============================================================
@@ -607,6 +654,7 @@ function render(){
 
   document.getElementById('controlsRow').style.display = isDirectory ? 'none' : 'flex';
   document.getElementById('list-view').style.display = 'none';
+  document.getElementById('pagination').style.display = 'none';
   document.getElementById('calendar-view').style.display = 'none';
   document.getElementById('directory-view').style.display = 'none';
 
@@ -615,6 +663,7 @@ function render(){
     renderDirectory();
   } else if(state.view === 'list'){
     document.getElementById('list-view').style.display = 'block';
+    document.getElementById('pagination').style.display = 'flex';
     renderList();
   } else {
     document.getElementById('calendar-view').style.display = 'block';
@@ -631,15 +680,26 @@ document.getElementById('tabs').addEventListener('click', e => {
   document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
   state.tab = btn.dataset.tab;
+  state.page = 1;
   render();
 });
 
 document.getElementById('viewToggle').addEventListener('click', e => {
   const btn = e.target.closest('button');
   if(!btn) return;
-  document.querySelectorAll('.view-toggle button').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('#viewToggle button').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
   state.view = btn.dataset.view;
+  render();
+});
+
+document.getElementById('timeToggle').addEventListener('click', e => {
+  const btn = e.target.closest('button');
+  if(!btn) return;
+  document.querySelectorAll('#timeToggle button').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  state.timeFilter = btn.dataset.time;
+  state.page = 1;
   render();
 });
 
@@ -647,6 +707,7 @@ document.getElementById('categoryRow').addEventListener('click', e => {
   const btn = e.target.closest('[data-catfilter]');
   if(!btn) return;
   state.categoryFilter = btn.dataset.catfilter;
+  state.page = 1;
   render();
 });
 
@@ -656,14 +717,14 @@ document.getElementById('subFilterRow').addEventListener('click', e => {
   const tripBtn = e.target.closest('[data-tripfilter]');
   const resourceBtn = e.target.closest('[data-resourcefilter]');
   const dirBtn = e.target.closest('#gatherDirBtn');
-  if(sportBtn){ state.sportFilter = sportBtn.dataset.sportfilter; render(); }
+  if(sportBtn){ state.sportFilter = sportBtn.dataset.sportfilter; state.page = 1; render(); }
   if(gatherBtn){ state.gatherSort = gatherBtn.dataset.gathersort; render(); }
-  if(tripBtn){ state.tripType = tripBtn.dataset.tripfilter; render(); }
+  if(tripBtn){ state.tripType = tripBtn.dataset.tripfilter; state.page = 1; render(); }
   if(resourceBtn){ state.resourceFilter = resourceBtn.dataset.resourcefilter; render(); }
   if(dirBtn){ state.gatherDir = state.gatherDir==='asc'?'desc':'asc'; render(); }
 });
 document.getElementById('subFilterRow').addEventListener('change', e => {
-  if(e.target.id === 'citySelect'){ state.dayCity = e.target.value; render(); }
+  if(e.target.id === 'citySelect'){ state.dayCity = e.target.value; state.page = 1; render(); }
 });
 
 document.body.addEventListener('click', e => {
