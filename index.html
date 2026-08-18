@@ -70,7 +70,7 @@
 
   #list-view{ padding-bottom: 8px; }
   .list-and-pagination{ display:flex; flex-direction:column; gap:28px; }
-  .pagination{ display:flex; align-items:center; justify-content:center; gap:16px 24px; padding:4px 16px 0; flex-wrap:wrap; row-gap:12px; }
+  .pagination{ display:flex; align-items:center; justify-content:center; gap:20px 32px; padding:4px 16px 0; flex-wrap:wrap; row-gap:14px; }
   .event-list > .event-card:last-child{ margin-bottom: 20px; }
   .page-btn{ font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:13px; background:white; border:2px solid var(--charcoal); padding:8px 16px; border-radius:999px; cursor:pointer; flex-shrink:0; }
   .page-btn:disabled{ opacity:0.35; cursor:default; }
@@ -89,7 +89,7 @@
 
   .event-list{ display:flex; flex-direction:column; gap:12px; }
   .event-card{ display:flex; gap:14px; align-items:center; background:var(--card); border-radius:14px; padding:15px 17px; border:2px solid var(--charcoal); box-shadow:3px 3px 0 var(--charcoal); }
-  .event-date-badge{ min-width:84px; font-size:12px; font-weight:600; color:var(--rose-deep); font-family:'Space Grotesk',sans-serif; line-height:1.3; text-align:left; }
+  .event-date-badge{ width:84px; flex-shrink:0; font-size:12px; font-weight:600; color:var(--rose-deep); font-family:'Space Grotesk',sans-serif; line-height:1.3; text-align:left; overflow-wrap:break-word; }
   .event-info{ flex:1; min-width:0; text-align:left; }
   .event-info h4{ font-family:'Space Grotesk',sans-serif; font-size:16px; font-weight:600; margin-bottom:4px; text-align:left; }
 
@@ -106,7 +106,7 @@
 
   @media (max-width: 480px){
     .event-card{ flex-direction: column; align-items: stretch; gap: 8px; }
-    .event-date-badge{ min-width: auto; }
+    .event-date-badge{ width: auto; }
     .click-btn{ width: 100%; text-align: center; padding: 11px 15px; }
   }
 
@@ -250,7 +250,7 @@
   <div id="calendar-view" style="display:none;"></div>
   <div class="list-and-pagination">
     <div id="directory-view" style="display:none;"></div>
-    <div id="resourcePagination"></div>
+    <div class="pagination" id="resourcePagination"></div>
   </div>
 
   <div id="detail-view">
