@@ -18,9 +18,9 @@
     --rose-deep: #776867;
     --pink: #caaacd;
     --coral: #ecc7d2;
-    --blue: #aabecf;
+    --blue: #c3d5e2;
     --purple: #caaacd;
-    --gold: #cb962e;
+    --gold: #ddb862;
     --tan: #f1dfb6;
     --lightblue: #d6e8f7;
     --blush: #fae1e4;
@@ -147,8 +147,7 @@
     .header-disclaimer{ font-size:10.5px; padding:0 30px; }
     .resource-map{ height:52vh; min-height:340px; }
     .panel-card{ padding:15px; }
-    .clubs-grid{ grid-template-columns:repeat(3, 78vw); overflow-x:auto; -webkit-overflow-scrolling:touch; scroll-snap-type:x mandatory; padding-bottom:6px; }
-    .clubs-grid .club-card{ scroll-snap-align:start; }
+    .clubs-grid .club-card{ flex:0 0 78vw; scroll-snap-align:start; }
     .controls{ flex-wrap:nowrap; gap:8px; padding-left:12px; padding-right:12px; overflow-x:auto; -webkit-overflow-scrolling:touch; }
     .view-toggle{ flex-shrink:0; }
     .view-toggle button{ padding:6px 10px; font-size:11.5px; }
@@ -163,7 +162,8 @@
   .cat-block h3{ font-family:'Space Grotesk',sans-serif; font-size:17px; margin-bottom:4px; }
   .cat-block .cat-desc{ font-size:13.5px; color:var(--muted); margin-bottom:14px; }
 
-  .clubs-grid{ display:grid; grid-template-columns:repeat(3, 1fr); gap:16px; }
+  .clubs-grid{ display:flex; gap:16px; overflow-x:auto; -webkit-overflow-scrolling:touch; scroll-snap-type:x mandatory; padding-bottom:8px; }
+  .clubs-grid .club-card{ flex:0 0 260px; scroll-snap-align:start; }
   .clubs-grid .club-card{ margin-bottom:0; }
   .panel-card{ background:var(--card); border:2px solid var(--charcoal); border-radius:16px; padding:18px; margin-bottom:16px; box-shadow:3px 3px 0 var(--charcoal); text-align:left; }
   .panel-top{ display:flex; gap:14px; align-items:center; margin-bottom:10px; text-align:left; }
@@ -218,12 +218,12 @@
 
 <header>
   <div class="wordmark">4DA<span>SISTAS</span></div>
-  <div class="header-disclaimer">4DASISTAS is an independent community resource — not officially run by the organizations listed.</div>
+  <div class="header-disclaimer">#1st and only community bringing together ALL muslim gals events in GTA to one Calendar (+ unique clubs to join) ↓</div>
 </header>
 
 <nav class="tabs" id="tabs">
   <button class="tab-btn active" data-tab="events">Events</button>
-  <button class="tab-btn" data-tab="clubs">Clubs</button>
+  <button class="tab-btn" data-tab="clubs">GALS CLUBS</button>
   <button class="tab-btn" data-tab="resources">Resources</button>
 </nav>
 
@@ -323,7 +323,7 @@ async function loadData(){
 /* ============================================================
    STATE
    ============================================================ */
-const today = new Date(2026,7,16); // Aug 16 2026
+const today = new Date(); // always the real current date
 let state = {
   tab:'events', categoryFilter:'all', view:'list',
   sportFilter:'all', dayCity:'all',
@@ -336,8 +336,7 @@ let state = {
 const introText = {
   all: "Everything happening across sports, day activities and trips.",
   sports: "Somehow there's badminton every single day of the week.",
-  dayactivities: "One-off outings and single-day plans.",
-  gatherings: "Dated social meetups will show up here as they're scheduled.",
+  activitiesgatherings: "One-off outings, day activities, and social meetups — dated ones show up here as they're scheduled.",
   trips: "Sample trips below — tell me the real ones and I'll swap them in.",
   clubs: "Special-interest clubs the community runs together — sign up to join one.",
   resources: "Mosques, cafes, shops and restaurants the community supports."
@@ -365,21 +364,9 @@ function itemsForCategoryBase(cat){
   if(cat === 'sports'){
     return state.sportFilter === 'all' ? sportsData : sportsData.filter(e => e.sportKey === state.sportFilter);
   }
-  if(cat === 'dayactivities'){
-    return state.dayCity === 'all' ? dayActivitiesData : dayActivitiesData.filter(e => e.city === state.dayCity);
-  }
-  if(cat === 'gatherings'){
-    let arr = [...gatheringsData];
-    arr.sort((a,b) => {
-      let av, bv;
-      if(state.gatherSort === 'hijab'){ av = a.hijabOff===null?2:(a.hijabOff?0:1); bv = b.hijabOff===null?2:(b.hijabOff?0:1); }
-      else if(state.gatherSort === 'location'){ av = a.location.toLowerCase(); bv = b.location.toLowerCase(); }
-      else { av = a.timingRank===null?9999:a.timingRank; bv = b.timingRank===null?9999:b.timingRank; }
-      if(av < bv) return state.gatherDir === 'asc' ? -1 : 1;
-      if(av > bv) return state.gatherDir === 'asc' ? 1 : -1;
-      return 0;
-    });
-    return arr;
+  if(cat === 'activitiesgatherings'){
+    const day = state.dayCity === 'all' ? dayActivitiesData : dayActivitiesData.filter(e => e.city === state.dayCity);
+    return [...day, ...gatheringsData];
   }
   if(cat === 'trips'){
     return state.tripType === 'all' ? tripsData : tripsData.filter(e => e.tripType === state.tripType);
@@ -410,8 +397,8 @@ function renderList(){
   const pagEl = document.getElementById('pagination');
 
   if(items.length === 0){
-    const msg = state.categoryFilter === 'gatherings' && state.timeFilter === 'upcoming'
-      ? 'No dated gatherings yet — ongoing social groups have moved to Resources → Organizations.'
+    const msg = state.categoryFilter === 'activitiesgatherings' && state.timeFilter === 'upcoming'
+      ? 'Nothing dated yet — check back soon, or see Resources for ongoing spots.'
       : 'Nothing here yet.';
     el.innerHTML = `<div class="empty">${msg}</div>`;
     pagEl.innerHTML = '';
@@ -523,8 +510,8 @@ function renderCalendar(){
         <div class="event-info"><h4>${e.title}</h4><span class="tag ${tagClass(e)}">${e.tag}</span></div>
         <button class="click-btn" data-id="${e.id}">Click me →</button>
       </div>`).join('')}</div>`;
-  } else if(items.length === 0 && state.categoryFilter === 'gatherings'){
-    html += `<div class="ongoing-note">No dated gatherings yet — ongoing social groups have moved to Resources → Mosques &amp; Shops.</div>`;
+  } else if(items.length === 0 && state.categoryFilter === 'activitiesgatherings'){
+    html += `<div class="ongoing-note">Nothing dated here yet — check back soon.</div>`;
   }
 
   document.getElementById('calendar-view').innerHTML = html;
@@ -555,9 +542,8 @@ const cityFilterList = [
 const categoryList = [
   {key:'all', label:'All Events', bg:'#373d3b', fg:'#fff7e6'},
   {key:'sports', label:'Sports Only', bg:'#ef601e', fg:'#fff7e6'},
-  {key:'dayactivities', label:'Day Activities', bg:'#aabecf', fg:'#373d3b'},
-  {key:'gatherings', label:'Gatherings', bg:'#caaacd', fg:'#373d3b'},
-  {key:'trips', label:'Trips', bg:'#cb962e', fg:'#373d3b'},
+  {key:'activitiesgatherings', label:'Activities & Gatherings', bg:'#c3d5e2', fg:'#373d3b'},
+  {key:'trips', label:'Trips', bg:'#ddb862', fg:'#373d3b'},
 ];
 
 const resourceFilterList = [
@@ -569,7 +555,7 @@ const resourceFilterList = [
 ];
 
 const categoryColors = {
-  mosques:'#444758', cafes:'#cb962e', shops:'#caaacd', restaurants:'#776867'
+  mosques:'#444758', cafes:'#ddb862', shops:'#caaacd', restaurants:'#776867'
 };
 
 function renderResourceFilters(){
@@ -590,13 +576,9 @@ function renderSubFilters(){
 
   if(state.categoryFilter === 'sports'){
     el.innerHTML = sportFilterList.map(f => `<button class="filter-chip ${state.sportFilter===f.key?'active':''}" data-sportfilter="${f.key}">${f.label}</button>`).join('');
-  } else if(state.categoryFilter === 'dayactivities'){
-    el.innerHTML = `<select class="filter-select" id="citySelect">${cityFilterList.map(c=>`<option value="${c.key}" ${state.dayCity===c.key?'selected':''}>${c.label}</option>`).join('')}</select>`;
-  } else if(state.categoryFilter === 'gatherings'){
-    const sorts = [{key:'hijab',label:'Hijab-off'},{key:'location',label:'Location'},{key:'timing',label:'Timing'}];
-    el.innerHTML = sorts.map(s => `<button class="filter-chip ${state.gatherSort===s.key?'active':''}" data-gathersort="${s.key}">${s.label}</button>`).join('')
-      + `<button class="sort-dir-btn" id="gatherDirBtn">${state.gatherDir==='asc'?'↑ Asc':'↓ Desc'}</button>`
-      + `<div class="sub-note">Sorted by ${state.gatherSort} · none of these have confirmed hijab-off status yet — always confirm with the organizer.</div>`;
+  } else if(state.categoryFilter === 'activitiesgatherings'){
+    el.innerHTML = `<select class="filter-select" id="citySelect">${cityFilterList.map(c=>`<option value="${c.key}" ${state.dayCity===c.key?'selected':''}>${c.label}</option>`).join('')}</select>`
+      + `<div class="sub-note">Location filter applies to day activities only — gatherings show regardless.</div>`;
   } else if(state.categoryFilter === 'trips'){
     const types = [{key:'all',label:'All'},{key:'domestic',label:'Domestic'},{key:'international',label:'International'}];
     el.innerHTML = types.map(t => `<button class="filter-chip ${state.tripType===t.key?'active':''}" data-tripfilter="${t.key}">${t.label}</button>`).join('');
@@ -724,23 +706,30 @@ function renderResourceMap(){
   map.fitBounds(group.getBounds().pad(0.15));
 }
 
-const clubColors = { 'club-activegaming':'#aabecf', 'club-adrenaline':'#cb962e', 'club-theater':'#caaacd' };
+const clubColors = {
+  'club-activegaming':{bg:'#c3d5e2', fg:'#373d3b'}, 'club-adrenaline':{bg:'#ddb862', fg:'#373d3b'}, 'club-theater':{bg:'#caaacd', fg:'#373d3b'},
+  'club-cuisine':{bg:'#ecc7d2', fg:'#373d3b'}, 'club-artscrafts':{bg:'#fae1e4', fg:'#373d3b'}, 'club-retreats':{bg:'#f1dfb6', fg:'#373d3b'},
+  'club-badminton':{bg:'#aabecf', fg:'#373d3b'}, 'club-adhd':{bg:'#776867', fg:'#fff7e6'}
+};
 
 function renderDirectory(){
   const el = document.getElementById('directory-view');
   if(state.tab === 'clubs'){
     document.getElementById('resourcePagination').innerHTML = '';
-    el.innerHTML = `<div class="clubs-grid">${clubsData.map(c => `
-      <div class="panel-card club-card" style="border-top:6px solid ${clubColors[c.id]||'#373d3b'}">
+    el.innerHTML = `<div class="clubs-grid">${clubsData.map(c => {
+      const col = clubColors[c.id] || {bg:'#373d3b', fg:'#fff7e6'};
+      return `
+      <div class="panel-card club-card" style="border-top:6px solid ${col.bg}">
         <div class="panel-top">
-          <div class="monogram" style="background:${clubColors[c.id]||'#373d3b'}">${c.title.charAt(0)}</div>
+          <div class="monogram" style="background:${col.bg};color:${col.fg}">${c.title.charAt(0)}</div>
           <div><h4>${c.title}</h4></div>
         </div>
         <div class="panel-desc">${c.desc}</div>
         <div class="panel-links">
           <a class="link-btn primary" href="${c.signup}" target="_blank" rel="noopener">Sign Up</a>
         </div>
-      </div>`).join('')}</div>`;
+      </div>`;
+    }).join('')}</div>`;
   } else if(state.tab === 'resources'){
     if(state.resourceView === 'map'){
       document.getElementById('resourcePagination').innerHTML = '';
