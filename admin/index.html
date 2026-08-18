@@ -7,6 +7,95 @@
   <title>4DASISTAS — Content Editor</title>
 </head>
 <body>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCNNUYMc_ZfoPllM182cVMZ8tRs_EzUhoM&libraries=places&loading=async" async defer></script>
   <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
+  <script>
+    // Custom "location-autocomplete" widget: Google Places Autocomplete, with a
+    // plain-text fallback if Google Maps fails to load for any reason — the CMS
+    // never breaks, it just loses the address-suggestion feature.
+    (function () {
+      function waitForGoogleMaps(timeoutMs) {
+        return new Promise(function (resolve, reject) {
+          var waited = 0;
+          var interval = setInterval(function () {
+            if (window.google && window.google.maps) {
+              clearInterval(interval);
+              resolve();
+            } else if ((waited += 150) > timeoutMs) {
+              clearInterval(interval);
+              reject(new Error('Google Maps did not load in time'));
+            }
+          }, 150);
+        });
+      }
+
+      var LocationAutocompleteControl = createClass({
+        getInitialState: function () {
+          return { fallback: false, ready: false };
+        },
+        componentDidMount: function () {
+          var self = this;
+          waitForGoogleMaps(8000)
+            .then(function () { return google.maps.importLibrary('places'); })
+            .then(function (lib) {
+              var PlaceAutocompleteElement = lib.PlaceAutocompleteElement;
+              var el = new PlaceAutocompleteElement();
+              self.containerEl.innerHTML = '';
+              self.containerEl.appendChild(el);
+              el.addEventListener('gmp-select', function (event) {
+                var placePrediction = event.placePrediction;
+                if (!placePrediction) return;
+                var place = placePrediction.toPlace();
+                place.fetchFields({ fields: ['formattedAddress'] }).then(function () {
+                  self.props.onChange(place.formattedAddress || '');
+                }).catch(function (err) {
+                  console.error('Could not fetch place details', err);
+                });
+              });
+              self.setState({ ready: true });
+            })
+            .catch(function (err) {
+              console.error('Places autocomplete unavailable, falling back to plain text:', err);
+              self.setState({ fallback: true });
+            });
+        },
+        handleFallbackChange: function (e) {
+          this.props.onChange(e.target.value);
+        },
+        render: function () {
+          var self = this;
+          var inputStyle = { width: '100%', padding: '10px 12px', fontSize: '15px', border: '1px solid #ccc', borderRadius: '4px', boxSizing: 'border-box' };
+          if (this.state.fallback) {
+            return h('input', {
+              type: 'text',
+              value: this.props.value || '',
+              onChange: this.handleFallbackChange,
+              style: inputStyle,
+            });
+          }
+          return h('div', {},
+            h('input', {
+              type: 'text',
+              value: this.props.value || '',
+              onChange: this.handleFallbackChange,
+              placeholder: 'Loading address search…',
+              style: Object.assign({}, inputStyle, { display: this.state.ready ? 'none' : 'block' }),
+            }),
+            h('div', { ref: function (el) { self.containerEl = el; }, style: { display: this.state.ready ? 'block' : 'none' } })
+          );
+        },
+      });
+
+      var LocationPreview = createClass({
+        render: function () {
+          return h('div', {}, this.props.value);
+        },
+      });
+
+      if (window.CMS && window.CMS.registerWidget) {
+        CMS.registerWidget('location-autocomplete', LocationAutocompleteControl, LocationPreview);
+      }
+    })();
+  </script>
 </body>
 </html>
