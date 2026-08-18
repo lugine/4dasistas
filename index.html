@@ -16,7 +16,7 @@
     --charcoal2: #444758;
     --rose: #caaacd;
     --rose-deep: #776867;
-    --pink: #ef601e;
+    --pink: #caaacd;
     --coral: #ecc7d2;
     --blue: #aabecf;
     --purple: #caaacd;
@@ -63,17 +63,18 @@
   .cat-filter-btn.active{ background:var(--pink); border-color:var(--pink); color:white; }
 
   .controls{ max-width:760px; margin:0 auto; padding:18px 20px 0; display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap; }
+  .controls-center{ justify-content:center; }
   .view-toggle{ display:flex; background:white; border:2px solid var(--charcoal); border-radius:999px; overflow:hidden; }
   .view-toggle button{ border:none; background:transparent; padding:7px 15px; font-size:13px; font-weight:600; font-family:'Space Grotesk',sans-serif; cursor:pointer; color:var(--charcoal); }
   .view-toggle button.active{ background:var(--pink); color:white; }
 
   #list-view{ padding-bottom: 8px; }
   .list-and-pagination{ display:flex; flex-direction:column; gap:28px; }
-  .pagination{ display:flex; align-items:center; justify-content:center; gap:10px 14px; padding-top:4px; flex-wrap:wrap; }
+  .pagination{ display:flex; align-items:center; justify-content:center; gap:16px 24px; padding:4px 16px 0; flex-wrap:wrap; row-gap:12px; }
   .event-list > .event-card:last-child{ margin-bottom: 20px; }
-  .page-btn{ font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:13px; background:white; border:2px solid var(--charcoal); padding:8px 16px; border-radius:999px; cursor:pointer; }
+  .page-btn{ font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:13px; background:white; border:2px solid var(--charcoal); padding:8px 16px; border-radius:999px; cursor:pointer; flex-shrink:0; }
   .page-btn:disabled{ opacity:0.35; cursor:default; }
-  .page-info{ font-size:13px; color:var(--muted); font-weight:600; }
+  .page-info{ font-size:13px; color:var(--muted); font-weight:600; padding:0 4px; white-space:nowrap; }
 
   .intro-line{ max-width:760px; margin:16px auto; padding:0 20px; font-size:13.5px; color:var(--muted); text-align:center; }
 
@@ -88,9 +89,9 @@
 
   .event-list{ display:flex; flex-direction:column; gap:12px; }
   .event-card{ display:flex; gap:14px; align-items:center; background:var(--card); border-radius:14px; padding:15px 17px; border:2px solid var(--charcoal); box-shadow:3px 3px 0 var(--charcoal); }
-  .event-date-badge{ min-width:84px; font-size:12px; font-weight:600; color:var(--rose-deep); font-family:'Space Grotesk',sans-serif; line-height:1.3; }
-  .event-info{ flex:1; min-width:0; }
-  .event-info h4{ font-family:'Space Grotesk',sans-serif; font-size:16px; font-weight:600; margin-bottom:4px; }
+  .event-date-badge{ min-width:84px; font-size:12px; font-weight:600; color:var(--rose-deep); font-family:'Space Grotesk',sans-serif; line-height:1.3; text-align:left; }
+  .event-info{ flex:1; min-width:0; text-align:left; }
+  .event-info h4{ font-family:'Space Grotesk',sans-serif; font-size:16px; font-weight:600; margin-bottom:4px; text-align:left; }
 
   .tag{ display:inline-block; font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:0.03em; padding:3px 9px; border-radius:999px; color:var(--charcoal); }
   .cat-sports{ background:var(--coral); }
@@ -156,13 +157,13 @@
   .cat-block h3{ font-family:'Space Grotesk',sans-serif; font-size:17px; margin-bottom:4px; }
   .cat-block .cat-desc{ font-size:13.5px; color:var(--muted); margin-bottom:14px; }
 
-  .panel-card{ background:var(--card); border:2px solid var(--charcoal); border-radius:16px; padding:18px; margin-bottom:16px; box-shadow:3px 3px 0 var(--charcoal); }
-  .panel-top{ display:flex; gap:14px; align-items:center; margin-bottom:10px; }
+  .panel-card{ background:var(--card); border:2px solid var(--charcoal); border-radius:16px; padding:18px; margin-bottom:16px; box-shadow:3px 3px 0 var(--charcoal); text-align:left; }
+  .panel-top{ display:flex; gap:14px; align-items:center; margin-bottom:10px; text-align:left; }
   .monogram{ width:48px; height:48px; border-radius:12px; background:var(--charcoal); color:var(--cream); font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:18px; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
-  .panel-top h4{ font-family:'Space Grotesk',sans-serif; font-size:17px; }
-  .panel-top .panel-type{ font-size:12px; color:var(--rose-deep); font-weight:600; }
-  .panel-desc{ font-size:14px; color:#4a4640; margin-bottom:10px; }
-  .panel-addr{ font-size:13px; color:var(--muted); margin-bottom:10px; }
+  .panel-top h4{ font-family:'Space Grotesk',sans-serif; font-size:17px; text-align:left; }
+  .panel-top .panel-type{ font-size:12px; color:var(--rose-deep); font-weight:600; text-align:left; }
+  .panel-desc{ font-size:14px; color:#4a4640; margin-bottom:10px; text-align:left; }
+  .panel-addr{ font-size:13px; color:var(--muted); margin-bottom:10px; text-align:left; }
   .map-embed{ width:100%; height:160px; border:0; border-radius:10px; margin-bottom:10px; }
 
   .resource-map{ width:100%; height:65vh; min-height:420px; border:2px solid var(--charcoal); border-radius:14px; overflow:hidden; }
@@ -243,7 +244,7 @@
   </div>
 </div>
 
-<div class="controls" id="resourceControlsRow" style="display:none;">
+<div class="controls controls-center" id="resourceControlsRow" style="display:none;">
   <div class="view-toggle" id="resourceViewToggle">
     <button class="active" data-rview="list">List view</button>
     <button data-rview="map">Map view</button>
@@ -595,7 +596,7 @@ const resourceFilterList = [
 ];
 
 const categoryColors = {
-  mosques:'#444758', cafes:'#cb962e', shops:'#caaacd', restaurants:'#ef601e',
+  mosques:'#444758', cafes:'#cb962e', shops:'#caaacd', restaurants:'#776867',
   organizations:'#aabecf', misc:'#d6e8f7'
 };
 
@@ -708,12 +709,10 @@ function renderResourceList(){
 
 function renderResourceMap(){
   const el = document.getElementById('directory-view');
+  const legendItems = resourceFilterList.filter(f => f.key !== 'all');
   el.innerHTML = `<div id="resourceMapContainer" class="resource-map"></div>
     <div class="map-legend">
-      <span><i style="background:${categoryColors.organizations}"></i> Organizations</span>
-      <span><i style="background:${categoryColors.shops}"></i> Shops</span>
-      <span><i style="background:${categoryColors.food}"></i> Food</span>
-      <span><i style="background:${categoryColors.misc}"></i> Misc</span>
+      ${legendItems.map(f => `<span><i style="background:${categoryColors[f.key]}"></i> ${f.label}</span>`).join('')}
     </div>
     <div class="sub-note" id="mapSkippedNote"></div>`;
 
@@ -753,7 +752,7 @@ function renderResourceMap(){
   map.fitBounds(group.getBounds().pad(0.15));
 }
 
-const clubColors = { 'club-activegaming':'#aabecf', 'club-adrenaline':'#ef601e', 'club-theater':'#caaacd' };
+const clubColors = { 'club-activegaming':'#aabecf', 'club-adrenaline':'#cb962e', 'club-theater':'#caaacd' };
 
 function renderDirectory(){
   const el = document.getElementById('directory-view');
