@@ -169,6 +169,20 @@
   .ig-btn svg{ width:18px; height:18px; flex-shrink:0; display:block; }
   .owned-badge{ display:inline-block; font-size:11px; font-weight:700; color:var(--rose-deep); background:rgba(201,138,150,0.16); padding:3px 10px; border-radius:999px; margin-bottom:8px; }
   .disclaimer{ font-size:11px; color:var(--muted); max-width:440px; margin:0 auto; line-height:1.5; }
+
+  .suggest-btn{ display:inline-block; font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:13px; background:none; border:1.5px solid var(--charcoal); color:var(--charcoal); padding:9px 18px; border-radius:999px; cursor:pointer; margin-bottom:16px; }
+
+  .suggest-overlay{ display:none; position:fixed; inset:0; background:rgba(33,30,28,0.55); z-index:100; align-items:center; justify-content:center; padding:20px; }
+  .suggest-overlay.open{ display:flex; }
+  .suggest-modal{ background:var(--cream); border:2px solid var(--charcoal); border-radius:16px; padding:24px 22px; max-width:420px; width:100%; position:relative; box-shadow:5px 5px 0 var(--charcoal); max-height:85vh; overflow-y:auto; }
+  .suggest-close{ position:absolute; top:12px; right:14px; background:none; border:none; font-size:22px; line-height:1; cursor:pointer; color:var(--charcoal); }
+  .suggest-modal h3{ font-family:'Space Grotesk',sans-serif; font-size:19px; margin-bottom:4px; }
+  .suggest-sub{ font-size:13px; color:var(--muted); margin-bottom:16px; }
+  .suggest-modal label{ display:block; font-size:12.5px; font-weight:600; color:var(--charcoal); margin:12px 0 5px; }
+  .suggest-modal input[type="text"], .suggest-modal input[type="email"], .suggest-modal textarea{ width:100%; padding:10px 12px; border:1.5px solid rgba(33,30,28,0.25); border-radius:8px; font-family:'Inter',sans-serif; font-size:14px; background:white; resize:vertical; }
+  .suggest-submit{ width:100%; margin-top:16px; background:var(--charcoal); color:var(--cream); border:none; padding:12px; border-radius:999px; font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:14px; cursor:pointer; }
+  .suggest-status{ font-size:13px; margin-top:10px; text-align:center; color:var(--rose-deep); font-weight:600; }
+  .hp-field{ position:absolute; left:-9999px; }
 </style>
 </head>
 <body>
@@ -227,8 +241,34 @@
       Follow @4dasistas.ca
     </a>
   </div>
+  <button class="suggest-btn" id="openSuggestBtn" type="button">✎ Suggest a change</button>
   <p class="disclaimer">4DASISTAS is an independent community resource — not officially run by the organizations listed. Details change often, so always confirm dates, prices, locations, and any "hijab-off"/private-space claims directly with the organizer before attending.</p>
 </footer>
+
+<div class="suggest-overlay" id="suggestOverlay">
+  <div class="suggest-modal">
+    <button class="suggest-close" id="closeSuggestBtn" type="button" aria-label="Close">×</button>
+    <h3>Suggest a change</h3>
+    <p class="suggest-sub">Spot something wrong, outdated, or missing? Let us know.</p>
+
+    <form name="site-suggestions" method="POST" data-netlify="true" netlify-honeypot="bot-field" id="suggestForm">
+      <input type="hidden" name="form-name" value="site-suggestions" />
+      <p class="hp-field"><label>Don't fill this out: <input name="bot-field" /></label></p>
+
+      <label for="sugg-name">Your name (optional)</label>
+      <input type="text" id="sugg-name" name="name" />
+
+      <label for="sugg-email">Your email (optional, if you want a reply)</label>
+      <input type="email" id="sugg-email" name="email" />
+
+      <label for="sugg-message">What should change?</label>
+      <textarea id="sugg-message" name="message" rows="4" required></textarea>
+
+      <button type="submit" class="suggest-submit">Send suggestion</button>
+      <p class="suggest-status" id="suggestStatus"></p>
+    </form>
+  </div>
+</div>
 
 <script>
 /* ============================================================
@@ -735,6 +775,38 @@ document.body.addEventListener('click', e => {
 });
 
 document.getElementById('backBtn').addEventListener('click', closeDetail);
+
+/* ============================================================
+   SUGGESTION FORM
+   ============================================================ */
+const suggestOverlay = document.getElementById('suggestOverlay');
+document.getElementById('openSuggestBtn').addEventListener('click', () => {
+  suggestOverlay.classList.add('open');
+});
+document.getElementById('closeSuggestBtn').addEventListener('click', () => {
+  suggestOverlay.classList.remove('open');
+});
+suggestOverlay.addEventListener('click', e => {
+  if(e.target === suggestOverlay) suggestOverlay.classList.remove('open');
+});
+
+document.getElementById('suggestForm').addEventListener('submit', function(e){
+  e.preventDefault();
+  const form = e.target;
+  const statusEl = document.getElementById('suggestStatus');
+  const data = new FormData(form);
+  fetch('/', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    body: new URLSearchParams(data).toString()
+  }).then(() => {
+    statusEl.textContent = "Thanks — sent!";
+    form.reset();
+    setTimeout(() => { suggestOverlay.classList.remove('open'); statusEl.textContent = ''; }, 1500);
+  }).catch(() => {
+    statusEl.textContent = "Something went wrong — try again?";
+  });
+});
 
 window.addEventListener('hashchange', () => {
   const match = location.hash.match(/^#\/event\/(.+)$/);
