@@ -10,17 +10,21 @@
   @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:ital,wght@0,400;0,500;0,600;0,700;1,500&display=swap');
 
   :root{
-    --cream: #F7F1E9;
+    --cream: #fff7e6;
     --card: #FFFFFF;
-    --charcoal: #211E1C;
-    --rose: #C98A96;
-    --rose-deep: #96566A;
-    --pink: #E8578F;
-    --coral: #F2A488;
-    --blue: #8FB8E0;
-    --purple: #B7A6D9;
-    --gold: #E3B23C;
-    --muted: #6b665e;
+    --charcoal: #373d3b;
+    --charcoal2: #444758;
+    --rose: #caaacd;
+    --rose-deep: #776867;
+    --pink: #ef601e;
+    --coral: #ecc7d2;
+    --blue: #aabecf;
+    --purple: #caaacd;
+    --gold: #cb962e;
+    --tan: #f1dfb6;
+    --lightblue: #d6e8f7;
+    --blush: #fae1e4;
+    --muted: #776867;
     --wa-green: #25D366;
   }
   *{ box-sizing:border-box; margin:0; padding:0; }
@@ -32,14 +36,16 @@
   .wordmark{ font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:clamp(32px,7vw,52px); letter-spacing:-0.01em; }
   .wordmark span{ color:var(--pink); }
   .tagline{ font-family:'Inter',sans-serif; font-style:italic; font-weight:500; font-size:14.5px; color:var(--rose-deep); margin-top:6px; }
+  .header-disclaimer{ font-size:11px; color:var(--muted); max-width:440px; margin:8px auto 0; line-height:1.5; text-align:center; }
 
-  .wa-header-btn{
-    display:inline-flex; align-items:center; gap:9px;
-    background:var(--wa-green); color:white; text-decoration:none;
-    font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:14px; line-height:1;
-    padding:12px 22px; border-radius:999px; margin-top:16px;
+  .wa-fixed-btn{
+    position:fixed; top:14px; right:14px; z-index:60;
+    display:flex; align-items:center; justify-content:center;
+    width:38px; height:38px; border-radius:50%;
+    background:var(--wa-green); border:2px solid var(--charcoal);
+    box-shadow:2px 2px 0 var(--charcoal);
   }
-  .wa-header-btn svg{ width:19px; height:19px; flex-shrink:0; display:block; }
+  .wa-fixed-btn svg{ width:18px; height:18px; flex-shrink:0; display:block; }
 
   .tabs{ display:flex; justify-content:center; gap:6px; padding:22px 16px 0; overflow-x:auto; -webkit-overflow-scrolling:touch; scrollbar-width:none; }
   .tabs::-webkit-scrollbar{ display:none; }
@@ -51,7 +57,7 @@
   .tab-btn.active{ background:var(--charcoal); color:var(--cream); }
   .tab-btn:focus-visible{ outline:3px solid var(--pink); outline-offset:2px; }
 
-  .category-row{ display:flex; gap:6px; padding:14px 20px 0; max-width:760px; margin:0 auto; overflow-x:auto; -webkit-overflow-scrolling:touch; scrollbar-width:none; }
+  .category-row{ display:flex; justify-content:center; gap:6px; padding:14px 20px 0; max-width:760px; margin:0 auto; overflow-x:auto; -webkit-overflow-scrolling:touch; scrollbar-width:none; }
   .category-row::-webkit-scrollbar{ display:none; }
   .cat-filter-btn{ flex-shrink:0; font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:13px; padding:8px 16px; border-radius:999px; border:1.5px solid var(--charcoal); background:white; color:var(--charcoal); cursor:pointer; white-space:nowrap; }
   .cat-filter-btn.active{ background:var(--pink); border-color:var(--pink); color:white; }
@@ -62,7 +68,9 @@
   .view-toggle button.active{ background:var(--pink); color:white; }
 
   #list-view{ padding-bottom: 8px; }
-  .pagination{ display:flex; align-items:center; justify-content:center; gap:10px 14px; margin-top:32px; padding-top:4px; flex-wrap:wrap; }
+  .list-and-pagination{ display:flex; flex-direction:column; gap:28px; }
+  .pagination{ display:flex; align-items:center; justify-content:center; gap:10px 14px; padding-top:4px; flex-wrap:wrap; }
+  .event-list > .event-card:last-child{ margin-bottom: 20px; }
   .page-btn{ font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:13px; background:white; border:2px solid var(--charcoal); padding:8px 16px; border-radius:999px; cursor:pointer; }
   .page-btn:disabled{ opacity:0.35; cursor:default; }
   .page-info{ font-size:13px; color:var(--muted); font-weight:600; }
@@ -74,7 +82,7 @@
   .filter-chip.active{ background:var(--charcoal); color:var(--cream); border-color:var(--charcoal); }
   .filter-select{ font-family:'Inter',sans-serif; font-size:12.5px; font-weight:600; padding:7px 12px; border-radius:999px; border:1.5px solid rgba(33,30,28,0.25); background:white; color:var(--charcoal); }
   .sort-dir-btn{ font-size:15px; padding:6px 10px; border-radius:999px; border:1.5px solid rgba(33,30,28,0.25); background:white; cursor:pointer; }
-  .sub-note{ font-size:11.5px; color:var(--muted); width:100%; margin-top:2px; }
+  .sub-note{ font-size:11.5px; color:var(--muted); width:100%; margin-top:2px; text-align:center; }
 
   main{ max-width:760px; margin:0 auto; padding:20px 20px 60px; }
 
@@ -129,6 +137,16 @@
     .week-col{ min-height:140px; padding:12px 8px; }
     .week-col .day-label{ font-size:13px; }
     .week-pill{ font-size:13px; padding:8px 9px; }
+
+    .wa-fixed-btn{ width:34px; height:34px; top:10px; right:10px; }
+    .wa-fixed-btn svg{ width:16px; height:16px; }
+    header{ padding-top:54px; }
+    .header-disclaimer{ font-size:10.5px; padding:0 30px; }
+    .resource-map{ height:52vh; min-height:340px; }
+    .panel-card{ padding:15px; }
+    .map-legend{ gap:10px; font-size:11.5px; }
+    .footer-btns{ gap:8px; }
+    .suggest-modal{ padding:20px 16px; }
   }
 
   .ongoing-note{ font-size:13px; color:var(--muted); margin:20px 0 8px; }
@@ -196,13 +214,14 @@
 </head>
 <body>
 
+<a class="wa-fixed-btn" href="https://chat.whatsapp.com/JgmuY1XU0jrGrDPUvuDPTS" target="_blank" rel="noopener" aria-label="Join the WhatsApp community">
+  <svg viewBox="0 0 32 32" fill="white"><path d="M16 5C9.4 5 4 9.9 4 16c0 3.2 1.5 6.1 3.9 8.1-.3 1.8-1.1 3.8-2.2 5.4 2.3-.4 4.6-1.3 6.4-2.6 1.2.3 2.5.5 3.9.5 6.6 0 12-4.9 12-11S22.6 5 16 5Z"/></svg>
+</a>
+
 <header>
   <div class="wordmark">4DA<span>SISTAS</span></div>
   <div class="tagline">Not a cult. Yet.</div>
-  <a class="wa-header-btn" href="https://chat.whatsapp.com/JgmuY1XU0jrGrDPUvuDPTS" target="_blank" rel="noopener">
-    <svg viewBox="0 0 32 32" fill="white"><path d="M16 5C9.4 5 4 9.9 4 16c0 3.2 1.5 6.1 3.9 8.1-.3 1.8-1.1 3.8-2.2 5.4 2.3-.4 4.6-1.3 6.4-2.6 1.2.3 2.5.5 3.9.5 6.6 0 12-4.9 12-11S22.6 5 16 5Z"/></svg>
-    Join the WhatsApp community
-  </a>
+  <div class="header-disclaimer">4DASISTAS is an independent community resource — not officially run by the organizations listed.</div>
 </header>
 
 <nav class="tabs" id="tabs">
@@ -235,10 +254,15 @@
 <div class="subfilter-row" id="subFilterRow"></div>
 
 <main>
-  <div id="list-view"></div>
-  <div id="pagination"></div>
+  <div class="list-and-pagination">
+    <div id="list-view"></div>
+    <div id="pagination"></div>
+  </div>
   <div id="calendar-view" style="display:none;"></div>
-  <div id="directory-view" style="display:none;"></div>
+  <div class="list-and-pagination">
+    <div id="directory-view" style="display:none;"></div>
+    <div id="resourcePagination"></div>
+  </div>
 
   <div id="detail-view">
     <button class="back-btn" id="backBtn">← Back</button>
@@ -258,7 +282,7 @@
     </a>
   </div>
   <button class="suggest-btn" id="openSuggestBtn" type="button">✎ Suggest a change</button>
-  <p class="disclaimer">4DASISTAS is an independent community resource — not officially run by the organizations listed. Details change often, so always confirm dates, prices, locations, and any "hijab-off"/private-space claims directly with the organizer before attending.</p>
+  <p class="disclaimer">Details change often, so always confirm dates, prices, locations, and any "hijab-off"/private-space claims directly with the organizer before attending.</p>
 </footer>
 
 <div class="suggest-overlay" id="suggestOverlay">
@@ -332,7 +356,7 @@ let state = {
   tab:'events', categoryFilter:'all', view:'list',
   sportFilter:'all', dayCity:'all',
   gatherSort:'hijab', gatherDir:'asc',
-  tripType:'all', resourceFilter:'all', resourceView:'list',
+  tripType:'all', resourceFilter:'all', resourceView:'list', resourcePage:1,
   timeFilter:'upcoming', page:1,
   calYear: today.getFullYear(), calMonth: today.getMonth(),
 };
@@ -562,13 +586,18 @@ const categoryList = [
 
 const resourceFilterList = [
   {key:'all', label:'All'},
-  {key:'organizations', label:'Organizations'},
+  {key:'mosques', label:'Mosques'},
+  {key:'cafes', label:'Cafes'},
   {key:'shops', label:'Shops'},
-  {key:'food', label:'Food'},
-  {key:'misc', label:'Misc'},
+  {key:'restaurants', label:'Restaurants'},
+  {key:'organizations', label:'Organizations'},
+  {key:'misc', label:'Activities'},
 ];
 
-const categoryColors = { organizations:'#C98A96', shops:'#E3B23C', food:'#5FAE94', misc:'#8FB8E0' };
+const categoryColors = {
+  mosques:'#444758', cafes:'#cb962e', shops:'#caaacd', restaurants:'#ef601e',
+  organizations:'#aabecf', misc:'#d6e8f7'
+};
 
 function renderResourceFilters(){
   const el = document.getElementById('subFilterRow');
@@ -610,14 +639,43 @@ function filteredResourceItems(){
   return state.resourceFilter === 'all' ? allResourceItems : allResourceItems.filter(r => r.category === state.resourceFilter);
 }
 
+// Round-robins through categories so the same category never appears twice in a row.
+function interleaveByCategory(items){
+  const groups = {};
+  const order = [];
+  items.forEach(i => {
+    if(!groups[i.category]){ groups[i.category] = []; order.push(i.category); }
+    groups[i.category].push(i);
+  });
+  const result = [];
+  let more = true;
+  while(more){
+    more = false;
+    for(const cat of order){
+      if(groups[cat].length){ result.push(groups[cat].shift()); more = true; }
+    }
+  }
+  return result;
+}
+
 function renderResourceList(){
+  const RES_PAGE_SIZE = 6;
   const el = document.getElementById('directory-view');
-  const filtered = filteredResourceItems();
-  if(filtered.length === 0){ el.innerHTML = '<div class="empty">Nothing here yet.</div>'; return; }
-  el.innerHTML = filtered.map(r => `
+  const pagEl = document.getElementById('resourcePagination');
+  const filtered = interleaveByCategory(filteredResourceItems());
+
+  if(filtered.length === 0){ el.innerHTML = '<div class="empty">Nothing here yet.</div>'; pagEl.innerHTML=''; return; }
+
+  const totalPages = Math.ceil(filtered.length / RES_PAGE_SIZE);
+  if(state.resourcePage > totalPages) state.resourcePage = totalPages;
+  if(state.resourcePage < 1) state.resourcePage = 1;
+  const start = (state.resourcePage - 1) * RES_PAGE_SIZE;
+  const pageItems = filtered.slice(start, start + RES_PAGE_SIZE);
+
+  el.innerHTML = pageItems.map(r => `
     <div class="panel-card">
       <div class="panel-top">
-        <div class="monogram" style="background:${categoryColors[r.category]||'#211E1C'}">${r.title.charAt(0)}</div>
+        <div class="monogram" style="background:${categoryColors[r.category]||'#373d3b'}">${r.title.charAt(0)}</div>
         <div>
           <h4>${r.title}</h4>
           <div class="panel-type">${r.type || 'Organization'}</div>
@@ -634,6 +692,18 @@ function renderResourceList(){
         ${r.phone ? `<a class="link-btn secondary" href="tel:${r.phone}">${r.phone}</a>` : ''}
       </div>
     </div>`).join('');
+
+  if(totalPages <= 1){
+    pagEl.innerHTML = '';
+  } else {
+    pagEl.innerHTML = `
+      <button class="page-btn" id="resPrevPage" ${state.resourcePage===1?'disabled':''}>← Prev</button>
+      <span class="page-info">Page ${state.resourcePage} of ${totalPages}</span>
+      <button class="page-btn" id="resNextPage" ${state.resourcePage===totalPages?'disabled':''}>Next →</button>
+    `;
+    document.getElementById('resPrevPage').addEventListener('click', () => { state.resourcePage--; renderResourceList(); window.scrollTo({top:0, behavior:'smooth'}); });
+    document.getElementById('resNextPage').addEventListener('click', () => { state.resourcePage++; renderResourceList(); window.scrollTo({top:0, behavior:'smooth'}); });
+  }
 }
 
 function renderResourceMap(){
@@ -683,13 +753,16 @@ function renderResourceMap(){
   map.fitBounds(group.getBounds().pad(0.15));
 }
 
+const clubColors = { 'club-activegaming':'#aabecf', 'club-adrenaline':'#ef601e', 'club-theater':'#caaacd' };
+
 function renderDirectory(){
   const el = document.getElementById('directory-view');
   if(state.tab === 'clubs'){
+    document.getElementById('resourcePagination').innerHTML = '';
     el.innerHTML = clubsData.map(c => `
-      <div class="panel-card">
+      <div class="panel-card" style="border-top:6px solid ${clubColors[c.id]||'#373d3b'}">
         <div class="panel-top">
-          <div class="monogram">${c.title.charAt(0)}</div>
+          <div class="monogram" style="background:${clubColors[c.id]||'#373d3b'}">${c.title.charAt(0)}</div>
           <div><h4>${c.title}</h4></div>
         </div>
         <div class="panel-desc">${c.desc}</div>
@@ -698,8 +771,12 @@ function renderDirectory(){
         </div>
       </div>`).join('');
   } else if(state.tab === 'resources'){
-    if(state.resourceView === 'map') renderResourceMap();
-    else renderResourceList();
+    if(state.resourceView === 'map'){
+      document.getElementById('resourcePagination').innerHTML = '';
+      renderResourceMap();
+    } else {
+      renderResourceList();
+    }
   }
 }
 
@@ -749,8 +826,8 @@ function closeDetail(){
   document.getElementById('tabs').style.display = 'flex';
   document.getElementById('introLine').style.display = 'block';
   document.getElementById('subFilterRow').style.display = 'flex';
+  history.replaceState(null, '', location.pathname + location.search);
   render();
-  location.hash = '';
 }
 
 /* ============================================================
@@ -790,6 +867,42 @@ function render(){
     document.getElementById('calendar-view').style.display = 'block';
     renderCalendar();
   }
+
+  syncStateToHash();
+}
+
+/* ============================================================
+   STATE <-> URL HASH (so refresh keeps you where you were)
+   ============================================================ */
+function syncStateToHash(){
+  if(location.hash.startsWith('#/event/')) return; // don't clobber an open detail page
+  const params = new URLSearchParams();
+  params.set('tab', state.tab);
+  params.set('cat', state.categoryFilter);
+  params.set('view', state.view);
+  params.set('time', state.timeFilter);
+  params.set('rfilter', state.resourceFilter);
+  params.set('rview', state.resourceView);
+  history.replaceState(null, '', '#' + params.toString());
+}
+
+function restoreStateFromHash(){
+  const hash = location.hash;
+  if(!hash || hash.startsWith('#/event/') || hash.length < 2) return;
+  const params = new URLSearchParams(hash.slice(1));
+  if(params.has('tab')) state.tab = params.get('tab');
+  if(params.has('cat')) state.categoryFilter = params.get('cat');
+  if(params.has('view')) state.view = params.get('view');
+  if(params.has('time')) state.timeFilter = params.get('time');
+  if(params.has('rfilter')) state.resourceFilter = params.get('rfilter');
+  if(params.has('rview')) state.resourceView = params.get('rview');
+}
+
+function syncToggleButtonClasses(){
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.toggle('active', b.dataset.tab === state.tab));
+  document.querySelectorAll('#viewToggle button').forEach(b => b.classList.toggle('active', b.dataset.view === state.view));
+  document.querySelectorAll('#timeToggle button').forEach(b => b.classList.toggle('active', b.dataset.time === state.timeFilter));
+  document.querySelectorAll('#resourceViewToggle button').forEach(b => b.classList.toggle('active', b.dataset.rview === state.resourceView));
 }
 
 /* ============================================================
@@ -850,7 +963,7 @@ document.getElementById('subFilterRow').addEventListener('click', e => {
   if(sportBtn){ state.sportFilter = sportBtn.dataset.sportfilter; state.page = 1; render(); }
   if(gatherBtn){ state.gatherSort = gatherBtn.dataset.gathersort; render(); }
   if(tripBtn){ state.tripType = tripBtn.dataset.tripfilter; state.page = 1; render(); }
-  if(resourceBtn){ state.resourceFilter = resourceBtn.dataset.resourcefilter; render(); }
+  if(resourceBtn){ state.resourceFilter = resourceBtn.dataset.resourcefilter; state.resourcePage = 1; render(); }
   if(dirBtn){ state.gatherDir = state.gatherDir==='asc'?'desc':'asc'; render(); }
 });
 document.getElementById('subFilterRow').addEventListener('change', e => {
@@ -907,7 +1020,9 @@ window.addEventListener('hashchange', () => {
    INIT
    ============================================================ */
 document.getElementById('list-view').innerHTML = '<div class="empty">Loading…</div>';
+restoreStateFromHash();
 loadData().then(() => {
+  syncToggleButtonClasses();
   render();
   const initMatch = location.hash.match(/^#\/event\/(.+)$/);
   if(initMatch) renderDetail(initMatch[1]);
