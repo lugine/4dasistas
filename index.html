@@ -4,6 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>4DASISTAS</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:ital,wght@0,400;0,500;0,600;0,700;1,500&display=swap');
 
@@ -144,6 +146,13 @@
   .panel-desc{ font-size:14px; color:#4a4640; margin-bottom:10px; }
   .panel-addr{ font-size:13px; color:var(--muted); margin-bottom:10px; }
   .map-embed{ width:100%; height:160px; border:0; border-radius:10px; margin-bottom:10px; }
+
+  .resource-map{ width:100%; height:65vh; min-height:420px; border:2px solid var(--charcoal); border-radius:14px; overflow:hidden; }
+  .map-legend{ display:flex; flex-wrap:wrap; gap:14px; justify-content:center; margin-top:12px; font-size:12.5px; font-weight:600; color:var(--charcoal); }
+  .map-legend span{ display:inline-flex; align-items:center; gap:6px; }
+  .map-legend i{ display:inline-block; width:12px; height:12px; border-radius:50%; border:1.5px solid var(--charcoal); }
+  .leaflet-popup-content{ font-family:'Inter',sans-serif; font-size:13px; }
+  .leaflet-popup-content strong{ font-family:'Space Grotesk',sans-serif; }
   .panel-links{ display:flex; gap:8px; flex-wrap:wrap; }
 
   /* ---- detail view ---- */
@@ -212,6 +221,13 @@
   <div class="view-toggle" id="timeToggle">
     <button class="active" data-time="upcoming">Upcoming</button>
     <button data-time="past">Past events</button>
+  </div>
+</div>
+
+<div class="controls" id="resourceControlsRow" style="display:none;">
+  <div class="view-toggle" id="resourceViewToggle">
+    <button class="active" data-rview="list">List view</button>
+    <button data-rview="map">Map view</button>
   </div>
 </div>
 
@@ -316,7 +332,7 @@ let state = {
   tab:'events', categoryFilter:'all', view:'list',
   sportFilter:'all', dayCity:'all',
   gatherSort:'hijab', gatherDir:'asc',
-  tripType:'all', resourceFilter:'all',
+  tripType:'all', resourceFilter:'all', resourceView:'list',
   timeFilter:'upcoming', page:1,
   calYear: today.getFullYear(), calMonth: today.getMonth(),
 };
@@ -549,7 +565,10 @@ const resourceFilterList = [
   {key:'organizations', label:'Organizations'},
   {key:'shops', label:'Shops'},
   {key:'food', label:'Food'},
+  {key:'misc', label:'Misc'},
 ];
+
+const categoryColors = { organizations:'#C98A96', shops:'#E3B23C', food:'#5FAE94', misc:'#8FB8E0' };
 
 function renderResourceFilters(){
   const el = document.getElementById('subFilterRow');
@@ -585,6 +604,85 @@ function renderSubFilters(){
 /* ============================================================
    RENDER: DIRECTORY TABS (Clubs / Resources)
    ============================================================ */
+let leafletMap = null;
+
+function filteredResourceItems(){
+  return state.resourceFilter === 'all' ? allResourceItems : allResourceItems.filter(r => r.category === state.resourceFilter);
+}
+
+function renderResourceList(){
+  const el = document.getElementById('directory-view');
+  const filtered = filteredResourceItems();
+  if(filtered.length === 0){ el.innerHTML = '<div class="empty">Nothing here yet.</div>'; return; }
+  el.innerHTML = filtered.map(r => `
+    <div class="panel-card">
+      <div class="panel-top">
+        <div class="monogram" style="background:${categoryColors[r.category]||'#211E1C'}">${r.title.charAt(0)}</div>
+        <div>
+          <h4>${r.title}</h4>
+          <div class="panel-type">${r.type || 'Organization'}</div>
+        </div>
+      </div>
+      ${r.ownedBy ? `<div class="owned-badge">${r.ownedBy}</div>` : ''}
+      <div class="panel-desc">${r.desc}</div>
+      <div class="panel-addr">📍 ${r.location}${r.date ? ' · ' + r.date : ''}</div>
+      <div class="panel-links">
+        ${r.mapsUrl ? `<a class="link-btn secondary" href="${r.mapsUrl}" target="_blank" rel="noopener">View on Google Maps</a>` : ''}
+        ${r.instagram ? `<a class="link-btn secondary" href="${r.instagram}" target="_blank" rel="noopener">Follow on Instagram</a>` : ''}
+        ${r.website ? `<a class="link-btn secondary" href="${r.website}" target="_blank" rel="noopener">Visit Website</a>` : ''}
+        ${r.email ? `<a class="link-btn secondary" href="mailto:${r.email}">Email</a>` : ''}
+        ${r.phone ? `<a class="link-btn secondary" href="tel:${r.phone}">${r.phone}</a>` : ''}
+      </div>
+    </div>`).join('');
+}
+
+function renderResourceMap(){
+  const el = document.getElementById('directory-view');
+  el.innerHTML = `<div id="resourceMapContainer" class="resource-map"></div>
+    <div class="map-legend">
+      <span><i style="background:${categoryColors.organizations}"></i> Organizations</span>
+      <span><i style="background:${categoryColors.shops}"></i> Shops</span>
+      <span><i style="background:${categoryColors.food}"></i> Food</span>
+      <span><i style="background:${categoryColors.misc}"></i> Misc</span>
+    </div>
+    <div class="sub-note" id="mapSkippedNote"></div>`;
+
+  const filtered = filteredResourceItems();
+  const withCoords = filtered.filter(r => typeof r.lat === 'number' && typeof r.lng === 'number');
+  const skipped = filtered.length - withCoords.length;
+  if(skipped > 0){
+    document.getElementById('mapSkippedNote').textContent = `${skipped} item${skipped>1?'s':''} without a mapped address — check List view for those.`;
+  }
+
+  if(leafletMap){ leafletMap.remove(); leafletMap = null; }
+
+  const map = L.map('resourceMapContainer', { scrollWheelZoom: false });
+  leafletMap = map;
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; OpenStreetMap contributors',
+    maxZoom: 19
+  }).addTo(map);
+
+  if(withCoords.length === 0){
+    map.setView([43.6, -79.7], 10);
+    return;
+  }
+
+  const markers = [];
+  withCoords.forEach(r => {
+    const color = categoryColors[r.category] || '#211E1C';
+    const marker = L.circleMarker([r.lat, r.lng], {
+      radius: 8, fillColor: color, color: '#211E1C', weight: 1.5, fillOpacity: 0.9
+    }).addTo(map);
+    const linkHtml = r.mapsUrl ? `<a href="${r.mapsUrl}" target="_blank" rel="noopener">View on Google Maps</a>` : '';
+    marker.bindPopup(`<strong>${r.title}</strong><br>${r.type||''}<br>${linkHtml}`);
+    markers.push(marker);
+  });
+
+  const group = L.featureGroup(markers);
+  map.fitBounds(group.getBounds().pad(0.15));
+}
+
 function renderDirectory(){
   const el = document.getElementById('directory-view');
   if(state.tab === 'clubs'){
@@ -600,27 +698,8 @@ function renderDirectory(){
         </div>
       </div>`).join('');
   } else if(state.tab === 'resources'){
-    const filtered = state.resourceFilter === 'all' ? allResourceItems : allResourceItems.filter(r => r.category === state.resourceFilter);
-    if(filtered.length === 0){ el.innerHTML = '<div class="empty">Nothing here yet.</div>'; return; }
-    el.innerHTML = filtered.map(r => `
-      <div class="panel-card">
-        <div class="panel-top">
-          <div class="monogram">${r.title.charAt(0)}</div>
-          <div>
-            <h4>${r.title}</h4>
-            <div class="panel-type">${r.type || 'Organization'}</div>
-          </div>
-        </div>
-        ${r.ownedBy ? `<div class="owned-badge">${r.ownedBy}</div>` : ''}
-        <div class="panel-desc">${r.desc}</div>
-        <div class="panel-addr">📍 ${r.location}${r.date ? ' · ' + r.date : ''}</div>
-        ${r.mapQuery ? `<iframe class="map-embed" loading="lazy" src="https://www.google.com/maps?q=${encodeURIComponent(r.mapQuery)}&output=embed"></iframe>` : ''}
-        <div class="panel-links">
-          ${r.instagram ? `<a class="link-btn secondary" href="${r.instagram}" target="_blank" rel="noopener">Follow on Instagram</a>` : ''}
-          ${r.website ? `<a class="link-btn secondary" href="${r.website}" target="_blank" rel="noopener">Visit Website</a>` : ''}
-          ${r.email ? `<a class="link-btn secondary" href="mailto:${r.email}">Email</a>` : ''}
-        </div>
-      </div>`).join('');
+    if(state.resourceView === 'map') renderResourceMap();
+    else renderResourceList();
   }
 }
 
@@ -694,6 +773,7 @@ function render(){
   }
 
   document.getElementById('controlsRow').style.display = isDirectory ? 'none' : 'flex';
+  document.getElementById('resourceControlsRow').style.display = state.tab === 'resources' ? 'flex' : 'none';
   document.getElementById('list-view').style.display = 'none';
   document.getElementById('pagination').style.display = 'none';
   document.getElementById('calendar-view').style.display = 'none';
@@ -742,6 +822,15 @@ document.getElementById('timeToggle').addEventListener('click', e => {
   state.timeFilter = btn.dataset.time;
   state.page = 1;
   render();
+});
+
+document.getElementById('resourceViewToggle').addEventListener('click', e => {
+  const btn = e.target.closest('button');
+  if(!btn) return;
+  document.querySelectorAll('#resourceViewToggle button').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  state.resourceView = btn.dataset.rview;
+  renderDirectory();
 });
 
 document.getElementById('categoryRow').addEventListener('click', e => {
