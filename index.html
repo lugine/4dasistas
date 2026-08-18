@@ -804,12 +804,19 @@ function renderDetail(id){
   if(e.instagram) links += `<a class="link-btn secondary" href="${e.instagram}" target="_blank" rel="noopener">Follow on Instagram</a>`;
   if(e.website) links += `<a class="link-btn secondary" href="${e.website}" target="_blank" rel="noopener">Visit Website</a>`;
 
+  let mapEmbed = '';
+  const mapQuery = (typeof e.lat === 'number' && typeof e.lng === 'number') ? `${e.lat},${e.lng}` : e.location;
+  if(mapQuery && !/tbd|see google maps|shared in|by appointment/i.test(mapQuery)){
+    mapEmbed = `<iframe class="map-embed" loading="lazy" src="https://www.google.com/maps?q=${encodeURIComponent(mapQuery)}&output=embed"></iframe>`;
+  }
+
   document.getElementById('detailCard').innerHTML = `
     <span class="tag ${tagClass(e)}">${e.tag}</span>
     <h2>${e.title}</h2>
     <div class="detail-date">${e.date}</div>
     <div class="detail-desc">${e.desc || ''}</div>
     <div class="detail-facts">${facts}</div>
+    ${mapEmbed}
     <div class="detail-links">${links}</div>
   `;
 
