@@ -157,10 +157,10 @@ collections:
               - { label: "Email", name: "email", widget: "string", required: false }
 
   - name: "resources"
-    label: "Resources — Shops, Food & Misc"
+    label: "Resources — Mosques, Cafes, Shops, Restaurants & Activities"
     files:
       - file: "data/resources.json"
-        label: "Shops, Food & Misc"
+        label: "Mosques, Cafes, Shops, Restaurants & Activities"
         name: "resources"
         fields:
           - label: "Items"
@@ -169,7 +169,7 @@ collections:
             fields:
               - { label: "ID (no spaces, unique)", name: "id", widget: "string" }
               - { label: "Title", name: "title", widget: "string" }
-              - { label: "Category", name: "category", widget: "select", options: ["shops", "food", "misc"] }
+              - { label: "Category", name: "category", widget: "select", options: ["mosques", "cafes", "shops", "restaurants", "misc"] }
               - { label: "Type (e.g. Boutique, Bakery & Café)", name: "type", widget: "string" }
               - { label: "Location", name: "location", widget: "string" }
               - { label: "Hours / date info", name: "date", widget: "string", required: false }
