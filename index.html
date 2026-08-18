@@ -113,6 +113,7 @@
   /* ---- Apple-style month calendar ---- */
   .cal-header{ display:flex; align-items:center; justify-content:center; gap:18px; margin-bottom:14px; }
   .cal-nav-btn{ background:white; border:2px solid var(--charcoal); width:34px; height:34px; border-radius:50%; font-size:16px; font-weight:700; cursor:pointer; display:flex; align-items:center; justify-content:center; }
+  .cal-nav-btn:disabled{ opacity:0.3; cursor:default; }
   .cal-title{ font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:19px; min-width:170px; text-align:center; }
 
   .weekday-row{ display:grid; grid-template-columns:repeat(7,1fr); margin-bottom:6px; }
@@ -146,6 +147,11 @@
     .header-disclaimer{ font-size:10.5px; padding:0 30px; }
     .resource-map{ height:52vh; min-height:340px; }
     .panel-card{ padding:15px; }
+    .clubs-grid{ grid-template-columns:repeat(3, 78vw); overflow-x:auto; -webkit-overflow-scrolling:touch; scroll-snap-type:x mandatory; padding-bottom:6px; }
+    .clubs-grid .club-card{ scroll-snap-align:start; }
+    .controls{ flex-wrap:nowrap; gap:8px; padding-left:12px; padding-right:12px; overflow-x:auto; -webkit-overflow-scrolling:touch; }
+    .view-toggle{ flex-shrink:0; }
+    .view-toggle button{ padding:6px 10px; font-size:11.5px; }
     .map-legend{ gap:10px; font-size:11.5px; }
     .footer-btns{ gap:8px; }
   }
@@ -157,6 +163,8 @@
   .cat-block h3{ font-family:'Space Grotesk',sans-serif; font-size:17px; margin-bottom:4px; }
   .cat-block .cat-desc{ font-size:13.5px; color:var(--muted); margin-bottom:14px; }
 
+  .clubs-grid{ display:grid; grid-template-columns:repeat(3, 1fr); gap:16px; }
+  .clubs-grid .club-card{ margin-bottom:0; }
   .panel-card{ background:var(--card); border:2px solid var(--charcoal); border-radius:16px; padding:18px; margin-bottom:16px; box-shadow:3px 3px 0 var(--charcoal); text-align:left; }
   .panel-top{ display:flex; gap:14px; align-items:center; margin-bottom:10px; text-align:left; }
   .monogram{ width:48px; height:48px; border-radius:12px; background:var(--charcoal); color:var(--cream); font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:18px; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
@@ -234,8 +242,8 @@
 
 <div class="controls controls-center" id="resourceControlsRow" style="display:none;">
   <div class="view-toggle" id="resourceViewToggle">
-    <button class="active" data-rview="list">List view</button>
-    <button data-rview="map">Map view</button>
+    <button data-rview="list">List view</button>
+    <button class="active" data-rview="map">Map view</button>
   </div>
 </div>
 
@@ -307,7 +315,7 @@ async function loadData(){
   clubsData = clubs;
   organizationsData = organizations;
   resourcesData = resources;
-  allResourceItems = [...organizationsData, ...resourcesData];
+  allResourceItems = [...resourcesData];
   ALL_ITEMS = [...sportsData, ...gatheringsData, ...dayActivitiesData, ...tripsData, ...clubsData, ...organizationsData, ...resourcesData];
   EVENT_ITEMS = [...sportsData, ...gatheringsData, ...dayActivitiesData, ...tripsData];
 }
@@ -320,7 +328,7 @@ let state = {
   tab:'events', categoryFilter:'all', view:'list',
   sportFilter:'all', dayCity:'all',
   gatherSort:'hijab', gatherDir:'asc',
-  tripType:'all', resourceFilter:'all', resourceView:'list', resourcePage:1,
+  tripType:'all', resourceFilter:'all', resourceView:'map', resourcePage:1,
   timeFilter:'upcoming', page:1,
   calYear: today.getFullYear(), calMonth: today.getMonth(),
 };
@@ -332,7 +340,7 @@ const introText = {
   gatherings: "Dated social meetups will show up here as they're scheduled.",
   trips: "Sample trips below — tell me the real ones and I'll swap them in.",
   clubs: "Special-interest clubs the community runs together — sign up to join one.",
-  resources: "Muslim-woman-run organizations, shops and food spots the community supports."
+  resources: "Mosques, cafes, shops and restaurants the community supports."
 };
 
 const dayOrder = ['sun','mon','tue','wed','thu','fri','sat'];
@@ -481,9 +489,12 @@ function renderCalendar(){
   const daysInMonth = new Date(year, month+1, 0).getDate();
   const todayStr = `${today.getFullYear()}-${pad(today.getMonth()+1)}-${pad(today.getDate())}`;
 
+  const MIN_YEAR = 2026, MIN_MONTH = 7; // August 2026 — never go earlier
+  const atMinBoundary = (year === MIN_YEAR && month === MIN_MONTH);
+
   let html = `
     <div class="cal-header">
-      <button class="cal-nav-btn" id="prevMonth">‹</button>
+      <button class="cal-nav-btn" id="prevMonth" ${atMinBoundary ? 'disabled' : ''}>‹</button>
       <div class="cal-title">${monthNames[month]} ${year}</div>
       <button class="cal-nav-btn" id="nextMonth">›</button>
     </div>
@@ -513,12 +524,13 @@ function renderCalendar(){
         <button class="click-btn" data-id="${e.id}">Click me →</button>
       </div>`).join('')}</div>`;
   } else if(items.length === 0 && state.categoryFilter === 'gatherings'){
-    html += `<div class="ongoing-note">No dated gatherings yet — ongoing social groups have moved to Resources → Organizations.</div>`;
+    html += `<div class="ongoing-note">No dated gatherings yet — ongoing social groups have moved to Resources → Mosques &amp; Shops.</div>`;
   }
 
   document.getElementById('calendar-view').innerHTML = html;
 
   document.getElementById('prevMonth').addEventListener('click', () => {
+    if(state.calYear === MIN_YEAR && state.calMonth === MIN_MONTH) return;
     state.calMonth--; if(state.calMonth<0){ state.calMonth=11; state.calYear--; }
     renderCalendar();
   });
@@ -554,13 +566,10 @@ const resourceFilterList = [
   {key:'cafes', label:'Cafes'},
   {key:'shops', label:'Shops'},
   {key:'restaurants', label:'Restaurants'},
-  {key:'organizations', label:'Organizations'},
-  {key:'misc', label:'Activities'},
 ];
 
 const categoryColors = {
-  mosques:'#444758', cafes:'#cb962e', shops:'#caaacd', restaurants:'#776867',
-  organizations:'#aabecf', misc:'#d6e8f7'
+  mosques:'#444758', cafes:'#cb962e', shops:'#caaacd', restaurants:'#776867'
 };
 
 function renderResourceFilters(){
@@ -721,8 +730,8 @@ function renderDirectory(){
   const el = document.getElementById('directory-view');
   if(state.tab === 'clubs'){
     document.getElementById('resourcePagination').innerHTML = '';
-    el.innerHTML = clubsData.map(c => `
-      <div class="panel-card" style="border-top:6px solid ${clubColors[c.id]||'#373d3b'}">
+    el.innerHTML = `<div class="clubs-grid">${clubsData.map(c => `
+      <div class="panel-card club-card" style="border-top:6px solid ${clubColors[c.id]||'#373d3b'}">
         <div class="panel-top">
           <div class="monogram" style="background:${clubColors[c.id]||'#373d3b'}">${c.title.charAt(0)}</div>
           <div><h4>${c.title}</h4></div>
@@ -731,7 +740,7 @@ function renderDirectory(){
         <div class="panel-links">
           <a class="link-btn primary" href="${c.signup}" target="_blank" rel="noopener">Sign Up</a>
         </div>
-      </div>`).join('');
+      </div>`).join('')}</div>`;
   } else if(state.tab === 'resources'){
     if(state.resourceView === 'map'){
       document.getElementById('resourcePagination').innerHTML = '';
