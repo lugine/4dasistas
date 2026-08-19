@@ -158,8 +158,8 @@ collections:
               - { label: "Trip type", name: "tripType", widget: "select", options: ["domestic", "international"] }
               - { label: "Location", name: "location", widget: "location-autocomplete", required: false }
               - { label: "Price", name: "price", widget: "string", required: false }
-               - { label: "Registration deadline", name: "registrationDeadline", widget: "date", required: false }
-               - { label: "Description", name: "desc", widget: "text", required: false }
+              - { label: "Registration deadline", name: "registrationDeadline", widget: "date", required: false }
+              - { label: "Description", name: "desc", widget: "text", required: false }
 
   - name: "mosquegatherings"
     label: "Mosque Gatherings"
