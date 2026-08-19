@@ -192,6 +192,10 @@
   .rules-content h3{ font-family:'Space Grotesk',sans-serif; font-size:17px; margin:24px 0 8px; }
   .rules-content ul, .rules-content ol{ padding-left:20px; display:flex; flex-direction:column; gap:10px; }
   .rules-content li{ font-size:14px; line-height:1.5; color:#4a4640; }
+  .club-guide-actions{ display:grid; grid-template-columns:repeat(2, minmax(0,1fr)); gap:12px; margin-bottom:20px; }
+  .club-guide-btn{ border:2px solid var(--charcoal); border-radius:14px; padding:15px 16px; background:var(--blush); color:var(--charcoal); box-shadow:3px 3px 0 var(--charcoal); cursor:pointer; font-family:'Space Grotesk',sans-serif; font-size:14px; font-weight:700; text-align:left; }
+  .club-guide-btn:last-child{ background:var(--lightblue); }
+  .club-guide-btn:hover{ transform:translate(-1px,-1px); box-shadow:4px 4px 0 var(--charcoal); }
   .panel-top{ display:flex; gap:14px; align-items:center; margin-bottom:10px; text-align:left; }
   .monogram{ width:48px; height:48px; border-radius:12px; background:var(--charcoal); color:var(--cream); font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:18px; display:flex; align-items:center; justify-content:center; flex-shrink:0;  overflow:hidden;}
   .monogram img{ width:100%; height:100%; object-fit:cover; display:block; }
@@ -255,7 +259,7 @@
 
 <nav class="tabs" id="tabs">
   <button class="tab-btn active" data-tab="home">Home</button>
-  <button class="tab-btn" data-tab="events">Events</button>
+  <button class="tab-btn" data-tab="events">Calendar4All</button>
   <button class="tab-btn" data-tab="clubs">GALS CLUBS</button>
   <button class="tab-btn" data-tab="resources">Resources</button>
   <button class="tab-btn" data-tab="rules">Rules</button>
@@ -394,7 +398,9 @@ const introText = {
   clubs: "Special-interest clubs the community runs together — sign up to join one.",
   resources: "Mosques, cafes, shops and restaurants the community supports.",
   home: "",
-  rules: "Please read before joining any event or club."
+  rules: "Please read before joining any event or club.",
+  clubstart: "Everything you need to launch a welcoming, well-run club.",
+  clubjoin: "A few simple expectations keep every club welcoming and easy to join."
 };
 
 const dayOrder = ['sun','mon','tue','wed','thu','fri','sat'];
@@ -607,7 +613,7 @@ const cityFilterList = [
 
 const categoryList = [
   {key:'all', label:'All Events', bg:'#373d3b', fg:'#fff7e6'},
-  {key:'sports', label:'Sports Only', bg:'#ef601e', fg:'#fff7e6'},
+  {key:'sports', label:'Sports Only', bg:'#f4b183', fg:'#373d3b'},
   {key:'activitiesgatherings', label:'Activities & Gatherings', bg:'#c3d5e2', fg:'#373d3b'},
   {key:'trips', label:'Trips', bg:'#ddb862', fg:'#373d3b'},
 ];
@@ -784,7 +790,11 @@ function renderDirectory(){
   const el = document.getElementById('directory-view');
   if(state.tab === 'clubs'){
     document.getElementById('resourcePagination').innerHTML = '';
-    el.innerHTML = `<div class="clubs-grid">${clubsData.map(c => {
+    el.innerHTML = `<div class="club-guide-actions">
+      <button class="club-guide-btn" data-hometab="clubstart">How to Start a Club →</button>
+      <button class="club-guide-btn" data-hometab="clubjoin">How to Join a Club →</button>
+    </div>
+    <div class="clubs-grid">${clubsData.map(c => {
       const col = clubColors[c.id] || {bg:'#373d3b', fg:'#fff7e6'};
       const monogramHtml = c.logo ? `<div class="monogram"><img src="${c.logo}" alt="${c.title} logo"></div>` : `<div class="monogram" style="background:${col.bg};color:${col.fg}">${c.title.charAt(0)}</div>`;
       return `
@@ -799,6 +809,55 @@ function renderDirectory(){
         </div>
       </div>`;
     }).join('')}</div>`;
+  } else if(state.tab === 'clubstart'){
+    document.getElementById('resourcePagination').innerHTML = '';
+    el.innerHTML = `
+      <button class="back-btn" data-hometab="clubs">← Back to GALS CLUBS</button>
+      <div class="rules-content">
+        <p class="rules-lead">Start a club when you have a clear activity, a realistic rhythm, and the capacity to welcome people well.</p>
+        <h3>1. Send your idea to an admin</h3>
+        <ol>
+          <li>Share the club name, purpose, who it is for, and the GTA area or venue approach.</li>
+          <li>Include your proposed frequency, expected cost, capacity, and anything members need to bring.</li>
+          <li>Name a backup lead and flag any access, privacy, safety, waiver, or venue requirements.</li>
+          <li>Please do not create an unofficial 4DASISTAS club chat or use the name before approval.</li>
+        </ol>
+        <h3>2. Begin with a short trial</h3>
+        <ul>
+          <li>Approved clubs begin with 2–3 meetups so members can see whether the format, timing, and capacity work.</li>
+          <li>Every event post should clearly state the date, time, location, cost, capacity, registration method, cancellation deadline, and photo policy.</li>
+          <li>Admins may combine similar ideas, ask for a backup lead, pause inactive clubs, or adjust a format that is not working.</li>
+        </ul>
+        <h3>Club Lead responsibilities</h3>
+        <ul>
+          <li>Keep the chat on-topic, welcoming, and organized; respect members’ privacy and do not share photos or details without consent.</li>
+          <li>Do not promise an event is private, hijab-off, women-only, accessible, supervised, or safe unless that specific detail has been confirmed.</li>
+          <li>Use direct venue payment whenever possible. If a shared booking is necessary, state the total, per-person cost, deadline, and refund policy before collecting anything.</li>
+          <li>Escalate harassment, privacy issues, payment concerns, repeated conflict, or safety concerns to an admin promptly.</li>
+        </ul>
+      </div>`;
+  } else if(state.tab === 'clubjoin'){
+    document.getElementById('resourcePagination').innerHTML = '';
+    el.innerHTML = `
+      <button class="back-btn" data-hometab="clubs">← Back to GALS CLUBS</button>
+      <div class="rules-content">
+        <p class="rules-lead">Join a club to participate, meet people, and help keep the space welcoming for everyone.</p>
+        <h3>How to join</h3>
+        <ol>
+          <li>Read the club description first and join only if the activity, location, cost, and expectations work for you.</li>
+          <li>Read the pinned message and follow the lead’s registration, capacity, payment, venue, and cancellation rules.</li>
+          <li>For limited-capacity events, update the lead as early as possible if you can no longer attend so another member can take the spot.</li>
+        </ol>
+        <h3>Club chat rules</h3>
+        <ul>
+          <li>Keep messages relevant to the club. No spam, unrelated promotions, fundraising, recruiting, or repeated self-promotion.</li>
+          <li>Ask before sending a member a private message. Do not screenshot, forward, or share phone numbers, photos, locations, or personal information without permission.</li>
+          <li>Be welcoming. No cliques, exclusion, gatekeeping, bullying, gossip, public call-outs, or behaviour that makes others feel unsafe or unwelcome.</li>
+          <li>Respect the lead’s time, boundaries, capacity limits, and venue rules. Repeated late cancellations or no-shows may affect priority for future limited-capacity events.</li>
+        </ul>
+        <h3>Need help?</h3>
+        <p>If there is harassment, a privacy breach, a payment concern, or conflict, contact a 4DASISTAS Admin privately. For immediate danger or an emergency, contact local emergency services first.</p>
+      </div>`;
   } else if(state.tab === 'resources'){
     if(state.resourceView === 'map'){
       document.getElementById('resourcePagination').innerHTML = '';
@@ -812,7 +871,7 @@ function renderDirectory(){
   } else if(state.tab === 'home'){
     document.getElementById('resourcePagination').innerHTML = '';
     const tiles = [
-      {tab:'events', title:'Events', bg:'#ef601e', fg:'#fff7e6', desc:'Sports, gatherings, day activities & trips — see what\'s coming up.'},
+      {tab:'events', title:'Calendar4All', bg:'#f4b183', fg:'#373d3b', desc:'Sports, gatherings, day activities & trips — see what\'s coming up.'},
       {tab:'clubs', title:'GALS CLUBS', bg:'#caaacd', fg:'#373d3b', desc:'Join a standing-interest club, from gaming to ADHD support.'},
       {tab:'resources', title:'Resources', bg:'#c3d5e2', fg:'#373d3b', desc:'Mosques, cafes, shops & restaurants the community supports.'},
     ];
@@ -924,7 +983,7 @@ function closeDetail(){
 /* ============================================================
    MAIN RENDER
    ============================================================ */
-const DIRECTORY_TABS = ['clubs','resources','home','rules'];
+const DIRECTORY_TABS = ['clubs','resources','home','rules','clubstart','clubjoin'];
 
 function render(){
   renderCategoryRow();
