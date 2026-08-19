@@ -11,11 +11,11 @@
 <meta name="apple-mobile-web-app-title" content="4DASISTAS">
 <meta name="format-detection" content="telephone=no">
 <link rel="manifest" href="/manifest.webmanifest">
-<link rel="icon" href="/app-icon.svg" type="image/svg+xml">
-<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
-<link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png">
-<link rel="apple-touch-icon" sizes="192x192" href="/assets/icon-192.png">
-<link rel="apple-touch-icon" sizes="512x512" href="/assets/icon-512.png">
+<link rel="icon" href="/OFFICIAL%20LOGO.png" type="image/png">
+<link rel="apple-touch-icon" href="/OFFICIAL%20LOGO.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/OFFICIAL%20LOGO.png">
+<link rel="apple-touch-icon" sizes="192x192" href="/OFFICIAL%20LOGO.png">
+<link rel="apple-touch-icon" sizes="512x512" href="/OFFICIAL%20LOGO.png">
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <style>
@@ -287,6 +287,7 @@
   <button class="tab-btn" data-tab="clubs">GALS CLUBS</button>
   <button class="tab-btn" data-tab="resources">Resources</button>
   <button class="tab-btn" data-tab="rules">Rules</button>
+  <button class="tab-btn" data-tab="homescreen">Add to Home Screen</button>
 </nav>
 
 <div class="category-row" id="categoryRow"></div>
@@ -451,6 +452,7 @@ const introText = {
   resources: "Mosques, cafes, shops and restaurants the community supports.",
   home: "",
   rules: "Please read before joining any event or club.",
+  homescreen: "Install 4DASISTAS on your device for fast, app-like access.",
   clubstart: "Everything you need to launch a welcoming, well-run club.",
   clubjoin: "A few simple expectations keep every club welcoming and easy to join."
 };
@@ -976,6 +978,7 @@ el.innerHTML = `<div class="club-guide-actions">
       {tab:'events', title:'Calendar4All', bg:'#f4b183', fg:'#373d3b', desc:'Sports, gatherings, day activities & trips — see what\'s coming up.'},
       {tab:'clubs', title:'GALS CLUBS', bg:'#caaacd', fg:'#373d3b', desc:'Join a standing-interest club, from gaming to ADHD support.'},
       {tab:'resources', title:'Resources', bg:'#c3d5e2', fg:'#373d3b', desc:'Mosques, cafes, shops & restaurants the community supports.'},
+      {tab:'homescreen', title:'Add this to your Home Screen', bg:'#A9D6B8', fg:'#373d3b', desc:'Install 4DASISTAS like an app for quick access.'},
     ];
     el.innerHTML = `<div class="home-tiles">${tiles.map(t => `
       <button class="home-tile" style="background:${t.bg};color:${t.fg}" data-hometab="${t.tab}">
@@ -1007,6 +1010,34 @@ el.innerHTML = `<div class="club-guide-actions">
           <li>Admins may speak separately with those involved, pause participation, remove content, appoint a new lead, or remove a member where necessary.</li>
           <li>Reports will be handled respectfully and as privately as practical, but confidentiality cannot be guaranteed where safety requires escalation.</li>
         </ol>
+      </div>`;
+  } else if(state.tab === 'homescreen'){
+    document.getElementById('resourcePagination').innerHTML = '';
+    el.innerHTML = `
+      <div class="rules-content">
+        <p class="rules-lead">Add 4DASISTAS to your Home Screen for quick access, just like an app.</p>
+        <img src="https://www.google.com/chrome/static/images/chrome-logo.svg" alt="Chrome logo" style="width:48px;height:48px;margin-bottom:12px;">
+        <h3>iPhone / iPad (Safari)</h3>
+        <ol>
+          <li>Open this site in Safari.</li>
+          <li>Tap the <strong>Share</strong> button <span style="font-size:18px;">⎋</span> at the bottom.</li>
+          <li>Scroll down and tap <strong>Add to Home Screen</strong>.</li>
+          <li>Name it <strong>4DASISTAS</strong> and tap <strong>Add</strong>.</li>
+        </ol>
+        <h3>Android (Chrome)</h3>
+        <ol>
+          <li>Open this site in Chrome.</li>
+          <li>Tap the <strong>Menu</strong> button <span style="font-size:18px;">⋮</span> (three dots).</li>
+          <li>Tap <strong>Add to Home screen</strong>.</li>
+          <li>Name it <strong>4DASISTAS</strong> and tap <strong>Add</strong>.</li>
+        </ol>
+        <h3>Desktop (Chrome / Edge)</h3>
+        <ol>
+          <li>Open this site in Chrome or Edge.</li>
+          <li>Click the <strong>Install</strong> icon <span style="font-size:18px;">⬇</span> in the address bar (or Menu → <strong>Install 4DASISTAS</strong>).</li>
+          <li>Click <strong>Install</strong> in the confirmation popup.</li>
+        </ol>
+        <p style="margin-top:16px;font-size:13px;color:var(--muted);">Once installed, the app will open full-screen and use the 4DASISTAS logo as its icon.</p>
       </div>`;
   }
 }
@@ -1098,7 +1129,7 @@ function closeDetail(){
 /* ============================================================
    MAIN RENDER
    ============================================================ */
-const DIRECTORY_TABS = ['clubs','resources','home','rules','clubstart','clubjoin'];
+const DIRECTORY_TABS = ['clubs','resources','home','rules','clubstart','clubjoin','homescreen'];
 
 function render(){
   renderCategoryRow();
