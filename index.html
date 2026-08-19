@@ -57,6 +57,10 @@
   .tab-btn:focus-visible{ outline:3px solid var(--pink); outline-offset:2px; }
 
   .category-row{ display:flex; justify-content:center; gap:10px; padding:18px 20px 0; max-width:760px; margin:0 auto; overflow-x:auto; -webkit-overflow-scrolling:touch; scrollbar-width:none; }
+
+  .subscribe-row{ display:flex; flex-direction:column; align-items:center; gap:4px; padding:12px 20px 0; }
+  .subscribe-btn{ display:inline-block; font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:13.5px; background:var(--charcoal); color:var(--cream); padding:9px 20px; border-radius:999px; text-decoration:none; }
+  .subscribe-fallback{ font-size:11px; color:var(--muted); text-decoration:underline; }
   .category-row::-webkit-scrollbar{ display:none; }
   .cat-filter-btn{ flex-shrink:0; font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:14px; padding:16px 30px; border-radius:14px; border:2px solid var(--charcoal); cursor:pointer; white-space:nowrap; box-shadow:3px 3px 0 var(--charcoal); transition:transform 0.12s ease, box-shadow 0.12s ease; }
   .cat-filter-btn:hover{ transform:translate(-1px,-1px); box-shadow:4px 4px 0 var(--charcoal); }
@@ -234,6 +238,10 @@
 </nav>
 
 <div class="category-row" id="categoryRow"></div>
+<div class="subscribe-row" id="subscribeRow">
+  <a class="subscribe-btn" id="subscribeBtn" href="#">📅 Subscribe to Calendar</a>
+  <a class="subscribe-fallback" id="subscribeFallback" href="#" target="_blank" rel="noopener">or download the file directly</a>
+</div>
 
 <div class="controls" id="controlsRow">
   <div class="view-toggle" id="viewToggle">
@@ -589,8 +597,10 @@ function renderResourceFilters(){
 
 function renderCategoryRow(){
   const el = document.getElementById('categoryRow');
-  if(state.tab !== 'events'){ el.style.display = 'none'; el.innerHTML = ''; return; }
+  const subEl = document.getElementById('subscribeRow');
+  if(state.tab !== 'events'){ el.style.display = 'none'; el.innerHTML = ''; subEl.style.display = 'none'; return; }
   el.style.display = 'flex';
+  subEl.style.display = 'flex';
   el.innerHTML = categoryList.map(c => `<button class="cat-filter-btn ${state.categoryFilter===c.key?'active':''}" style="background:${c.bg};color:${c.fg};" data-catfilter="${c.key}">${c.label}</button>`).join('');
 }
 
@@ -996,6 +1006,8 @@ window.addEventListener('hashchange', () => {
    INIT
    ============================================================ */
 document.getElementById('list-view').innerHTML = '<div class="empty">Loading…</div>';
+document.getElementById('subscribeBtn').href = `webcal://${location.host}/calendar.ics`;
+document.getElementById('subscribeFallback').href = `https://${location.host}/calendar.ics`;
 restoreStateFromHash();
 loadData().then(() => {
   syncToggleButtonClasses();
