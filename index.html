@@ -151,6 +151,10 @@
     .week-pill{ font-size:13px; padding:8px 9px; }
 
     .wa-fixed-btn{ width:34px; height:34px; top:10px; right:10px; }
+    .home-tile{ padding:20px 18px; }
+    .home-tile-title{ font-size:19px; }
+    .home-tile-desc{ font-size:13px; max-width:78%; }
+    .rules-content{ padding:20px 16px; }
     .cat-filter-btn{ padding:12px 20px; font-size:13px; }
     .wa-fixed-btn svg{ width:16px; height:16px; }
     header{ padding-top:54px; }
@@ -158,7 +162,6 @@
     .resource-map{ height:52vh; min-height:340px; }
     .ig-grid{ grid-template-columns:repeat(2, 1fr); gap:12px; }
     .panel-card{ padding:15px; }
-    .clubs-grid .club-card{ flex:0 0 78vw; scroll-snap-align:start; }
     .controls{ flex-wrap:nowrap; gap:8px; padding-left:12px; padding-right:12px; overflow-x:auto; -webkit-overflow-scrolling:touch; }
     .view-toggle{ flex-shrink:0; }
     .view-toggle button{ padding:6px 10px; font-size:11.5px; }
@@ -173,10 +176,22 @@
   .cat-block h3{ font-family:'Space Grotesk',sans-serif; font-size:17px; margin-bottom:4px; }
   .cat-block .cat-desc{ font-size:13.5px; color:var(--muted); margin-bottom:14px; }
 
-  .clubs-grid{ display:flex; gap:16px; overflow-x:auto; -webkit-overflow-scrolling:touch; scroll-snap-type:x mandatory; padding-bottom:8px; }
-  .clubs-grid .club-card{ flex:0 0 260px; scroll-snap-align:start; }
-  .clubs-grid .club-card{ margin-bottom:0; }
+  .clubs-grid{ display:flex; flex-direction:column; gap:16px; }
+  .clubs-grid .club-card{ width:100%; }
   .panel-card{ background:var(--card); border:2px solid var(--charcoal); border-radius:16px; padding:18px; margin-bottom:16px; box-shadow:3px 3px 0 var(--charcoal); text-align:left; }
+
+  .home-tiles{ display:flex; flex-direction:column; gap:16px; }
+  .home-tile{ display:block; width:100%; text-align:left; border:2px solid var(--charcoal); border-radius:18px; padding:24px 22px; cursor:pointer; box-shadow:4px 4px 0 var(--charcoal); transition:transform 0.12s ease, box-shadow 0.12s ease; font-family:'Inter',sans-serif; position:relative; }
+  .home-tile:hover{ transform:translate(-2px,-2px); box-shadow:6px 6px 0 var(--charcoal); }
+  .home-tile-title{ font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:22px; margin-bottom:6px; }
+  .home-tile-desc{ font-size:14px; max-width:85%; opacity:0.9; }
+  .home-tile-arrow{ position:absolute; top:22px; right:22px; font-size:24px; font-weight:700; }
+
+  .rules-content{ background:var(--card); border:2px solid var(--charcoal); border-radius:16px; padding:24px 22px; box-shadow:3px 3px 0 var(--charcoal); text-align:left; }
+  .rules-lead{ font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:17px; margin-bottom:16px; }
+  .rules-content h3{ font-family:'Space Grotesk',sans-serif; font-size:17px; margin:24px 0 8px; }
+  .rules-content ul, .rules-content ol{ padding-left:20px; display:flex; flex-direction:column; gap:10px; }
+  .rules-content li{ font-size:14px; line-height:1.5; color:#4a4640; }
   .panel-top{ display:flex; gap:14px; align-items:center; margin-bottom:10px; text-align:left; }
   .monogram{ width:48px; height:48px; border-radius:12px; background:var(--charcoal); color:var(--cream); font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:18px; display:flex; align-items:center; justify-content:center; flex-shrink:0;  overflow:hidden;}
   .monogram img{ width:100%; height:100%; object-fit:cover; display:block; }
@@ -239,9 +254,11 @@
 </header>
 
 <nav class="tabs" id="tabs">
-  <button class="tab-btn active" data-tab="events">Events</button>
+  <button class="tab-btn active" data-tab="home">Home</button>
+  <button class="tab-btn" data-tab="events">Events</button>
   <button class="tab-btn" data-tab="clubs">GALS CLUBS</button>
   <button class="tab-btn" data-tab="resources">Resources</button>
+  <button class="tab-btn" data-tab="rules">Rules</button>
 </nav>
 
 <div class="category-row" id="categoryRow"></div>
@@ -361,7 +378,7 @@ async function loadData(){
    ============================================================ */
 const today = new Date(); // always the real current date
 let state = {
-  tab:'events', categoryFilter:'all', view:'list',
+  tab:'home', categoryFilter:'all', view:'list',
   sportFilter:'all', dayCity:'all',
   gatherSort:'hijab', gatherDir:'asc',
   tripType:'all', resourceFilter:'all', resourceView:'map', resourcePage:1,
@@ -375,7 +392,9 @@ const introText = {
   activitiesgatherings: "One-off outings, day activities, and social meetups — dated ones show up here as they're scheduled.",
   trips: "Sample trips below — tell me the real ones and I'll swap them in.",
   clubs: "Special-interest clubs the community runs together — sign up to join one.",
-  resources: "Mosques, cafes, shops and restaurants the community supports."
+  resources: "Mosques, cafes, shops and restaurants the community supports.",
+  home: "",
+  rules: "Please read before joining any event or club."
 };
 
 const dayOrder = ['sun','mon','tue','wed','thu','fri','sat'];
@@ -790,6 +809,44 @@ function renderDirectory(){
     } else {
       renderResourceList();
     }
+  } else if(state.tab === 'home'){
+    document.getElementById('resourcePagination').innerHTML = '';
+    const tiles = [
+      {tab:'events', title:'Events', bg:'#ef601e', fg:'#fff7e6', desc:'Sports, gatherings, day activities & trips — see what\'s coming up.'},
+      {tab:'clubs', title:'GALS CLUBS', bg:'#caaacd', fg:'#373d3b', desc:'Join a standing-interest club, from gaming to ADHD support.'},
+      {tab:'resources', title:'Resources', bg:'#c3d5e2', fg:'#373d3b', desc:'Mosques, cafes, shops & restaurants the community supports.'},
+    ];
+    el.innerHTML = `<div class="home-tiles">${tiles.map(t => `
+      <button class="home-tile" style="background:${t.bg};color:${t.fg}" data-hometab="${t.tab}">
+        <div class="home-tile-title">${t.title}</div>
+        <div class="home-tile-desc">${t.desc}</div>
+        <div class="home-tile-arrow">→</div>
+      </button>`).join('')}</div>`;
+  } else if(state.tab === 'rules'){
+    document.getElementById('resourcePagination').innerHTML = '';
+    el.innerHTML = `
+      <div class="rules-content">
+        <p class="rules-lead">This is a respectful community for Muslim women in the GTA.</p>
+        <ul>
+          <li>Be kind and assume good intent. No bullying, harassment, discrimination, gossip, public call-outs, or debates that make others feel unsafe or unwelcome.</li>
+          <li>Protect privacy. Do not screenshot, forward messages, share phone numbers, photos, locations, or personal stories without clear permission.</li>
+          <li>No spam, chain messages, unrelated promotions, recruitment, affiliate links, fundraising, business advertising, or repeated self-promotion without admin approval.</li>
+          <li>Events, venues, prices, and availability can change. Members must confirm details directly with the organizer before attending or paying.</li>
+          <li>4DASISTAS is a community connector, not the organizer, employer, insurer, transport provider, or safety guarantor for independent events and clubs.</li>
+          <li>Members are responsible for their own transportation, belongings, payments, safety decisions, and conduct at meetups.</li>
+          <li>Respect club leads' boundaries, time, venue rules, capacity limits, and registration requirements.</li>
+          <li>Admins may remove posts or members that break these rules, create repeated conflict, or put the community at risk.</li>
+        </ul>
+        <h3>Safety &amp; Conflict Process</h3>
+        <p>If there is a concern:</p>
+        <ol>
+          <li>For immediate danger or an emergency, contact local emergency services first.</li>
+          <li>For harassment, boundary issues, payment concerns, privacy breaches, or conflict, message a 4DASISTAS Admin privately with screenshots/details if appropriate.</li>
+          <li>Do not publicly litigate conflicts in club chats.</li>
+          <li>Admins may speak separately with those involved, pause participation, remove content, appoint a new lead, or remove a member where necessary.</li>
+          <li>Reports will be handled respectfully and as privately as practical, but confidentiality cannot be guaranteed where safety requires escalation.</li>
+        </ol>
+      </div>`;
   }
 }
 
@@ -867,7 +924,7 @@ function closeDetail(){
 /* ============================================================
    MAIN RENDER
    ============================================================ */
-const DIRECTORY_TABS = ['clubs','resources'];
+const DIRECTORY_TABS = ['clubs','resources','home','rules'];
 
 function render(){
   renderCategoryRow();
@@ -942,14 +999,24 @@ function syncToggleButtonClasses(){
 /* ============================================================
    EVENTS
    ============================================================ */
+function goToTab(tabName){
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.toggle('active', b.dataset.tab === tabName));
+  state.tab = tabName;
+  state.page = 1;
+  render();
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+document.getElementById('directory-view').addEventListener('click', e => {
+  const tile = e.target.closest('[data-hometab]');
+  if(!tile) return;
+  goToTab(tile.dataset.hometab);
+});
+
 document.getElementById('tabs').addEventListener('click', e => {
   const btn = e.target.closest('.tab-btn');
   if(!btn) return;
-  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-  state.tab = btn.dataset.tab;
-  state.page = 1;
-  render();
+  goToTab(btn.dataset.tab);
 });
 
 document.getElementById('viewToggle').addEventListener('click', e => {
