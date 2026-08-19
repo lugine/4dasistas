@@ -108,6 +108,7 @@
   .cat-gathering{ background:var(--pink); color:white; }
   .cat-dayactivity{ background:var(--blue); }
   .cat-trip{ background:var(--purple); }
+  .cat-mosque{ background:#c3e2d4; }
   .cat-club{ background:var(--gold); }
   .cat-resource{ background:#A9D6B8; }
 
@@ -177,7 +178,7 @@
   .cat-block h3{ font-family:'Space Grotesk',sans-serif; font-size:17px; margin-bottom:4px; }
   .cat-block .cat-desc{ font-size:13.5px; color:var(--muted); margin-bottom:14px; }
 
-  .clubs-grid{ display:flex; flex-direction:column; gap:16px; }
+.clubs-grid{ display:flex; flex-direction:column; gap:16px; }
   .clubs-grid .club-card{ width:100%; }
   .panel-card{ background:var(--card); border:2px solid var(--charcoal); border-radius:16px; padding:18px; margin-bottom:16px; box-shadow:3px 3px 0 var(--charcoal); text-align:left; }
 
@@ -339,12 +340,14 @@ let clubsData = [];
 let organizationsData = [];
 let resourcesData = [];
 let smallBusinessesData = [];
+let mosqueGatheringsData = [];
 let allResourceItems = [];
 let ALL_ITEMS = [];
 let EVENT_ITEMS = [];
 
 async function loadData(){
-  const [sports, gatherings, dayactivities, trips, clubs, organizations, resources, smallbusinesses] = await Promise.all([
+const [sports, gatherings, dayactivities, trips, clubs, organizations, resources, smallbusinesses] = await Promise.all([,
+    fetch("data/mosquegatherings.json").then(r => r.json()).then(d => d.items)
     fetch('data/sports.json').then(r => r.json()).then(d => d.items),
     fetch('data/gatherings.json').then(r => r.json()).then(d => d.items),
     fetch('data/dayactivities.json').then(r => r.json()).then(d => d.items),
@@ -352,7 +355,7 @@ async function loadData(){
     fetch('data/clubs.json').then(r => r.json()).then(d => d.items),
     fetch('data/organizations.json').then(r => r.json()).then(d => d.items),
     fetch('data/resources.json').then(r => r.json()).then(d => d.items),
-    fetch('data/smallbusinesses.json').then(r => r.json()).then(d => d.items),
+fetch('data/smallbusinesses.json').then(r => r.json()).then(d => d.items),
   ]);
   sportsData = sports;
   gatheringsData = gatherings;
@@ -361,10 +364,11 @@ async function loadData(){
   clubsData = clubs;
   organizationsData = organizations;
   resourcesData = resources;
-  smallBusinessesData = smallbusinesses;
+smallBusinessesData = smallbusinesses;
+mosqueGatheringsData = mosqueGatherings;
 
   // If a simple "eventDate" was set in the CMS, auto-derive calDate + display date text from it.
-  [sportsData, gatheringsData, dayActivitiesData, tripsData].forEach(arr => {
+  [sportsData, gatheringsData, dayActivitiesData, tripsData, mosqueGatheringsData].forEach(arr => {
     arr.forEach(item => {
       if(item.eventDate){
         if(!item.calDate) item.calDate = item.eventDate;
@@ -377,8 +381,29 @@ async function loadData(){
   });
 
   allResourceItems = [...resourcesData];
-  ALL_ITEMS = [...sportsData, ...gatheringsData, ...dayActivitiesData, ...tripsData, ...clubsData, ...organizationsData, ...resourcesData];
-  EVENT_ITEMS = [...sportsData, ...gatheringsData, ...dayActivitiesData, ...tripsData];
+  ALL_ITEMS = [...sportsData, ...gatheringsData, ...dayActivitiesData, ...tripsData, ...clubsData, ...organizationsData, ...resourcesData, ...mosqueGatheringsData];
+  EVENT_ITEMS = mixEvents(sportsData, gatheringsData, dayActivitiesData, tripsData, mosqueGatheringsData);
+}
+
+function mixEvents(sports, gatherings, dayActs, trips, mosqueGatherings){
+  const badmintons = sports.filter(s => s.sportKey === 'badminton');
+  const otherSports = sports.filter(s => s.sportKey !== 'badminton');
+  const buckets = [
+    [...gatherings],
+    [...badmintons],
+    [...dayActs],
+    [...otherSports],
+    [...trips],
+    [...mosqueGatherings]
+  ];
+  const mixed = [];
+  const maxLen = Math.max(...buckets.map(b => b.length));
+  for(let i = 0; i < maxLen; i++){
+    buckets.forEach(b => {
+      if(b[i]) mixed.push(b[i]);
+    });
+  }
+  return mixed;
 }
 
 /* ============================================================
@@ -397,8 +422,9 @@ let state = {
 const introText = {
   all: "Everything happening across sports, day activities and trips.",
   sports: "Somehow there's badminton every single day of the week.",
-  activitiesgatherings: "One-off outings, day activities, and social meetups — dated ones show up here as they're scheduled.",
+  activitiesfunctions: "One-off outings, day activities, and social meetups — dated ones show up here as they're scheduled.",
   trips: "Sample trips below — tell me the real ones and I'll swap them in.",
+  mosquegatherings: "Mosque events, prayers, and community gatherings.",
   clubs: "Special-interest clubs the community runs together — sign up to join one.",
   resources: "Mosques, cafes, shops and restaurants the community supports.",
   home: "",
@@ -417,6 +443,7 @@ function tagClass(item){
   if(gatheringsData.includes(item)) return 'cat-gathering';
   if(dayActivitiesData.includes(item)) return 'cat-dayactivity';
   if(tripsData.includes(item)) return 'cat-trip';
+  if(mosqueGatheringsData.includes(item)) return 'cat-mosque';
   if(clubsData.includes(item)) return 'cat-club';
   return 'cat-resource';
 }
@@ -429,12 +456,15 @@ function itemsForCategoryBase(cat){
   if(cat === 'sports'){
     return state.sportFilter === 'all' ? sportsData : sportsData.filter(e => e.sportKey === state.sportFilter);
   }
-  if(cat === 'activitiesgatherings'){
+  if(cat === 'activitiesfunctions'){
     const day = state.dayCity === 'all' ? dayActivitiesData : dayActivitiesData.filter(e => e.city === state.dayCity);
     return [...day, ...gatheringsData];
   }
   if(cat === 'trips'){
     return state.tripType === 'all' ? tripsData : tripsData.filter(e => e.tripType === state.tripType);
+  }
+  if(cat === 'mosquegatherings'){
+    return mosqueGatheringsData;
   }
   return [];
 }
@@ -462,7 +492,7 @@ function renderList(){
   const pagEl = document.getElementById('pagination');
 
   if(items.length === 0){
-    const msg = state.categoryFilter === 'activitiesgatherings' && state.timeFilter === 'upcoming'
+    const msg = state.categoryFilter === 'activitiesfunctions' && state.timeFilter === 'upcoming'
       ? 'Nothing dated yet — check back soon, or see Resources for ongoing spots.'
       : 'Nothing here yet.';
     el.innerHTML = `<div class="empty">${msg}</div>`;
@@ -578,7 +608,7 @@ function renderCalendar(){
         <div class="event-info"><h4>${e.title}</h4><span class="tag ${tagClass(e)}">${e.tag}</span></div>
         <button class="click-btn" data-id="${e.id}">Click me →</button>
       </div>`).join('')}</div>`;
-  } else if(items.length === 0 && state.categoryFilter === 'activitiesgatherings'){
+  } else if(items.length === 0 && state.categoryFilter === 'activitiesfunctions'){
     html += `<div class="ongoing-note">Nothing dated here yet — check back soon.</div>`;
   }
 
@@ -617,9 +647,10 @@ const cityFilterList = [
 
 const categoryList = [
   {key:'all', label:'All Events', bg:'#373d3b', fg:'#fff7e6'},
-  {key:'sports', label:'Sports Only', bg:'#f4b183', fg:'#373d3b'},
+{key:'sports', label:'Sports Only', bg:'#f4b183', fg:'#373d3b'},
   {key:'activitiesgatherings', label:'Activities & Gatherings', bg:'#c3d5e2', fg:'#373d3b'},
   {key:'trips', label:'Trips', bg:'#ddb862', fg:'#373d3b'},
+  {key:'mosquegatherings', label:'Mosque Gatherings', bg:'#c3e2d4', fg:'#373d3b'},
 ];
 
 const resourceFilterList = [
@@ -653,7 +684,7 @@ function renderSubFilters(){
   el.innerHTML = '';
 
   if(state.categoryFilter === 'sports'){
-    el.innerHTML = sportFilterOptions().map(f => `<button class="filter-chip ${state.sportFilter===f.key?'active':''}" data-sportfilter="${f.key}">${f.label}</button>`).join('');
+el.innerHTML = sportFilterOptions().map(f => `<button class="filter-chip ${state.sportFilter===f.key?'active':''}" data-sportfilter="${f.key}">${f.label}</button>`).join('');
   } else if(state.categoryFilter === 'activitiesgatherings'){
     el.innerHTML = `<select class="filter-select" id="citySelect">${cityFilterList.map(c=>`<option value="${c.key}" ${state.dayCity===c.key?'selected':''}>${c.label}</option>`).join('')}</select>`
       + `<div class="sub-note">Location filter applies to day activities only — gatherings show regardless.</div>`;
@@ -794,7 +825,7 @@ function renderDirectory(){
   const el = document.getElementById('directory-view');
   if(state.tab === 'clubs'){
     document.getElementById('resourcePagination').innerHTML = '';
-    el.innerHTML = `<div class="club-guide-actions">
+el.innerHTML = `<div class="club-guide-actions">
       <button class="club-guide-btn" data-hometab="clubstart">How to Start a Club →</button>
       <button class="club-guide-btn" data-hometab="clubjoin">How to Join a Club →</button>
     </div>

@@ -158,8 +158,46 @@ collections:
               - { label: "Trip type", name: "tripType", widget: "select", options: ["domestic", "international"] }
               - { label: "Location", name: "location", widget: "location-autocomplete", required: false }
               - { label: "Price", name: "price", widget: "string", required: false }
-              - { label: "Registration deadline", name: "registrationDeadline", widget: "date", required: false }
+               - { label: "Registration deadline", name: "registrationDeadline", widget: "date", required: false }
+               - { label: "Description", name: "desc", widget: "text", required: false }
+
+  - name: "mosquegatherings"
+    label: "Mosque Gatherings"
+    files:
+      - file: "data/mosquegatherings.json"
+        label: "Mosque Gatherings"
+        name: "mosquegatherings"
+        fields:
+          - label: "Items"
+            name: "items"
+            widget: "list"
+            fields:
+              - { label: "Tag / Type — change this to switch category", name: "tag", widget: "string", default: "Mosque Gathering" }
+              - { label: "ID (no spaces, unique)", name: "id", widget: "string" }
+              - { label: "Title", name: "title", widget: "string" }
+              - label: "Simple one-off date (optional — use this OR the recurring fields below, not both)"
+                name: "eventDate"
+                widget: "date"
+                required: false
+                hint: "Pick a date — the site automatically builds the display text and places it on the calendar. Leave blank for recurring or ongoing."
+              - { label: "Date text (shown on card — only needed if not using the simple date above)", name: "date", widget: "string", required: false }
+              - label: "Recurring weekdays (leave empty if one-off/ongoing)"
+                name: "days"
+                widget: "select"
+                multiple: true
+                required: false
+                options: ["sun","mon","tue","wed","thu","fri","sat"]
+              - { label: "Recurring: starts on (optional)", name: "recurStart", widget: "date", required: false }
+              - { label: "Recurring: ends on (optional)", name: "recurEnd", widget: "date", required: false }
+              - { label: "Specific calendar date (YYYY-MM-DD, legacy field — prefer the simple date above)", name: "calDate", widget: "string", required: false }
+              - { label: "Location", name: "location", widget: "location-autocomplete", required: false }
+              - { label: "Organizer name", name: "organizer", widget: "string", required: false }
+              - { label: "Contact", name: "contact", widget: "string", required: false }
               - { label: "Description", name: "desc", widget: "text", required: false }
+              - { label: "WhatsApp link", name: "whatsapp", widget: "string", required: false }
+              - { label: "Instagram link", name: "instagram", widget: "string", required: false }
+              - { label: "Website link", name: "website", widget: "string", required: false }
+              - { label: "Email", name: "email", widget: "string", required: false }
 
   - name: "clubs"
     label: "Gals Clubs"
