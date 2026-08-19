@@ -215,6 +215,22 @@
 
   .resource-map{ width:100%; height:65vh; min-height:420px; border:2px solid var(--charcoal); border-radius:14px; overflow:hidden; }
 
+  .resource-map-wrapper{ display:flex; gap:16px; align-items:flex-start; }
+  .resource-map-wrapper .resource-map{ flex:1; }
+  .resource-side-list{ width:280px; max-height:65vh; overflow-y:auto; border:2px solid var(--charcoal); border-radius:14px; background:var(--card); padding:12px; display:none; }
+  .resource-side-list.active{ display:block; }
+  .resource-side-list h4{ font-family:'Space Grotesk',sans-serif; font-size:15px; margin:0 0 10px; }
+  .resource-side-list .side-list-close{ background:none; border:none; font-size:18px; cursor:pointer; float:right; line-height:1; }
+  .resource-side-list .side-item{ padding:8px; border-bottom:1px solid rgba(33,30,28,0.08); cursor:pointer; }
+  .resource-side-list .side-item:last-child{ border-bottom:none; }
+  .resource-side-list .side-item strong{ display:block; font-size:13px; margin-bottom:2px; }
+  .resource-side-list .side-item span{ font-size:12px; color:var(--muted); }
+
+  @media (max-width:860px){
+    .resource-map-wrapper{ flex-direction:column; }
+    .resource-side-list{ width:100%; max-height:300px; }
+  }
+
   .ig-grid{ display:grid; grid-template-columns:repeat(4, 1fr); gap:14px; }
   .ig-tile{ display:flex; flex-direction:column; align-items:center; gap:8px; text-decoration:none; color:var(--charcoal); }
   .ig-tile-icon{ width:100%; aspect-ratio:1; border-radius:16px; border:2px solid var(--charcoal); display:flex; align-items:center; justify-content:center; font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:26px; box-shadow:3px 3px 0 var(--charcoal); }
@@ -779,7 +795,14 @@ function renderResourceList(){
 function renderResourceMap(){
   const el = document.getElementById('directory-view');
   const legendItems = resourceFilterList.filter(f => f.key !== 'all');
-  el.innerHTML = `<div id="resourceMapContainer" class="resource-map"></div>
+  el.innerHTML = `<div class="resource-map-wrapper">
+    <div class="resource-side-list" id="resourceSideList">
+      <button class="side-list-close" id="sideListClose" aria-label="Close list">&times;</button>
+      <h4 id="sideListTitle">Select a category on the map</h4>
+      <div id="sideListContent"></div>
+    </div>
+    <div id="resourceMapContainer" class="resource-map"></div>
+  </div>
     <div class="map-legend">
       ${legendItems.map(f => `<span><i style="background:${categoryColors[f.key]}"></i> ${f.label}</span>`).join('')}
     </div>
@@ -814,11 +837,50 @@ function renderResourceMap(){
     }).addTo(map);
     const linkHtml = r.mapsUrl ? `<a href="${r.mapsUrl}" target="_blank" rel="noopener">View on Google Maps</a>` : '';
     marker.bindPopup(`<strong>${r.title}</strong><br>${r.type||''}<br>${linkHtml}`);
+    marker.on('click', () => {
+      showSideList(r.category);
+    });
     markers.push(marker);
   });
 
   const group = L.featureGroup(markers);
   map.fitBounds(group.getBounds().pad(0.15));
+
+  const sideList = document.getElementById('resourceSideList');
+  const sideListTitle = document.getElementById('sideListTitle');
+  const sideListContent = document.getElementById('sideListContent');
+  const sideListClose = document.getElementById('sideListClose');
+
+  function showSideList(categoryKey){
+    const items = filteredResourceItems().filter(r => r.category === categoryKey);
+    const label = resourceFilterList.find(f => f.key === categoryKey)?.label || categoryKey;
+    sideListTitle.textContent = `${label} (${items.length})`;
+    sideListContent.innerHTML = items.map(r => `
+      <div class="side-item" data-id="${r.id}">
+        <strong>${r.title}</strong>
+        <span>${r.type || ''}${r.location ? ' · ' + r.location : ''}</span>
+      </div>
+    `).join('');
+    sideList.classList.add('active');
+
+    sideListContent.querySelectorAll('.side-item').forEach(item => {
+      item.addEventListener('click', () => {
+        const id = item.dataset.id;
+        const found = allResourceItems.find(r => r.id === id);
+        if(found) renderDetail(found.id || found.title);
+      });
+    });
+  }
+
+  function hideSideList(){
+    sideList.classList.remove('active');
+  }
+
+  sideListClose.addEventListener('click', hideSideList);
+
+  map.on('click', () => {
+    hideSideList();
+  });
 }
 
 const clubColors = {
