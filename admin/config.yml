@@ -223,3 +223,22 @@ collections:
               - { label: "Phone", name: "phone", widget: "string", required: false }
               - { label: "Instagram link", name: "instagram", widget: "string", required: false }
               - { label: "Website link", name: "website", widget: "string", required: false }
+
+  - name: "smallbusinesses"
+    label: "Resources — Small Businesses"
+    files:
+      - file: "data/smallbusinesses.json"
+        label: "Small Businesses"
+        name: "smallbusinesses"
+        fields:
+          - label: "Items"
+            name: "items"
+            widget: "list"
+            fields:
+              - { label: "ID (no spaces, unique)", name: "id", widget: "string" }
+              - { label: "Business name", name: "title", widget: "string" }
+              - { label: "Type (e.g. Home bakery, Online shop)", name: "type", widget: "string", required: false }
+              - { label: "Description", name: "desc", widget: "text" }
+              - { label: "Instagram link", name: "instagram", widget: "string", required: false }
+              - { label: "Website link", name: "website", widget: "string", required: false }
+              - { label: "Email", name: "email", widget: "string", required: false }
