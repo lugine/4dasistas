@@ -238,11 +238,6 @@
 </nav>
 
 <div class="category-row" id="categoryRow"></div>
-<div class="subscribe-row" id="subscribeRow">
-  <a class="subscribe-btn" id="subscribeBtn" href="#">📅 Subscribe to Calendar</a>
-  <a class="subscribe-fallback" id="subscribeFallback" href="#" target="_blank" rel="noopener">or download the file directly</a>
-</div>
-
 <div class="controls" id="controlsRow">
   <div class="view-toggle" id="viewToggle">
     <button class="active" data-view="list">List view</button>
@@ -281,6 +276,11 @@
     <div class="detail-card" id="detailCard"></div>
   </div>
 </main>
+
+<div class="subscribe-row" id="subscribeRow">
+  <a class="subscribe-btn" id="subscribeBtn" href="#">📅 Subscribe to Calendar</a>
+  <a class="subscribe-fallback" id="subscribeFallback" href="#" target="_blank" rel="noopener">or download the file directly</a>
+</div>
 
 <footer>
   <div class="footer-btns">
@@ -562,11 +562,19 @@ function renderCalendar(){
 /* ============================================================
    RENDER: SUB-FILTERS
    ============================================================ */
-const sportFilterList = [
-  {key:'all',label:'All'},{key:'badminton',label:'Badminton'},{key:'soccer',label:'Soccer'},
-  {key:'basketball',label:'Basketball'},{key:'softball',label:'Softball'},{key:'hockey',label:'Hockey'},
-  {key:'running',label:'Running'},{key:'fitness',label:'Fitness'},
-];
+function normalizeSportKey(value){
+  return String(value || '').trim().toLowerCase();
+}
+
+function sportFilterLabel(key){
+  return key.replace(/[-_]+/g, ' ').replace(/\b\w/g, letter => letter.toUpperCase());
+}
+
+function sportFilterOptions(){
+  const keys = [...new Set(sportsData.map(item => normalizeSportKey(item.sportKey)).filter(Boolean))]
+    .sort((a, b) => a.localeCompare(b));
+  return [{key:'all',label:'All'}, ...keys.map(key => ({key, label:sportFilterLabel(key)}))];
+}
 const cityFilterList = [
   {key:'all',label:'All locations'},{key:'Mississauga',label:'Mississauga'},{key:'Oakville',label:'Oakville'},{key:'Toronto',label:'Toronto'},
 ];
@@ -609,7 +617,7 @@ function renderSubFilters(){
   el.innerHTML = '';
 
   if(state.categoryFilter === 'sports'){
-    el.innerHTML = sportFilterList.map(f => `<button class="filter-chip ${state.sportFilter===f.key?'active':''}" data-sportfilter="${f.key}">${f.label}</button>`).join('');
+    el.innerHTML = sportFilterOptions().map(f => `<button class="filter-chip ${state.sportFilter===f.key?'active':''}" data-sportfilter="${f.key}">${f.label}</button>`).join('');
   } else if(state.categoryFilter === 'activitiesgatherings'){
     el.innerHTML = `<select class="filter-select" id="citySelect">${cityFilterList.map(c=>`<option value="${c.key}" ${state.dayCity===c.key?'selected':''}>${c.label}</option>`).join('')}</select>`
       + `<div class="sub-note">Location filter applies to day activities only — gatherings show regardless.</div>`;
