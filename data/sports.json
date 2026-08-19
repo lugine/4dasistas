@@ -132,6 +132,34 @@
       "instagram": "https://www.instagram.com/p/Db6etN9Buk9/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==&igsi=MzRlODBiNWFlZA==",
       "sportKey": "running",
       "tag": "Running"
+    },
+    {
+      "id": "rallyclub-tennis-pickleball",
+      "title": "Rally Club (Tennis & Pickleball)",
+      "tag": "Tennis & Pickleball",
+      "sportKey": "tennis-pickleball",
+      "date": "Every Thursday · 8:00 PM",
+      "days": ["thu"],
+      "location": "Angela James Tennis Court",
+      "registration": "Drop-in",
+      "desc": "Weekly drop-in tennis & pickleball with Muslimah Athletic Club.",
+      "instagram": "https://www.instagram.com/muslimahathleticclub/",
+      "website": "https://linktr.ee/MuslimahAthleticClub",
+      "calDate": null
+    },
+    {
+      "id": "ballhockey-open-practice",
+      "title": "Ball Hockey Open Practice",
+      "tag": "Ball Hockey",
+      "sportKey": "ball-hockey",
+      "date": "Saturdays · 1:00–3:00 PM",
+      "days": ["sat"],
+      "location": "Angela James Arena",
+      "registration": "Drop-in",
+      "desc": "Beginner-friendly ball hockey open practice, women & girls only, ages 16+. 1-2 skills, 2-3 scrimmage.",
+      "instagram": "https://www.instagram.com/muslimahathleticclub/",
+      "website": "https://linktr.ee/MuslimahAthleticClub",
+      "calDate": null
     }
   ]
 }
