@@ -19,6 +19,62 @@
       "calDate": "2026-06-28",
       "desc": "a bouquet making workshop, but with the sweetest lil twist!! tickets can be found in the link in our bio🎟️\nhttps://www.instagram.com/p/DZlTgUVD_hK/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==&igsi=MzRlODBiNWFlZA==",
       "location": "Toronto (see Instagram for exact venue)"
+    },
+    {
+      "id": "market-salaamgirls-aug22",
+      "title": "Muslimah Market",
+      "tag": "Day Activity",
+      "date": "August 22, 2026 · 1:00–8:00 PM",
+      "calDate": "2026-08-22",
+      "city": "Mississauga",
+      "location": "5585 McAdam Rd, Mississauga",
+      "desc": "80+ vendors, pay-what-you-can charity market — food, art, spa, workshops & speakers.",
+      "instagram": "https://www.instagram.com/salaamgirlsmarket/",
+      "website": "https://www.eventbrite.co.uk/e/muslimah-market-attendee-volunteer-content-creator-workshop-tickets-registration-1994915605277"
+    },
+    {
+      "id": "tubing-koraa-aug23",
+      "title": "Tubing the Rapids",
+      "tag": "Day Activity",
+      "date": "Sunday, August 23, 2026 · Drop in 10 AM–4 PM",
+      "calDate": "2026-08-23",
+      "city": "Elora",
+      "location": "Elora Gorge",
+      "desc": "Tubing down the rapids with the girls — lunch provided after. Best for comfortable swimmers, spots limited.",
+      "instagram": "https://www.instagram.com/koraa.ca/"
+    },
+    {
+      "id": "bloombake-girlsroom-aug23",
+      "title": "Bloom & Bake",
+      "tag": "Day Activity",
+      "date": "August 23, 2026 · 12:00 PM",
+      "calDate": "2026-08-23",
+      "city": "Scarborough",
+      "location": "Scarborough (location shared with confirmed attendees)",
+      "desc": "Build-your-own bouquet, specialty drinks, and a community dessert exchange. Tickets from $49.",
+      "instagram": "https://www.instagram.com/p/DbvzMSyDrtX/"
+    },
+    {
+      "id": "pilates-sisterscorner-aug29",
+      "title": "Pilates & Wellness Social",
+      "tag": "Day Activity",
+      "date": "August 29, 2026 · 11:00 AM",
+      "calDate": "2026-08-29",
+      "city": "Mississauga",
+      "location": "Mississauga (see Instagram for exact venue)",
+      "desc": "A morning of Pilates, wellness & sisterhood — limited spots available.",
+      "instagram": "https://www.instagram.com/p/DcMSiVCm1nx/"
+    },
+    {
+      "id": "glamatelier-girlsroom-sep12",
+      "title": "Glam Atelier",
+      "tag": "Day Activity",
+      "date": "September 12, 2026 · 4:00 PM",
+      "calDate": "2026-09-12",
+      "city": "Toronto",
+      "location": "Mieluna Café, 483 Bay St, Toronto",
+      "desc": "Custom lip gloss bar, Palestine mirror decoden workshop, specialty café drink & 15% off Mieluna's menu. Early bird spots limited.",
+      "instagram": "https://www.instagram.com/p/DcG676yjveM/"
     }
   ]
 }
