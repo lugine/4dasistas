@@ -1061,7 +1061,10 @@ function restoreStateFromHash(){
   if(params.has('view')) state.view = params.get('view');
   if(params.has('time')) state.timeFilter = params.get('time');
   if(params.has('rfilter')) state.resourceFilter = params.get('rfilter');
-  if(params.has('rview')) state.resourceView = params.get('rview');
+  if(params.has('rview')){
+    const resourceView = params.get('rview');
+    state.resourceView = resourceView === 'instagram' ? 'smallbusinesses' : resourceView;
+  }
 }
 
 function syncToggleButtonClasses(){
