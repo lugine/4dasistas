@@ -61,6 +61,8 @@ files you're touching, and a timestamp. Change back to IDLE when done.)*
 
 **2026-08-19 19:30 — Kilo (VS Code) — `index.html`, `manifest.webmanifest`, `OFFICIAL LOGO.png`** — Added "Add to Home Screen" tab and instructions page. Wired repo logo into Chrome tab icon, Apple touch icons, and PWA manifest. Added home tile for homescreen instructions. Updated icon references to use `OFFICIAL LOGO.png`.
 
+**2026-08-19 19:50 — Kilo (VS Code) — `index.html`** — Removed "Add to Home Screen" from top horizontal tabs, added colored background bar behind tab navigation, made 4DASISTAS headline clickable to return to homepage. Completed.
+
 ---
 
 ## Recent Activity Log
@@ -71,3 +73,4 @@ _(most recent first — add new entries to the top)_
 - 2026-08-19 — Kilo (VS Code) — `index.html`, `service-worker.js`, `manifest.webmanifest`, `app-icon.svg`, `assets/`, `data/mosquegatherings.json`, `data/smallbusinesses.json`, `admin/config.yml` — Added PWA support (installable app, service worker), new "Small Businesses" resource view + CMS collection, new mosque-specific gatherings category.
 - 2026-08-19 — Claude (chat) — `index.html` — Added Home tab (landing page), Rules tab (community guidelines), Clubs changed to stacked layout.
 - 2026-08-19 — Kilo (VS Code) — `index.html`, `manifest.webmanifest`, `OFFICIAL LOGO.png` — Added "Add to Home Screen" tab with instructions, wired new logo into favicon/PWA icons.
+- 2026-08-19 — Kilo (VS Code) — `index.html` — Removed "Add to Home Screen" from top tabs, added tab bar background color, made headline clickable to home.

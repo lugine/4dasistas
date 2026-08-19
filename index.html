@@ -46,6 +46,8 @@
 
   header{ padding:40px 20px 20px; text-align:center; }
   .wordmark{ font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:clamp(32px,7vw,52px); letter-spacing:-0.01em; }
+  .wordmark-link{ text-decoration:none; color:inherit; display:inline-block; }
+  .wordmark-link:hover .wordmark span{ color:var(--charcoal); }
   .wordmark span{ color:var(--pink); }
   .header-disclaimer{ font-size:11px; color:var(--muted); max-width:440px; margin:8px auto 0; line-height:1.5; text-align:center; }
 
@@ -58,7 +60,7 @@
   }
   .wa-fixed-btn svg{ width:18px; height:18px; flex-shrink:0; display:block; }
 
-  .tabs{ display:flex; justify-content:center; gap:6px; padding:22px 16px 0; overflow-x:auto; -webkit-overflow-scrolling:touch; scrollbar-width:none; }
+  .tabs{ display:flex; justify-content:center; gap:6px; padding:22px 16px 0; overflow-x:auto; -webkit-overflow-scrolling:touch; scrollbar-width:none; background:rgba(201,170,173,0.18); }
   .tabs::-webkit-scrollbar{ display:none; }
   .tab-btn{
     flex-shrink:0; font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:14px;
@@ -277,7 +279,9 @@
 </a>
 
 <header>
-  <div class="wordmark">4DA<span>SISTAS</span></div>
+  <a href="#" class="wordmark-link" aria-label="Go to homepage">
+    <div class="wordmark">4DA<span>SISTAS</span></div>
+  </a>
   <div class="header-disclaimer">#1st and only community bringing together ALL muslim gals events in GTA to one Calendar (+ unique clubs to join) ↓</div>
 </header>
 
@@ -287,7 +291,6 @@
   <button class="tab-btn" data-tab="clubs">GALS CLUBS</button>
   <button class="tab-btn" data-tab="resources">Resources</button>
   <button class="tab-btn" data-tab="rules">Rules</button>
-  <button class="tab-btn" data-tab="homescreen">Add to Home Screen</button>
 </nav>
 
 <div class="category-row" id="categoryRow"></div>
@@ -1220,6 +1223,11 @@ document.getElementById('directory-view').addEventListener('click', e => {
   const tile = e.target.closest('[data-hometab]');
   if(!tile) return;
   goToTab(tile.dataset.hometab);
+});
+
+document.querySelector('.wordmark-link').addEventListener('click', e => {
+  e.preventDefault();
+  goToTab('home');
 });
 
 document.getElementById('tabs').addEventListener('click', e => {
