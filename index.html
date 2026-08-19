@@ -4,6 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>4DASISTAS</title>
+<meta name="theme-color" content="#caaacd">
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="icon" href="/app-icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/app-icon.svg">
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <style>
@@ -1013,6 +1017,14 @@ window.addEventListener('hashchange', () => {
 /* ============================================================
    INIT
    ============================================================ */
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/service-worker.js').catch(error => {
+      console.warn('Service worker registration failed:', error);
+    });
+  });
+}
+
 document.getElementById('list-view').innerHTML = '<div class="empty">Loading…</div>';
 document.getElementById('subscribeBtn').href = `webcal://${location.host}/calendar.ics`;
 document.getElementById('subscribeFallback').href = `https://${location.host}/calendar.ics`;
