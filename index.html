@@ -260,7 +260,7 @@
 
 <nav class="tabs" id="tabs">
   <button class="tab-btn active" data-tab="home">Home</button>
-  <button class="tab-btn" data-tab="events">Calendar4All</button>
+  <button class="tab-btn" data-tab="events">Calendar</button>
   <button class="tab-btn" data-tab="clubs">GALS CLUBS</button>
   <button class="tab-btn" data-tab="resources">Resources</button>
   <button class="tab-btn" data-tab="rules">Rules</button>
@@ -282,7 +282,7 @@
   <div class="view-toggle" id="resourceViewToggle">
     <button data-rview="list">List view</button>
     <button class="active" data-rview="map">Map view</button>
-    <button data-rview="instagram">Instagram</button>
+    <button data-rview="smallbusinesses">Small Businesses</button>
   </div>
 </div>
 
@@ -338,12 +338,13 @@ let tripsData = [];
 let clubsData = [];
 let organizationsData = [];
 let resourcesData = [];
+let smallBusinessesData = [];
 let allResourceItems = [];
 let ALL_ITEMS = [];
 let EVENT_ITEMS = [];
 
 async function loadData(){
-  const [sports, gatherings, dayactivities, trips, clubs, organizations, resources] = await Promise.all([
+  const [sports, gatherings, dayactivities, trips, clubs, organizations, resources, smallbusinesses] = await Promise.all([
     fetch('data/sports.json').then(r => r.json()).then(d => d.items),
     fetch('data/gatherings.json').then(r => r.json()).then(d => d.items),
     fetch('data/dayactivities.json').then(r => r.json()).then(d => d.items),
@@ -351,6 +352,7 @@ async function loadData(){
     fetch('data/clubs.json').then(r => r.json()).then(d => d.items),
     fetch('data/organizations.json').then(r => r.json()).then(d => d.items),
     fetch('data/resources.json').then(r => r.json()).then(d => d.items),
+    fetch('data/smallbusinesses.json').then(r => r.json()).then(d => d.items),
   ]);
   sportsData = sports;
   gatheringsData = gatherings;
@@ -359,6 +361,7 @@ async function loadData(){
   clubsData = clubs;
   organizationsData = organizations;
   resourcesData = resources;
+  smallBusinessesData = smallbusinesses;
 
   // If a simple "eventDate" was set in the CMS, auto-derive calDate + display date text from it.
   [sportsData, gatheringsData, dayActivitiesData, tripsData].forEach(arr => {
@@ -863,9 +866,8 @@ function renderDirectory(){
     if(state.resourceView === 'map'){
       document.getElementById('resourcePagination').innerHTML = '';
       renderResourceMap();
-    } else if(state.resourceView === 'instagram'){
-      document.getElementById('resourcePagination').innerHTML = '';
-      renderResourceInstagram();
+    } else if(state.resourceView === 'smallbusinesses'){
+      renderSmallBusinesses();
     } else {
       renderResourceList();
     }
@@ -910,18 +912,31 @@ function renderDirectory(){
   }
 }
 
-function renderResourceInstagram(){
+function renderSmallBusinesses(){
   const el = document.getElementById('directory-view');
-  const filtered = filteredResourceItems().filter(r => r.instagram);
-  if(filtered.length === 0){
-    el.innerHTML = '<div class="empty">None of these have a linked Instagram yet — add one via the CMS and it\'ll show up here.</div>';
+  document.getElementById('resourcePagination').innerHTML = '';
+
+  if(smallBusinessesData.length === 0){
+    el.innerHTML = '<div class="empty">No small businesses have been added yet.</div>';
     return;
   }
-  el.innerHTML = `<div class="ig-grid">${filtered.map(r => `
-    <a class="ig-tile" href="${r.instagram}" target="_blank" rel="noopener">
-      <div class="ig-tile-icon" style="background:${categoryColors[r.category]||'#373d3b'}">${r.title.charAt(0)}</div>
-      <div class="ig-tile-name">${r.title}</div>
-    </a>`).join('')}</div>`;
+
+  el.innerHTML = smallBusinessesData.map(b => `
+    <div class="panel-card">
+      <div class="panel-top">
+        <div class="monogram" style="background:var(--blush);color:var(--charcoal)">${b.title.charAt(0)}</div>
+        <div>
+          <h4>${b.title}</h4>
+          <div class="panel-type">${b.type || 'Small business'}</div>
+        </div>
+      </div>
+      <div class="panel-desc">${b.desc}</div>
+      <div class="panel-links">
+        ${b.instagram ? `<a class="link-btn secondary" href="${b.instagram}" target="_blank" rel="noopener">Follow on Instagram</a>` : ''}
+        ${b.website ? `<a class="link-btn secondary" href="${b.website}" target="_blank" rel="noopener">Visit Website</a>` : ''}
+        ${b.email ? `<a class="link-btn secondary" href="mailto:${b.email}">Email</a>` : ''}
+      </div>
+    </div>`).join('');
 }
 
 /* ============================================================
@@ -1062,6 +1077,7 @@ function syncToggleButtonClasses(){
 function goToTab(tabName){
   document.querySelectorAll('.tab-btn').forEach(b => b.classList.toggle('active', b.dataset.tab === tabName));
   state.tab = tabName;
+  if(tabName === 'events') state.view = 'calendar';
   state.page = 1;
   render();
   window.scrollTo({top:0, behavior:'smooth'});
