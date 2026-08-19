@@ -53,6 +53,8 @@ protocol.
 *(Whoever starts work next: change this to IN PROGRESS, your name, the
 files you're touching, and a timestamp. Change back to IDLE when done.)*
 
+**2026-08-19 (later) — Claude (chat) — `admin/config.yml`** — Fixed a YAML indentation bug (2 lines with 15 spaces instead of 14 in the trips collection) that broke the entire CMS config parser. Confirmed valid YAML after fix, pushed as commit 312d084530e3.
+
 **2026-08-19 16:12 — Kilo (VS Code) — `index.html`** — Investigating reported broken interactivity on live site. Pulled latest `origin/main`, read AGENT-COORDINATION.md, confirmed Claude (chat) already fixed the JS syntax/Promise.all bug in `b0b7a46`. Live site HTML now matches fixed local `index.html` exactly (no diff). Likely remaining issue is Cloudflare cache serving stale pre-fix version. No code changes made.
 
 **2026-08-19 16:25 — Kilo (VS Code) — `index.html`** — Implemented side list panel in Resources map view: clicking a category marker shows all locations of that type in a left-side list. Added CSS for `.resource-map-wrapper` layout, modified `renderResourceMap()` to include side list container, marker click handlers to populate list by category, and close button. Tested JS syntax balance. Completed.
