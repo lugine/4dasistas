@@ -2,14 +2,20 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>4DASISTAS</title>
 <meta name="theme-color" content="#caaacd">
+<meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="4DASISTAS">
+<meta name="format-detection" content="telephone=no">
 <link rel="manifest" href="/manifest.webmanifest">
 <link rel="icon" href="/app-icon.svg" type="image/svg+xml">
-<link rel="apple-touch-icon" href="/app-icon.svg">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png">
+<link rel="apple-touch-icon" sizes="192x192" href="/assets/icon-192.png">
+<link rel="apple-touch-icon" sizes="512x512" href="/assets/icon-512.png">
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <style>
@@ -131,11 +137,11 @@
   .weekday-row div{ text-align:center; font-size:11px; font-weight:700; color:var(--rose-deep); text-transform:uppercase; }
 
   .month-grid{ display:grid; grid-template-columns:repeat(7,1fr); gap:4px; }
-  .day-cell{ min-height:78px; border:1.5px solid rgba(33,30,28,0.15); border-radius:8px; background:white; padding:4px; overflow:hidden; }
+  .day-cell{ min-height:78px; border:1.5px solid rgba(33,30,28,0.15); border-radius:8px; background:white; padding:4px; overflow:visible; }
   .day-cell.empty{ border:none; background:transparent; }
   .day-cell.today{ border:2px solid var(--pink); }
   .day-num{ font-family:'Space Grotesk',sans-serif; font-size:12px; font-weight:700; color:var(--charcoal); }
-  .day-pip{ display:block; font-size:9.5px; font-weight:600; padding:2px 4px; border-radius:4px; margin-top:2px; cursor:pointer; line-height:1.25; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; color:var(--charcoal); }
+  .day-pip{ display:block; font-size:9.5px; font-weight:600; padding:2px 4px; border-radius:4px; margin-top:2px; cursor:pointer; line-height:1.25; overflow:hidden; text-overflow:ellipsis; white-space:normal; word-break:break-word; color:var(--charcoal); max-height:4.7em; }
   .day-pip.cat-gathering{ color:white; }
 
   @media (max-width:480px){
@@ -143,7 +149,7 @@
     .month-grid{ gap:3px; }
     .day-cell{ min-height:94px; padding:6px 4px; }
     .day-num{ font-size:14px; }
-    .day-pip{ font-size:11px; padding:3px 5px; margin-top:3px; }
+    .day-pip{ font-size:11px; padding:3px 5px; margin-top:3px; max-height:5em; }
     .weekday-row div{ font-size:10px; }
     .cal-title{ font-size:17px; min-width:auto; }
     .week-grid{ gap:5px; }
