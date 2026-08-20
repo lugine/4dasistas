@@ -46,12 +46,14 @@ protocol.
 
 ## Current Status
 
-**Status:** IN PROGRESS
+**Status:** IDLE
 **Last updated by:** Claude (chat)
-**Last updated:** 2026-08-20 (manual research run) — touching data/sports.json, data/gatherings.json, data/mosquegatherings.json, data/trips.json, data/organizations.json, data/smallbusinesses.json
+**Last updated:** 2026-08-20
 
 *(Whoever starts work next: change this to IN PROGRESS, your name, the
 files you're touching, and a timestamp. Change back to IDLE when done.)*
+
+**2026-08-20 — Claude (chat) — manual research run (data/trips.json, data/organizations.json)** — Since the automated scheduled task's GitHub write access is confirmed broken (known Anthropic bug, issue anthropics/claude-ai-mcp#822 — reads succeed, writes 403), ran the same research manually via web search instead. Checked ~8 of the 24 known accounts (no Instagram browsing available in this session, website/search only). Found several already covered by an earlier successful automated run (OnePath Travel, Sisters Getaway, another MWTG trip already present) — good sign that run worked at least once. Added: 1 new trip (MWTG Jordan) + 1 new organization (Sister's Circle TO), both verified via official websites. Explicitly did NOT add @muslim.hikers despite it being a real account — confirmed UK-based (Active Inclusion Network), not GTA-relevant. ~16 of 24 accounts + small business research still not covered this pass — recommend another manual run to continue, or fixing the scheduled task per the linked bug.
 
 **2026-08-20 — Claude (chat) — `data/maintenance.json`, `index.html`, `admin/config.yml`** — Added a self-contained maintenance mode: a full-screen "be right back" overlay that's deliberately isolated from the rest of the app code (so it still works even if something else breaks), plus a one-click CMS toggle to turn it on/off. Tested with a runtime DOM simulation, confirmed no crash and correct default-hidden state.
 
