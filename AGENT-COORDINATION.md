@@ -63,7 +63,7 @@ files you're touching, and a timestamp. Change back to IDLE when done.)*
 
 **2026-08-19 19:50 — Kilo (VS Code) — `index.html`** — Removed "Add to Home Screen" from top horizontal tabs, added colored background bar behind tab navigation, made 4DASISTAS headline clickable to return to homepage. Completed.
 
-**2026-08-20 — Kilo (VS Code) — `index.html`, `data/resources.json`, `data/trips.json`, `AGENT-COORDINATION.md`** — Added calendar subscription selection page with category checkboxes and client-side ICS download. Added Beauty & Care resource category with Hair by Reema, Eclat Beauty Studio, and The Curl Lounge. Reordered Resources view toggle to List | Small Businesses | Map with Map as default landing. Removed example trips. Updated footer with logo color and tagline. Validated JS and JSON. Pushed to origin/main.
+**2026-08-20 — Kilo (VS Code) — `index.html`, `data/resources.json`, `data/trips.json`, `AGENT-COORDINATION.md`** — Added calendar subscription selection page with category checkboxes and client-side ICS download. Added Beauty & Care resource category with Hair by Reema, Eclat Beauty Studio, and The Curl Lounge. Reordered Resources view toggle to List | Small Businesses | Map with Map as default landing. Removed example trips. Updated footer with logo color and tagline. Added 5 trips from IG accounts (ISNA Food Festival, MWTG Oman, OnePath Kyrgyzstan, Sakinah Cappadocia, Sisters Getaway Morocco). Validated JS and JSON. Pushed to origin/main.
 
 ---
 

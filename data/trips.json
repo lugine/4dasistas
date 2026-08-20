@@ -1,3 +1,69 @@
 {
-  "items": []
+  "items": [
+    {
+      "id": "isna-food-festival-2026",
+      "title": "ISNA Canada Street Food Festival",
+      "date": "September 19-20, 2026",
+      "time": "2PM - 10PM",
+      "location": "2200 S Sheridan Way, Mississauga, ON",
+      "desc": "ISNA Canada's 3rd Annual Street Food Festival. Free admission. Halal street food, entertainment, attractions, vendors, bazaar, activities, contests, inflatables, and performances. Family-friendly community event.",
+      "website": "https://www.isnacanada.com/events-programs/street-food-festival-2026/",
+      "type": "Community Festival",
+      "category": "largeevents",
+      "lat": 43.5567,
+      "lng": -79.6558
+    },
+    {
+      "id": "mwtg-oman-2026",
+      "title": "MWTG Oman Group Trip",
+      "date": "October 24-31, 2026",
+      "location": "Oman",
+      "desc": "The Muslim Women's Travel Group presents an 8-day group trip to Oman. Women-only, halal-friendly, small group travel with local guides. Safety, sisterhood, and cultural immersion.",
+      "website": "https://themwtg.com/oman-2026_1/",
+      "instagram": "https://www.instagram.com/the.mwtg/",
+      "type": "International Trip",
+      "category": "trips",
+      "lat": 23.5880,
+      "lng": 58.3829
+    },
+    {
+      "id": "onepath-kyrgyzstan-2026",
+      "title": "OnePath Travel Kyrgyzstan (Ladies)",
+      "date": "June 28 - July 5, 2026",
+      "location": "Kyrgyzstan",
+      "desc": "Muslim-friendly group trip to Kyrgyzstan for women. Experience breathtaking untouched nature, high mountains, clear blue lakes, and nomadic culture. Small group, halal options, meaningful cultural moments.",
+      "website": "https://www.travelonepath.com/group-trips/kyrgyzstan-(ladies)",
+      "instagram": "https://www.instagram.com/onepath.travel/",
+      "type": "International Trip",
+      "category": "trips",
+      "lat": 41.2044,
+      "lng": 74.7661
+    },
+    {
+      "id": "sakinah-cappadocia-2026",
+      "title": "Sakinah Retreats - Cappadocia Turkey",
+      "date": "September 24-28, 2026",
+      "location": "Göreme, Cappadocia, Turkey",
+      "desc": "5-day sacred retreat in the surreal landscapes of Cappadocia. Sunrise hot air balloons, ancient caves of Göreme, pottery in Avanos, spiritual day trip to Konya (resting place of Rumi). Faith-aligned travel with sisterhood.",
+      "website": "https://sakinahretreats.wetravel.com/trips/cappadocia-turkey-sakinah-retreat-5-days-4-nights-sakinah-retreat-7626716303",
+      "instagram": "https://www.instagram.com/sakinaretreats/",
+      "type": "Retreat",
+      "category": "trips",
+      "lat": 38.6431,
+      "lng": 34.8289
+    },
+    {
+      "id": "sisters-getaway-morocco-2026",
+      "title": "Sisters Getaway - Morocco",
+      "date": "October 2026",
+      "location": "Morocco",
+      "desc": "Fully-inclusive female-only group trip to Morocco with Sisters Getaway. 15-20 women per group, 2 leaders, private pool, halal meals, airport pickup, yoga, sightseeing, and sisterhood. Split itinerary: rural retreat + city break.",
+      "website": "https://www.sistersgetaway.com/",
+      "instagram": "https://www.instagram.com/sistersgetawayofficial/",
+      "type": "Retreat",
+      "category": "trips",
+      "lat": 31.7917,
+      "lng": -7.0926
+    }
+  ]
 }
