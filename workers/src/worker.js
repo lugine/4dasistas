@@ -79,7 +79,7 @@ export default {
       const data = document.getElementById('editor').value;
       await fetch('/api/data/trips', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ${ADMIN_PASSWORD}' },
+        headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + ADMIN_PASSWORD },
         body: data
       });
       alert('Saved!');
