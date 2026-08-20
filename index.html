@@ -434,9 +434,14 @@ async function fetchDataWithFallback(key, localPath){
     const data = await res.json();
     return (data && data.items) ? data.items : [];
   } catch (e) {
-    const res = await fetch(localPath);
-    const data = await res.json();
-    return data.items || [];
+    try {
+      const res = await fetch(localPath);
+      const data = await res.json();
+      return data.items || [];
+    } catch (fallbackError) {
+      console.warn(`Failed to load ${key} from Worker and local fallback:`, fallbackError);
+      return [];
+    }
   }
 }
 
