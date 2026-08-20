@@ -23,7 +23,27 @@ jobs:
           
       - name: Generate calendar.ics
         run: python3 scripts/generate_calendar.py
-        
+      
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      
+      - name: Install wrangler
+        run: npm install -g wrangler
+      
+      - name: Sync data to Worker KV
+        if: secrets.CLOUDFLARE_API_TOKEN != ''
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        run: |
+          cd workers
+          for file in ../data/*.json; do
+            key=$(basename "$file" .json)
+            echo "Syncing $key to KV..."
+            wrangler kv key put --binding=SITE_DATA "$key" --path="$file"
+          done
+          
       - name: Check for changes
         id: changes
         run: |

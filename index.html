@@ -398,17 +398,30 @@ let allResourceItems = [];
 let ALL_ITEMS = [];
 let EVENT_ITEMS = [];
 
+async function fetchDataWithFallback(key, localPath){
+  try {
+    const res = await fetch(`https://4dasistas-editor.luginealdimasi.workers.dev/api/data/${key}`);
+    if (!res.ok) throw new Error('Worker unavailable');
+    const data = await res.json();
+    return (data && data.items) ? data.items : [];
+  } catch (e) {
+    const res = await fetch(localPath);
+    const data = await res.json();
+    return data.items || [];
+  }
+}
+
 async function loadData(){
 const [mosqueGatherings, sports, gatherings, dayactivities, trips, clubs, organizations, resources, smallbusinesses] = await Promise.all([
-    fetch("data/mosquegatherings.json").then(r => r.json()).then(d => d.items),
-    fetch('data/sports.json').then(r => r.json()).then(d => d.items),
-    fetch('data/gatherings.json').then(r => r.json()).then(d => d.items),
-    fetch('data/dayactivities.json').then(r => r.json()).then(d => d.items),
-    fetch('data/trips.json').then(r => r.json()).then(d => d.items),
-    fetch('data/clubs.json').then(r => r.json()).then(d => d.items),
-    fetch('data/organizations.json').then(r => r.json()).then(d => d.items),
-    fetch('data/resources.json').then(r => r.json()).then(d => d.items),
-fetch('data/smallbusinesses.json').then(r => r.json()).then(d => d.items),
+    fetchDataWithFallback('mosquegatherings', 'data/mosquegatherings.json'),
+    fetchDataWithFallback('sports', 'data/sports.json'),
+    fetchDataWithFallback('gatherings', 'data/gatherings.json'),
+    fetchDataWithFallback('dayactivities', 'data/dayactivities.json'),
+    fetchDataWithFallback('trips', 'data/trips.json'),
+    fetchDataWithFallback('clubs', 'data/clubs.json'),
+    fetchDataWithFallback('organizations', 'data/organizations.json'),
+    fetchDataWithFallback('resources', 'data/resources.json'),
+    fetchDataWithFallback('smallbusinesses', 'data/smallbusinesses.json'),
   ]);
   sportsData = sports;
   gatheringsData = gatherings;
