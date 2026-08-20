@@ -309,8 +309,8 @@
 <div class="controls controls-center" id="resourceControlsRow" style="display:none;">
   <div class="view-toggle" id="resourceViewToggle">
     <button data-rview="list">List view</button>
-    <button class="active" data-rview="map">Map view</button>
     <button data-rview="smallbusinesses">Small Businesses</button>
+    <button class="active" data-rview="map">Map view</button>
   </div>
 </div>
 
@@ -335,7 +335,7 @@
 </main>
 
 <div class="subscribe-row" id="subscribeRow">
-  <a class="subscribe-btn" id="subscribeBtn" href="#">📅 Subscribe to Calendar</a>
+  <a class="subscribe-btn" id="subscribeBtn" href="#" data-goto-subscribe>📅 Subscribe to Calendar</a>
   <a class="subscribe-fallback" id="subscribeFallback" href="#" target="_blank" rel="noopener">or download the file directly</a>
 </div>
 
@@ -683,10 +683,11 @@ const resourceFilterList = [
   {key:'cafes', label:'Cafes'},
   {key:'shops', label:'Shops'},
   {key:'restaurants', label:'Restaurants'},
+  {key:'beautycare', label:'Beauty & Care'},
 ];
 
 const categoryColors = {
-  mosques:'#444758', cafes:'#ddb862', shops:'#caaacd', restaurants:'#776867'
+  mosques:'#444758', cafes:'#ddb862', shops:'#caaacd', restaurants:'#776867', beautycare:'#ecc7d2'
 };
 
 function renderResourceFilters(){
@@ -1039,7 +1040,96 @@ el.innerHTML = `<div class="club-guide-actions">
         </ol>
         <p style="margin-top:16px;font-size:13px;color:var(--muted);">Once installed, the app will open full-screen and use the 4DASISTAS logo as its icon.</p>
       </div>`;
+  } else if(state.tab === 'subscribe'){
+    document.getElementById('resourcePagination').innerHTML = '';
+    el.innerHTML = `
+      <div class="rules-content">
+        <p class="rules-lead">Choose what to add to your calendar.</p>
+        <p style="margin-bottom:14px;">Select the categories you want, then download your custom .ics file. For auto-updating subscription, use the main calendar feed and filter in your calendar app.</p>
+        <div style="display:flex; gap:10px; margin-bottom:14px; flex-wrap:wrap;">
+          <button class="club-guide-btn" id="subSelectAll" style="background:var(--blush);">Select All</button>
+          <button class="club-guide-btn" id="subClearAll" style="background:var(--lightblue);">Clear All</button>
+        </div>
+        <div id="subscribeChecks" style="display:flex; flex-direction:column; gap:10px;"></div>
+        <button class="club-guide-btn" id="subDownload" style="margin-top:18px; background:var(--charcoal); color:var(--cream); width:100%; text-align:center;">Download Calendar (.ics)</button>
+      </div>`;
+    setTimeout(populateSubscribeChecks, 0);
   }
+}
+
+function populateSubscribeChecks(){
+  const container = document.getElementById('subscribeChecks');
+  if(!container) return;
+  const sportTypes = [...new Set(sportsData.map(s => s.sportKey).filter(Boolean))];
+  container.innerHTML = `
+    <label style="display:flex; align-items:center; gap:10px; font-size:15px; cursor:pointer;">
+      <input type="checkbox" class="sub-cat" data-cat="sports" checked> <strong>Sports</strong>
+    </label>
+    <div style="margin-left:24px; display:flex; flex-direction:column; gap:6px;">
+      ${sportTypes.map(k => `<label style="display:flex; align-items:center; gap:10px; font-size:14px; cursor:pointer;"><input type="checkbox" class="sub-sport" data-sport="${k}" checked> ${k}</label>`).join('')}
+    </div>
+    <label style="display:flex; align-items:center; gap:10px; font-size:15px; cursor:pointer;">
+      <input type="checkbox" class="sub-cat" data-cat="activitiesfunctions" checked> <strong>Activities &amp; Functions</strong>
+    </label>
+    <label style="display:flex; align-items:center; gap:10px; font-size:15px; cursor:pointer;">
+      <input type="checkbox" class="sub-cat" data-cat="trips" checked> <strong>Trips</strong>
+    </label>
+    <label style="display:flex; align-items:center; gap:10px; font-size:15px; cursor:pointer;">
+      <input type="checkbox" class="sub-cat" data-cat="mosquegatherings" checked> <strong>Mosque Gatherings</strong>
+    </label>
+  `;
+}
+
+function generateCustomICS(){
+  const selectedCats = [...document.querySelectorAll('.sub-cat:checked')].map(cb => cb.dataset.cat);
+  const selectedSports = [...document.querySelectorAll('.sub-sport:checked')].map(cb => cb.dataset.sport);
+  let items = [];
+  selectedCats.forEach(cat => {
+    if(cat === 'sports'){
+      items.push(...sportsData.filter(s => selectedSports.includes(s.sportKey)));
+    } else if(cat === 'activitiesfunctions'){
+      items.push(...gatheringsData, ...dayActivitiesData);
+    } else if(cat === 'trips'){
+      items.push(...tripsData);
+    } else if(cat === 'mosquegatherings'){
+      items.push(...mosqueGatheringsData);
+    }
+  });
+  if(items.length === 0){
+    alert('Please select at least one category.');
+    return;
+  }
+  const now = new Date();
+  const dtstamp = now.toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z';
+  let ics = 'BEGIN:VCALENDAR\nVERSION:2.0\nPRODID:-//4DASISTAS//Custom Calendar//EN\nCALSCALE:GREGORIAN\nMETHOD:PUBLISH\nX-WR-CALNAME:4DASISTAS Custom\nX-WR-TIMEZONE:America/Toronto\n';
+  items.forEach(item => {
+    const uid = (item.id || item.title).toLowerCase().replace(/[^a-z0-9]+/g, '-') + '@4dasistas.ca';
+    ics += 'BEGIN:VEVENT\nUID:' + uid + '\nDTSTAMP:' + dtstamp + '\n';
+    if(item.calDate){
+      ics += 'DTSTART;VALUE=DATE:' + item.calDate.replace(/-/g, '') + '\n';
+    }
+    if(item.days && item.days.length){
+      const dayMap = {sun:'SU',mon:'MO',tue:'TU',wed:'WE',thu:'TH',fri:'FR',sat:'SA'};
+      const byday = item.days.map(d => dayMap[d] || d.toUpperCase()).join(',');
+      ics += 'RRULE:FREQ=WEEKLY;BYDAY=' + byday + '\n';
+    }
+    const summary = (item.title || '').replace(/\\/g, '\\\\').replace(/;/g, '\\;').replace(/,/g, '\\,');
+    ics += 'SUMMARY:' + summary + '\n';
+    const desc = [item.date, item.desc].filter(Boolean).join('\n').replace(/\\/g, '\\\\').replace(/;/g, '\\;').replace(/,/g, '\\,');
+    ics += 'DESCRIPTION:' + desc + '\n';
+    if(item.location) ics += 'LOCATION:' + item.location.replace(/\\/g, '\\\\').replace(/;/g, '\\;').replace(/,/g, '\\,') + '\n';
+    ics += 'END:VEVENT\n';
+  });
+  ics += 'END:VCALENDAR\n';
+  const blob = new Blob([ics], {type: 'text/calendar;charset=utf-8'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = '4dasistas-custom.ics';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
 }
 
 function renderSmallBusinesses(){
@@ -1129,7 +1219,7 @@ function closeDetail(){
 /* ============================================================
    MAIN RENDER
    ============================================================ */
-const DIRECTORY_TABS = ['clubs','resources','home','rules','clubstart','clubjoin','homescreen'];
+const DIRECTORY_TABS = ['clubs','resources','home','rules','clubstart','clubjoin','homescreen','subscribe'];
 
 function render(){
   renderCategoryRow();
@@ -1311,8 +1401,19 @@ if ('serviceWorker' in navigator) {
 }
 
 document.getElementById('list-view').innerHTML = '<div class="empty">Loading…</div>';
-document.getElementById('subscribeBtn').href = `webcal://${location.host}/calendar.ics`;
+document.getElementById('subscribeBtn').addEventListener('click', e => {
+  e.preventDefault();
+  goToTab('subscribe');
+});
 document.getElementById('subscribeFallback').href = `https://${location.host}/calendar.ics`;
+
+document.getElementById('subSelectAll').addEventListener('click', () => {
+  document.querySelectorAll('#subscribeChecks input[type=checkbox]').forEach(cb => cb.checked = true);
+});
+document.getElementById('subClearAll').addEventListener('click', () => {
+  document.querySelectorAll('#subscribeChecks input[type=checkbox]').forEach(cb => cb.checked = false);
+});
+document.getElementById('subDownload').addEventListener('click', generateCustomICS);
 restoreStateFromHash();
 loadData().then(() => {
   syncToggleButtonClasses();
