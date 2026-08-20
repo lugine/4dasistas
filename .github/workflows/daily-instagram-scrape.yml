@@ -1,0 +1,41 @@
+name: Daily Instagram Trip Scraper
+
+on:
+  schedule:
+    - cron: "0 6 * * *"  # Run daily at 6 AM UTC
+  workflow_dispatch:  # Allow manual runs
+
+jobs:
+  scrape:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          
+      - name: Install dependencies
+        run: pip install requests beautifulsoup4
+        
+      - name: Run Instagram scraper
+        run: python3 scripts/scrape_instagram_trips.py
+        
+      - name: Check for changes
+        id: changes
+        run: |
+          if git diff --quiet data/trips.json; then
+            echo "changed=false" >> $GITHUB_OUTPUT
+          else
+            echo "changed=true" >> $GITHUB_OUTPUT
+          fi
+          
+      - name: Commit and push if changed
+        if: steps.changes.outputs.changed == 'true'
+        run: |
+          git config user.name "4DASISTAS Bot"
+          git config user.email "bot@4dasistas.ca"
+          git add data/trips.json
+          git commit -m "Auto-update trips from Instagram scraping [skip ci]"
+          git push

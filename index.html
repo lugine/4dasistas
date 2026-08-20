@@ -10,6 +10,17 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="4DASISTAS">
 <meta name="format-detection" content="telephone=no">
+<meta name="description" content="4DASISTAS — Community, events, and resources for Muslim women in the GTA. Sports, activities, trips, mosque gatherings, and a directory of local businesses.">
+<meta name="keywords" content="Muslim women, GTA, Toronto, community, events, sports, trips, mosque gatherings, halal, sisterhood, activities, resources">
+<meta property="og:title" content="4DASISTAS — Community for Muslim Women in the GTA">
+<meta property="og:description" content="Sports, activities, trips, mosque gatherings, and local resources for Muslim women in the Greater Toronto Area.">
+<meta property="og:image" content="/OFFICIAL%20LOGO.png">
+<meta property="og:url" content="https://4dasistas.ca">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="4DASISTAS — Community for Muslim Women in the GTA">
+<meta name="twitter:description" content="Sports, activities, trips, mosque gatherings, and local resources for Muslim women in the GTA.">
+<link rel="canonical" href="https://4dasistas.ca">
 <link rel="manifest" href="/manifest.webmanifest">
 <link rel="icon" href="/OFFICIAL%20LOGO.png" type="image/png">
 <link rel="apple-touch-icon" href="/OFFICIAL%20LOGO.png">
@@ -129,6 +140,18 @@
     .click-btn{ width: 100%; text-align: center; padding: 11px 15px; }
   }
 
+  @media (min-width: 768px){
+    main{ max-width: 980px; padding: 28px 28px 80px; }
+    header{ padding: 56px 28px 24px; }
+    .tabs{ gap:8px; padding: 16px 20px; }
+    .tab-btn{ font-size:15px; padding:10px 22px; }
+    .category-row{ padding: 22px 28px 0; }
+    .event-card{ padding: 18px 22px; }
+    .event-info h4{ font-size: 18px; }
+    .month-grid{ gap:6px; }
+    .day-cell{ min-height:100px; }
+  }
+
   /* ---- Apple-style month calendar ---- */
   .cal-header{ display:flex; align-items:center; justify-content:center; gap:18px; margin-bottom:14px; }
   .cal-nav-btn{ background:white; border:2px solid var(--charcoal); width:34px; height:34px; border-radius:50%; font-size:16px; font-weight:700; cursor:pointer; display:flex; align-items:center; justify-content:center; }
@@ -142,6 +165,8 @@
   .day-cell{ min-height:78px; border:1.5px solid rgba(33,30,28,0.15); border-radius:8px; background:white; padding:4px; overflow:visible; }
   .day-cell.empty{ border:none; background:transparent; }
   .day-cell.today{ border:2px solid var(--pink); }
+  .day-cell.row-even{ background:rgba(201,170,173,0.12); }
+  .day-cell.row-odd{ background:white; }
   .day-num{ font-family:'Space Grotesk',sans-serif; font-size:12px; font-weight:700; color:var(--charcoal); }
   .day-pip{ display:block; font-size:9.5px; font-weight:600; padding:2px 4px; border-radius:4px; margin-top:2px; cursor:pointer; line-height:1.25; overflow:hidden; text-overflow:ellipsis; white-space:normal; word-break:break-word; color:var(--charcoal); max-height:4.7em; }
   .day-pip.cat-gathering{ color:white; }
@@ -622,17 +647,20 @@ function renderCalendar(){
     <div class="weekday-row">${dayLabelsShort.map(d=>`<div>${d}</div>`).join('')}</div>
     <div class="month-grid">`;
 
+  let row = 0;
   for(let i=0;i<startDay;i++) html += `<div class="day-cell empty"></div>`;
 
   for(let d=1; d<=daysInMonth; d++){
     const dateStr = `${year}-${pad(month+1)}-${pad(d)}`;
     const dayItems = dateMap[dateStr] || [];
     const isToday = dateStr === todayStr;
-    html += `<div class="day-cell${isToday?' today':''}"><div class="day-num">${d}</div>`;
+    const rowClass = row % 2 === 0 ? ' row-even' : ' row-odd';
+    html += `<div class="day-cell${isToday?' today':''}${rowClass}"><div class="day-num">${d}</div>`;
     dayItems.forEach(e => {
       html += `<span class="day-pip ${tagClass(e)}" data-id="${e.id}">${e.title}</span>`;
     });
     html += `</div>`;
+    if ((startDay + d) % 7 === 0 && d !== daysInMonth) row++;
   }
   html += `</div>`;
 
