@@ -1,0 +1,43 @@
+name: Regenerate Calendar ICS
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'data/*.json'
+      - 'scripts/generate_calendar.py'
+  schedule:
+    - cron: "0 5 * * *"  # Daily at 5 AM UTC
+  workflow_dispatch:
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          
+      - name: Generate calendar.ics
+        run: python3 scripts/generate_calendar.py
+        
+      - name: Check for changes
+        id: changes
+        run: |
+          if git diff --quiet calendar.ics; then
+            echo "changed=false" >> $GITHUB_OUTPUT
+          else
+            echo "changed=true" >> $GITHUB_OUTPUT
+          fi
+          
+      - name: Commit and push if changed
+        if: steps.changes.outputs.changed == 'true'
+        run: |
+          git config user.name "4DASISTAS Bot"
+          git config user.email "bot@4dasistas.ca"
+          git add calendar.ics
+          git commit -m "Auto-regenerate calendar.ics from JSON data [skip ci]"
+          git push
