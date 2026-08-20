@@ -53,6 +53,8 @@ protocol.
 *(Whoever starts work next: change this to IN PROGRESS, your name, the
 files you're touching, and a timestamp. Change back to IDLE when done.)*
 
+**2026-08-20 — Claude (chat) — `data/maintenance.json`, `index.html`, `admin/config.yml`** — Added a self-contained maintenance mode: a full-screen "be right back" overlay that's deliberately isolated from the rest of the app code (so it still works even if something else breaks), plus a one-click CMS toggle to turn it on/off. Tested with a runtime DOM simulation, confirmed no crash and correct default-hidden state.
+
 **2026-08-19 (later) — Claude (chat) — `admin/config.yml`** — Fixed a YAML indentation bug (2 lines with 15 spaces instead of 14 in the trips collection) that broke the entire CMS config parser. Confirmed valid YAML after fix, pushed as commit 312d084530e3.
 
 **2026-08-19 16:12 — Kilo (VS Code) — `index.html`** — Investigating reported broken interactivity on live site. Pulled latest `origin/main`, read AGENT-COORDINATION.md, confirmed Claude (chat) already fixed the JS syntax/Promise.all bug in `b0b7a46`. Live site HTML now matches fixed local `index.html` exactly (no diff). Likely remaining issue is Cloudflare cache serving stale pre-fix version. No code changes made.
