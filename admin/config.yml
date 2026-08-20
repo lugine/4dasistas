@@ -24,6 +24,17 @@ display_url: https://4dasistas.luginealdimasi.workers.dev
 
 collections:
 
+  - name: "maintenance"
+    label: "🛠️ Maintenance Mode"
+    files:
+      - file: "data/maintenance.json"
+        label: "Maintenance Mode"
+        name: "maintenance"
+        fields:
+          - { label: "Show maintenance screen to visitors?", name: "enabled", widget: "boolean", default: false, hint: "Turn this ON to hide the site behind a 'be right back' message. Turn OFF to show the real site again." }
+          - { label: "Message shown to visitors", name: "message", widget: "string", default: "We're fixing something — be right back!" }
+          - { label: "Smaller subtext", name: "subtext", widget: "string", required: false, default: "This won't take long. Thanks for your patience 💛" }
+
   - name: "sports"
     label: "Sports"
     files:
