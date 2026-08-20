@@ -46,9 +46,9 @@ protocol.
 
 ## Current Status
 
-**Status:** IDLE
+**Status:** IN PROGRESS
 **Last updated by:** Claude (chat)
-**Last updated:** 2026-08-19
+**Last updated:** 2026-08-20 (manual research run) — touching data/sports.json, data/gatherings.json, data/mosquegatherings.json, data/trips.json, data/organizations.json, data/smallbusinesses.json
 
 *(Whoever starts work next: change this to IN PROGRESS, your name, the
 files you're touching, and a timestamp. Change back to IDLE when done.)*
