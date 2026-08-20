@@ -11,10 +11,9 @@
  *   wrangler deploy
  */
 
-const ADMIN_PASSWORD = env.ADMIN_PASSWORD || "change-me-in-production";
-
 export default {
   async fetch(request, env, ctx) {
+    const ADMIN_PASSWORD = env.ADMIN_PASSWORD || "change-me-in-production";
     const url = new URL(request.url);
     const path = url.pathname;
 
