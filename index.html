@@ -1094,7 +1094,16 @@ el.innerHTML = `<div class="club-guide-actions">
         <div id="subscribeChecks" style="display:flex; flex-direction:column; gap:10px;"></div>
         <button class="club-guide-btn" id="subDownload" style="margin-top:18px; background:var(--charcoal); color:var(--cream); width:100%; text-align:center;">Download Calendar (.ics)</button>
       </div>`;
-    setTimeout(populateSubscribeChecks, 0);
+    setTimeout(() => {
+      populateSubscribeChecks();
+      document.getElementById('subSelectAll').addEventListener('click', () => {
+        document.querySelectorAll('#subscribeChecks input[type=checkbox]').forEach(cb => cb.checked = true);
+      });
+      document.getElementById('subClearAll').addEventListener('click', () => {
+        document.querySelectorAll('#subscribeChecks input[type=checkbox]').forEach(cb => cb.checked = false);
+      });
+      document.getElementById('subDownload').addEventListener('click', generateCustomICS);
+    }, 0);
   }
 }
 
@@ -1448,13 +1457,6 @@ document.getElementById('subscribeBtn').addEventListener('click', e => {
 });
 document.getElementById('subscribeFallback').href = `https://${location.host}/calendar.ics`;
 
-document.getElementById('subSelectAll').addEventListener('click', () => {
-  document.querySelectorAll('#subscribeChecks input[type=checkbox]').forEach(cb => cb.checked = true);
-});
-document.getElementById('subClearAll').addEventListener('click', () => {
-  document.querySelectorAll('#subscribeChecks input[type=checkbox]').forEach(cb => cb.checked = false);
-});
-document.getElementById('subDownload').addEventListener('click', generateCustomICS);
 restoreStateFromHash();
 loadData().then(() => {
   syncToggleButtonClasses();
