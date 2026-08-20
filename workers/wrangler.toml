@@ -1,16 +1,18 @@
-# wrangler.toml for 4DASISTAS tab editor Cloudflare Worker
 name = "4dasistas-editor"
 main = "src/worker.js"
 compatibility_date = "2024-01-01"
 
 # KV namespace for storing site data
-# Run: wrangler kv namespace create "SITE_DATA"
-# Then paste the id below
+# Create with: wrangler kv namespace create SITE_DATA
 [[kv_namespaces]]
 binding = "SITE_DATA"
 id = "YOUR_KV_NAMESPACE_ID"
 
-# Routes for workers.dev
+# Routes - uncomment and modify after deployment
 # routes = [
 #   { pattern = "4dasistas-editor.workers.dev", zone_name = "4dasistas.ca" }
 # ]
+
+# Environment variables
+# [vars]
+# ADMIN_PASSWORD = "your-secure-password-here"
