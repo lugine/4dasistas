@@ -8,7 +8,7 @@
       "organizer": "Bushra",
       "desc": "Weekly Monday badminton run for the group.",
       "whatsapp": "https://chat.whatsapp.com/LRe3ehsaFxDH2CTYuzAOXW?s=cl&p=i&ilr=2",
-      "location": "SU South Campus",
+      "location": "4140B Sladeview Crescent #6, Mississauga, ON L5L 5Z3, Canada",
       "days": [
         "mon"
       ],
@@ -44,7 +44,7 @@
       "organizer": "Lujane",
       "desc": "Drop-in badminton at ISNA — no sign-up needed, just show up.",
       "whatsapp": "https://chat.whatsapp.com/JBbZDTEo45095qpNOwa9Fy?s=cl&p=i&ilr=2",
-      "location": "ISNA",
+      "location": "2200 S Sheridan Way, Mississauga, ON L5J 2M4, Canada",
       "days": [
         "thu"
       ],
@@ -52,43 +52,6 @@
       "registration": "Drop-in",
       "tag": "Badminton",
       "id": "bad-thu",
-      "calDate": null
-    },
-    {
-      "contact": "",
-      "price": "$13",
-      "sportKey": "badminton",
-      "date": "Fridays & Saturdays · 9:00 PM–12:00 AM",
-      "organizer": "",
-      "desc": "Late-night weekend badminton — drop-in, no prior registration needed.",
-      "whatsapp": "",
-      "location": "SU Badminton — North Campus",
-      "days": [
-        "fri",
-        "sat"
-      ],
-      "title": "Friday & Saturday Badminton",
-      "registration": "Drop-in",
-      "tag": "Badminton",
-      "id": "bad-frisat",
-      "calDate": null
-    },
-    {
-      "contact": "",
-      "price": "$6",
-      "sportKey": "badminton",
-      "date": "Every Sunday · 6:00–8:00 PM",
-      "organizer": "",
-      "desc": "Sunday session at Oakville Trafalgar Community Centre.",
-      "whatsapp": "",
-      "location": "Oakville Trafalgar Community Centre",
-      "days": [
-        "sun"
-      ],
-      "title": "Sunday Badminton",
-      "registration": "Prior registration required",
-      "tag": "Badminton",
-      "id": "bad-sun",
       "calDate": null
     },
     {
@@ -134,31 +97,35 @@
       "tag": "Running"
     },
     {
-      "id": "rallyclub-tennis-pickleball",
-      "title": "Rally Club (Tennis & Pickleball)",
-      "tag": "Tennis & Pickleball",
       "sportKey": "tennis-pickleball",
       "date": "Every Thursday · 8:00 PM",
-      "days": ["thu"],
-      "location": "Angela James Tennis Court",
-      "registration": "Drop-in",
       "desc": "Weekly drop-in tennis & pickleball with Muslimah Athletic Club.",
       "instagram": "https://www.instagram.com/muslimahathleticclub/",
+      "location": "Angela James Tennis Court",
+      "days": [
+        "thu"
+      ],
+      "title": "Rally Club (Tennis & Pickleball)",
+      "registration": "Drop-in",
+      "tag": "Tennis & Pickleball",
       "website": "https://linktr.ee/MuslimahAthleticClub",
+      "id": "rallyclub-tennis-pickleball",
       "calDate": null
     },
     {
-      "id": "ballhockey-open-practice",
-      "title": "Ball Hockey Open Practice",
-      "tag": "Ball Hockey",
       "sportKey": "ball-hockey",
       "date": "Saturdays · 1:00–3:00 PM",
-      "days": ["sat"],
-      "location": "Angela James Arena",
-      "registration": "Drop-in",
       "desc": "Beginner-friendly ball hockey open practice, women & girls only, ages 16+. 1-2 skills, 2-3 scrimmage.",
       "instagram": "https://www.instagram.com/muslimahathleticclub/",
+      "location": "Angela James Arena",
+      "days": [
+        "sat"
+      ],
+      "title": "Ball Hockey Open Practice",
+      "registration": "Drop-in",
+      "tag": "Ball Hockey",
       "website": "https://linktr.ee/MuslimahAthleticClub",
+      "id": "ballhockey-open-practice",
       "calDate": null
     }
   ]
