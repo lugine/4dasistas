@@ -429,25 +429,13 @@ let EVENT_ITEMS = [];
 
 async function fetchDataWithFallback(key, localPath){
   try {
-    const controller = new AbortController();
-    const timeout = setTimeout(() => controller.abort(), 5000);
-    const res = await fetch(`https://4dasistas-editor.luginealdimasi.workers.dev/api/data/${key}`, {
-      signal: controller.signal
-    });
-    clearTimeout(timeout);
-    if (!res.ok) throw new Error('Worker unavailable');
+    const res = await fetch(localPath, { cache: 'no-store' });
+    if (!res.ok) throw new Error(`${localPath} returned ${res.status}`);
     const data = await res.json();
-    if (data && data.items && data.items.length) return data.items;
-    throw new Error('Worker returned empty data');
+    return data.items || [];
   } catch (e) {
-    try {
-      const res = await fetch(localPath);
-      const data = await res.json();
-      return data.items || [];
-    } catch (fallbackError) {
-      console.warn(`Failed to load ${key} from Worker and local fallback:`, fallbackError);
-      return [];
-    }
+    console.warn(`Failed to load ${key} from ${localPath}:`, e);
+    return [];
   }
 }
 

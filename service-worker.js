@@ -1,4 +1,4 @@
-const CACHE_NAME = '4dasistas-v2';
+const CACHE_NAME = '4dasistas-v3';
 const APP_SHELL = ['/', '/index.html', '/manifest.webmanifest', '/app-icon.svg', '/assets/apple-touch-icon.png', '/assets/icon-192.png', '/assets/icon-512.png'];
 
 self.addEventListener('install', event => {
@@ -26,6 +26,12 @@ self.addEventListener('fetch', event => {
         }
         return response;
       })
-      .catch(() => caches.match(event.request).then(cached => cached || caches.match('/')))
+      .catch(() => caches.match(event.request).then(cached => {
+        if (cached) return cached;
+        // Only fall back to the app shell for page navigations — a failed
+        // fetch for data/*.json must stay a failure, not silently become HTML.
+        if (event.request.mode === 'navigate') return caches.match('/');
+        return Response.error();
+      }))
   );
 });
