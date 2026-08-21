@@ -429,7 +429,10 @@ let EVENT_ITEMS = [];
 
 async function fetchDataWithFallback(key, localPath){
   try {
-    const res = await fetch(`https://4dasistas-editor.luginealdimasi.workers.dev/api/data/${key}`);
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 4000); // never wait more than 4s
+    const res = await fetch(`https://4dasistas-editor.luginealdimasi.workers.dev/api/data/${key}`, { signal: controller.signal });
+    clearTimeout(timeoutId);
     if (!res.ok) throw new Error('Worker unavailable');
     const data = await res.json();
     return (data && data.items) ? data.items : [];
