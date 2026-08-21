@@ -19,8 +19,8 @@ logo_url: https://decapbridge.com/decapcms-with-bridge.svg
 media_folder: "admin/uploads"
 public_folder: "/admin/uploads"
 
-site_url: https://4dasistas.luginealdimasi.workers.dev
-display_url: https://4dasistas.luginealdimasi.workers.dev
+site_url: https://4dasistas.ca
+display_url: https://4dasistas.ca
 
 collections:
 
