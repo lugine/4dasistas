@@ -1,0 +1,13 @@
+# Deploys the whole site (index.html, data/*.json, calendar.ics, assets/, admin/)
+# as static assets on the existing "4dasistas" Worker that 4dasistas.ca points to.
+#
+# Connect this repo in the Cloudflare dashboard under Workers & Pages so every
+# push to main deploys automatically — see AGENT-COORDINATION.md for the
+# one-time setup steps. Build command: python3 scripts/generate_calendar.py
+# Deploy command: npx wrangler deploy
+
+name = "4dasistas"
+compatibility_date = "2026-08-21"
+
+[assets]
+directory = "."

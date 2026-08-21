@@ -1,0 +1,17 @@
+# Files that live in the repo but shouldn't be uploaded as public static assets
+# when Wrangler deploys the site (see wrangler.toml). Same syntax as .gitignore.
+
+.github
+.git
+workers
+scripts
+node_modules
+package-lock.json
+netlify.toml
+AGENT-COORDINATION.md
+README.md
+wrangler.toml
+.assetsignore
+.gitignore
+.gitattributes
+.DS_Store
