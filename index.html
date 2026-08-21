@@ -1340,6 +1340,20 @@ function render(){
    ============================================================ */
 function syncStateToHash(){
   if(location.hash.startsWith('#/event/')) return; // don't clobber an open detail page
+
+  const isDefaultHomeState = state.tab === 'home'
+    && state.categoryFilter === 'all'
+    && state.view === 'list'
+    && state.timeFilter === 'upcoming'
+    && state.resourceFilter === 'all'
+    && state.resourceView === 'map';
+
+  if(isDefaultHomeState){
+    const cleanUrl = location.pathname + location.search;
+    if(location.hash) history.replaceState(null, '', cleanUrl);
+    return;
+  }
+
   const params = new URLSearchParams();
   params.set('tab', state.tab);
   params.set('cat', state.categoryFilter);
@@ -1347,7 +1361,7 @@ function syncStateToHash(){
   params.set('time', state.timeFilter);
   params.set('rfilter', state.resourceFilter);
   params.set('rview', state.resourceView);
-  history.replaceState(null, '', '#' + params.toString());
+  history.replaceState(null, '', location.pathname + location.search + '#' + params.toString());
 }
 
 function restoreStateFromHash(){

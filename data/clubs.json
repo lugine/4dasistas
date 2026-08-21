@@ -16,6 +16,7 @@
     },
     {
       "id": "club-theater",
+      "logo": "assets/theatre.png",
       "title": "Theatre",
       "desc": "We catch plays, musicals, and live shows around the city, plus run our own improv nights. Basically any excuse to be dramatic.",
       "signup": "https://chat.whatsapp.com/KXGjx4wT15E9hdzqkAevOR?mode=gi_t"
@@ -29,6 +30,7 @@
     },
     {
       "id": "club-artscrafts",
+      "logo": "assets/artncrafts.png",
       "title": "Arts & Crafts",
       "desc": "Painting nights, DIY sessions, and low-key crafternoons — no talent required, just vibes and glitter.",
       "signup": "https://chat.whatsapp.com/JgmuY1XU0jrGrDPUvuDPTS"
@@ -41,6 +43,7 @@
     },
     {
       "id": "club-badminton",
+      "logo": "assets/badminton.png",
       "title": "Badminton",
       "desc": "The badminton crew, gathered in one place — same weekly sessions as the Sports tab, just easier to find and join here too.",
       "signup": "https://chat.whatsapp.com/JgmuY1XU0jrGrDPUvuDPTS"
