@@ -681,6 +681,15 @@
       "ownedBy": "",
       "category": "beautycare",
       "lat": 43.6767
+    },
+    {
+      "id": "cozy-crumb-maya",
+      "title": "Cozy Crumb Maya",
+      "type": "Home Bakery",
+      "desc": "Home bakery specializing in chocolate chip cookies, fudgy brownies, and floral cupcakes, including custom cupcake bouquets.",
+      "instagram": "https://www.instagram.com/cozycrumb_maya?igsh=MWgzb3h6YXV0YW5mcQ%3D%3D&utm_source=qr",
+      "ownedBy": "Muslim woman-owned",
+      "category": "bakeries"
     }
   ]
 }

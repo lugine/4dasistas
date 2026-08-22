@@ -72,21 +72,21 @@
   }
   .wa-fixed-btn svg{ width:18px; height:18px; flex-shrink:0; display:block; }
 
-  .tabs{ display:flex; justify-content:center; align-items:center; gap:6px; padding:14px 16px; overflow-x:auto; -webkit-overflow-scrolling:touch; scrollbar-width:none; background:rgba(201,170,173,0.45); }
+  .tabs{ display:flex; justify-content:center; align-items:center; gap:6px; padding:10px 16px; overflow-x:auto; -webkit-overflow-scrolling:touch; scrollbar-width:none; background:rgba(201,170,173,0.45); }
   .tabs::-webkit-scrollbar{ display:none; }
-  .top-search-wrap{ position:relative; z-index:20; display:flex; justify-content:flex-end; width:100%; padding:0 20px; }
+  .top-search-wrap{ position:relative; z-index:20; display:flex; justify-content:flex-end; flex:0 0 220px; width:220px; padding:0; }
   .top-search-shell{
     display:flex; align-items:center; gap:10px;
-    max-width:340px; width:100%; margin:0 0 12px; padding:10px 14px; border-radius:999px;
+    max-width:220px; width:100%; margin:0; padding:7px 11px; border-radius:999px;
     background: rgba(55,61,59,0.06); border: 1.5px solid rgba(55,61,59,0.2);
     box-shadow: inset 0 1px 0 rgba(255,255,255,0.6);
   }
   .top-search-shell svg{ width:16px; height:16px; opacity:0.7; flex-shrink:0; }
   .top-search-shell input{
-    width:100%; border:none; background:transparent; font: inherit; color:var(--charcoal); font-size:14px; outline:none;
+    width:100%; border:none; background:transparent; font: inherit; color:var(--charcoal); font-size:12px; outline:none;
   }
   .top-search-shell input::placeholder{ color:#6d6a68; }
-  .search-suggestions{ position:absolute; top:calc(100% - 8px); right:20px; width:min(340px,calc(100% - 40px)); max-height:280px; overflow-y:auto; background:white; border:2px solid var(--charcoal); border-radius:12px; box-shadow:3px 3px 0 var(--charcoal); }
+  .search-suggestions{ position:absolute; top:calc(100% - 2px); right:20px; width:min(340px,calc(100% - 40px)); max-height:280px; overflow-y:auto; background:white; border:2px solid var(--charcoal); border-radius:12px; box-shadow:3px 3px 0 var(--charcoal); }
   .search-suggestion{ display:block; width:100%; padding:10px 14px; border:0; border-bottom:1px solid rgba(33,30,28,0.12); background:white; color:var(--charcoal); text-align:left; cursor:pointer; }
   .search-suggestion:last-child{ border-bottom:0; }
   .search-suggestion strong{ display:block; font-family:'Space Grotesk',sans-serif; }
@@ -127,6 +127,8 @@
 
   .subfilter-row{ max-width:760px; margin:0 auto; padding:0 20px; display:flex; gap:8px; flex-wrap:wrap; align-items:center; justify-content:center; }
   .filter-chip{ font-family:'Inter',sans-serif; font-size:12.5px; font-weight:600; padding:6px 14px; border-radius:999px; border:1.5px solid rgba(33,30,28,0.25); background:white; color:var(--charcoal); cursor:pointer; }
+  .resource-filter-chip{ flex:1 1 150px; min-height:52px; font-family:'Space Grotesk',sans-serif; font-size:14px; font-weight:700; padding:12px 18px; border-radius:14px; border:2px solid var(--charcoal); background:white; color:var(--charcoal); cursor:pointer; box-shadow:2px 2px 0 var(--charcoal); }
+  .resource-filter-chip.active{ background:var(--charcoal); color:var(--cream); }
   .filter-chip.active{ background:var(--charcoal); color:var(--cream); border-color:var(--charcoal); }
   .filter-select{ font-family:'Inter',sans-serif; font-size:12.5px; font-weight:600; padding:7px 12px; border-radius:999px; border:1.5px solid rgba(33,30,28,0.25); background:white; color:var(--charcoal); }
   .sort-dir-btn{ font-size:15px; padding:6px 10px; border-radius:999px; border:1.5px solid rgba(33,30,28,0.25); background:white; cursor:pointer; }
@@ -161,8 +163,8 @@
   @media (min-width: 768px){
     main{ max-width: 980px; padding: 28px 28px 80px; }
     header{ padding: 56px 28px 24px; }
-    .tabs{ gap:8px; padding: 16px 20px; }
-    .tab-btn{ font-size:15px; padding:10px 22px; }
+    .tabs{ gap:8px; padding: 10px 20px; }
+    .tab-btn{ font-size:14px; padding:8px 16px; }
     .category-row{ padding: 22px 28px 0; }
     .event-card{ padding: 18px 22px; }
     .event-info h4{ font-size: 18px; }
@@ -220,9 +222,9 @@
     .view-toggle button{ padding:6px 10px; font-size:11.5px; }
     .map-legend{ gap:10px; font-size:11.5px; }
     .footer-btns{ gap:8px; flex-direction:row; }
-    .top-search-wrap{ padding:0 12px; }
+    .top-search-wrap{ flex-basis:180px; width:180px; }
     .top-search-shell{ max-width:100%; }
-    .search-suggestions{ right:12px; width:calc(100% - 24px); }
+    .search-suggestions{ right:0; width:180px; }
     .subfilter-row, .category-row, .tabs { justify-content:center; }
   }
 
@@ -267,18 +269,26 @@
 
   .resource-map-wrapper{ display:flex; gap:16px; align-items:flex-start; }
   .resource-map-wrapper .resource-map{ flex:1; }
-  .resource-side-list{ width:280px; max-height:65vh; overflow-y:auto; border:2px solid var(--charcoal); border-radius:14px; background:var(--card); padding:12px; display:none; }
-  .resource-side-list.active{ display:block; }
+  .resource-side-list{ width:280px; max-height:65vh; overflow-y:auto; border:2px solid var(--charcoal); border-radius:14px; background:var(--card); padding:12px; display:block; }
   .resource-side-list h4{ font-family:'Space Grotesk',sans-serif; font-size:15px; margin:0 0 10px; }
   .resource-side-list .side-list-close{ background:none; border:none; font-size:18px; cursor:pointer; float:right; line-height:1; }
   .resource-side-list .side-item{ padding:8px; border-bottom:1px solid rgba(33,30,28,0.08); cursor:pointer; }
   .resource-side-list .side-item:last-child{ border-bottom:none; }
   .resource-side-list .side-item strong{ display:block; font-size:13px; margin-bottom:2px; }
   .resource-side-list .side-item span{ font-size:12px; color:var(--muted); }
+  .resource-side-list .side-number{ display:inline-flex; align-items:center; justify-content:center; width:22px; height:22px; margin-right:6px; border-radius:50%; background:var(--charcoal); color:var(--cream); font-size:11px; font-weight:700; }
+  .unmapped-resource-list{ margin-top:14px; padding:12px; border:2px solid var(--charcoal); border-radius:14px; background:var(--card); }
+  .unmapped-resource-list h4{ font-family:'Space Grotesk',sans-serif; font-size:15px; margin-bottom:8px; }
+  .unmapped-resource-list .side-item{ padding:8px 0; border-bottom:1px solid rgba(33,30,28,0.08); }
+  .unmapped-resource-list .side-item:last-child{ border-bottom:0; }
+  .unmapped-resource-list .side-item strong{ display:block; font-size:13px; }
+  .unmapped-resource-list .side-item span{ display:block; font-size:12px; color:var(--muted); }
+  .resource-number-icon{ background:transparent; border:0; }
+  .resource-number-icon span{ display:flex; align-items:center; justify-content:center; width:26px; height:26px; border:2px solid var(--charcoal); border-radius:50%; color:var(--charcoal); font-size:11px; font-weight:700; box-shadow:1px 1px 0 var(--charcoal); }
 
   @media (max-width:860px){
     .resource-map-wrapper{ flex-direction:column; }
-    .resource-side-list{ width:100%; max-height:300px; }
+    .resource-side-list{ width:100%; max-height:300px; order:2; }
   }
 
   .ig-grid{ display:grid; grid-template-columns:repeat(4, 1fr); gap:14px; }
@@ -371,15 +381,14 @@
   <button class="tab-btn" data-tab="resources">Resources</button>
   <button class="tab-btn" data-tab="travel">Travel</button>
   <button class="tab-btn" data-tab="rules">FAQ</button>
-</nav>
-
-<div class="top-search-wrap" id="globalSearchShell" style="display:none;">
-  <div class="top-search-shell">
+  <div class="top-search-wrap" id="globalSearchShell" style="display:none;">
+    <div class="top-search-shell">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="6"></circle><path d="M16 16L21 21"></path></svg>
     <input id="globalSearch" type="search" placeholder="Search for anything..." aria-label="Search for anything" autocomplete="off" />
+    </div>
+    <div class="search-suggestions" id="searchSuggestions" style="display:none;"></div>
   </div>
-  <div class="search-suggestions" id="searchSuggestions" style="display:none;"></div>
-</div>
+</nav>
 
 <div class="category-row" id="categoryRow"></div>
 <div class="controls" id="controlsRow">
@@ -396,7 +405,6 @@
 <div class="controls controls-center" id="resourceControlsRow" style="display:none;">
   <div class="view-toggle" id="resourceViewToggle">
     <button data-rview="list">List view</button>
-    <button data-rview="smallbusinesses">Small Businesses</button>
     <button class="active" data-rview="map">Map view</button>
   </div>
 </div>
@@ -455,7 +463,6 @@ let tripsData = [];
 let clubsData = [];
 let organizationsData = [];
 let resourcesData = [];
-let smallBusinessesData = [];
 let mosqueGatheringsData = [];
 let allResourceItems = [];
 let ALL_ITEMS = [];
@@ -474,7 +481,7 @@ async function fetchDataWithFallback(key, localPath){
 }
 
 async function loadData(){
-const [mosqueGatherings, sports, gatherings, dayactivities, trips, clubs, organizations, resources, smallbusinesses] = await Promise.all([
+const [mosqueGatherings, sports, gatherings, dayactivities, trips, clubs, organizations, resources] = await Promise.all([
     fetchDataWithFallback('mosquegatherings', 'data/mosquegatherings.json'),
     fetchDataWithFallback('sports', 'data/sports.json'),
     fetchDataWithFallback('gatherings', 'data/gatherings.json'),
@@ -483,7 +490,6 @@ const [mosqueGatherings, sports, gatherings, dayactivities, trips, clubs, organi
     fetchDataWithFallback('clubs', 'data/clubs.json'),
     fetchDataWithFallback('organizations', 'data/organizations.json'),
     fetchDataWithFallback('resources', 'data/resources.json'),
-    fetchDataWithFallback('smallbusinesses', 'data/smallbusinesses.json'),
   ]);
   sportsData = sports;
   gatheringsData = gatherings;
@@ -492,7 +498,6 @@ const [mosqueGatherings, sports, gatherings, dayactivities, trips, clubs, organi
   clubsData = clubs;
   organizationsData = organizations;
   resourcesData = resources;
-smallBusinessesData = smallbusinesses;
 mosqueGatheringsData = mosqueGatherings;
 
   // Normalize dates so every event has a clean, consistent display date.
@@ -515,7 +520,7 @@ mosqueGatheringsData = mosqueGatherings;
     });
   });
 
-  const mosquePrograms = mosqueGatheringsData.map(item => ({...item, category:'mosques', type:'Mosque Program', ownedBy:item.organizer || ''}));
+  const mosquePrograms = mosqueGatheringsData.map(item => ({...item, category:'mosqueprograms', type:'Mosque Program', ownedBy:item.organizer || ''}));
   allResourceItems = [...resourcesData, ...mosquePrograms];
   ALL_ITEMS = [...sportsData, ...gatheringsData, ...dayActivitiesData, ...tripsData, ...clubsData, ...organizationsData, ...resourcesData, ...mosqueGatheringsData];
   EVENT_ITEMS = mixEvents(sportsData, gatheringsData, dayActivitiesData, tripsData, mosqueGatheringsData);
@@ -529,8 +534,7 @@ function mixEvents(sports, gatherings, dayActs, trips, mosqueGatherings){
     [...badmintons],
     [...dayActs, ...mosqueGatherings],
     [...otherSports],
-    [...trips],
-    [...mosqueGatherings]
+    [...trips]
   ];
   const mixed = [];
   const maxLen = Math.max(...buckets.map(b => b.length));
@@ -550,7 +554,7 @@ let state = {
   tab:'home', categoryFilter:'all', view:'list',
   sportFilter:'all', dayCity:'all',
   gatherSort:'hijab', gatherDir:'asc',
-  tripType:'all', tripView:'list', resourceFilter:'all', resourceView:'map', resourcePage:1,
+  tripType:'all', tripView:'earth', resourceFilter:'all', resourceView:'map', resourcePage:1,
   timeFilter:'upcoming', page:1,
   calYear: today.getFullYear(), calMonth: today.getMonth(),
 };
@@ -558,11 +562,11 @@ let state = {
 const introText = {
   all: "Everything happening across sports, day activities and trips.",
   sports: "Somehow there's badminton every single day of the week.",
-  activitiesfunctions: "One-off outings, day activities, and social meetups — dated ones show up here as they're scheduled.",
+  activities: "Sports-adjacent outings, workshops, wellness, and social activities.",
+  functions: "Markets, festivals, gatherings, and community functions.",
   trips: "Sample trips below — tell me the real ones and I'll swap them in.",
-  mosquegatherings: "Mosque events, prayers, and community gatherings.",
   clubs: "Special-interest clubs the community runs together — sign up to join one.",
-  resources: "Mosques, cafes, shops and restaurants the community supports.",
+  resources: "A directory of Muslim women-owned and Muslim-supporting resources across the GTA.",
   home: "",
   travel: "Women-friendly trips, retreats, and group travel beyond the GTA.",
   rules: "Answers about community guidelines, events, clubs, and safety.",
@@ -599,15 +603,15 @@ function itemsForCategoryBase(cat){
   if(cat === 'sports'){
     return state.sportFilter === 'all' ? sportsData : sportsData.filter(e => e.sportKey === state.sportFilter);
   }
-  if(cat === 'activitiesfunctions'){
+  if(cat === 'activities'){
     const day = state.dayCity === 'all' ? dayActivitiesData : dayActivitiesData.filter(e => e.city === state.dayCity);
-    return [...day, ...gatheringsData, ...mosqueGatheringsData];
+    return [...day, ...mosqueGatheringsData];
+  }
+  if(cat === 'functions'){
+    return gatheringsData;
   }
   if(cat === 'trips'){
     return state.tripType === 'all' ? tripsData : tripsData.filter(e => tripTypeForItem(e) === state.tripType);
-  }
-  if(cat === 'mosquegatherings'){
-    return mosqueGatheringsData;
   }
   return [];
 }
@@ -657,7 +661,7 @@ function renderList(){
   const pagEl = document.getElementById('pagination');
 
   if(items.length === 0){
-    const msg = state.categoryFilter === 'activitiesfunctions' && state.timeFilter === 'upcoming'
+    const msg = state.categoryFilter === 'activities' && state.timeFilter === 'upcoming'
       ? 'Nothing dated yet — check back soon, or see Resources for ongoing spots.'
       : 'Nothing here yet.';
     el.innerHTML = `<div class="empty">${msg}</div>`;
@@ -730,14 +734,16 @@ function buildDateMap(items, year, month){
 
 function renderTripEarthView(targetId='calendar-view', mapId='tripEarthMap', selectedItems=itemsForCategory('trips')){
   const el = document.getElementById(targetId);
-  if(targetId === 'calendar-view') el.innerHTML = `<div id="${mapId}" class="calendar-map"></div>`;
+  el.innerHTML = `<div id="${mapId}" class="calendar-map"></div>`;
 
   const items = selectedItems;
   const points = items
     .filter(item => typeof item.lat === 'number' && typeof item.lng === 'number')
-    .map(item => ({
+    .map((item, index) => ({
+      id: item.id,
       lat: item.lat,
       lng: item.lng,
+      color: ['#caaacd','#ddb862','#c3d5e2','#ecc7d2','#a9d6b8','#f1dfb6'][index % 6],
       title: item.title,
       location: item.location || '',
       date: item.date || ''
@@ -752,10 +758,11 @@ function renderTripEarthView(targetId='calendar-view', mapId='tripEarthMap', sel
     .pointsData(points)
     .pointLat('lat')
     .pointLng('lng')
-    .pointColor(() => '#373d3b')
+    .pointColor(point => point.color)
     .pointAltitude(0.08)
     .pointRadius(0.45)
     .pointLabel(point => `<strong>${point.title}</strong><br>${point.location}<br>${point.date}`)
+    .onPointClick(point => renderDetail(point.id))
     .width(document.getElementById(mapId).clientWidth)
     .height(document.getElementById(mapId).clientHeight);
   globe.controls().autoRotate = false;
@@ -842,27 +849,29 @@ const cityFilterList = [
 const categoryList = [
   {key:'all', label:'All Events', bg:'#373d3b', fg:'#fff7e6'},
   {key:'sports', label:'Sports', bg:'#f4b183', fg:'#373d3b'},
-  {key:'activitiesfunctions', label:'Activities & Functions', bg:'#c3d5e2', fg:'#373d3b'},
+  {key:'activities', label:'Activities', bg:'#c3d5e2', fg:'#373d3b'},
+  {key:'functions', label:'Functions', bg:'#fae1e4', fg:'#373d3b'},
   {key:'trips', label:'Trips', bg:'#ddb862', fg:'#373d3b'},
+  {key:'mosqueprograms', label:'Mosque Programs', bg:'#c3e2d4', fg:'#373d3b'},
 ];
 
 const resourceFilterList = [
   {key:'all', label:'All'},
-  {key:'mosques', label:'Mosque Programs'},
   {key:'cafes', label:'Cafes'},
   {key:'shops', label:'Shops'},
   {key:'restaurants', label:'Restaurants'},
   {key:'beautycare', label:'Beauty & Care'},
-  {key:'mosqueprograms', label:'Mosque Programs'},
+  {key:'mentalhealth', label:'Mental Health'},
+  {key:'bakeries', label:'Bakeries'},
 ];
 
 const categoryColors = {
-  mosques:'#c3e2d4', cafes:'#ddb862', shops:'#caaacd', restaurants:'#776867', beautycare:'#ecc7d2'
+  mosques:'#c3e2d4', mosqueprograms:'#c3e2d4', cafes:'#ddb862', shops:'#caaacd', restaurants:'#776867', beautycare:'#ecc7d2', mentalhealth:'#a9d6b8', bakeries:'#f1dfb6'
 };
 
 function renderResourceFilters(){
   const el = document.getElementById('subFilterRow');
-  el.innerHTML = resourceFilterList.map(f => `<button class="filter-chip ${state.resourceFilter===f.key?'active':''}" data-resourcefilter="${f.key}">${f.label}</button>`).join('');
+  el.innerHTML = resourceFilterList.map(f => `<button class="resource-filter-chip ${state.resourceFilter===f.key?'active':''}" data-resourcefilter="${f.key}">${f.label}</button>`).join('');
 }
 
 function renderSearchSuggestions(){
@@ -891,9 +900,9 @@ function renderSubFilters(){
 
   if(state.categoryFilter === 'sports'){
 el.innerHTML = sportFilterOptions().map(f => `<button class="filter-chip ${state.sportFilter===f.key?'active':''}" data-sportfilter="${f.key}">${f.label}</button>`).join('');
-  } else if(state.categoryFilter === 'activitiesfunctions'){
+  } else if(state.categoryFilter === 'activities'){
     el.innerHTML = `<select class="filter-select" id="citySelect">${cityFilterList.map(c=>`<option value="${c.key}" ${state.dayCity===c.key?'selected':''}>${c.label}</option>`).join('')}</select>`
-      + `<div class="sub-note">Location filter applies to day activities only — gatherings show regardless.</div>`;
+      + `<div class="sub-note">Location filter applies to activities.</div>`;
   } else if(state.categoryFilter === 'trips'){
     const types = [{key:'all',label:'All'},{key:'domestic',label:'Domestic'},{key:'international',label:'International'}];
     const views = [{key:'list',label:'List'},{key:'earth',label:'Earth'}];
@@ -955,7 +964,7 @@ function renderResourceList(){
       </div>
       ${r.ownedBy ? `<div class="owned-badge">${r.ownedBy}</div>` : ''}
       <div class="panel-desc">${r.desc}</div>
-      <div class="panel-addr">📍 ${r.location}${r.date ? ' · ' + r.date : ''}</div>
+      ${r.location ? `<div class="panel-addr">📍 ${r.location}${r.date ? ' · ' + r.date : ''}</div>` : '<div class="panel-addr">Location not provided</div>'}
       <div class="panel-links">
         ${r.mapsUrl ? `<a class="link-btn secondary" href="${r.mapsUrl}" target="_blank" rel="noopener">View on Google Maps</a>` : ''}
         ${r.instagram ? `<a class="link-btn secondary" href="${r.instagram}" target="_blank" rel="noopener">Follow on Instagram</a>` : ''}
@@ -983,12 +992,12 @@ function renderResourceMap(){
   const legendItems = resourceFilterList.filter(f => f.key !== 'all');
   el.innerHTML = `<div class="resource-map-wrapper">
     <div class="resource-side-list" id="resourceSideList">
-      <button class="side-list-close" id="sideListClose" aria-label="Close list">&times;</button>
-      <h4 id="sideListTitle">Select a category on the map</h4>
+      <h4 id="sideListTitle">Mapped resources</h4>
       <div id="sideListContent"></div>
     </div>
     <div id="resourceMapContainer" class="resource-map"></div>
   </div>
+    <div class="unmapped-resource-list" id="unmappedListContent"></div>
     <div class="map-legend">
       ${legendItems.map(f => `<span><i style="background:${categoryColors[f.key]}"></i> ${f.label}</span>`).join('')}
     </div>
@@ -1010,63 +1019,47 @@ function renderResourceMap(){
     maxZoom: 19
   }).addTo(map);
 
+  const markers = [];
   if(withCoords.length === 0){
     map.setView([43.6, -79.7], 10);
-    return;
-  }
-
-  const markers = [];
-  withCoords.forEach(r => {
+  } else {
+  withCoords.forEach((r, index) => {
     const color = categoryColors[r.category] || '#211E1C';
-    const marker = L.circleMarker([r.lat, r.lng], {
-      radius: 8, fillColor: color, color: '#211E1C', weight: 1.5, fillOpacity: 0.9
-    }).addTo(map);
+    const marker = L.marker([r.lat, r.lng], {icon: L.divIcon({className:'resource-number-icon', html:`<span style="background:${color}">${index + 1}</span>`, iconSize:[26,26], iconAnchor:[13,13]})}).addTo(map);
     const linkHtml = r.mapsUrl ? `<a href="${r.mapsUrl}" target="_blank" rel="noopener">View on Google Maps</a>` : '';
     marker.bindPopup(`<strong>${r.title}</strong><br>${r.type||''}<br>${linkHtml}`);
-    marker.on('click', () => {
-      showSideList(r.category);
-    });
     markers.push(marker);
   });
 
   const group = L.featureGroup(markers);
   map.fitBounds(group.getBounds().pad(0.15));
+  }
 
   const sideList = document.getElementById('resourceSideList');
   const sideListTitle = document.getElementById('sideListTitle');
   const sideListContent = document.getElementById('sideListContent');
-  const sideListClose = document.getElementById('sideListClose');
-
-  function showSideList(categoryKey){
-    const items = filteredResourceItems().filter(r => r.category === categoryKey);
-    const label = resourceFilterList.find(f => f.key === categoryKey)?.label || categoryKey;
-    sideListTitle.textContent = `${label} (${items.length})`;
-    sideListContent.innerHTML = items.map(r => `
+  const unmappedListContent = document.getElementById('unmappedListContent');
+  const mappedItems = withCoords;
+  sideListContent.innerHTML = mappedItems.map((r, index) => `
       <div class="side-item" data-id="${r.id}">
-        <strong>${r.title}</strong>
+        <strong><span class="side-number">${index + 1}</span>${r.title}</strong>
         <span>${r.type || ''}${r.location ? ' · ' + r.location : ''}</span>
       </div>
     `).join('');
-    sideList.classList.add('active');
+  const unmappedItems = filtered.filter(r => typeof r.lat !== 'number' || typeof r.lng !== 'number');
+  unmappedListContent.innerHTML = `<h4>Not mapped (${unmappedItems.length})</h4>${unmappedItems.map(r => `
+    <div class="side-item" data-id="${r.id}">
+      <strong>${r.title}</strong><span>${r.type || 'Resource'} · Location not provided</span>
+    </div>`).join('') || '<div class="side-item"><span>All resources have mapped locations.</span></div>'}`;
+  sideListTitle.textContent = `Mapped resources (${mappedItems.length})`;
 
-    sideListContent.querySelectorAll('.side-item').forEach(item => {
+  document.querySelectorAll('#resourceSideList .side-item, #unmappedListContent .side-item').forEach(item => {
       item.addEventListener('click', () => {
         const id = item.dataset.id;
         const found = allResourceItems.find(r => r.id === id);
         if(found) renderDetail(found.id || found.title);
       });
-    });
-  }
-
-  function hideSideList(){
-    sideList.classList.remove('active');
-  }
-
-  sideListClose.addEventListener('click', hideSideList);
-
-  map.on('click', () => {
-    hideSideList();
-  });
+      });
 }
 
 const clubColors = {
@@ -1167,8 +1160,6 @@ el.innerHTML = `<div class="club-guide-actions">
     if(state.resourceView === 'map'){
       document.getElementById('resourcePagination').innerHTML = '';
       renderResourceMap();
-    } else if(state.resourceView === 'smallbusinesses'){
-      renderSmallBusinesses();
     } else {
       renderResourceList();
     }
@@ -1176,6 +1167,7 @@ el.innerHTML = `<div class="club-guide-actions">
     document.getElementById('resourcePagination').innerHTML = '';
     const tiles = [
       {tab:'events', title:'Calendar4All', bg:'#f4b183', fg:'#373d3b', desc:'Sports, gatherings, day activities & trips — see what\'s coming up.'},
+      {tab:'travel', title:'Travel', bg:'#ddb862', fg:'#373d3b', desc:'Explore women-friendly trips, retreats, and group travel.'},
       {tab:'clubs', title:'GALS CLUBS', bg:'#caaacd', fg:'#373d3b', desc:'Join a standing-interest club, from gaming to ADHD support.'},
       {tab:'resources', title:'Resources', bg:'#c3d5e2', fg:'#373d3b', desc:'Mosques, cafes, shops & restaurants the community supports.'},
       {tab:'homescreen', title:'Add this to your Home Screen', bg:'#A9D6B8', fg:'#373d3b', desc:'Install 4DASISTAS like an app for quick access.'},
@@ -1277,7 +1269,10 @@ function populateSubscribeChecks(){
       ${sportTypes.map(k => `<label style="display:flex; align-items:center; gap:10px; font-size:14px; cursor:pointer;"><input type="checkbox" class="sub-sport" data-sport="${k}" checked> ${k}</label>`).join('')}
     </div>
     <label style="display:flex; align-items:center; gap:10px; font-size:15px; cursor:pointer;">
-      <input type="checkbox" class="sub-cat" data-cat="activitiesfunctions" checked> <strong>Activities &amp; Functions</strong>
+      <input type="checkbox" class="sub-cat" data-cat="activities" checked> <strong>Activities</strong>
+    </label>
+    <label style="display:flex; align-items:center; gap:10px; font-size:15px; cursor:pointer;">
+      <input type="checkbox" class="sub-cat" data-cat="functions" checked> <strong>Functions</strong>
     </label>
     <label style="display:flex; align-items:center; gap:10px; font-size:15px; cursor:pointer;">
       <input type="checkbox" class="sub-cat" data-cat="trips" checked> <strong>Trips</strong>
@@ -1292,8 +1287,10 @@ function generateCustomICS(){
   selectedCats.forEach(cat => {
     if(cat === 'sports'){
       items.push(...sportsData.filter(s => selectedSports.includes(s.sportKey)));
-    } else if(cat === 'activitiesfunctions'){
-      items.push(...gatheringsData, ...dayActivitiesData, ...mosqueGatheringsData);
+    } else if(cat === 'activities'){
+      items.push(...dayActivitiesData, ...mosqueGatheringsData);
+    } else if(cat === 'functions'){
+      items.push(...gatheringsData);
     } else if(cat === 'trips'){
       items.push(...tripsData);
     }
@@ -1333,33 +1330,6 @@ function generateCustomICS(){
   a.click();
   document.body.removeChild(a);
   URL.revokeObjectURL(url);
-}
-
-function renderSmallBusinesses(){
-  const el = document.getElementById('directory-view');
-  document.getElementById('resourcePagination').innerHTML = '';
-
-  if(smallBusinessesData.length === 0){
-    el.innerHTML = '<div class="empty">No small businesses have been added yet.</div>';
-    return;
-  }
-
-  el.innerHTML = smallBusinessesData.map(b => `
-    <div class="panel-card">
-      <div class="panel-top">
-        <div class="monogram" style="background:var(--blush);color:var(--charcoal)">${b.title.charAt(0)}</div>
-        <div>
-          <h4>${b.title}</h4>
-          <div class="panel-type">${b.type || 'Small business'}</div>
-        </div>
-      </div>
-      <div class="panel-desc">${b.desc}</div>
-      <div class="panel-links">
-        ${b.instagram ? `<a class="link-btn secondary" href="${b.instagram}" target="_blank" rel="noopener">Follow on Instagram</a>` : ''}
-        ${b.website ? `<a class="link-btn secondary" href="${b.website}" target="_blank" rel="noopener">Visit Website</a>` : ''}
-        ${b.email ? `<a class="link-btn secondary" href="mailto:${b.email}">Email</a>` : ''}
-      </div>
-    </div>`).join('');
 }
 
 /* ============================================================
@@ -1426,7 +1396,7 @@ const DIRECTORY_TABS = ['clubs','resources','home','travel','rules','clubstart',
 
 function render(){
   const searchShell = document.getElementById('globalSearchShell');
-  if(searchShell) searchShell.style.display = ['home','events'].includes(state.tab) ? 'flex' : 'none';
+  if(searchShell) searchShell.style.display = 'flex';
   if(document.getElementById('globalSearch')) document.getElementById('globalSearch').value = state.searchQuery || '';
 
   renderCategoryRow();
@@ -1504,9 +1474,9 @@ function restoreStateFromHash(){
   if(params.has('rfilter')) state.resourceFilter = params.get('rfilter');
   if(params.has('rview')){
     const resourceView = params.get('rview');
-    state.resourceView = resourceView === 'instagram' ? 'smallbusinesses' : resourceView;
+    state.resourceView = resourceView === 'instagram' ? 'list' : resourceView;
   }
-  if(state.categoryFilter === 'mosquegatherings') state.categoryFilter = 'activitiesfunctions';
+  if(state.categoryFilter === 'mosquegatherings') state.categoryFilter = 'activities';
 }
 
 function syncToggleButtonClasses(){
@@ -1576,6 +1546,13 @@ document.getElementById('resourceViewToggle').addEventListener('click', e => {
 document.getElementById('categoryRow').addEventListener('click', e => {
   const btn = e.target.closest('[data-catfilter]');
   if(!btn) return;
+  if(btn.dataset.catfilter === 'mosqueprograms'){
+    state.tab = 'resources';
+    state.resourceFilter = 'mosqueprograms';
+    state.resourceView = 'list';
+    render();
+    return;
+  }
   state.categoryFilter = btn.dataset.catfilter;
   state.page = 1;
   render();

@@ -1,19 +1,6 @@
 {
   "items": [
     {
-      "id": "isna-food-festival-2026",
-      "title": "ISNA Canada Street Food Festival",
-      "date": "September 19-20, 2026",
-      "time": "2PM - 10PM",
-      "location": "2200 S Sheridan Way, Mississauga, ON",
-      "desc": "ISNA Canada's 3rd Annual Street Food Festival. Free admission. Halal street food, entertainment, attractions, vendors, bazaar, activities, contests, inflatables, and performances. Family-friendly community event.",
-      "website": "https://www.isnacanada.com/events-programs/street-food-festival-2026/",
-      "type": "Community Festival",
-      "category": "largeevents",
-      "lat": 43.5567,
-      "lng": -79.6558
-    },
-    {
       "id": "mwtg-oman-2026",
       "title": "MWTG Oman Group Trip",
       "date": "October 24-31, 2026",

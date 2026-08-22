@@ -248,17 +248,17 @@ collections:
               - { label: "Email", name: "email", widget: "string", required: false }
 
   - name: "resources"
-    label: "Resources — Mosques, Cafes, Shops, Restaurants & Activities"
+    label: "Resources — Muslim Women-Owned Resources"
     files:
       - file: "data/resources.json"
-        label: "Mosques, Cafes, Shops, Restaurants & Activities"
+        label: "Muslim Women-Owned Resources"
         name: "resources"
         fields:
           - label: "Items"
             name: "items"
             widget: "list"
             fields:
-              - { label: "Category — change this to switch type", name: "category", widget: "select", options: ["mosques", "cafes", "shops", "restaurants", "misc"] }
+              - { label: "Category — change this to switch type", name: "category", widget: "select", options: ["cafes", "shops", "restaurants", "beautycare", "mentalhealth", "bakeries", "mosqueprograms"] }
               - { label: "ID (no spaces, unique)", name: "id", widget: "string" }
               - { label: "Title", name: "title", widget: "string" }
               - { label: "Type (e.g. Boutique, Bakery & Café)", name: "type", widget: "string" }
@@ -273,21 +273,4 @@ collections:
               - { label: "Instagram link", name: "instagram", widget: "string", required: false }
               - { label: "Website link", name: "website", widget: "string", required: false }
 
-  - name: "smallbusinesses"
-    label: "Resources — Small Businesses"
-    files:
-      - file: "data/smallbusinesses.json"
-        label: "Small Businesses"
-        name: "smallbusinesses"
-        fields:
-          - label: "Items"
-            name: "items"
-            widget: "list"
-            fields:
-              - { label: "ID (no spaces, unique)", name: "id", widget: "string" }
-              - { label: "Business name", name: "title", widget: "string" }
-              - { label: "Type (e.g. Home bakery, Online shop)", name: "type", widget: "string", required: false }
-              - { label: "Description", name: "desc", widget: "text" }
-              - { label: "Instagram link", name: "instagram", widget: "string", required: false }
-              - { label: "Website link", name: "website", widget: "string", required: false }
               - { label: "Email", name: "email", widget: "string", required: false }
