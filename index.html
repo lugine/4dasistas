@@ -73,6 +73,17 @@
 
   .tabs{ display:flex; justify-content:center; align-items:center; gap:6px; padding:14px 16px; overflow-x:auto; -webkit-overflow-scrolling:touch; scrollbar-width:none; background:rgba(201,170,173,0.45); }
   .tabs::-webkit-scrollbar{ display:none; }
+  .top-search-shell{
+    display:flex; align-items:center; gap:10px;
+    max-width: 340px; width: min(100%, 340px); margin: 0 20px 12px auto; padding: 10px 14px; border-radius: 999px;
+    background: rgba(55,61,59,0.06); border: 1.5px solid rgba(55,61,59,0.2);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.6);
+  }
+  .top-search-shell svg{ width:16px; height:16px; opacity:0.7; flex-shrink:0; }
+  .top-search-shell input{
+    width:100%; border:none; background:transparent; font: inherit; color:var(--charcoal); font-size:14px; outline:none;
+  }
+  .top-search-shell input::placeholder{ color:#6d6a68; }
   .tab-btn{
     flex-shrink:0; font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:14px;
     padding:9px 18px; border-radius:999px; border:2px solid var(--charcoal);
@@ -197,11 +208,13 @@
     .resource-map{ height:52vh; min-height:340px; }
     .ig-grid{ grid-template-columns:repeat(2, 1fr); gap:12px; }
     .panel-card{ padding:15px; }
-    .controls{ flex-wrap:nowrap; gap:8px; padding-left:12px; padding-right:12px; overflow-x:auto; -webkit-overflow-scrolling:touch; }
+    .controls{ flex-wrap:nowrap; gap:8px; padding-left:12px; padding-right:12px; overflow-x:auto; -webkit-overflow-scrolling:touch; justify-content:center; }
     .view-toggle{ flex-shrink:0; }
     .view-toggle button{ padding:6px 10px; font-size:11.5px; }
     .map-legend{ gap:10px; font-size:11.5px; }
-    .footer-btns{ gap:8px; }
+    .footer-btns{ gap:8px; flex-direction:row; }
+    .top-search-shell{ width:100%; max-width:100%; margin: 0 auto 12px; }
+    .subfilter-row, .category-row, .tabs { justify-content:center; }
   }
 
   .ongoing-note{ font-size:13px; color:var(--muted); margin:20px 0 8px; }
@@ -241,6 +254,7 @@
   .map-embed{ width:100%; height:160px; border:0; border-radius:10px; margin-bottom:10px; }
 
   .resource-map{ width:100%; height:65vh; min-height:420px; border:2px solid var(--charcoal); border-radius:14px; overflow:hidden; }
+  .calendar-map{ width:100%; height:65vh; min-height:420px; border:2px solid var(--charcoal); border-radius:14px; overflow:hidden; }
 
   .resource-map-wrapper{ display:flex; gap:16px; align-items:flex-start; }
   .resource-map-wrapper .resource-map{ flex:1; }
@@ -284,15 +298,16 @@
   .link-btn.primary{ background:var(--charcoal); color:var(--cream); }
   .link-btn.secondary{ background:white; color:var(--charcoal); }
 
-  footer{ text-align:center; padding:32px 20px 40px; border-top:1px solid rgba(33,30,28,0.12); margin-top:16px; background:#CE8491; }
-  .footer-btns{ display:flex; justify-content:center; flex-wrap:wrap; gap:10px; margin-bottom:14px; }
+  footer{ text-align:center; padding:32px 20px 40px; border-top:1px solid rgba(33,30,28,0.12); margin-top:16px; background:rgba(201,170,173,0.45); }
+  .footer-btns{ display:flex; justify-content:center; flex-wrap:nowrap; gap:10px; margin-bottom:14px; }
   .wa-btn{ display:inline-flex; align-items:center; gap:9px; font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:14px; line-height:1; background:var(--wa-green); color:white; padding:12px 22px; border-radius:999px; text-decoration:none; }
   .wa-btn svg{ width:18px; height:18px; flex-shrink:0; display:block; }
   .ig-btn{ display:inline-flex; align-items:center; gap:9px; font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:14px; line-height:1; background:linear-gradient(135deg,#f58529,#dd2a7b,#8134af,#515bd4); color:white; padding:12px 22px; border-radius:999px; text-decoration:none; }
   .ig-btn svg{ width:18px; height:18px; flex-shrink:0; display:block; }
   .owned-badge{ display:inline-block; font-size:11px; font-weight:700; color:var(--rose-deep); background:rgba(201,138,150,0.16); padding:3px 10px; border-radius:999px; margin-bottom:8px; }
   .disclaimer{ font-size:11px; color:var(--muted); max-width:440px; margin:0 auto; line-height:1.5; }
-  .footer-tagline{ font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:18px; color:white; margin-bottom:14px; text-shadow:0 1px 2px rgba(0,0,0,0.15); }
+  .footer-tagline{ font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:18px; color:white; margin-bottom:6px; text-shadow:0 1px 2px rgba(0,0,0,0.15); }
+  .footer-tagline.yet{ margin-top:0; margin-bottom:14px; }
 
   .suggest-btn{ display:inline-block; font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:13px; background:none; border:1.5px solid var(--charcoal); color:var(--charcoal); padding:9px 18px; border-radius:999px; cursor:pointer; margin-bottom:16px; text-decoration:none; }
   .hp-field{ position:absolute; left:-9999px; }
@@ -348,6 +363,11 @@
   <button class="tab-btn" data-tab="rules">Rules</button>
 </nav>
 
+<div class="top-search-shell" id="globalSearchShell" style="display:none;">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="6"></circle><path d="M16 16L21 21"></path></svg>
+  <input id="globalSearch" type="search" placeholder="Search for anything..." aria-label="Search for anything" />
+</div>
+
 <div class="category-row" id="categoryRow"></div>
 <div class="controls" id="controlsRow">
   <div class="view-toggle" id="viewToggle">
@@ -394,7 +414,6 @@
 </div>
 
 <footer>
-  <p class="footer-tagline">Not a cult. Yet.</p>
   <div class="footer-btns">
     <a class="wa-btn" href="https://chat.whatsapp.com/JgmuY1XU0jrGrDPUvuDPTS" target="_blank" rel="noopener">
       <svg viewBox="0 0 32 32" fill="white"><path d="M16 5C9.4 5 4 9.9 4 16c0 3.2 1.5 6.1 3.9 8.1-.3 1.8-1.1 3.8-2.2 5.4 2.3-.4 4.6-1.3 6.4-2.6 1.2.3 2.5.5 3.9.5 6.6 0 12-4.9 12-11S22.6 5 16 5Z"/></svg>
@@ -405,6 +424,8 @@
       Follow @4dasistas.ca
     </a>
   </div>
+  <p class="footer-tagline">Not a cult.</p>
+  <p class="footer-tagline yet">Yet.</p>
   <a class="suggest-btn" href="mailto:lujanealdimasi@gmail.com?subject=4DASISTAS%20Suggestion">✎ Suggest a change</a>
   <p class="disclaimer">Details change often, so always confirm dates, prices, locations, and any "hijab-off"/private-space claims directly with the organizer before attending.</p>
 </footer>
@@ -515,7 +536,7 @@ let state = {
   tab:'home', categoryFilter:'all', view:'list',
   sportFilter:'all', dayCity:'all',
   gatherSort:'hijab', gatherDir:'asc',
-  tripType:'all', resourceFilter:'all', resourceView:'map', resourcePage:1,
+  tripType:'all', tripView:'list', resourceFilter:'all', resourceView:'map', resourcePage:1,
   timeFilter:'upcoming', page:1,
   calYear: today.getFullYear(), calMonth: today.getMonth(),
 };
@@ -579,9 +600,31 @@ function isPastItem(item){
   return item.calDate < todayStr;
 }
 
+function normalizeSearchText(value){
+  return String(value || '').toLowerCase().replace(/[^a-z0-9\s]/g, ' ');
+}
+
+function itemMatchesSearch(item){
+  if(!state.searchQuery) return true;
+  const query = normalizeSearchText(state.searchQuery);
+  const haystack = normalizeSearchText([
+    item.title,
+    item.desc,
+    item.location,
+    item.type,
+    item.tag,
+    item.organizer,
+    item.category,
+    item.tripType,
+    item.sportKey,
+    item.ownedBy
+  ].join(' '));
+  return haystack.includes(query);
+}
+
 function itemsForCategory(cat){
   const base = itemsForCategoryBase(cat);
-  return base.filter(e => state.timeFilter === 'past' ? isPastItem(e) : !isPastItem(e));
+  return base.filter(item => itemMatchesSearch(item) && (state.timeFilter === 'past' ? isPastItem(item) : !isPastItem(item)));
 }
 
 /* ============================================================
@@ -665,7 +708,37 @@ function buildDateMap(items, year, month){
   return map;
 }
 
+function renderTripEarthView(){
+  const el = document.getElementById('calendar-view');
+  el.innerHTML = '<div id="tripEarthMap" class="calendar-map"></div>';
+
+  const items = itemsForCategory('trips');
+  const tripMap = L.map('tripEarthMap', { scrollWheelZoom: true, worldCopyJump: true });
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; OpenStreetMap contributors',
+    maxZoom: 19
+  }).addTo(tripMap);
+
+  const markers = items.filter(item => typeof item.lat === 'number' && typeof item.lng === 'number').map(item => {
+    const marker = L.marker([item.lat, item.lng]).addTo(tripMap);
+    marker.bindPopup(`<strong>${item.title}</strong><br>${item.location || ''}<br>${item.date || ''}`);
+    return marker;
+  });
+
+  if(markers.length){
+    const group = L.featureGroup(markers);
+    tripMap.fitBounds(group.getBounds().pad(0.4));
+  } else {
+    tripMap.setView([20, 0], 2);
+  }
+}
+
 function renderCalendar(){
+  if(state.categoryFilter === 'trips' && state.tripView === 'earth'){
+    document.getElementById('calendar-view').style.display = 'block';
+    renderTripEarthView();
+    return;
+  }
   const items = itemsForCategory(state.categoryFilter);
   const year = state.calYear, month = state.calMonth;
   const dateMap = buildDateMap(items, year, month);
@@ -784,7 +857,9 @@ el.innerHTML = sportFilterOptions().map(f => `<button class="filter-chip ${state
       + `<div class="sub-note">Location filter applies to day activities only — gatherings show regardless.</div>`;
   } else if(state.categoryFilter === 'trips'){
     const types = [{key:'all',label:'All'},{key:'domestic',label:'Domestic'},{key:'international',label:'International'}];
-    el.innerHTML = types.map(t => `<button class="filter-chip ${state.tripType===t.key?'active':''}" data-tripfilter="${t.key}">${t.label}</button>`).join('');
+    const views = [{key:'list',label:'List'},{key:'earth',label:'Earth'}];
+    el.innerHTML = types.map(t => `<button class="filter-chip ${state.tripType===t.key?'active':''}" data-tripfilter="${t.key}">${t.label}</button>`).join('')
+      + `<div class="trip-view-toggle" style="display:flex; gap:8px; justify-content:center; width:100%; margin-top:8px;">${views.map(v => `<button class="filter-chip ${state.tripView===v.key?'active':''}" data-tripview="${v.key}">${v.label}</button>`).join('')}</div>`;
   }
 }
 
@@ -1300,6 +1375,10 @@ function closeDetail(){
 const DIRECTORY_TABS = ['clubs','resources','home','rules','clubstart','clubjoin','homescreen','subscribe'];
 
 function render(){
+  const searchShell = document.getElementById('globalSearchShell');
+  if(searchShell) searchShell.style.display = ['home','events'].includes(state.tab) ? 'flex' : 'none';
+  if(document.getElementById('globalSearch')) document.getElementById('globalSearch').value = state.searchQuery || '';
+
   renderCategoryRow();
 
   const isDirectory = DIRECTORY_TABS.includes(state.tab);
@@ -1455,11 +1534,13 @@ document.getElementById('subFilterRow').addEventListener('click', e => {
   const sportBtn = e.target.closest('[data-sportfilter]');
   const gatherBtn = e.target.closest('[data-gathersort]');
   const tripBtn = e.target.closest('[data-tripfilter]');
+  const tripViewBtn = e.target.closest('[data-tripview]');
   const resourceBtn = e.target.closest('[data-resourcefilter]');
   const dirBtn = e.target.closest('#gatherDirBtn');
   if(sportBtn){ state.sportFilter = sportBtn.dataset.sportfilter; state.page = 1; render(); }
   if(gatherBtn){ state.gatherSort = gatherBtn.dataset.gathersort; render(); }
   if(tripBtn){ state.tripType = tripBtn.dataset.tripfilter; state.page = 1; render(); }
+  if(tripViewBtn){ state.tripView = tripViewBtn.dataset.tripview; render(); }
   if(resourceBtn){ state.resourceFilter = resourceBtn.dataset.resourcefilter; state.resourcePage = 1; render(); }
   if(dirBtn){ state.gatherDir = state.gatherDir==='asc'?'desc':'asc'; render(); }
 });
@@ -1493,6 +1574,11 @@ if ('serviceWorker' in navigator) {
 }
 
 document.getElementById('list-view').innerHTML = '<div class="empty">Loading…</div>';
+document.getElementById('globalSearch').addEventListener('input', e => {
+  state.searchQuery = e.target.value.trim();
+  state.page = 1;
+  render();
+});
 document.getElementById('subscribeBtn').addEventListener('click', e => {
   e.preventDefault();
   goToTab('subscribe');
