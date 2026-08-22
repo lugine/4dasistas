@@ -39,7 +39,7 @@
       "days": [
         "sun"
       ],
-      "date": "Every Sunday \u00b7 4:00\u20135:30 PM",
+      "date": "Every Sunday · 4:00–5:30 PM",
       "location": "Jami Mosque, 56 Boustead Ave, Toronto",
       "organizer": "ISNA Canada",
       "price": "",
@@ -57,7 +57,7 @@
       "days": [
         "tue"
       ],
-      "date": "Every Tuesday \u00b7 7:30 PM",
+      "date": "Every Tuesday · 7:30 PM",
       "location": "ISNA Canada Centre, 2200 South Sheridan Way, Mississauga",
       "organizer": "ISNA Canada",
       "price": "",
@@ -174,7 +174,7 @@
       "date": "Date TBD",
       "location": "Halton Masjid, 4310 Fairview St, Burlington, ON",
       "organizer": "Halton Islamic Association (HIA)",
-      "desc": "28 Sep 28 Sisters Other Youth Sister's Apple Picking Youth Sisters Apple Picking! Join us for a fun afternoon at The Apple Orchard Inc. (Ages 14\u201330) Learn More Register Now",
+      "desc": "28 Sep 28 Sisters Other Youth Sister's Apple Picking Youth Sisters Apple Picking! Join us for a fun afternoon at The Apple Orchard Inc. (Ages 14–30) Learn More Register Now",
       "website": "https://www.hia.live/event/youth-sisters-apple-picking",
       "instagram": "https://www.instagram.com/masjidhalton/"
     },
@@ -196,7 +196,7 @@
       "date": "Date TBD",
       "location": "Halton Masjid, 4310 Fairview St, Burlington, ON",
       "organizer": "Halton Islamic Association (HIA)",
-      "desc": "15 Jun 15 Sisters Masjid Halton Beads and Brunch Join us for a fun morning of Beads &\u00a0Brunch! Learn More Register Now",
+      "desc": "15 Jun 15 Sisters Masjid Halton Beads and Brunch Join us for a fun morning of Beads & Brunch! Learn More Register Now",
       "website": "https://www.hia.live/event/beads-and-brunch-2025",
       "instagram": "https://www.instagram.com/masjidhalton/"
     },
@@ -207,7 +207,7 @@
       "date": "Date TBD",
       "location": "Halton Masjid, 4310 Fairview St, Burlington, ON",
       "organizer": "Halton Islamic Association (HIA)",
-      "desc": "7 Jun 7 Sisters Masjid Halton Ink & Inspiration (Daughters of Light) Join us for an evening of reflection on the lives of the daughters of the Prophet SAW. Open to all sisters ages 13\u201330 Learn More Register Now",
+      "desc": "7 Jun 7 Sisters Masjid Halton Ink & Inspiration (Daughters of Light) Join us for an evening of reflection on the lives of the daughters of the Prophet SAW. Open to all sisters ages 13–30 Learn More Register Now",
       "website": "https://www.hia.live/event/ink-inspiration",
       "instagram": "https://www.instagram.com/masjidhalton/"
     },
@@ -218,7 +218,7 @@
       "date": "Date TBD",
       "location": "Halton Masjid, 4310 Fairview St, Burlington, ON",
       "organizer": "Halton Islamic Association (HIA)",
-      "desc": "24 May 24 Sisters Other Sisters on the Court Attention Youth Sisters, we\u2019re taking over the basketball court! \ud83c\udfc0 \u2728 Learn More Register Now",
+      "desc": "24 May 24 Sisters Other Sisters on the Court Attention Youth Sisters, we’re taking over the basketball court! 🏀 ✨ Learn More Register Now",
       "website": "https://www.hia.live/event/sisters-on-the-court",
       "instagram": "https://www.instagram.com/masjidhalton/"
     },
@@ -298,6 +298,24 @@
       "desc": "14 May 15 Sisters Rahmah Centre Chai and Chat Join Sister Nesrine Said for a discussion on raising your kids with a conscious mind. Learn More Register Now",
       "website": "https://www.hia.live/event/chai-and-chat",
       "instagram": "https://www.instagram.com/masjidhalton/"
+    },
+    {
+      "id": "mg-almukhlisin-fiqh-of-salah",
+      "tag": "Mosque Gathering",
+      "title": "Fiqh of Salah",
+      "days": [
+        "sun"
+      ],
+      "date": "Every Sunday in August from 2:15–3:15pm ",
+      "location": "Markham",
+      "organizer": "Al Mukhlisin Institute",
+      "price": "",
+      "registration": "",
+      "desc": "Ready for a month of the Fiqh of Salah? 🤲🏻\n\nJoin us every Sunday in August from 2:15–3:15 PM for our 4-part Halaqa Series led by @almukhlisinstitute at @ismsisters : learning, where we’ll gather as sisters to reflect, connect, and grow in faith through learning about Salah (prayer).\n\n✨ Drinks provided\n🤍 Sisters 16+\n📍Every Sunday in August | 2:15–3:15 PM",
+      "whatsapp": "",
+      "instagram": "https://www.instagram.com/p/DbOyPO9iXQX/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==&igsi=MzRlODBiNWFlZA==",
+      "website": "",
+      "email": ""
     }
   ]
 }

@@ -35,6 +35,40 @@ collections:
           - { label: "Message shown to visitors", name: "message", widget: "string", default: "We're fixing something — be right back!" }
           - { label: "Smaller subtext", name: "subtext", widget: "string", required: false, default: "This won't take long. Thanks for your patience 💛" }
 
+  - name: "sitetext"
+    label: "✏️ Page Text"
+    files:
+      - file: "data/sitetext.json"
+        label: "Page Text"
+        name: "sitetext"
+        fields:
+          - { label: "Header subtitle (under the 4DASISTAS logo)", name: "headerDisclaimer", widget: "string" }
+          - { label: "Footer tagline (above the WhatsApp/Instagram buttons)", name: "footerTagline", widget: "string" }
+          - { label: "Footer fine print", name: "footerDisclaimer", widget: "text" }
+          - { label: "Home tile — Calendar — title", name: "homeTileEventsTitle", widget: "string" }
+          - { label: "Home tile — Calendar — description", name: "homeTileEventsDesc", widget: "text" }
+          - { label: "Home tile — Travel — title", name: "homeTileTravelTitle", widget: "string" }
+          - { label: "Home tile — Travel — description", name: "homeTileTravelDesc", widget: "text" }
+          - { label: "Home tile — GALS CLUBS — title", name: "homeTileClubsTitle", widget: "string" }
+          - { label: "Home tile — GALS CLUBS — description", name: "homeTileClubsDesc", widget: "text" }
+          - { label: "Home tile — Resources — title", name: "homeTileResourcesTitle", widget: "string" }
+          - { label: "Home tile — Resources — description", name: "homeTileResourcesDesc", widget: "text" }
+          - { label: "Home tile — Add to Home Screen — title", name: "homeTileHomescreenTitle", widget: "string" }
+          - { label: "Home tile — Add to Home Screen — description", name: "homeTileHomescreenDesc", widget: "text" }
+          - { label: "Intro line — All Events", name: "introAll", widget: "text" }
+          - { label: "Intro line — Sports", name: "introSports", widget: "text" }
+          - { label: "Intro line — Activities", name: "introActivities", widget: "text" }
+          - { label: "Intro line — Functions", name: "introFunctions", widget: "text" }
+          - { label: "Intro line — Trips (Calendar tab)", name: "introTrips", widget: "text" }
+          - { label: "Intro line — Mosque Programs", name: "introMosquePrograms", widget: "text" }
+          - { label: "Intro line — CLUBS", name: "introClubs", widget: "text" }
+          - { label: "Intro line — Resources", name: "introResources", widget: "text" }
+          - { label: "Intro line — Travel tab", name: "introTravel", widget: "text" }
+          - { label: "Intro line — Rules", name: "introRules", widget: "text" }
+          - { label: "Intro line — Add to Home Screen", name: "introHomescreen", widget: "text" }
+          - { label: "Intro line — How to Start a Club", name: "introClubstart", widget: "text" }
+          - { label: "Intro line — How to Join a Club", name: "introClubjoin", widget: "text" }
+
   - name: "sports"
     label: "Sports"
     files:

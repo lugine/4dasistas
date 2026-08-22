@@ -133,9 +133,10 @@
   .resource-filter-chip{ flex:1 1 150px; min-height:52px; font-family:'Space Grotesk',sans-serif; font-size:14px; font-weight:700; padding:12px 18px; border-radius:14px; border:2px solid var(--charcoal); background:white; color:var(--charcoal); cursor:pointer; box-shadow:2px 2px 0 var(--charcoal); }
   .resource-filter-chip.active{ background:var(--charcoal); color:var(--cream); }
   .resource-filter-row{ display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); max-width:760px; }
-  .mental-health-grid{ display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px; }
-  .mental-health-grid .panel-card{ aspect-ratio:1; display:flex; flex-direction:column; justify-content:space-between; margin:0; }
-  .mental-health-grid .panel-desc{ line-height:1.35; margin-bottom:6px; }
+  .mental-health-grid{ display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; align-items:start; }
+  .mental-health-grid .panel-card{ margin:0; padding:14px; }
+  .mental-health-grid .panel-top{ margin-bottom:6px; }
+  .mental-health-grid .panel-desc{ line-height:1.35; margin-bottom:0; }
   .filter-chip.active{ background:var(--charcoal); color:var(--cream); border-color:var(--charcoal); }
   .filter-select{ font-family:'Inter',sans-serif; font-size:12.5px; font-weight:600; padding:7px 12px; border-radius:999px; border:1.5px solid rgba(33,30,28,0.25); background:white; color:var(--charcoal); }
   .sort-dir-btn{ font-size:15px; padding:6px 10px; border-radius:999px; border:1.5px solid rgba(33,30,28,0.25); background:white; cursor:pointer; }
@@ -155,7 +156,7 @@
   .cat-dayactivity{ background:var(--blue); }
   .cat-trip{ background:var(--purple); }
   .cat-mosque{ background:#c3e2d4; }
-  .cat-club{ background:var(--gold); }
+  .cat-club{ background:var(--pink); }
   .cat-resource{ background:#A9D6B8; }
 
   .click-btn{ font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:12.5px; background:var(--charcoal); color:var(--cream); border:none; padding:9px 15px; border-radius:999px; cursor:pointer; white-space:nowrap; }
@@ -218,6 +219,7 @@
     .home-tile-desc{ font-size:13px; max-width:78%; }
     .rules-content{ padding:20px 16px; }
     .club-guide-actions, .home-tiles{ grid-template-columns:1fr; }
+    .home-tile[data-hometab="homescreen"]{ grid-column:1; }
     .cat-filter-btn{ padding:12px 20px; font-size:13px; }
     .wa-fixed-btn svg{ width:16px; height:16px; }
     header{ padding-top:54px; }
@@ -251,7 +253,7 @@
 
   .home-tiles{ display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:16px; }
   .home-tile{ display:block; width:100%; text-align:left; border:2px solid var(--charcoal); border-radius:18px; padding:24px 22px; cursor:pointer; box-shadow:4px 4px 0 var(--charcoal); transition:transform 0.12s ease, box-shadow 0.12s ease; font-family:'Inter',sans-serif; position:relative; }
-  .home-tile[data-hometab="homescreen"]{ padding-top:14px; padding-bottom:14px; min-height:74px; align-self:center; }
+  .home-tile[data-hometab="homescreen"]{ padding-top:14px; padding-bottom:14px; min-height:74px; align-self:center; grid-column:2; }
   .home-tile:hover{ transform:translate(-2px,-2px); box-shadow:6px 6px 0 var(--charcoal); }
   .home-tile-title{ font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:22px; margin-bottom:6px; padding-right:40px; }
   .home-tile-desc{ font-size:14px; max-width:85%; opacity:0.9; }
@@ -488,6 +490,7 @@ let mosqueGatheringsData = [];
 let allResourceItems = [];
 let ALL_ITEMS = [];
 let EVENT_ITEMS = [];
+let siteText = {};
 
 async function fetchDataWithFallback(key, localPath){
   try {
@@ -501,8 +504,39 @@ async function fetchDataWithFallback(key, localPath){
   }
 }
 
+async function fetchSiteText(){
+  try {
+    const res = await fetch('data/sitetext.json', { cache: 'no-store' });
+    if (!res.ok) throw new Error(`sitetext.json returned ${res.status}`);
+    return await res.json();
+  } catch (e) {
+    console.warn('Failed to load data/sitetext.json, using built-in defaults:', e);
+    return {};
+  }
+}
+
+function applySiteText(){
+  const headerEl = document.querySelector('.header-disclaimer');
+  if(headerEl && siteText.headerDisclaimer) headerEl.textContent = siteText.headerDisclaimer;
+  const footerTaglineEl = document.querySelector('.footer-tagline');
+  if(footerTaglineEl && siteText.footerTagline) footerTaglineEl.textContent = siteText.footerTagline;
+  const footerDisclaimerEl = document.querySelector('.disclaimer');
+  if(footerDisclaimerEl && siteText.footerDisclaimer) footerDisclaimerEl.textContent = siteText.footerDisclaimer;
+
+  const introOverrides = {
+    all: siteText.introAll, sports: siteText.introSports, activities: siteText.introActivities,
+    functions: siteText.introFunctions, trips: siteText.introTrips, mosqueprograms: siteText.introMosquePrograms,
+    clubs: siteText.introClubs, resources: siteText.introResources, travel: siteText.introTravel,
+    rules: siteText.introRules, homescreen: siteText.introHomescreen,
+    clubstart: siteText.introClubstart, clubjoin: siteText.introClubjoin,
+  };
+  Object.keys(introOverrides).forEach(key => {
+    if(introOverrides[key]) introText[key] = introOverrides[key];
+  });
+}
+
 async function loadData(){
-const [mosqueGatherings, sports, gatherings, dayactivities, trips, clubs, organizations, resources] = await Promise.all([
+const [mosqueGatherings, sports, gatherings, dayactivities, trips, clubs, organizations, resources, text] = await Promise.all([
     fetchDataWithFallback('mosquegatherings', 'data/mosquegatherings.json'),
     fetchDataWithFallback('sports', 'data/sports.json'),
     fetchDataWithFallback('gatherings', 'data/gatherings.json'),
@@ -511,6 +545,7 @@ const [mosqueGatherings, sports, gatherings, dayactivities, trips, clubs, organi
     fetchDataWithFallback('clubs', 'data/clubs.json'),
     fetchDataWithFallback('organizations', 'data/organizations.json'),
     fetchDataWithFallback('resources', 'data/resources.json'),
+    fetchSiteText(),
   ]);
   sportsData = sports;
   gatheringsData = gatherings;
@@ -520,6 +555,8 @@ const [mosqueGatherings, sports, gatherings, dayactivities, trips, clubs, organi
   organizationsData = organizations;
   resourcesData = resources;
 mosqueGatheringsData = mosqueGatherings;
+siteText = text;
+applySiteText();
 
   // Normalize dates so every event has a clean, consistent display date.
   [sportsData, gatheringsData, dayActivitiesData, tripsData, mosqueGatheringsData].forEach(arr => {
@@ -586,6 +623,7 @@ const introText = {
   activities: "Sports-adjacent outings, workshops, wellness, and social activities.",
   functions: "Markets, festivals, gatherings, and community functions.",
   trips: "Sample trips below — tell me the real ones and I'll swap them in.",
+  mosqueprograms: "Mosque events, prayers, classes, and community gatherings.",
   clubs: "Special-interest clubs the community runs together — sign up to join one.",
   resources: "A directory of Muslim women-owned and Muslim-supporting resources across the GTA.",
   home: "",
@@ -792,11 +830,12 @@ function renderTripEarthView(targetId='calendar-view', mapId='tripEarthMap', sel
     }));
   const globe = Globe()(document.getElementById(mapId))
     .backgroundColor('#fff7e6')
-    .globeImageUrl(null)
-    .showGraticules(true)
+    .globeImageUrl('https://unpkg.com/three-globe/example/img/earth-blue-marble.jpg')
+    .bumpImageUrl('https://unpkg.com/three-globe/example/img/earth-topology.png')
+    .showGraticules(false)
     .showAtmosphere(true)
     .atmosphereColor('#caaacd')
-    .atmosphereAltitude(0.12)
+    .atmosphereAltitude(0.14)
     .pointsData(points)
     .pointLat('lat')
     .pointLng('lng')
@@ -814,11 +853,8 @@ function renderTripEarthView(targetId='calendar-view', mapId='tripEarthMap', sel
     .onPointClick(point => renderDetail(point.id))
     .width(document.getElementById(mapId).clientWidth)
     .height(document.getElementById(mapId).clientHeight);
-  const globeMaterial = globe.globeMaterial();
-  globeMaterial.color.set('#c3d5e2');
-  globeMaterial.emissive.set('#7f8998');
-  globeMaterial.emissiveIntensity = 0.25;
-  globe.controls().autoRotate = false;
+  globe.controls().autoRotate = true;
+  globe.controls().autoRotateSpeed = 0.6;
 }
 
 function renderCalendar(){
@@ -909,7 +945,7 @@ const categoryList = [
   {key:'functions', label:'Functions', bg:'#fae1e4', fg:'#373d3b'},
   {key:'trips', label:'Trips', bg:'#ddb862', fg:'#373d3b'},
   {key:'mosqueprograms', label:'Mosque Programs', bg:'#c3e2d4', fg:'#373d3b'},
-  {key:'clubs', label:'CLUBS', bg:'#b8d8c2', fg:'#373d3b'},
+  {key:'clubs', label:'CLUBS', bg:'#caaacd', fg:'#373d3b'},
 ];
 
 const resourceFilterList = [
@@ -974,6 +1010,15 @@ el.innerHTML = sportFilterOptions().map(f => `<button class="filter-chip ${state
   }
 }
 
+function renderTravelFilters(){
+  const el = document.getElementById('subFilterRow');
+  el.className = 'subfilter-row';
+  el.innerHTML = `<button class="filter-chip ${state.tripType==='all'?'active':''}" data-travel-filter="all">All</button>
+    <button class="filter-chip ${state.tripType==='domestic'?'active':''}" data-travel-filter="domestic">Domestic</button>
+    <button class="filter-chip ${state.tripType==='international'?'active':''}" data-travel-filter="international">International</button>
+    <div class="sub-note">Explore the globe, then browse every trip below.</div>`;
+}
+
 /* ============================================================
    RENDER: DIRECTORY TABS (Clubs / Resources)
    ============================================================ */
@@ -1007,7 +1052,9 @@ function renderResourceList(){
   const el = document.getElementById('directory-view');
   const pagEl = document.getElementById('resourcePagination');
   const filtered = interleaveByCategory(filteredResourceItems());
-  el.className = state.resourceFilter === 'mentalhealth' ? 'mental-health-grid' : '';
+  const isMentalHealth = state.resourceFilter === 'mentalhealth';
+  el.className = isMentalHealth ? 'mental-health-grid' : '';
+  el.style.display = isMentalHealth ? 'grid' : 'block';
 
   if(filtered.length === 0){ el.innerHTML = '<div class="empty">Nothing here yet.</div>'; pagEl.innerHTML=''; return; }
 
@@ -1137,13 +1184,7 @@ function renderDirectory(){
   if(state.tab === 'travel'){
     document.getElementById('resourcePagination').innerHTML = '';
     const travelItems = state.tripType === 'all' ? tripsData : tripsData.filter(item => tripTypeForItem(item) === state.tripType);
-    el.innerHTML = `<div class="subfilter-row" style="padding:0 0 16px;">
-      <button class="filter-chip ${state.tripType==='all'?'active':''}" data-travel-filter="all">All</button>
-      <button class="filter-chip ${state.tripType==='domestic'?'active':''}" data-travel-filter="domestic">Domestic</button>
-      <button class="filter-chip ${state.tripType==='international'?'active':''}" data-travel-filter="international">International</button>
-      <span class="sub-note">Explore the globe, then browse every trip below.</span>
-    </div>`;
-    el.innerHTML += `<div class="travel-earth-layout">
+    el.innerHTML = `<div class="travel-earth-layout">
       <div class="travel-trip-list"><h4>Trips on the globe</h4>${travelItems.map(item => `<div class="side-item" data-id="${item.id}"><strong>${item.title}</strong><span>${item.location || ''} · ${item.date || ''}</span></div>`).join('') || '<div class="side-item"><span>No trips match this filter.</span></div>'}</div>
       <div id="travelEarthView" class="travel-map"><div id="travelEarthMap" class="calendar-map"></div></div>
     </div>`;
@@ -1228,11 +1269,11 @@ el.innerHTML = `<div class="club-guide-actions">
   } else if(state.tab === 'home'){
     document.getElementById('resourcePagination').innerHTML = '';
     const tiles = [
-      {tab:'events', title:'Calendar', bg:'#f4b183', fg:'#373d3b', desc:'Sports, gatherings, day activities & trips — see what\'s coming up.'},
-      {tab:'travel', title:'Travel', bg:'#ddb862', fg:'#373d3b', desc:'Explore women-friendly trips, retreats, and group travel.'},
-      {tab:'clubs', title:'GALS CLUBS', bg:'#caaacd', fg:'#373d3b', desc:'Join a standing-interest club, from gaming to ADHD support.'},
-      {tab:'resources', title:'Resources', bg:'#c3d5e2', fg:'#373d3b', desc:'Mosques, cafes, shops & restaurants the community supports.'},
-      {tab:'homescreen', title:'Add this to your Home Screen', bg:'#A9D6B8', fg:'#373d3b', desc:'Install 4DASISTAS like an app for quick access.'},
+      {tab:'events', title: siteText.homeTileEventsTitle || 'Calendar', bg:'#f4b183', fg:'#373d3b', desc: siteText.homeTileEventsDesc || 'Sports, gatherings, day activities & trips — see what\'s coming up.'},
+      {tab:'travel', title: siteText.homeTileTravelTitle || 'Travel', bg:'#ddb862', fg:'#373d3b', desc: siteText.homeTileTravelDesc || 'Explore women-friendly trips, retreats, and group travel.'},
+      {tab:'clubs', title: siteText.homeTileClubsTitle || 'GALS CLUBS', bg:'#caaacd', fg:'#373d3b', desc: siteText.homeTileClubsDesc || 'Join a standing-interest club, from gaming to ADHD support.'},
+      {tab:'resources', title: siteText.homeTileResourcesTitle || 'Resources', bg:'#c3d5e2', fg:'#373d3b', desc: siteText.homeTileResourcesDesc || 'Mosques, cafes, shops & restaurants the community supports.'},
+      {tab:'homescreen', title: siteText.homeTileHomescreenTitle || 'Add this to your Home Screen', bg:'#A9D6B8', fg:'#373d3b', desc: siteText.homeTileHomescreenDesc || 'Install 4DASISTAS like an app for quick access.'},
     ];
     el.innerHTML = `<div class="home-tiles">${tiles.map(t => `
       <button class="home-tile" style="background:${t.bg};color:${t.fg}" data-hometab="${t.tab}">
@@ -1471,6 +1512,8 @@ function render(){
 
   if(state.tab === 'resources'){
     renderResourceFilters();
+  } else if(state.tab === 'travel'){
+    renderTravelFilters();
   } else if(!isDirectory){
     renderSubFilters();
   } else {
@@ -1643,17 +1686,17 @@ document.getElementById('subFilterRow').addEventListener('click', e => {
   const tripViewBtn = e.target.closest('[data-tripview]');
   const resourceBtn = e.target.closest('[data-resourcefilter]');
   const dirBtn = e.target.closest('#gatherDirBtn');
+  const travelFilter = e.target.closest('[data-travel-filter]');
   if(sportBtn){ state.sportFilter = sportBtn.dataset.sportfilter; state.page = 1; render(); }
   if(gatherBtn){ state.gatherSort = gatherBtn.dataset.gathersort; render(); }
   if(tripBtn){ state.tripType = tripBtn.dataset.tripfilter; state.page = 1; render(); }
   if(tripViewBtn){ state.tripView = tripViewBtn.dataset.tripview; render(); }
   if(resourceBtn){ state.resourceFilter = resourceBtn.dataset.resourcefilter; state.resourcePage = 1; render(); }
   if(dirBtn){ state.gatherDir = state.gatherDir==='asc'?'desc':'asc'; render(); }
+  if(travelFilter){ state.tripType = travelFilter.dataset.travelFilter; render(); }
 });
 document.getElementById('directory-view').addEventListener('click', e => {
-  const travelFilter = e.target.closest('[data-travel-filter]');
   const travelView = e.target.closest('[data-travel-view]');
-  if(travelFilter){ state.tripType = travelFilter.dataset.travelFilter; render(); }
   if(travelView){ state.tripView = travelView.dataset.travelView; render(); }
 });
 document.getElementById('subFilterRow').addEventListener('change', e => {
