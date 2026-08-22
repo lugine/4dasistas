@@ -298,6 +298,8 @@
   .fall-submit-btn{ display:block; width:100%; border:none; border-radius:999px; padding:16px; background:var(--charcoal); color:var(--cream); font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:15px; cursor:pointer; box-shadow:0 4px 14px rgba(55,61,59,0.25); }
   .fall-submit-btn:disabled{ opacity:0.6; cursor:not-allowed; }
   .fall-submit-status{ text-align:center; font-size:13px; color:var(--rose-deep); margin-top:10px; min-height:1em; }
+  .fall-submit-status.fall-status-error{ color:#b3423a; font-weight:600; }
+  .fall-option-wrap{ display:flex; flex-direction:column; }
   .fall-thankyou{ text-align:center; background:var(--card); border-radius:20px; padding:40px 24px; box-shadow:0 4px 16px rgba(55,61,59,0.08); }
   .fall-thankyou-emoji{ font-size:40px; margin-bottom:14px; }
   .fall-thankyou p{ font-size:15.5px; font-weight:600; color:var(--charcoal); max-width:360px; margin:0 auto; line-height:1.5; }
@@ -1238,7 +1240,6 @@ function setupFallSignupForm(){
   const otherNameInput = document.getElementById('fallOtherName');
   otherCheckbox.addEventListener('change', () => {
     otherNameInput.style.display = otherCheckbox.checked ? 'block' : 'none';
-    otherNameInput.required = otherCheckbox.checked;
     if(!otherCheckbox.checked) otherNameInput.value = '';
   });
 
@@ -1248,6 +1249,23 @@ function setupFallSignupForm(){
     const submitBtn = form.querySelector('.fall-submit-btn');
     if(form.querySelector('[name="_gotcha"]').value){ return; } // honeypot tripped, silently drop
     statusEl.textContent = '';
+    statusEl.classList.remove('fall-status-error');
+
+    const missing = [];
+    const checkedClubCount = checks.filter(c => c.checked).length;
+    if(checkedClubCount !== 3) missing.push('select exactly 3 clubs above');
+    if(!form.whatsapp.value.trim()) missing.push('add your WhatsApp number');
+    if(otherCheckbox.checked && !otherNameInput.value.trim()) missing.push('tell us the name of the "Other" club you have in mind');
+    if(!form.terms.checked) missing.push('agree to the community terms & conditions');
+
+    if(missing.length){
+      const list = missing.length === 1 ? missing[0]
+        : missing.slice(0, -1).join(', ') + ', and ' + missing[missing.length - 1];
+      statusEl.textContent = `Before submitting, please ${list}.`;
+      statusEl.classList.add('fall-status-error');
+      return;
+    }
+
     submitBtn.disabled = true;
     submitBtn.textContent = 'Sending…';
     try {
@@ -1364,25 +1382,25 @@ el.innerHTML = `<button class="fall-cta-btn" data-hometab="fallsignup">🍂 Join
         <form id="fallSignupForm">
           <input type="text" name="_gotcha" class="hp-field" tabindex="-1" autocomplete="off">
           <div class="fall-section">
-            <h3>Phone number</h3>
-            <input type="tel" name="phone" placeholder="e.g. 416-555-0123" class="fall-text-input">
+            <h3>WhatsApp number</h3>
+            <input type="tel" name="whatsapp" placeholder="e.g. 416-555-0123" class="fall-text-input">
           </div>
           <div class="fall-section">
-            <h3>Which club(s) are you interested in? <span class="fall-hint">(pick up to 3 — handy if a top choice is full)</span></h3>
+            <h3>Which club(s) are you interested in? <span class="fall-hint">(select exactly 3 — helps us place you if a top choice is full)</span></h3>
             <div class="fall-checkbox-grid" id="fallClubChecks">${FALL_SIGNUP_CLUBS.map(c => `
               <label class="fall-option">
                 <input type="checkbox" name="clubs" value="${c.title}">
                 <span class="fall-option-emoji">${c.emoji}</span>
                 <span class="fall-option-text"><strong>${c.title}</strong> — ${c.desc}</span>
               </label>`).join('')}
-              <label class="fall-option" id="fallOtherOption">
-                <input type="checkbox" name="clubs" value="Other" id="fallOtherCheckbox">
-                <span class="fall-option-emoji">✨</span>
-                <span class="fall-option-text">
-                  <strong>Others</strong> — something not listed above? Tell us!
-                  <input type="text" name="otherClubName" id="fallOtherName" placeholder="Club name" class="fall-text-input fall-other-input" style="display:none;">
-                </span>
-              </label>
+              <div class="fall-option-wrap" id="fallOtherOption">
+                <label class="fall-option">
+                  <input type="checkbox" name="clubs" value="Other" id="fallOtherCheckbox">
+                  <span class="fall-option-emoji">✨</span>
+                  <span class="fall-option-text"><strong>Others</strong> — something not listed above? Tell us!</span>
+                </label>
+                <input type="text" name="otherClubName" id="fallOtherName" placeholder="Club name" class="fall-text-input fall-other-input" style="display:none;">
+              </div>
             </div>
           </div>
           <div class="fall-section">
@@ -1407,7 +1425,7 @@ el.innerHTML = `<button class="fall-cta-btn" data-hometab="fallsignup">🍂 Join
           </div>
           <div class="fall-section fall-terms">
             <label class="fall-option fall-option-compact">
-              <input type="checkbox" name="terms" required>
+              <input type="checkbox" name="terms">
               I agree to the <a href="#tab=rules" target="_blank" rel="noopener">community terms &amp; conditions</a>.
             </label>
           </div>
