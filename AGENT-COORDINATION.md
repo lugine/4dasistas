@@ -109,6 +109,7 @@ files you're touching, and a timestamp. Change back to IDLE when done.)*
 
 _(most recent first — add new entries to the top)_
 
+- 2026-08-22 — GitHub Copilot — `index.html` — Replaced the flat trip Leaflet map with an interactive Globe.gl 3D Earth view, retaining trip markers and the calendar-sized responsive container; validated JavaScript syntax and globe wiring.
 - 2026-08-22 — GitHub Copilot — `index.html`, `data/clubs.json`, `data/resources.json`, `assets/adhd.png`, `assets/FIELD.png`, `calendar.ics` — Reconciled the latest remote commits, completed the search/trip-view/mobile UI wiring, corrected the ADHD asset path, cleaned resource ownership fields, and validated the deployable site.
 - 2026-08-19 — Claude (chat) — `index.html` — Fixed JS syntax error + destructuring/Promise.all positional bug from the mosqueGatherings insertion that broke all click interactions site-wide.
 - 2026-08-19 — Kilo (VS Code) — `index.html`, `service-worker.js`, `manifest.webmanifest`, `app-icon.svg`, `assets/`, `data/mosquegatherings.json`, `data/smallbusinesses.json`, `admin/config.yml` — Added PWA support (installable app, service worker), new "Small Businesses" resource view + CMS collection, new mosque-specific gatherings category.

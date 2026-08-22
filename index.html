@@ -29,6 +29,7 @@
 <link rel="apple-touch-icon" sizes="512x512" href="/OFFICIAL%20LOGO.png">
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="https://unpkg.com/globe.gl"></script>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:ital,wght@0,400;0,500;0,600;0,700;1,500&display=swap');
 
@@ -713,24 +714,32 @@ function renderTripEarthView(){
   el.innerHTML = '<div id="tripEarthMap" class="calendar-map"></div>';
 
   const items = itemsForCategory('trips');
-  const tripMap = L.map('tripEarthMap', { scrollWheelZoom: true, worldCopyJump: true });
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: '&copy; OpenStreetMap contributors',
-    maxZoom: 19
-  }).addTo(tripMap);
-
-  const markers = items.filter(item => typeof item.lat === 'number' && typeof item.lng === 'number').map(item => {
-    const marker = L.marker([item.lat, item.lng]).addTo(tripMap);
-    marker.bindPopup(`<strong>${item.title}</strong><br>${item.location || ''}<br>${item.date || ''}`);
-    return marker;
-  });
-
-  if(markers.length){
-    const group = L.featureGroup(markers);
-    tripMap.fitBounds(group.getBounds().pad(0.4));
-  } else {
-    tripMap.setView([20, 0], 2);
-  }
+  const points = items
+    .filter(item => typeof item.lat === 'number' && typeof item.lng === 'number')
+    .map(item => ({
+      lat: item.lat,
+      lng: item.lng,
+      title: item.title,
+      location: item.location || '',
+      date: item.date || ''
+    }));
+  const globe = Globe()(document.getElementById('tripEarthMap'))
+    .backgroundColor('#fff7e6')
+    .globeImageUrl('https://unpkg.com/three-globe/example/img/earth-blue-marble.jpg')
+    .bumpImageUrl('https://unpkg.com/three-globe/example/img/earth-topology.png')
+    .showAtmosphere(true)
+    .atmosphereColor('#caaacd')
+    .atmosphereAltitude(0.12)
+    .pointsData(points)
+    .pointLat('lat')
+    .pointLng('lng')
+    .pointColor(() => '#373d3b')
+    .pointAltitude(0.08)
+    .pointRadius(0.45)
+    .pointLabel(point => `<strong>${point.title}</strong><br>${point.location}<br>${point.date}`)
+    .width(document.getElementById('tripEarthMap').clientWidth)
+    .height(document.getElementById('tripEarthMap').clientHeight);
+  globe.controls().autoRotate = false;
 }
 
 function renderCalendar(){
