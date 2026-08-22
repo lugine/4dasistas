@@ -278,6 +278,14 @@
 
   .resource-map-wrapper{ display:flex; gap:16px; align-items:flex-start; }
   .resource-map-wrapper .resource-map{ flex:1; }
+  .travel-earth-layout{ display:flex; gap:16px; align-items:stretch; }
+  .travel-trip-list{ width:280px; max-height:65vh; overflow-y:auto; border:2px solid var(--charcoal); border-radius:14px; background:var(--card); padding:12px; order:0; }
+  .travel-trip-list h4{ font-family:'Space Grotesk',sans-serif; font-size:15px; margin:0 0 10px; }
+  .travel-trip-list .side-item{ padding:9px 0; border-bottom:1px solid rgba(33,30,28,0.1); cursor:pointer; }
+  .travel-trip-list .side-item:last-child{ border-bottom:0; }
+  .travel-trip-list .side-item strong{ display:block; font-size:13px; }
+  .travel-trip-list .side-item span{ display:block; color:var(--muted); font-size:11px; }
+  .travel-earth-layout .travel-map{ flex:1; }
   .resource-side-list{ width:280px; max-height:65vh; overflow-y:auto; border:2px solid var(--charcoal); border-radius:14px; background:var(--card); padding:12px; display:block; }
   .resource-side-list h4{ font-family:'Space Grotesk',sans-serif; font-size:15px; margin:0 0 10px; }
   .resource-side-list .side-list-close{ background:none; border:none; font-size:18px; cursor:pointer; float:right; line-height:1; }
@@ -285,7 +293,7 @@
   .resource-side-list .side-item:last-child{ border-bottom:none; }
   .resource-side-list .side-item strong{ display:block; font-size:13px; margin-bottom:2px; }
   .resource-side-list .side-item span{ font-size:12px; color:var(--muted); }
-  .resource-side-list .side-number{ display:inline-flex; align-items:center; justify-content:center; width:22px; height:22px; margin-right:6px; border-radius:50%; background:var(--charcoal); color:var(--cream); font-size:11px; font-weight:700; }
+  .resource-side-list .side-number{ display:inline-flex; align-items:center; justify-content:center; width:22px; height:22px; margin-right:6px; border-radius:50%; color:var(--charcoal); font-size:11px; font-weight:700; }
   .unmapped-resource-list{ margin-top:14px; padding:12px; border:2px solid var(--charcoal); border-radius:14px; background:var(--card); }
   .unmapped-resource-list h4{ font-family:'Space Grotesk',sans-serif; font-size:15px; margin-bottom:8px; }
   .unmapped-resource-list .side-item{ padding:8px 0; border-bottom:1px solid rgba(33,30,28,0.08); }
@@ -298,6 +306,8 @@
   @media (max-width:860px){
     .resource-map-wrapper{ flex-direction:column; }
     .resource-side-list{ width:100%; max-height:300px; order:2; }
+    .travel-earth-layout{ flex-direction:column; }
+    .travel-trip-list{ width:100%; max-height:260px; order:2; }
   }
 
   .ig-grid{ display:grid; grid-template-columns:repeat(4, 1fr); gap:14px; }
@@ -326,15 +336,15 @@
   .link-btn.primary{ background:var(--charcoal); color:var(--cream); }
   .link-btn.secondary{ background:white; color:var(--charcoal); }
 
-  footer{ text-align:center; padding:32px 20px 40px; border-top:1px solid rgba(33,30,28,0.12); margin-top:16px; background:#ce8798; }
+  footer{ text-align:center; padding:32px 20px 40px; border-top:1px solid rgba(33,30,28,0.12); margin-top:16px; background:#ce8491; }
   .footer-btns{ display:flex; justify-content:center; flex-wrap:nowrap; gap:10px; margin:14px 0; }
   .wa-btn{ display:inline-flex; align-items:center; gap:9px; font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:14px; line-height:1; background:var(--wa-green); color:white; padding:12px 22px; border-radius:999px; text-decoration:none; }
   .wa-btn svg{ width:18px; height:18px; flex-shrink:0; display:block; }
   .ig-btn{ display:inline-flex; align-items:center; gap:9px; font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:14px; line-height:1; background:linear-gradient(135deg,#f58529,#dd2a7b,#8134af,#515bd4); color:white; padding:12px 22px; border-radius:999px; text-decoration:none; }
   .ig-btn svg{ width:18px; height:18px; flex-shrink:0; display:block; }
   .owned-badge{ display:inline-block; font-size:11px; font-weight:700; color:var(--rose-deep); background:rgba(201,138,150,0.16); padding:3px 10px; border-radius:999px; margin-bottom:8px; }
-  .disclaimer{ font-size:11px; color:var(--muted); max-width:440px; margin:0 auto; line-height:1.5; }
-  .footer-logo{ display:block; width:min(220px,72vw); height:112px; margin:0 auto; object-fit:cover; object-position:center 68%; }
+  .disclaimer{ font-size:11px; color:#fff7e6; max-width:440px; margin:0 auto; line-height:1.5; }
+  .footer-logo{ display:block; width:min(360px,88vw); height:180px; margin:0 auto; object-fit:cover; object-position:center 68%; image-rendering:auto; }
 
   .suggest-btn{ display:inline-block; font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:13px; background:none; border:1.5px solid var(--charcoal); color:var(--charcoal); padding:9px 18px; border-radius:999px; cursor:pointer; margin-bottom:2px; text-decoration:none; }
   .hp-field{ position:absolute; left:-9999px; }
@@ -760,9 +770,9 @@ function buildDateMap(items, year, month){
   return map;
 }
 
-function renderTripEarthView(targetId='calendar-view', mapId='tripEarthMap', selectedItems=itemsForCategory('trips')){
+function renderTripEarthView(targetId='calendar-view', mapId='tripEarthMap', selectedItems=itemsForCategory('trips'), replaceTarget=true){
   const el = document.getElementById(targetId);
-  el.innerHTML = `<div id="${mapId}" class="calendar-map"></div>`;
+  if(replaceTarget) el.innerHTML = `<div id="${mapId}" class="calendar-map"></div>`;
 
   const items = selectedItems;
   const points = items
@@ -778,7 +788,6 @@ function renderTripEarthView(targetId='calendar-view', mapId='tripEarthMap', sel
     }));
   const globe = Globe()(document.getElementById(mapId))
     .backgroundColor('#fff7e6')
-    .globeMaterial(new THREE.MeshPhongMaterial({ color:'#c3d5e2', shininess:8 }))
     .globeImageUrl(null)
     .showGraticules(true)
     .showAtmosphere(true)
@@ -801,6 +810,10 @@ function renderTripEarthView(targetId='calendar-view', mapId='tripEarthMap', sel
     .onPointClick(point => renderDetail(point.id))
     .width(document.getElementById(mapId).clientWidth)
     .height(document.getElementById(mapId).clientHeight);
+  const globeMaterial = globe.globeMaterial();
+  globeMaterial.color.set('#c3d5e2');
+  globeMaterial.emissive.set('#7f8998');
+  globeMaterial.emissiveIntensity = 0.25;
   globe.controls().autoRotate = false;
 }
 
@@ -1087,7 +1100,7 @@ function renderResourceMap(){
   const mappedItems = withCoords;
   sideListContent.innerHTML = mappedItems.map((r, index) => `
       <div class="side-item" data-id="${r.id}">
-        <strong><span class="side-number">${index + 1}</span>${r.title}</strong>
+        <strong><span class="side-number" style="background:${categoryColors[r.category] || '#fff7e6'}">${index + 1}</span>${r.title}</strong>
         <span>${r.type || ''}${r.location ? ' · ' + r.location : ''}</span>
       </div>
     `).join('');
@@ -1124,9 +1137,11 @@ function renderDirectory(){
       <button class="filter-chip ${state.tripType==='international'?'active':''}" data-travel-filter="international">International</button>
       <span class="sub-note">Explore the globe, then browse every trip below.</span>
     </div>`;
-    el.innerHTML += '<div id="travelEarthView" class="travel-map"></div>';
-    renderTripEarthView('travelEarthView', 'travelEarthMap', travelItems);
-    el.innerHTML += `<div class="event-list travel-list">${travelItems.map(item => `<div class="event-card"><div class="event-date-badge">${item.date || ''}</div><div class="event-info"><h4>${item.title}</h4><span class="tag cat-trip">${item.type || 'Trip'}</span></div><button class="click-btn" data-id="${item.id}">Click me →</button></div>`).join('')}</div>`;
+    el.innerHTML += `<div class="travel-earth-layout">
+      <div class="travel-trip-list"><h4>Trips on the globe</h4>${travelItems.map(item => `<div class="side-item" data-id="${item.id}"><strong>${item.title}</strong><span>${item.location || ''} · ${item.date || ''}</span></div>`).join('') || '<div class="side-item"><span>No trips match this filter.</span></div>'}</div>
+      <div id="travelEarthView" class="travel-map"><div id="travelEarthMap" class="calendar-map"></div></div>
+    </div>`;
+    renderTripEarthView('travelEarthView', 'travelEarthMap', travelItems, false);
   } else if(state.tab === 'clubs'){
     document.getElementById('resourcePagination').innerHTML = '';
 el.innerHTML = `<div class="club-guide-actions">
