@@ -278,6 +278,9 @@
   .fall-section h3{ font-family:'Space Grotesk',sans-serif; font-size:15.5px; font-weight:700; margin-bottom:4px; }
   .fall-hint{ font-weight:500; font-size:12.5px; color:var(--rose-deep); }
   .fall-section textarea{ width:100%; margin-top:12px; border:2px solid rgba(55,61,59,0.15); border-radius:14px; padding:12px 14px; font-family:'Inter',sans-serif; font-size:14px; resize:vertical; background:var(--cream); }
+  .fall-text-input{ width:100%; border:2px solid rgba(55,61,59,0.15); border-radius:14px; padding:12px 14px; font-family:'Inter',sans-serif; font-size:14px; background:var(--cream); }
+  .fall-section > h3 + .fall-text-input{ margin-top:12px; }
+  .fall-other-input{ margin-top:8px; }
   .fall-checkbox-grid{ display:flex; flex-direction:column; gap:10px; margin-top:14px; }
   .fall-option{ display:flex; align-items:flex-start; gap:12px; border:2px solid rgba(55,61,59,0.12); border-radius:16px; padding:13px 14px; cursor:pointer; transition:border-color 0.12s ease, background 0.12s ease; background:var(--cream); }
   .fall-option:has(input:checked){ border-color:var(--pink); background:var(--blush); }
@@ -1232,6 +1235,14 @@ function setupFallSignupForm(){
     checks.forEach(c => { if(!c.checked) c.disabled = checkedCount >= 3; });
   }));
 
+  const otherCheckbox = document.getElementById('fallOtherCheckbox');
+  const otherNameInput = document.getElementById('fallOtherName');
+  otherCheckbox.addEventListener('change', () => {
+    otherNameInput.style.display = otherCheckbox.checked ? 'block' : 'none';
+    otherNameInput.required = otherCheckbox.checked;
+    if(!otherCheckbox.checked) otherNameInput.value = '';
+  });
+
   form.addEventListener('submit', async e => {
     e.preventDefault();
     const statusEl = document.getElementById('fallSubmitStatus');
@@ -1354,6 +1365,10 @@ el.innerHTML = `<button class="fall-cta-btn" data-hometab="fallsignup">🍂 Join
         <form id="fallSignupForm">
           <input type="text" name="_gotcha" class="hp-field" tabindex="-1" autocomplete="off">
           <div class="fall-section">
+            <h3>Phone number</h3>
+            <input type="tel" name="phone" placeholder="e.g. 416-555-0123" class="fall-text-input">
+          </div>
+          <div class="fall-section">
             <h3>Which club(s) are you interested in? <span class="fall-hint">(pick up to 3 — handy if a top choice is full)</span></h3>
             <div class="fall-checkbox-grid" id="fallClubChecks">${FALL_SIGNUP_CLUBS.map(c => `
               <label class="fall-option">
@@ -1361,6 +1376,14 @@ el.innerHTML = `<button class="fall-cta-btn" data-hometab="fallsignup">🍂 Join
                 <span class="fall-option-emoji">${c.emoji}</span>
                 <span class="fall-option-text"><strong>${c.title}</strong> — ${c.desc}</span>
               </label>`).join('')}
+              <label class="fall-option" id="fallOtherOption">
+                <input type="checkbox" name="clubs" value="Other" id="fallOtherCheckbox">
+                <span class="fall-option-emoji">✨</span>
+                <span class="fall-option-text">
+                  <strong>Others</strong> — something not listed above? Tell us!
+                  <input type="text" name="otherClubName" id="fallOtherName" placeholder="Club name" class="fall-text-input fall-other-input" style="display:none;">
+                </span>
+              </label>
             </div>
           </div>
           <div class="fall-section">
@@ -1386,7 +1409,7 @@ el.innerHTML = `<button class="fall-cta-btn" data-hometab="fallsignup">🍂 Join
           <div class="fall-section fall-terms">
             <label class="fall-option fall-option-compact">
               <input type="checkbox" name="terms" required>
-              I agree to the <a href="#/tab/rules" target="_blank" rel="noopener">community terms &amp; conditions</a>.
+              I agree to the <a href="#tab=rules" target="_blank" rel="noopener">community terms &amp; conditions</a>.
             </label>
           </div>
           <button type="submit" class="fall-submit-btn">Submit →</button>
