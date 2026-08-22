@@ -98,6 +98,9 @@
   }
   .tab-btn.active{ background:var(--charcoal); color:var(--cream); }
   .tab-btn:focus-visible{ outline:3px solid var(--pink); outline-offset:2px; }
+  .context-back{ display:none; max-width:760px; margin:12px auto 0; padding:0 20px; }
+  .context-back.visible{ display:block; }
+  .context-back button{ border:0; background:none; color:var(--rose-deep); font-family:'Space Grotesk',sans-serif; font-size:13px; font-weight:700; cursor:pointer; padding:4px 0; }
 
   .category-row{ display:flex; justify-content:center; gap:10px; padding:18px 20px 0; width:100%; max-width:none; margin:0 auto; overflow-x:auto; -webkit-overflow-scrolling:touch; scrollbar-width:none; scroll-padding-left:20px; }
 
@@ -390,6 +393,8 @@
   </div>
 </nav>
 
+<div class="context-back" id="contextBack"><button type="button" id="contextBackButton">← Back to Calendar</button></div>
+
 <div class="category-row" id="categoryRow"></div>
 <div class="controls" id="controlsRow">
   <div class="view-toggle" id="viewToggle">
@@ -556,6 +561,7 @@ let state = {
   gatherSort:'hijab', gatherDir:'asc',
   tripType:'all', tripView:'earth', resourceFilter:'all', resourceView:'map', resourcePage:1,
   timeFilter:'upcoming', page:1,
+  returnTab:'',
   calYear: today.getFullYear(), calMonth: today.getMonth(),
 };
 
@@ -1395,6 +1401,9 @@ function closeDetail(){
 const DIRECTORY_TABS = ['clubs','resources','home','travel','rules','clubstart','clubjoin','homescreen','subscribe'];
 
 function render(){
+  const contextBack = document.getElementById('contextBack');
+  if(contextBack) contextBack.classList.toggle('visible', state.tab === 'resources' && state.returnTab === 'events');
+  syncToggleButtonClasses();
   const searchShell = document.getElementById('globalSearchShell');
   if(searchShell) searchShell.style.display = 'flex';
   if(document.getElementById('globalSearch')) document.getElementById('globalSearch').value = state.searchQuery || '';
@@ -1492,6 +1501,7 @@ function syncToggleButtonClasses(){
 function goToTab(tabName){
   document.querySelectorAll('.tab-btn').forEach(b => b.classList.toggle('active', b.dataset.tab === tabName));
   state.tab = tabName;
+  if(tabName !== 'resources') state.returnTab = '';
   if(tabName === 'events'){
     state.categoryFilter = 'all';
     state.view = 'calendar';
@@ -1551,6 +1561,7 @@ document.getElementById('categoryRow').addEventListener('click', e => {
   if(!btn) return;
   if(btn.dataset.catfilter === 'mosqueprograms'){
     state.tab = 'resources';
+    state.returnTab = 'events';
     state.resourceFilter = 'mosqueprograms';
     state.resourceView = 'list';
     render();
@@ -1596,6 +1607,10 @@ document.body.addEventListener('click', e => {
 });
 
 document.getElementById('backBtn').addEventListener('click', closeDetail);
+document.getElementById('contextBackButton').addEventListener('click', () => {
+  state.returnTab = '';
+  goToTab('events');
+});
 
 window.addEventListener('hashchange', () => {
   const match = location.hash.match(/^#\/event\/(.+)$/);
