@@ -109,6 +109,7 @@ files you're touching, and a timestamp. Change back to IDLE when done.)*
 
 _(most recent first — add new entries to the top)_
 
+- 2026-08-22 — GitHub Copilot — `index.html`, `data/clubs.json`, `admin/config.yml` — Refined mobile homepage arrows and heading spacing, renamed the Calendar tile, made Home Screen lighter, added editable per-club calendars and a Calendar CLUBS category, made club cards open their own calendar, changed Travel to globe plus list, and restyled the globe with pastel material and dramatic colored rings.
 - 2026-08-22 — GitHub Copilot — `index.html` — Fixed the Calendar Mosque Programs handoff so Resources becomes visibly active, a top-left Back to Calendar control appears, and the originating Calendar context is preserved.
 - 2026-08-22 — GitHub Copilot — `index.html`, `data/resources.json` — Made Calendar open to All Events calendar view, routed Calendar Trips to Travel, changed homepage to a responsive 2-column grid, matched search styling to buttons, tightened club spacing, and moved Orda/Dera family ownership and Menaal details into `ownedBy`.
 - 2026-08-22 — GitHub Copilot — `index.html`, `data/gatherings.json`, `data/trips.json`, `data/resources.json`, `data/smallbusinesses.json`, `admin/config.yml` — Moved ISNA Street Food Festival to Functions, split Activities and Functions, made Travel open to the Earth view, added live navigation search and resource indexing, added Mental Health and Bakeries, moved Cozy Crumb Maya, removed Small Businesses, and separated Mosque Programs from mosque locations.

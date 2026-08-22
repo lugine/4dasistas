@@ -225,6 +225,19 @@ collections:
               - { label: "Title", name: "title", widget: "string" }
               - { label: "Description", name: "desc", widget: "text" }
               - { label: "Sign Up link", name: "signup", widget: "string" }
+              - label: "Club calendar events"
+                name: "calendarEvents"
+                widget: "list"
+                required: false
+                fields:
+                  - { label: "Event ID", name: "id", widget: "string" }
+                  - { label: "Title", name: "title", widget: "string" }
+                  - { label: "Date", name: "date", widget: "string", required: false }
+                  - { label: "Calendar date", name: "calDate", widget: "string", required: false }
+                  - { label: "Recurring weekdays", name: "days", widget: "select", multiple: true, required: false, options: ["sun", "mon", "tue", "wed", "thu", "fri", "sat"] }
+                  - { label: "Location", name: "location", widget: "location-autocomplete", required: false }
+                  - { label: "Description", name: "desc", widget: "text", required: false }
+                  - { label: "Website", name: "website", widget: "string", required: false }
 
   - name: "organizations"
     label: "Resources — Organizations"

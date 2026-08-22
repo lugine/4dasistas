@@ -5,56 +5,64 @@
       "logo": "assets/logos/club-activegaming.png",
       "title": "Active Gaming",
       "desc": "We hit up escape rooms, VR arenas, and challenge venues like Activate, CUBE Challenges, and VR Vibe. Good for anyone who'd rather move, solve, and compete than sit still.",
-      "signup": "https://chat.whatsapp.com/CPWlv3mhoxkC8ZNWbLganS?mode=gi_t"
+      "signup": "https://chat.whatsapp.com/CPWlv3mhoxkC8ZNWbLganS?mode=gi_t",
+      "calendarEvents": []
     },
     {
       "id": "club-adrenaline",
       "logo": "assets/logos/club-adrenaline.png",
       "title": "Adrenaline",
       "desc": "Waterparks, karting, paintballing, skiing, — if it gets your heart racing, we're probably already planning it.",
-      "signup": "https://chat.whatsapp.com/KWoZU7Wl69eJSWOKw3mgT9?mode=gi_t"
+      "signup": "https://chat.whatsapp.com/KWoZU7Wl69eJSWOKw3mgT9?mode=gi_t",
+      "calendarEvents": []
     },
     {
       "id": "club-theater",
       "logo": "assets/theatre.png",
       "title": "Theatre",
       "desc": "We catch plays, musicals, and live shows around the city, plus run our own improv nights. Basically any excuse to be dramatic.",
-      "signup": "https://chat.whatsapp.com/KXGjx4wT15E9hdzqkAevOR?mode=gi_t"
+      "signup": "https://chat.whatsapp.com/KXGjx4wT15E9hdzqkAevOR?mode=gi_t",
+      "calendarEvents": []
     },
     {
       "id": "club-cuisine",
       "logo": "assets/logos/club-cuisine.png",
       "title": "Cuisine",
       "desc": "Group dinners, halal restaurant crawls, and the occasional cooking night — for anyone who plans their week around food.",
-      "signup": "https://chat.whatsapp.com/JgmuY1XU0jrGrDPUvuDPTS"
+      "signup": "https://chat.whatsapp.com/JgmuY1XU0jrGrDPUvuDPTS",
+      "calendarEvents": []
     },
     {
       "id": "club-artscrafts",
       "logo": "assets/artncrafts.png",
       "title": "Arts & Crafts",
       "desc": "Painting nights, DIY sessions, and low-key crafternoons — no talent required, just vibes and glitter.",
-      "signup": "https://chat.whatsapp.com/JgmuY1XU0jrGrDPUvuDPTS"
+      "signup": "https://chat.whatsapp.com/JgmuY1XU0jrGrDPUvuDPTS",
+      "calendarEvents": []
     },
     {
       "id": "club-retreats",
       "title": "Field",
       "desc": "Weekend getaways, cabin trips, and the occasional wellness retreat — for when the group chat needs to actually leave the city.",
       "signup": "https://chat.whatsapp.com/JgmuY1XU0jrGrDPUvuDPTS",
-      "logo": "assets/FIELD.png"
+      "logo": "assets/FIELD.png",
+      "calendarEvents": []
     },
     {
       "id": "club-badminton",
       "logo": "assets/badminton.png",
       "title": "Badminton",
       "desc": "The badminton crew, gathered in one place — same weekly sessions as the Sports tab, just easier to find and join here too.",
-      "signup": "https://chat.whatsapp.com/JgmuY1XU0jrGrDPUvuDPTS"
+      "signup": "https://chat.whatsapp.com/JgmuY1XU0jrGrDPUvuDPTS",
+      "calendarEvents": []
     },
     {
       "id": "club-adhd",
       "logo": "assets/adhd.png",
       "title": "ADHD / Neurodivergence",
       "desc": "A low-pressure space for neurodivergent sisters to connect, vent, swap strategies, and just exist without masking.",
-      "signup": "https://chat.whatsapp.com/JgmuY1XU0jrGrDPUvuDPTS"
+      "signup": "https://chat.whatsapp.com/JgmuY1XU0jrGrDPUvuDPTS",
+      "calendarEvents": []
     }
   ]
 }
