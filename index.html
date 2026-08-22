@@ -78,7 +78,7 @@
   .top-search-shell{
     display:flex; align-items:center; gap:10px;
     max-width:220px; width:100%; margin:0; padding:7px 11px; border-radius:999px;
-    background: rgba(55,61,59,0.06); border: 1.5px solid rgba(55,61,59,0.2);
+    background:var(--cream); border:1.5px solid var(--charcoal);
     box-shadow: inset 0 1px 0 rgba(255,255,255,0.6);
   }
   .top-search-shell svg{ width:16px; height:16px; opacity:0.7; flex-shrink:0; }
@@ -209,7 +209,7 @@
     .home-tile-title{ font-size:19px; }
     .home-tile-desc{ font-size:13px; max-width:78%; }
     .rules-content{ padding:20px 16px; }
-    .club-guide-actions{ grid-template-columns:1fr; }
+    .club-guide-actions, .home-tiles{ grid-template-columns:1fr; }
     .cat-filter-btn{ padding:12px 20px; font-size:13px; }
     .wa-fixed-btn svg{ width:16px; height:16px; }
     header{ padding-top:54px; }
@@ -239,7 +239,7 @@
   .clubs-grid .club-card{ width:100%; }
   .panel-card{ background:var(--card); border:2px solid var(--charcoal); border-radius:16px; padding:18px; margin-bottom:16px; box-shadow:3px 3px 0 var(--charcoal); text-align:left; }
 
-  .home-tiles{ display:flex; flex-direction:column; gap:16px; }
+  .home-tiles{ display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:16px; }
   .home-tile{ display:block; width:100%; text-align:left; border:2px solid var(--charcoal); border-radius:18px; padding:24px 22px; cursor:pointer; box-shadow:4px 4px 0 var(--charcoal); transition:transform 0.12s ease, box-shadow 0.12s ease; font-family:'Inter',sans-serif; position:relative; }
   .home-tile:hover{ transform:translate(-2px,-2px); box-shadow:6px 6px 0 var(--charcoal); }
   .home-tile-title{ font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:22px; margin-bottom:6px; padding-right:40px; }
@@ -251,7 +251,7 @@
   .rules-content h3{ font-family:'Space Grotesk',sans-serif; font-size:17px; margin:24px 0 8px; }
   .rules-content ul, .rules-content ol{ padding-left:20px; display:flex; flex-direction:column; gap:10px; }
   .rules-content li{ font-size:14px; line-height:1.5; color:#4a4640; }
-  .club-guide-actions{ display:grid; grid-template-columns:repeat(2, minmax(0,1fr)); gap:12px; margin-bottom:20px; }
+  .club-guide-actions{ display:grid; grid-template-columns:repeat(2, minmax(0,1fr)); gap:12px; margin:0 0 12px; }
   .club-guide-btn{ border:2px solid var(--charcoal); border-radius:14px; padding:15px 16px; background:var(--blush); color:var(--charcoal); box-shadow:3px 3px 0 var(--charcoal); cursor:pointer; font-family:'Space Grotesk',sans-serif; font-size:14px; font-weight:700; text-align:left; }
   .club-guide-btn:last-child{ background:var(--lightblue); }
   .club-guide-btn:hover{ transform:translate(-1px,-1px); box-shadow:4px 4px 0 var(--charcoal); }
@@ -1492,7 +1492,10 @@ function syncToggleButtonClasses(){
 function goToTab(tabName){
   document.querySelectorAll('.tab-btn').forEach(b => b.classList.toggle('active', b.dataset.tab === tabName));
   state.tab = tabName;
-  if(tabName === 'events') state.view = 'calendar';
+  if(tabName === 'events'){
+    state.categoryFilter = 'all';
+    state.view = 'calendar';
+  }
   state.page = 1;
   render();
   window.scrollTo({top:0, behavior:'smooth'});
@@ -1551,6 +1554,10 @@ document.getElementById('categoryRow').addEventListener('click', e => {
     state.resourceFilter = 'mosqueprograms';
     state.resourceView = 'list';
     render();
+    return;
+  }
+  if(btn.dataset.catfilter === 'trips'){
+    goToTab('travel');
     return;
   }
   state.categoryFilter = btn.dataset.catfilter;

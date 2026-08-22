@@ -109,6 +109,7 @@ files you're touching, and a timestamp. Change back to IDLE when done.)*
 
 _(most recent first — add new entries to the top)_
 
+- 2026-08-22 — GitHub Copilot — `index.html`, `data/resources.json` — Made Calendar open to All Events calendar view, routed Calendar Trips to Travel, changed homepage to a responsive 2-column grid, matched search styling to buttons, tightened club spacing, and moved Orda/Dera family ownership and Menaal details into `ownedBy`.
 - 2026-08-22 — GitHub Copilot — `index.html`, `data/gatherings.json`, `data/trips.json`, `data/resources.json`, `data/smallbusinesses.json`, `admin/config.yml` — Moved ISNA Street Food Festival to Functions, split Activities and Functions, made Travel open to the Earth view, added live navigation search and resource indexing, added Mental Health and Bakeries, moved Cozy Crumb Maya, removed Small Businesses, and separated Mosque Programs from mosque locations.
 - 2026-08-22 — GitHub Copilot — `index.html`, `data/clubs.json` — Added the Travel tab, live search suggestions, circular club icons, Field club rename, FAQ label, full-width event filters, reordered footer actions, and moved mosque programming into Activities and Resources as Mosque Programs.
 - 2026-08-22 — GitHub Copilot — `index.html` — Replaced the flat trip Leaflet map with an interactive Globe.gl 3D Earth view, retaining trip markers and the calendar-sized responsive container; validated JavaScript syntax and globe wiring.
