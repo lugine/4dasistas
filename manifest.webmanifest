@@ -11,31 +11,31 @@
   "theme_color": "#caaacd",
   "icons": [
     {
-      "src": "/OFFICIAL%20LOGO.png",
+      "src": "/assets/OFFICIAL%20LOGO.png",
       "sizes": "any",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "/OFFICIAL%20LOGO.png",
+      "src": "/assets/OFFICIAL%20LOGO.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "/OFFICIAL%20LOGO.png",
+      "src": "/assets/OFFICIAL%20LOGO.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "/OFFICIAL%20LOGO.png",
+      "src": "/assets/OFFICIAL%20LOGO.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "maskable"
     },
     {
-      "src": "/OFFICIAL%20LOGO.png",
+      "src": "/assets/OFFICIAL%20LOGO.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "maskable"
