@@ -109,6 +109,7 @@ files you're touching, and a timestamp. Change back to IDLE when done.)*
 
 _(most recent first — add new entries to the top)_
 
+- 2026-08-22 — GitHub Copilot — `index.html`, `data/resources.json` — Tightened Mental Health cards, made Legal Services list-only, added Sabrina Malik Legal Services, separated Mosque Programs from Resources into its own Calendar category, added the All Events exclusion note, gave CLUBS a distinct pastel, and stabilized the Travel globe/list layout.
 - 2026-08-22 — GitHub Copilot — `index.html` — Repaired the black Travel globe by removing the failing direct THREE material constructor, applying the pastel material after Globe.gl creation, adding dramatic colored rings, restoring the permanent left trip list, matching resource number colors to categories, and matching the footer exactly to the logo background color.
 - 2026-08-22 — GitHub Copilot — `index.html`, `data/resources.json`, `admin/config.yml` — Added Legal Services, made Resource filters symmetrical, made Mental Health a square-card list without a map, added Canadian Muslim Counselling, Ruh Care, and Salam Psychology from official websites, and corrected Majestic Thobe/Sitti map coordinates.
 - 2026-08-22 — GitHub Copilot — `index.html`, `manifest.webmanifest`, `assets/OFFICIAL LOGO.png` — Switched browser/PWA branding to the new assets logo, replaced the footer “Not a cult. Yet.” text with the supplied logo, and matched the footer background to the logo backdrop.
