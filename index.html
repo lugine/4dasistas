@@ -268,6 +268,36 @@
   .club-guide-btn{ border:2px solid var(--charcoal); border-radius:14px; padding:15px 16px; background:var(--blush); color:var(--charcoal); box-shadow:3px 3px 0 var(--charcoal); cursor:pointer; font-family:'Space Grotesk',sans-serif; font-size:14px; font-weight:700; text-align:left; }
   .club-guide-btn:last-child{ background:var(--lightblue); }
   .club-guide-btn:hover{ transform:translate(-1px,-1px); box-shadow:4px 4px 0 var(--charcoal); }
+  .fall-cta-btn{ display:block; width:100%; border:none; border-radius:16px; padding:18px 20px; margin-bottom:14px; background:linear-gradient(135deg,var(--gold),var(--pink)); color:var(--charcoal); font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:16px; cursor:pointer; box-shadow:0 4px 14px rgba(221,184,98,0.35); transition:transform 0.12s ease, box-shadow 0.12s ease; }
+  .fall-cta-btn:hover{ transform:translate(0,-2px); box-shadow:0 6px 18px rgba(221,184,98,0.45); }
+  .fall-signup{ max-width:640px; margin:0 auto; }
+  .fall-hero{ text-align:center; margin:18px 0 24px; }
+  .fall-hero h2{ font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:24px; margin-bottom:10px; }
+  .fall-hero p{ font-size:14.5px; color:#4a4640; line-height:1.55; max-width:480px; margin:0 auto; }
+  .fall-section{ background:var(--card); border-radius:20px; padding:22px 20px; margin-bottom:16px; box-shadow:0 4px 16px rgba(55,61,59,0.08); }
+  .fall-section h3{ font-family:'Space Grotesk',sans-serif; font-size:15.5px; font-weight:700; margin-bottom:4px; }
+  .fall-hint{ font-weight:500; font-size:12.5px; color:var(--rose-deep); }
+  .fall-section textarea{ width:100%; margin-top:12px; border:2px solid rgba(55,61,59,0.15); border-radius:14px; padding:12px 14px; font-family:'Inter',sans-serif; font-size:14px; resize:vertical; background:var(--cream); }
+  .fall-checkbox-grid{ display:flex; flex-direction:column; gap:10px; margin-top:14px; }
+  .fall-option{ display:flex; align-items:flex-start; gap:12px; border:2px solid rgba(55,61,59,0.12); border-radius:16px; padding:13px 14px; cursor:pointer; transition:border-color 0.12s ease, background 0.12s ease; background:var(--cream); }
+  .fall-option:has(input:checked){ border-color:var(--pink); background:var(--blush); }
+  .fall-option:has(input:disabled){ opacity:0.4; cursor:not-allowed; }
+  .fall-option input{ margin-top:3px; flex-shrink:0; width:18px; height:18px; accent-color:var(--rose-deep); }
+  .fall-option-emoji{ font-size:20px; line-height:1.3; }
+  .fall-option-text{ font-size:13.5px; line-height:1.45; color:#4a4640; }
+  .fall-option-text strong{ color:var(--charcoal); font-family:'Space Grotesk',sans-serif; }
+  .fall-radio-group{ display:flex; flex-direction:column; gap:10px; margin-top:14px; }
+  .fall-option-compact{ padding:12px 14px; font-size:14px; font-weight:600; color:var(--charcoal); }
+  .fall-section-badminton{ background:#eaf1f8; }
+  .fall-section-badminton p{ font-size:13.5px; color:#4a4640; line-height:1.5; margin:6px 0 14px; }
+  .fall-terms{ background:var(--blush); }
+  .fall-terms a{ color:var(--charcoal); font-weight:700; text-decoration:underline; }
+  .fall-submit-btn{ display:block; width:100%; border:none; border-radius:999px; padding:16px; background:var(--charcoal); color:var(--cream); font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:15px; cursor:pointer; box-shadow:0 4px 14px rgba(55,61,59,0.25); }
+  .fall-submit-btn:disabled{ opacity:0.6; cursor:not-allowed; }
+  .fall-submit-status{ text-align:center; font-size:13px; color:var(--rose-deep); margin-top:10px; min-height:1em; }
+  .fall-thankyou{ text-align:center; background:var(--card); border-radius:20px; padding:40px 24px; box-shadow:0 4px 16px rgba(55,61,59,0.08); }
+  .fall-thankyou-emoji{ font-size:40px; margin-bottom:14px; }
+  .fall-thankyou p{ font-size:15.5px; font-weight:600; color:var(--charcoal); max-width:360px; margin:0 auto; line-height:1.5; }
   .panel-top{ display:flex; gap:14px; align-items:center; margin-bottom:10px; text-align:left; }
   .monogram{ width:56px; height:56px; border-radius:50%; background:var(--charcoal); color:var(--cream); font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:18px; display:flex; align-items:center; justify-content:center; flex-shrink:0; overflow:hidden;}
   .monogram img{ width:100%; height:100%; object-fit:contain; display:block; background:var(--cream); image-rendering:auto; }
@@ -631,7 +661,8 @@ const introText = {
   rules: "Answers about community guidelines, events, clubs, and safety.",
   homescreen: "Install 4DASISTAS on your device for fast, app-like access.",
   clubstart: "Everything you need to launch a welcoming, well-run club.",
-  clubjoin: "A few simple expectations keep every club welcoming and easy to join."
+  clubjoin: "A few simple expectations keep every club welcoming and easy to join.",
+  fallsignup: ""
 };
 
 const dayOrder = ['sun','mon','tue','wed','thu','fri','sat'];
@@ -1179,6 +1210,57 @@ const clubColors = {
   'club-badminton':{bg:'#aabecf', fg:'#373d3b'}, 'club-adhd':{bg:'#776867', fg:'#fff7e6'}
 };
 
+// TODO: replace with your real Formspree endpoint (formspree.io -> create a form -> copy its "https://formspree.io/f/xxxxxxx" URL)
+const FALL_SIGNUP_ENDPOINT = 'https://formspree.io/f/REPLACE_ME';
+
+const FALL_SIGNUP_CLUBS = [
+  {id:'club-activegaming', emoji:'🎮', title:'Active Gaming', desc:'Escape rooms, VR arenas, challenge venues'},
+  {id:'club-adrenaline', emoji:'⚡', title:'Adrenaline', desc:'Roller-coasters, paintballing, skiing'},
+  {id:'club-theater', emoji:'🎭', title:'Theatre', desc:'Plays, musicals, live shows, improv nights'},
+  {id:'club-cuisine', emoji:'🍽️', title:'Cuisine', desc:'Group dinners, restaurant crawls, cooking nights'},
+  {id:'club-artscrafts', emoji:'🎨', title:'Arts & Crafts', desc:'Painting nights, DIY, crafternoons'},
+  {id:'club-retreats', emoji:'🏞️', title:'Field', desc:'Hiking, horseback riding, farm days, cabin retreats'},
+  {id:'club-adhd', emoji:'🧠', title:'ADHD / Neurodivergence', desc:'Low-pressure space to connect and swap strategies'},
+];
+
+function setupFallSignupForm(){
+  const form = document.getElementById('fallSignupForm');
+  if(!form) return;
+  const checks = [...form.querySelectorAll('input[name="clubs"]')];
+  checks.forEach(cb => cb.addEventListener('change', () => {
+    const checkedCount = checks.filter(c => c.checked).length;
+    checks.forEach(c => { if(!c.checked) c.disabled = checkedCount >= 3; });
+  }));
+
+  form.addEventListener('submit', async e => {
+    e.preventDefault();
+    const statusEl = document.getElementById('fallSubmitStatus');
+    const submitBtn = form.querySelector('.fall-submit-btn');
+    if(form.querySelector('[name="_gotcha"]').value){ return; } // honeypot tripped, silently drop
+    statusEl.textContent = '';
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Sending…';
+    try {
+      const res = await fetch(FALL_SIGNUP_ENDPOINT, {
+        method: 'POST',
+        headers: { 'Accept': 'application/json' },
+        body: new FormData(form)
+      });
+      if(res.ok){
+        form.style.display = 'none';
+        document.getElementById('fallThankYou').style.display = 'block';
+      } else {
+        throw new Error('Form submission failed');
+      }
+    } catch(err){
+      console.error('Fall signup submission failed:', err);
+      statusEl.textContent = 'Something went wrong — please try again, or message us directly.';
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Submit →';
+    }
+  });
+}
+
 function renderDirectory(){
   const el = document.getElementById('directory-view');
   if(state.tab === 'travel'){
@@ -1191,7 +1273,8 @@ function renderDirectory(){
     renderTripEarthView('travelEarthView', 'travelEarthMap', travelItems, false);
   } else if(state.tab === 'clubs'){
     document.getElementById('resourcePagination').innerHTML = '';
-el.innerHTML = `<div class="club-guide-actions">
+el.innerHTML = `<button class="fall-cta-btn" data-hometab="fallsignup">🍂 Join the Fall Season</button>
+    <div class="club-guide-actions">
       <button class="club-guide-btn" data-hometab="clubstart">How to Start a Club →</button>
       <button class="club-guide-btn" data-hometab="clubjoin">How to Join a Club →</button>
     </div>
@@ -1259,6 +1342,62 @@ el.innerHTML = `<div class="club-guide-actions">
         <h3>Need help?</h3>
         <p>If there is harassment, a privacy breach, a payment concern, or conflict, contact a 4DASISTAS Admin privately. For immediate danger or an emergency, contact local emergency services first.</p>
       </div>`;
+  } else if(state.tab === 'fallsignup'){
+    document.getElementById('resourcePagination').innerHTML = '';
+    el.innerHTML = `
+      <button class="back-btn" data-hometab="clubs">← Back to GALS CLUBS</button>
+      <div class="fall-signup">
+        <div class="fall-hero">
+          <h2>Pick Your Clubs — Fall Season 🌸</h2>
+          <p>Reply below to choose your club(s) for the season! Max 2 clubs for now — a 3rd can open after 1 month of activity.</p>
+        </div>
+        <form id="fallSignupForm">
+          <input type="text" name="_gotcha" class="hp-field" tabindex="-1" autocomplete="off">
+          <div class="fall-section">
+            <h3>Which club(s) are you interested in? <span class="fall-hint">(pick up to 3 — handy if a top choice is full)</span></h3>
+            <div class="fall-checkbox-grid" id="fallClubChecks">${FALL_SIGNUP_CLUBS.map(c => `
+              <label class="fall-option">
+                <input type="checkbox" name="clubs" value="${c.title}">
+                <span class="fall-option-emoji">${c.emoji}</span>
+                <span class="fall-option-text"><strong>${c.title}</strong> — ${c.desc}</span>
+              </label>`).join('')}
+            </div>
+          </div>
+          <div class="fall-section">
+            <h3>Why do you want to join this club / what would you like to see?</h3>
+            <textarea name="whyJoin" rows="3" placeholder="Events, frequency, vibe, etc."></textarea>
+          </div>
+          <div class="fall-section">
+            <h3>Are you interested in leading a club, or do you have a new club idea?</h3>
+            <div class="fall-radio-group">
+              <label class="fall-option fall-option-compact"><input type="radio" name="leadInterest" value="Yes, leading"> Yes, leading</label>
+              <label class="fall-option fall-option-compact"><input type="radio" name="leadInterest" value="Yes, new idea"> Yes, new idea</label>
+              <label class="fall-option fall-option-compact"><input type="radio" name="leadInterest" value="Not right now"> Not right now</label>
+            </div>
+          </div>
+          <div class="fall-section fall-section-badminton">
+            <h3>Badminton Club 🏸</h3>
+            <p>This is our weekly badminton crew — a great way to stay active with the girls! Note: you must be able to drop in at least once a week to join.</p>
+            <label class="fall-option fall-option-compact">
+              <input type="checkbox" name="badminton" value="Yes, interested in Badminton Club">
+              Yes, I'm interested in joining Badminton Club.
+            </label>
+          </div>
+          <div class="fall-section fall-terms">
+            <label class="fall-option fall-option-compact">
+              <input type="checkbox" name="terms" required>
+              I agree to the <a href="#/tab/rules" target="_blank" rel="noopener">community terms &amp; conditions</a>.
+            </label>
+          </div>
+          <button type="submit" class="fall-submit-btn">Submit →</button>
+          <p class="fall-submit-status" id="fallSubmitStatus"></p>
+        </form>
+        <div class="fall-thankyou" id="fallThankYou" style="display:none;">
+          <div class="fall-thankyou-emoji">💌</div>
+          <p>Thank you! You'll receive an invite to your club group chat once it's ready 💌</p>
+        </div>
+      </div>`;
+    setupFallSignupForm();
   } else if(state.tab === 'resources'){
     if(state.resourceView === 'map' && !['mentalhealth','legal'].includes(state.resourceFilter)){
       document.getElementById('resourcePagination').innerHTML = '';
@@ -1495,7 +1634,7 @@ function closeDetail(){
 /* ============================================================
    MAIN RENDER
    ============================================================ */
-const DIRECTORY_TABS = ['clubs','resources','home','travel','rules','clubstart','clubjoin','homescreen','subscribe'];
+const DIRECTORY_TABS = ['clubs','resources','home','travel','rules','clubstart','clubjoin','fallsignup','homescreen','subscribe'];
 
 function render(){
   const contextBack = document.getElementById('contextBack');
