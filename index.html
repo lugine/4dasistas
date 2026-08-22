@@ -132,6 +132,9 @@
   .filter-chip{ font-family:'Inter',sans-serif; font-size:12.5px; font-weight:600; padding:6px 14px; border-radius:999px; border:1.5px solid rgba(33,30,28,0.25); background:white; color:var(--charcoal); cursor:pointer; }
   .resource-filter-chip{ flex:1 1 150px; min-height:52px; font-family:'Space Grotesk',sans-serif; font-size:14px; font-weight:700; padding:12px 18px; border-radius:14px; border:2px solid var(--charcoal); background:white; color:var(--charcoal); cursor:pointer; box-shadow:2px 2px 0 var(--charcoal); }
   .resource-filter-chip.active{ background:var(--charcoal); color:var(--cream); }
+  .resource-filter-row{ display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); max-width:760px; }
+  .mental-health-grid{ display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:14px; }
+  .mental-health-grid .panel-card{ aspect-ratio:1; display:flex; flex-direction:column; justify-content:space-between; margin:0; }
   .filter-chip.active{ background:var(--charcoal); color:var(--cream); border-color:var(--charcoal); }
   .filter-select{ font-family:'Inter',sans-serif; font-size:12.5px; font-weight:600; padding:7px 12px; border-radius:999px; border:1.5px solid rgba(33,30,28,0.25); background:white; color:var(--charcoal); }
   .sort-dir-btn{ font-size:15px; padding:6px 10px; border-radius:999px; border:1.5px solid rgba(33,30,28,0.25); background:white; cursor:pointer; }
@@ -229,6 +232,8 @@
     .top-search-shell{ max-width:100%; }
     .search-suggestions{ right:0; width:180px; }
     .subfilter-row, .category-row, .tabs { justify-content:center; }
+    .resource-filter-row{ grid-template-columns:repeat(2,minmax(0,1fr)); }
+    .mental-health-grid{ grid-template-columns:1fr; }
   }
 
   .ongoing-note{ font-size:13px; color:var(--muted); margin:20px 0 8px; }
@@ -896,14 +901,16 @@ const resourceFilterList = [
   {key:'mentalhealth', label:'Mental Health'},
   {key:'bakeries', label:'Bakeries'},
   {key:'mosqueprograms', label:'Mosque Programs'},
+  {key:'legal', label:'Legal Services'},
 ];
 
 const categoryColors = {
-  mosques:'#c3e2d4', mosqueprograms:'#c3e2d4', cafes:'#ddb862', shops:'#caaacd', restaurants:'#f6c1a8', beautycare:'#ecc7d2', mentalhealth:'#a9d6b8', bakeries:'#f1dfb6'
+  mosques:'#c3e2d4', mosqueprograms:'#c3e2d4', cafes:'#ddb862', shops:'#caaacd', restaurants:'#f6c1a8', beautycare:'#ecc7d2', mentalhealth:'#a9d6b8', bakeries:'#f1dfb6', legal:'#c8b6e8'
 };
 
 function renderResourceFilters(){
   const el = document.getElementById('subFilterRow');
+  el.className = 'subfilter-row resource-filter-row';
   el.innerHTML = resourceFilterList.map(f => `<button class="resource-filter-chip ${state.resourceFilter===f.key?'active':''}" data-resourcefilter="${f.key}">${f.label}</button>`).join('');
 }
 
@@ -929,6 +936,7 @@ function renderCategoryRow(){
 
 function renderSubFilters(){
   const el = document.getElementById('subFilterRow');
+  el.className = 'subfilter-row';
   el.innerHTML = '';
 
   if(state.categoryFilter === 'sports'){
@@ -980,6 +988,7 @@ function renderResourceList(){
   const el = document.getElementById('directory-view');
   const pagEl = document.getElementById('resourcePagination');
   const filtered = interleaveByCategory(filteredResourceItems());
+  el.className = state.resourceFilter === 'mentalhealth' ? 'mental-health-grid' : '';
 
   if(filtered.length === 0){ el.innerHTML = '<div class="empty">Nothing here yet.</div>'; pagEl.innerHTML=''; return; }
 
@@ -1189,7 +1198,7 @@ el.innerHTML = `<div class="club-guide-actions">
         <p>If there is harassment, a privacy breach, a payment concern, or conflict, contact a 4DASISTAS Admin privately. For immediate danger or an emergency, contact local emergency services first.</p>
       </div>`;
   } else if(state.tab === 'resources'){
-    if(state.resourceView === 'map'){
+    if(state.resourceView === 'map' && state.resourceFilter !== 'mentalhealth'){
       document.getElementById('resourcePagination').innerHTML = '';
       renderResourceMap();
     } else {
@@ -1448,7 +1457,7 @@ function render(){
   }
 
   document.getElementById('controlsRow').style.display = isDirectory ? 'none' : 'flex';
-  document.getElementById('resourceControlsRow').style.display = state.tab === 'resources' ? 'flex' : 'none';
+  document.getElementById('resourceControlsRow').style.display = state.tab === 'resources' && state.resourceFilter !== 'mentalhealth' ? 'flex' : 'none';
   document.getElementById('list-view').style.display = 'none';
   document.getElementById('pagination').style.display = 'none';
   document.getElementById('calendar-view').style.display = 'none';

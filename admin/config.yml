@@ -271,7 +271,7 @@ collections:
             name: "items"
             widget: "list"
             fields:
-              - { label: "Category — change this to switch type", name: "category", widget: "select", options: ["cafes", "shops", "restaurants", "beautycare", "mentalhealth", "bakeries", "mosqueprograms"] }
+              - { label: "Category — change this to switch type", name: "category", widget: "select", options: ["cafes", "shops", "restaurants", "beautycare", "mentalhealth", "bakeries", "legal", "mosqueprograms"] }
               - { label: "ID (no spaces, unique)", name: "id", widget: "string" }
               - { label: "Title", name: "title", widget: "string" }
               - { label: "Type (e.g. Boutique, Bakery & Café)", name: "type", widget: "string" }

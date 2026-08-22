@@ -15,11 +15,11 @@
       "lat": 43.4654774
     },
     {
-      "lng": null,
+      "lng": -79.644,
       "date": "By appointment",
       "desc": "Luxury Palestinian thobes — bridal, traditional & modern styles. No returns.",
       "instagram": "https://www.instagram.com/majestic_thobe/",
-      "location": "Free pickup — Mississauga & Oakville",
+      "location": "Free pickup — Mississauga & Oakville (approximate GTA area)",
       "title": "Majestic Thobe Boutique",
       "mapsUrl": "https://share.google/66djI8avfn7TyHp5d",
       "type": "Boutique",
@@ -27,7 +27,8 @@
       "id": "res-thobe",
       "ownedBy": "Renad H",
       "category": "shops",
-      "lat": null
+      "lat": 43.589,
+      "lng": -79.644
     },
     {
       "lng": -79.7409622,
@@ -628,17 +629,18 @@
       "lat": 43.5380466
     },
     {
-      "lng": -2,
+      "lng": -79.644,
       "desc": "⤖ Social enterprise creating long term income-generating opportunities with and for the refugee community.\n⤖ All natural olive oil soap and much more.",
       "instagram": "https://www.instagram.com/sittisoap",
-      "location": "Mississauga",
+      "location": "Mississauga (approximate area)",
       "title": "Sitti Social Enterprise Limited",
       "mapsUrl": "https://share.google/MFzE00yOhTdBNhG1q",
       "type": "BOUTIQUE",
       "website": "https://sittisoap.com/",
       "id": "sittisocial",
       "ownedBy": "Owned by a Muslim-Palestinian Woman",
-      "category": "shops"
+      "category": "shops",
+      "lat": 43.589
     },
     {
       "lng": -79.7117,
@@ -681,6 +683,42 @@
       "ownedBy": "",
       "category": "beautycare",
       "lat": 43.6767
+    },
+    {
+      "id": "mental-canadian-muslim-counselling",
+      "title": "Canadian Muslim Counselling (CMC)",
+      "type": "Mental Health Service",
+      "desc": "Non-profit online Islamic counselling across Ontario and Canada. Services include individual therapy, Muslim marriage and premarital counselling, family therapy, and faith-based counselling.",
+      "location": "Ontario and Canada (online)",
+      "website": "https://muslimcounselling.ca/",
+      "email": "info@muslimcounselling.ca",
+      "phone": "+1 437-886-6309",
+      "ownedBy": "Canadian Muslim non-profit counselling service",
+      "category": "mentalhealth"
+    },
+    {
+      "id": "mental-ruh-care",
+      "title": "Ruh Care",
+      "type": "Mental Health Service",
+      "desc": "Online therapy platform connecting clients with licensed Muslim therapists for Islamically aligned, culturally responsive care for individuals, children, couples, and families.",
+      "location": "Online",
+      "website": "https://www.ruhcare.com/",
+      "email": "hello@ruhcare.com",
+      "phone": "+1 416-639-5993",
+      "ownedBy": "Muslim therapist network",
+      "category": "mentalhealth"
+    },
+    {
+      "id": "mental-salam-psychology",
+      "title": "Salam Psychology",
+      "type": "Mental Health Service",
+      "desc": "Culturally and spiritually responsive psychological care for children, teens, adults, and seniors, including therapy, assessments, and consultations. Offers Oakville in-person and virtual appointments.",
+      "location": "Oakville and virtual",
+      "website": "https://salampsychology.com/",
+      "email": "info@salampsychology.com",
+      "phone": "+1 289-796-8098",
+      "ownedBy": "Culturally responsive psychology practice",
+      "category": "mentalhealth"
     },
     {
       "id": "cozy-crumb-maya",

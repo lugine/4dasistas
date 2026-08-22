@@ -109,6 +109,7 @@ files you're touching, and a timestamp. Change back to IDLE when done.)*
 
 _(most recent first — add new entries to the top)_
 
+- 2026-08-22 — GitHub Copilot — `index.html`, `data/resources.json`, `admin/config.yml` — Added Legal Services, made Resource filters symmetrical, made Mental Health a square-card list without a map, added Canadian Muslim Counselling, Ruh Care, and Salam Psychology from official websites, and corrected Majestic Thobe/Sitti map coordinates.
 - 2026-08-22 — GitHub Copilot — `index.html`, `manifest.webmanifest`, `assets/OFFICIAL LOGO.png` — Switched browser/PWA branding to the new assets logo, replaced the footer “Not a cult. Yet.” text with the supplied logo, and matched the footer background to the logo backdrop.
 - 2026-08-22 — GitHub Copilot — `index.html`, `data/clubs.json`, `admin/config.yml` — Refined mobile homepage arrows and heading spacing, renamed the Calendar tile, made Home Screen lighter, added editable per-club calendars and a Calendar CLUBS category, made club cards open their own calendar, changed Travel to globe plus list, and restyled the globe with pastel material and dramatic colored rings.
 - 2026-08-22 — GitHub Copilot — `index.html` — Fixed the Calendar Mosque Programs handoff so Resources becomes visibly active, a top-left Back to Calendar control appears, and the originating Calendar context is preserved.
