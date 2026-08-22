@@ -76,9 +76,10 @@ npx wrangler deploy
 
 ## Current Status
 
-**Status:** IDLE
-**Last updated by:** GitHub Copilot
+**Status:** IN PROGRESS
+**Last updated by:** Claude (chat)
 **Last updated:** 2026-08-22
+**Files:** `index.html`, `data/dayactivities.json`, `data/mosquegatherings.json`, `admin/config.yml` — working through Lujane's 7-item UI/content punch list (homescreen button alignment, travel globe realism, travel tab spacing, CMS field flexibility, clubs/mosque calendar color contrast, miscategorized activities entries, mental health resource spacing). Will re-check this section before each file edit in case Copilot is also active.
 
 *(Whoever starts work next: change this to IN PROGRESS, your name, the
 files you're touching, and a timestamp. Change back to IDLE when done.)*
