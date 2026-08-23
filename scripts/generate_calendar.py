@@ -74,25 +74,45 @@ def parse_date(date_str):
     """Parse a date string like '2026-07-26' or 'July 26th, 2026' into YYYY-MM-DD."""
     if not date_str:
         return None
-    date_str = str(date_str).strip()
+    date_str = str(date_str).strip().replace('–', '-').replace('—', '-')
     # Try ISO format first
     m = re.match(r"(\d{4})-(\d{2})-(\d{2})", date_str)
     if m:
         return f"{m.group(1)}-{m.group(2)}-{m.group(3)}"
-    # Try formats like "July 26th, 2026" or "July 26, 2026"
-    m = re.search(r"([A-Za-z]+)\s+(\d{1,2})(?:st|nd|rd|th)?,?\s*(\d{4})", date_str)
+
+    month_map = {
+        "jan": "01", "feb": "02", "mar": "03", "apr": "04",
+        "may": "05", "jun": "06", "jul": "07", "aug": "08",
+        "sep": "09", "oct": "10", "nov": "11", "dec": "12",
+    }
+
+    # Try formats like "July 26th, 2026", "July 26, 2026", or date ranges like "June 28 - July 5, 2026"
+    m = re.search(r"([A-Za-z]+)\s+(\d{1,2})(?:st|nd|rd|th)?\s*(?:-|\s+to\s+|\s+\-\s+|\s+through\s+)?(?:[A-Za-z]+\s+)?(\d{1,2})?(?:st|nd|rd|th)?[,\s]*(\d{4})", date_str)
     if m:
         month_name = m.group(1).lower()[:3]
-        day = m.group(2).zfill(2)
-        year = m.group(3)
-        month_map = {
-            "jan": "01", "feb": "02", "mar": "03", "apr": "04",
-            "may": "05", "jun": "06", "jul": "07", "aug": "08",
-            "sep": "09", "oct": "10", "nov": "11", "dec": "12",
-        }
         month = month_map.get(month_name)
         if month:
-            return f"{year}-{month}-{day}"
+            day = m.group(2).zfill(2)
+            year = m.group(4)
+            if month and day:
+                return f"{year}-{month}-{day}"
+
+    # Try month-only formats like "October 2026"
+    m = re.search(r"([A-Za-z]+)\s+(\d{4})", date_str)
+    if m:
+        month_name = m.group(1).lower()[:3]
+        month = month_map.get(month_name)
+        if month:
+            return f"{m.group(2)}-{month}-01"
+
+    # Try plain "July 26th" without year
+    m = re.search(r"([A-Za-z]+)\s+(\d{1,2})(?:st|nd|rd|th)?", date_str)
+    if m:
+        month_name = m.group(1).lower()[:3]
+        month = month_map.get(month_name)
+        if month:
+            return f"{datetime.now().year}-{month}-{m.group(2).zfill(2)}"
+
     return None
 
 

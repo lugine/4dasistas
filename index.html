@@ -196,16 +196,18 @@
   .day-cell.row-even{ background:rgba(201,170,173,0.12); }
   .day-cell.row-odd{ background:white; }
   .day-num{ font-family:'Space Grotesk',sans-serif; font-size:12px; font-weight:700; color:var(--charcoal); }
-  .day-pip{ display:block; font-size:9.5px; font-weight:600; padding:2px 4px; border-radius:4px; margin-top:2px; cursor:pointer; line-height:1.25; overflow:hidden; text-overflow:ellipsis; white-space:normal; word-break:break-word; color:var(--charcoal); max-height:4.7em; }
+  .day-pip{ display:block; font-size:9.5px; font-weight:600; padding:2px 4px; border-radius:4px; margin-top:2px; cursor:pointer; line-height:1.25; white-space:normal; overflow-wrap:anywhere; word-break:normal; color:var(--charcoal); }
   .day-pip.cat-gathering{ color:white; }
   .calendar-scope-note{ margin:14px auto 0; max-width:620px; color:var(--muted); font-size:12.5px; line-height:1.45; text-align:center; }
 
   @media (max-width:480px){
     main{ padding-left:12px; padding-right:12px; }
-    .month-grid{ gap:3px; }
-    .day-cell{ min-height:94px; padding:6px 4px; }
+    #calendar-view{ overflow-x:auto; padding-bottom:8px; }
+    .weekday-row,.month-grid{ min-width:700px; }
+    .month-grid{ gap:4px; }
+    .day-cell{ min-height:126px; padding:6px 5px; }
     .day-num{ font-size:14px; }
-    .day-pip{ font-size:11px; padding:3px 5px; margin-top:3px; max-height:5em; }
+    .day-pip{ font-size:11px; padding:4px 5px; margin-top:4px; line-height:1.3; }
     .weekday-row div{ font-size:10px; }
     .cal-title{ font-size:17px; min-width:auto; }
     .week-grid{ gap:5px; }
@@ -253,7 +255,7 @@
 
   .home-tiles{ display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:16px; }
   .home-tile{ display:block; width:100%; text-align:left; border:2px solid var(--charcoal); border-radius:18px; padding:24px 22px; cursor:pointer; box-shadow:4px 4px 0 var(--charcoal); transition:transform 0.12s ease, box-shadow 0.12s ease; font-family:'Inter',sans-serif; position:relative; }
-  .home-tile[data-hometab="homescreen"]{ padding-top:14px; padding-bottom:14px; min-height:74px; align-self:center; justify-self:center; width:50%; grid-column:1 / -1; }
+  .home-tile[data-hometab="homescreen"]{ padding-top:14px; padding-bottom:14px; min-height:74px; align-self:center; justify-self:center; width:100%; grid-column:1 / -1; }
   .home-tile:hover{ transform:translate(-2px,-2px); box-shadow:6px 6px 0 var(--charcoal); }
   .home-tile-title{ font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:22px; margin-bottom:6px; padding-right:40px; }
   .home-tile-desc{ font-size:14px; max-width:85%; opacity:0.9; }
@@ -650,7 +652,7 @@ let state = {
   tab:'home', categoryFilter:'all', view:'list',
   sportFilter:'all', dayCity:'all', clubFilter:'all',
   gatherSort:'hijab', gatherDir:'asc',
-  tripType:'all', tripView:'earth', resourceFilter:'all', resourceView:'map', resourcePage:1,
+  tripType:'all', tripView:'list', resourceFilter:'all', resourceView:'map', resourcePage:1,
   timeFilter:'upcoming', page:1,
   returnTab:'',
   calYear: today.getFullYear(), calMonth: today.getMonth(),
@@ -680,13 +682,29 @@ const monthNames = ['January','February','March','April','May','June','July','Au
 
 function pad(n){ return String(n).padStart(2,'0'); }
 function tagClass(item){
-  if(sportsData.includes(item)) return 'cat-sports';
-  if(gatheringsData.includes(item)) return 'cat-gathering';
-  if(dayActivitiesData.includes(item)) return 'cat-dayactivity';
-  if(tripsData.includes(item)) return 'cat-trip';
-  if(item.category === 'clubs') return 'cat-club';
-  if(mosqueGatheringsData.includes(item)) return 'cat-dayactivity';
-  if(clubsData.includes(item)) return 'cat-club';
+  if(!item) return 'cat-resource';
+
+  const title = String(item.title || '').toLowerCase();
+  const tag = String(item.tag || item.category || '').toLowerCase();
+  const text = `${title} ${tag} ${item.desc || ''}`.toLowerCase();
+
+  const sportsKeywords = [
+    'soccer','softball','basketball','badminton','tennis','pickleball','hockey',
+    'fitness','run against hunger','run4','running','league','padel','volleyball',
+    'gym','tournament','training','boxing','fseries','sports'
+  ];
+  const tripKeywords = ['trip','retreat','umrah','hiking','journey','travel','cruise'];
+  const gatheringKeywords = ['market','festival','bbq','potluck','conference','awards','dining','chai','chill','vendor','community','function'];
+  const activityKeywords = ['workshop','wellness','social','bake','bouquet','prep','fun day','family fun','creative','writing','atelier'];
+  const mosqueKeywords = ['fiqh','tafseer','salah','quran','tajweed','hifdh','thrive','stand firm','halaqa','prayer','masjid','mnn','ism','icna'];
+
+  if(sportsData.includes(item) || item.category === 'sports' || sportsKeywords.some(k => text.includes(k))) return 'cat-sports';
+  if(tripsData.includes(item) || item.category === 'trips' || tripKeywords.some(k => text.includes(k))) return 'cat-trip';
+  if(item.category === 'clubs' || clubsData.includes(item)) return 'cat-club';
+  if(gatheringsData.includes(item) || item.category === 'functions' || gatheringKeywords.some(k => text.includes(k))) return 'cat-gathering';
+  if(dayActivitiesData.includes(item) || item.category === 'dayactivities' || activityKeywords.some(k => text.includes(k))) return 'cat-dayactivity';
+  if(mosqueGatheringsData.includes(item) || item.category === 'mosquegatherings' || mosqueKeywords.some(k => text.includes(k))) return 'cat-mosque';
+
   return 'cat-resource';
 }
 
@@ -870,11 +888,11 @@ function renderTripEarthView(targetId='calendar-view', mapId='tripEarthMap', sel
     }));
   const globe = Globe()(document.getElementById(mapId))
     .backgroundColor('#e5f4fb')
-    .globeImageUrl(null)
+    .globeImageUrl('https://unpkg.com/three-globe/example/img/earth-blue-marble.jpg')
     .showGraticules(false)
     .showAtmosphere(true)
-    .atmosphereColor('#caaacd')
-    .atmosphereAltitude(0.14)
+    .atmosphereColor('#d9efff')
+    .atmosphereAltitude(0.16)
     .pointsData(points)
     .pointLat('lat')
     .pointLng('lng')
@@ -893,20 +911,24 @@ function renderTripEarthView(targetId='calendar-view', mapId='tripEarthMap', sel
     .width(document.getElementById(mapId).clientWidth)
     .height(document.getElementById(mapId).clientHeight);
   const globeMaterial = globe.globeMaterial();
-  globeMaterial.color.set('#c3d5e2');
-  globeMaterial.emissive.set('#a9c7d8');
-  globeMaterial.emissiveIntensity = 0.4;
+  globeMaterial.color.set('#ffffff');
+  globeMaterial.emissive.set('#cde9ff');
+  globeMaterial.emissiveIntensity = 0.18;
   globe.controls().autoRotate = true;
   globe.controls().autoRotateSpeed = 0.6;
 }
 
 function renderCalendar(){
-  if(state.categoryFilter === 'trips' && state.tripView === 'earth'){
-    document.getElementById('calendar-view').style.display = 'block';
-    renderTripEarthView();
-    return;
-  }
   const items = itemsForCategory(state.categoryFilter);
+
+  if(state.categoryFilter === 'trips' && state.tripView === 'earth'){
+    const hasMappedTrips = items.some(item => typeof item.lat === 'number' && typeof item.lng === 'number');
+    if(hasMappedTrips){
+      document.getElementById('calendar-view').style.display = 'block';
+      renderTripEarthView();
+      return;
+    }
+  }
   const year = state.calYear, month = state.calMonth;
   const dateMap = buildDateMap(items, year, month);
   const dateless = items.filter(e => (!e.calDate) && (!e.days || !e.days.length));
@@ -945,7 +967,7 @@ function renderCalendar(){
   }
   html += `</div>`;
   if(state.categoryFilter === 'all'){
-    html += `<p class="calendar-scope-note">Clubs and Mosque Programs are not included here. Check their respective tabs for their calendars.</p>`;
+    html += `<p class="calendar-scope-note">Trips, Clubs, and Mosque Programs are not included here. Check their respective tabs for their calendars.</p>`;
   }
 
   document.getElementById('calendar-view').innerHTML = html;
@@ -996,7 +1018,7 @@ const resourceFilterList = [
   {key:'cafes', label:'Cafes'},
   {key:'shops', label:'Shops'},
   {key:'restaurants', label:'Restaurants'},
-  {key:'beautycare', label:'Beauty & Care'},
+  {key:'beautycare', label:'Health n Beauty'},
   {key:'mentalhealth', label:'Mental Health'},
   {key:'bakeries', label:'Bakeries'},
   {key:'legal', label:'Legal Services'},
@@ -1160,7 +1182,9 @@ function renderResourceMap(){
   const filtered = filteredResourceItems();
   const withCoords = filtered.filter(r => typeof r.lat === 'number' && typeof r.lng === 'number');
   const skipped = filtered.length - withCoords.length;
-  if(skipped > 0){
+  if(withCoords.length === 0){
+    document.getElementById('mapSkippedNote').textContent = 'No mapped resources.';
+  } else if(skipped > 0){
     document.getElementById('mapSkippedNote').textContent = `${skipped} item${skipped>1?'s':''} without a mapped address — check List view for those.`;
   }
 
@@ -1194,6 +1218,9 @@ function renderResourceMap(){
   const sideListContent = document.getElementById('sideListContent');
   const unmappedListContent = document.getElementById('unmappedListContent');
   const mappedItems = withCoords;
+  if(mappedItems.length === 0){
+    document.getElementById('resourceSideList').style.display = 'none';
+  }
   sideListContent.innerHTML = mappedItems.map((r, index) => `
       <div class="side-item" data-id="${r.id}">
         <strong><span class="side-number" style="background:${categoryColors[r.category] || '#fff7e6'}">${index + 1}</span>${r.title}</strong>
@@ -1201,7 +1228,8 @@ function renderResourceMap(){
       </div>
     `).join('');
   const unmappedItems = filtered.filter(r => typeof r.lat !== 'number' || typeof r.lng !== 'number');
-  unmappedListContent.innerHTML = `<h4>Not mapped (${unmappedItems.length})</h4>${unmappedItems.map(r => `
+  const unmappedHeading = state.resourceFilter === 'bakeries' ? 'Small businesses' : `Not mapped (${unmappedItems.length})`;
+  unmappedListContent.innerHTML = `<h4>${unmappedHeading}</h4>${unmappedItems.map(r => `
     <div class="side-item" data-id="${r.id}">
       <strong>${r.title}</strong><span>${r.type || 'Resource'} · Location not provided</span>
     </div>`).join('') || '<div class="side-item"><span>All resources have mapped locations.</span></div>'}`;

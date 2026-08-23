@@ -127,6 +127,71 @@
       "website": "https://linktr.ee/MuslimahAthleticClub",
       "id": "ballhockey-open-practice",
       "calDate": null
+    },
+    {
+      "id": "hijabiballers-fseries-2026",
+      "title": "Hijabi Ballers FSeries",
+      "date": "Sundays, September 6–27, 2026 · 1:30–3:30 PM",
+      "eventDate": "2026-09-06",
+      "location": "Sweat Society, East York",
+      "organizer": "Hijabi Ballers",
+      "price": "Registration opens August 24 at 7 PM",
+      "registration": "Women only; registration opens Aug 24 at 7 PM",
+      "desc": "A women-only Sunday basketball series with a community-focused, beginner-friendly vibe.",
+      "instagram": "https://www.instagram.com/hijabiballers/",
+      "sportKey": "basketball",
+      "tag": "Basketball",
+      "days": [
+        "sun"
+      ]
+    },
+    {
+      "id": "isna-run-against-hunger-2026",
+      "title": "ISNA Run Against Hunger",
+      "date": "Saturday, September 13, 2026 · 10:00 AM–4:00 PM",
+      "eventDate": "2026-09-13",
+      "location": "J.C. Saddington Park, Mississauga",
+      "organizer": "ISNA Canada",
+      "price": "1K walk or 5K / 10K run",
+      "registration": "Register via ISNA Canada",
+      "desc": "Community run/walk with BBQ and family activities to support hunger relief.",
+      "website": "https://isnacanada.com/run",
+      "sportKey": "running",
+      "tag": "Running"
+    },
+    {
+      "id": "meadowvale-sisters-fitness-2026",
+      "title": "Meadowvale Sisters Fitness",
+      "date": "Mondays, September 14–December 28, 2026 · 7:00–8:00 PM",
+      "eventDate": "2026-09-14",
+      "location": "6508 Winston Churchill Blvd, Mississauga",
+      "organizer": "Meadowvale Islamic Centre",
+      "price": "$90",
+      "registration": "Women 18+",
+      "desc": "Weekly women’s fitness session led by Meadowvale Islamic Centre.",
+      "instagram": "https://www.instagram.com/meadowvaleislamiccentre/",
+      "sportKey": "fitness",
+      "tag": "Fitness",
+      "days": [
+        "mon"
+      ]
+    },
+    {
+      "id": "maa-fall-leagues-2026",
+      "title": "MAA Fall Leagues",
+      "date": "Sundays, September 20–November 29, 2026 · 11:00 AM–1:00 PM",
+      "eventDate": "2026-09-20",
+      "location": "TBA",
+      "organizer": "MAA Sports",
+      "price": "Fees TBA",
+      "registration": "League registration details TBA",
+      "desc": "Flag football league with other sports also expected this fall and fees still to be confirmed.",
+      "website": "https://maasports.ca/",
+      "sportKey": "league",
+      "tag": "League",
+      "days": [
+        "sun"
+      ]
     }
   ]
 }

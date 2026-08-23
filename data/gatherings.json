@@ -33,6 +33,62 @@
       "id": "MuslimahDining",
       "desc": "Muslimah's Dining gets it. That's why we've launched this community building initiative, where you get to be matched up with three to five other amazing Muslimah women, just like you, once a month. \n\nMeeting inspiring Muslimahs working on their deen and dunya, shouldn't be rare. Muslimah's Dining will be matching you up based on the information you provide below and a matching approach that places importance on group compatibility. Register by filling out the form below for our next match-up and meet three to five new Muslimahs over dinner InshaAllah. \n",
       "location": "Toronto and Mississauga"
+    },
+    {
+      "id": "isna-converts-bbq-potluck-2026",
+      "title": "ISNA Converts BBQ and Potluck",
+      "tag": "Function",
+      "date": "Friday, August 29, 2026 · 2:00–5:00 PM",
+      "eventDate": "2026-08-29",
+      "location": "ICC, 2200 S Sheridan Way, Mississauga",
+      "organizer": "ISNA Canada",
+      "desc": "A community BBQ and potluck for converts and new Muslims, with food, fellowship, and connection.",
+      "website": "https://isnacanada.com/convertbbq"
+    },
+    {
+      "id": "aangan-chai-and-chill-2026",
+      "title": "Aangan Chai and Chill",
+      "tag": "Function",
+      "date": "Friday, September 12, 2026 · 6:30 PM",
+      "eventDate": "2026-09-12",
+      "location": "Mississauga (exact location TBD)",
+      "organizer": "Aangan / The Courtyard",
+      "desc": "A community chai catch-up with a time discrepancy between the caption and graphic; exact location is still TBA.",
+      "instagram": "https://www.instagram.com/aanganthecourtyard/"
+    },
+    {
+      "id": "sakeenah-money-matters-2026",
+      "title": "Sakeenah Money Matters",
+      "tag": "Function",
+      "date": "Saturday, September 20, 2026 · 11:00 AM–3:00 PM",
+      "eventDate": "2026-09-20",
+      "location": "Amana Event Centre and Banquet Hall",
+      "organizer": "Sakeenah Canada",
+      "desc": "A financial wellness and community event with more details to be confirmed by the organizer.",
+      "instagram": "https://www.instagram.com/sakeenahcanada/"
+    },
+    {
+      "id": "beingme-toronto-2026",
+      "title": "Being ME Toronto",
+      "tag": "Function",
+      "date": "Friday–Saturday, October 24–25, 2026",
+      "eventDate": "2026-10-24",
+      "location": "Location TBA",
+      "organizer": "Being Me Toronto",
+      "desc": "Women’s retreat and conference weekend; registration opens via attendbm.com and exact location/time/price are still pending.",
+      "website": "https://attendbm.com/",
+      "instagram": "https://www.instagram.com/beingmetoronto/"
+    },
+    {
+      "id": "ccmw-women-who-inspire-awards-2026",
+      "title": "CCMW Women Who Inspire Awards",
+      "tag": "Function",
+      "date": "Saturday, November 8, 2026 · 10:00 AM–3:00 PM",
+      "eventDate": "2026-11-08",
+      "location": "Novotel Toronto North York",
+      "organizer": "CCMW National",
+      "desc": "Brunch, keynote, panel, poetry, scholarship presentation, and a vendor market by CCMW.",
+      "instagram": "https://www.instagram.com/ccmwnational/"
     }
   ]
 }

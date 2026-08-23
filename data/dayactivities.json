@@ -75,6 +75,30 @@
       "location": "Mieluna Café, 483 Bay St, Toronto",
       "desc": "Custom lip gloss bar, Palestine mirror decoden workshop, specialty café drink & 15% off Mieluna's menu. Early bird spots limited.",
       "instagram": "https://www.instagram.com/p/DcG676yjveM/"
+    },
+    {
+      "id": "journey-ahead-icco-aug30",
+      "title": "Your Journey Ahead: University and College Prep",
+      "tag": "Day Activity",
+      "date": "Saturday, August 30, 2026 · 1:00–4:00 PM",
+      "calDate": "2026-08-30",
+      "city": "Mississauga",
+      "location": "ICCO, 2550 Dunwin Dr, Mississauga",
+      "desc": "A university and college prep workshop for Muslim youth, with lunch provided and mandatory registration.",
+      "price": "$10",
+      "registration": "Registration mandatory",
+      "instagram": "https://www.instagram.com/hidayah__icco/"
+    },
+    {
+      "id": "meadowvale-bbq-family-fun-day-aug22",
+      "title": "Meadowvale Community BBQ and Family Fun Day",
+      "tag": "Day Activity",
+      "date": "Friday, August 22, 2026 · 12:00–4:00 PM",
+      "calDate": "2026-08-22",
+      "city": "Mississauga",
+      "location": "Meadowvale Islamic Centre",
+      "desc": "Community BBQ and family fun day hosted by Meadowvale Islamic Centre.",
+      "instagram": "https://www.instagram.com/meadowvaleislamiccentre/"
     }
   ]
 }

@@ -168,6 +168,82 @@
       "instagram": "https://www.instagram.com/masjidhalton/"
     },
     {
+      "id": "mg-sisters-through-faith-fiqh-salah-aug23",
+      "tag": "Mosque Gathering",
+      "title": "Sisters Through Faith Fiqh of Salah Halaqa",
+      "eventDate": "2026-08-23",
+      "date": "Sunday, August 23, 2026 · 2:15–3:15 PM",
+      "location": "ISM Sisters, Mississauga",
+      "organizer": "Sisters Through Faith",
+      "price": "Sisters 16+",
+      "desc": "A halaqa on the fiqh of salah, with the remaining August sessions on Sundays at ISM Sisters.",
+      "instagram": "https://www.instagram.com/sistersthroughfaith/"
+    },
+    {
+      "id": "mg-sisters-through-faith-fiqh-salah-aug30",
+      "tag": "Mosque Gathering",
+      "title": "Sisters Through Faith Fiqh of Salah Halaqa",
+      "eventDate": "2026-08-30",
+      "date": "Sunday, August 30, 2026 · 2:15–3:15 PM",
+      "location": "ISM Sisters, Mississauga",
+      "organizer": "Sisters Through Faith",
+      "price": "Sisters 16+",
+      "desc": "A halaqa on the fiqh of salah, with the remaining August sessions on Sundays at ISM Sisters.",
+      "instagram": "https://www.instagram.com/sistersthroughfaith/"
+    },
+    {
+      "id": "mnn-sisters-tafseer-gems-aug26",
+      "tag": "Mosque Gathering",
+      "title": "MNN Sisters Tafseer Gems",
+      "eventDate": "2026-08-26",
+      "date": "Wednesday, August 26, 2026 · 8:45 PM after Maghrib",
+      "location": "MNN, Mississauga (outdoors; portables if raining)",
+      "organizer": "MNN",
+      "desc": "Outdoor tafseer circle for sisters, with chairs and snacks encouraged.",
+      "instagram": "https://www.instagram.com/officialmnn/"
+    },
+    {
+      "id": "mnn-stand-firm-2026",
+      "tag": "Mosque Gathering",
+      "title": "MNN Stand FIRM",
+      "eventDate": "2026-09-02",
+      "days": [
+        "wed"
+      ],
+      "date": "Wednesdays, September 2–November 11, 2026 · 7:00–9:00 PM",
+      "location": "3520 Odyssey Dr, Mississauga",
+      "organizer": "MNN",
+      "price": "$100",
+      "registration": "Ages 18–30",
+      "desc": "12-week program beginning in early September for women ages 18–30.",
+      "instagram": "https://www.instagram.com/officialmnn/"
+    },
+    {
+      "id": "mnn-stand-firm-launch-aug22",
+      "tag": "Mosque Gathering",
+      "title": "MNN Stand FIRM Launch",
+      "eventDate": "2026-08-22",
+      "date": "Friday, August 22, 2026 · 7:00–9:00 PM",
+      "location": "MNN, Mississauga",
+      "organizer": "MNN",
+      "desc": "Launch night for the Stand FIRM program.",
+      "instagram": "https://www.instagram.com/officialmnn/"
+    },
+    {
+      "id": "isna-thrive-2026",
+      "tag": "Mosque Gathering",
+      "title": "ISNA Thrive",
+      "eventDate": "2026-08-24",
+      "days": [
+        "mon"
+      ],
+      "date": "Mondays · 7:00 PM",
+      "location": "ICC Prayer Hall, 2200 S Sheridan Way, Mississauga",
+      "organizer": "ISNA Canada",
+      "desc": "Weekly sisters’ community gathering and support circle at ICC.",
+      "instagram": "https://www.instagram.com/isna_canada/"
+    },
+    {
       "id": "mg-hia-youthsistersapplepicking",
       "tag": "Mosque Gathering",
       "title": "Youth Sister's Apple Picking",
