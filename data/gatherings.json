@@ -127,29 +127,29 @@
       "registration": "Ages 18+; bring a friend",
       "desc": "Annual summer gathering with fun activities, opportunities to meet new people, and a rejuvenating khatira. Rain or shine."
     },
-      {
-        "id": "mscca-shabab-social-aug16-2026",
-        "title": "MSCCA Shabab Social",
-        "tag": "Gathering",
-        "date": "Sunday, August 16, 2026 · 4:00–9:00 PM",
-        "eventDate": "2026-08-16",
-        "location": "Mississauga Valley Park",
-        "organizer": "MSCCA",
-        "price": "Free",
-        "registration": "Ages 16–25; registration required",
-        "desc": "Youth social with games, music, food, good vibes, and new connections."
-        },
-      {
-        "id": "meadowvale-bbq-family-fun-day-aug22",
-        "title": "Meadowvale Community BBQ and Family Fun Day",
-        "tag": "Function",
-        "date": "Saturday, August 22, 2026 · 12:00–4:00 PM",
-        "eventDate": "2026-08-22",
-        "location": "Meadowvale Islamic Centre, 6508 Winston Churchill Blvd, Mississauga",
-        "organizer": "Meadowvale Islamic Centre",
-        "desc": "Community BBQ and family fun day with halal food, bouncy castles, face painting, games, community stalls, and more.",
-        "instagram": "https://www.instagram.com/meadowvaleislamiccentre/"
-      },
+    {
+      "id": "mscca-shabab-social-aug16-2026",
+      "title": "MSCCA Shabab Social",
+      "tag": "Gathering",
+      "date": "Sunday, August 16, 2026 · 4:00–9:00 PM",
+      "eventDate": "2026-08-16",
+      "location": "Mississauga Valley Park",
+      "organizer": "MSCCA",
+      "price": "Free",
+      "registration": "Ages 16–25; registration required",
+      "desc": "Youth social with games, music, food, good vibes, and new connections."
+    },
+    {
+      "id": "meadowvale-bbq-family-fun-day-aug22",
+      "title": "Meadowvale Community BBQ and Family Fun Day",
+      "tag": "Function",
+      "date": "Saturday, August 22, 2026 · 12:00–4:00 PM",
+      "eventDate": "2026-08-22",
+      "location": "Meadowvale Islamic Centre, 6508 Winston Churchill Blvd, Mississauga",
+      "organizer": "Meadowvale Islamic Centre",
+      "desc": "Community BBQ and family fun day with halal food, bouncy castles, face painting, games, community stalls, and more.",
+      "instagram": "https://www.instagram.com/meadowvaleislamiccentre/"
+    },
     {
       "id": "beingme-toronto-2026",
       "title": "Being ME Toronto",
@@ -203,6 +203,117 @@
       "registration": "https://www.eventbrite.com/e/toronto-muslim-singles-night-market-social-mixer-tickets-1996385075502",
       "desc": "Muslim singles social event in a night market format.",
       "website": "https://www.eventbrite.com/d/canada--toronto/muslim/"
+    },
+    {
+      "id": "ummahcon-2026",
+      "title": "Ummah Con 2026",
+      "tag": "Function",
+      "category": "functions",
+      "type": "Community Function",
+      "eventDate": "2026-10-12",
+      "date": "Monday, October 12, 2026 (Thanksgiving Day) · 12 PM – 9 PM",
+      "location": "Pearl Banquet & Convention Centre, 1638 Aimco Blvd, Mississauga, ON L4W 1V1",
+      "desc": "Mississauga's biggest single-day Muslim convention & fun fest. Family friendly, free entry, free parking (or park on Aimco St if lot is full). Check in 1 hour early to secure your spot.",
+      "instagram": "https://www.instagram.com/ummahcon/",
+      "registration": "https://forms.gle/TewyTENCTXCjw1pt9"
+    },
+    {
+      "id": "pym-community-bbq-sept26-2026",
+      "title": "Community BBQ (Hand in Hand)",
+      "tag": "Function",
+      "category": "functions",
+      "type": "Community Function",
+      "eventDate": "2026-09-26",
+      "date": "Saturday, September 26, 2026 · time TBD",
+      "location": "Mississauga Valley Park",
+      "desc": "Annual community BBQ hosted by Peel Palestinian Families, PYM Toronto, Streetsville 4 Palestine, and Connect with PCAC. Free entry, food available for pre-purchase. Features food, cultural performances, kids' activities, and local vendors. This year's theme: Hand in Hand.",
+      "instagram": "https://www.instagram.com/pymtoronto/"
+    },
+    {
+      "id": "syg-summer-cafe-aug14-2026",
+      "title": "SYG Summer Cafe: Shukr",
+      "tag": "Function",
+      "category": "functions",
+      "type": "Youth Group Event",
+      "eventDate": "2026-08-14",
+      "date": "Friday, August 14, 2026 · 7:30–9:00 PM",
+      "location": "Islamic Community Centre of Ontario (ICCO), 2550 Dunwin Dr, Mississauga",
+      "desc": "SYG Mississauga summer cafe — make your own summer drinks, reflections, activities, and sisterhood. This session's lesson: Shukr (Gratitude Through Obedience). All high school girls welcome.",
+      "instagram": "https://www.instagram.com/macyouthmississauga/",
+      "registration": "https://tinyurl.com/SYGweekly26"
+    },
+    {
+      "id": "bazm-market-aug15-2026",
+      "title": "BAZM Market",
+      "tag": "Market",
+      "category": "functions",
+      "type": "Vendor Market",
+      "eventDate": "2026-08-15",
+      "date": "August 15, 2026 · 12–8 PM",
+      "location": "1145 Bronte St. S, Milton, ON",
+      "desc": "A curated day of shopping, community, food, and supporting small businesses. Free entry. Vendor applications open.",
+      "instagram": "https://www.instagram.com/bazmmarket/"
+    },
+    {
+      "id": "link-mommies-minis-aug9-2026",
+      "title": "Mommies & Minis: Crafting Connections",
+      "tag": "Function",
+      "category": "functions",
+      "type": "Community Function",
+      "eventDate": "2026-08-09",
+      "date": "Sunday, August 9, 2026 · 1:00–3:00 PM",
+      "location": "AAT&CO, 56 Steeles Ave #38, Milton",
+      "desc": "Story time and creative crafts for little ones (ages 0-3), giving moms a dedicated space to connect over refreshments. $15 per mother-child pair, includes refreshments, activity & goodie bags.",
+      "instagram": "https://www.instagram.com/linkcommunityspace/"
+    },
+    {
+      "id": "link-community-bbq-aug1-2026",
+      "title": "Link Community BBQ",
+      "tag": "Function",
+      "category": "functions",
+      "type": "Community Function",
+      "eventDate": "2026-08-01",
+      "date": "August 1, 2026 · 2–6 PM",
+      "location": "Lowville Park, 6207 Lowville Park Rd, Burlington, ON L7P 0A6",
+      "desc": "Gather with the Link community for an evening of BBQ, connection, and summer fun. For Brothers & Sisters, ages 18-35. Registration required.",
+      "instagram": "https://www.instagram.com/linkcommunityspace/"
+    },
+    {
+      "id": "recfest-2026",
+      "title": "RECFEST 2026 (10th Anniversary)",
+      "tag": "Function",
+      "category": "functions",
+      "type": "Community Function",
+      "eventDate": "2026-09-26",
+      "date": "September 26, 2026",
+      "location": "The Hangar, 75 Carl Hall Rd, North York",
+      "desc": "Smile Canada's biggest sports and recreational event of the year, celebrating 10 years. Giant inflatables, carnival games, arts & crafts, raffle, food vendors. Free parking, open to everyone.",
+      "instagram": "https://www.instagram.com/smilecanada/",
+      "website": "https://smilecan.org/recfest"
+    },
+    {
+      "id": "deen-journeys-bookclub-sept13-2026",
+      "title": "Toronto Book Club: Allah Loves",
+      "tag": "Function",
+      "category": "functions",
+      "type": "Book Club",
+      "eventDate": "2026-09-13",
+      "date": "September 13, 2026 · 4 PM",
+      "location": "Toronto café meetup",
+      "desc": "Toronto Book Club session studying 'Allah Loves' by Omar Suleiman, part of this quarter's theme 'Love of Allah & Longing for Jannah'. Members free, non-members $15.",
+      "instagram": "https://www.instagram.com/deen.journeys/"
+    },
+    {
+      "id": "deen-journeys-bookclub-nov22-2026",
+      "title": "Toronto Book Club: Because I Want Jannah",
+      "tag": "Function",
+      "category": "functions",
+      "type": "Book Club",
+      "eventDate": "2026-11-22",
+      "date": "November 22, 2026 · 1 PM",
+      "location": "Toronto café meetup",
+      "desc": "Toronto Book Club session studying 'Because I Want Jannah' by H. Abdulhakim, part of this quarter's theme 'Love of Allah & Longing for Jannah'. Members free, non-members $15.",
+      "instagram": "https://www.instagram.com/deen.journeys/"
     }
   ]
 }
