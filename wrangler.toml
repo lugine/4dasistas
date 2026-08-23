@@ -7,7 +7,24 @@
 # Deploy command: npx wrangler deploy
 
 name = "4dasistas"
+main = "workers/src/worker.js"
 compatibility_date = "2026-08-21"
+
+routes = [
+	{ pattern = "4dasistas.ca/api/*", zone_name = "4dasistas.ca" },
+	{ pattern = "www.4dasistas.ca/api/*", zone_name = "4dasistas.ca" }
+]
+
+[triggers]
+crons = ["0 13 * * *"]
+
+[[kv_namespaces]]
+binding = "SITE_DATA"
+id = "f70e43c88d1043439e400e127faaf90e"
+
+[vars]
+SITE_ORIGIN = "https://4dasistas.ca"
+FROM_EMAIL = "4DASISTAS <updates@4dasistas.ca>"
 
 [assets]
 directory = "."

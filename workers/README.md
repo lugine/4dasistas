@@ -59,9 +59,9 @@ The Worker sends the current local-day event list once per day through Resend. T
 1. Create a Resend account and verify the `4dasistas.ca` sending domain.
 2. Set the API key: `wrangler secret put RESEND_API_KEY`.
 3. Set `SITE_ORIGIN` and `FROM_EMAIL` in `workers/wrangler.toml` to the deployed site and verified sender.
-4. Deploy from `workers` with `npm run deploy`.
+4. Deploy from the repository root with `npx wrangler deploy` so the subscription API is attached to the production `4dasistas` Worker and its static assets. The `workers` directory contains the Worker source used by the root `wrangler.toml`.
 
-The site button calls `/api/subscribe`. The API route in `wrangler.toml` must be deployed and the domain must be proxied through Cloudflare; otherwise the site will show “Subscription is temporarily unavailable” because Netlify has no `/api/subscribe` handler.
+The site button calls `/api/subscribe`. The root production Worker must be deployed and the domain must be proxied through Cloudflare; otherwise the site will show “Subscription is temporarily unavailable” because static hosting has no `/api/subscribe` handler.
 
 The cron is configured for `0 13 * * *` (9:00 AM Toronto during daylight time). Cloudflare cron schedules are UTC; adjust it seasonally if a fixed local delivery time is required.
 

@@ -305,6 +305,7 @@ export default {
 
     // ---- Default ----
 
+    if (env.ASSETS) return env.ASSETS.fetch(request);
     return new Response("4DASISTAS Worker — use /api/data/:key, /editor, /login, or /logout", {
       headers: { "Content-Type": "text/plain", ...corsHeaders },
     });
