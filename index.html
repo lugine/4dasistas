@@ -768,6 +768,7 @@ function tagClass(item){
   if(dayActivitiesData.includes(item) || item.category === 'dayactivities') return 'cat-dayactivity';
   if(gatheringsData.includes(item) || item.category === 'functions') return 'cat-gathering';
   if(mosqueGatheringsData.includes(item) || item.category === 'mosquegatherings') return 'cat-mosque';
+  if(resourcesData.includes(item)) return 'cat-resource';
   if(tripKeywords.some(k => text.includes(k))) return 'cat-trip';
   if(gatheringKeywords.some(k => text.includes(k))) return 'cat-gathering';
   if(activityKeywords.some(k => text.includes(k))) return 'cat-dayactivity';
@@ -777,6 +778,13 @@ function tagClass(item){
 }
 
 function eventTypeLabel(item){
+  if(resourcesData.includes(item)){
+    const resourceLabels = {
+      cafes:'Café', shops:'Shop', restaurants:'Restaurant', beautycare:'Health n Beauty',
+      mentalhealth:'Mental Health', bakeries:'Bakery', legal:'Legal Service', mosques:'Mosque'
+    };
+    return resourceLabels[item.category] || item.type || 'Resource';
+  }
   const labels = {
     'cat-sports':'Sports', 'cat-trip':'Trip', 'cat-club':'Club',
     'cat-gathering':'Function', 'cat-dayactivity':'Activity', 'cat-mosque':'Mosque Program',
