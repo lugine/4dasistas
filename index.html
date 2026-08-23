@@ -640,6 +640,11 @@ applySiteText();
       }
     });
   });
+  sportsData = dedupeEvents(sportsData);
+  gatheringsData = dedupeEvents(gatheringsData);
+  dayActivitiesData = dedupeEvents(dayActivitiesData);
+  tripsData = dedupeEvents(tripsData);
+  mosqueGatheringsData = dedupeEvents(mosqueGatheringsData);
 
   allResourceItems = [...resourcesData];
   ALL_ITEMS = [...sportsData, ...gatheringsData, ...dayActivitiesData, ...tripsData, ...clubsData, ...organizationsData, ...resourcesData, ...mosqueGatheringsData, ...clubCalendarItems()];
@@ -705,6 +710,22 @@ const dayLabelsShort = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
 const monthNames = ['January','February','March','April','May','June','July','August','September','October','November','December'];
 
 function pad(n){ return String(n).padStart(2,'0'); }
+function dedupeEvents(items){
+  const aliases = {
+    'muslimah market bazaar workshops': 'muslimah market'
+  };
+  const seen = new Set();
+  return items.filter(item => {
+    const title = String(item.title || '').toLowerCase().replace(/[^a-z0-9 ]/g, '').replace(/\s+/g, ' ').trim();
+    const canonicalTitle = aliases[title] || title;
+    const date = item.calDate || item.eventDate || item.date || '';
+    const key = `${canonicalTitle}|${date}`;
+    if(seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  });
+}
+
 function tagClass(item){
   if(!item) return 'cat-resource';
 
@@ -971,7 +992,7 @@ function renderTripEarthView(targetId='calendar-view', mapId='tripEarthMap', sel
     .pointLng('lng')
     .pointColor(point => point.color)
     .pointAltitude(0.16)
-    .pointRadius(0.9)
+    .pointRadius(1.5)
     .ringsData(points)
     .ringLat('lat')
     .ringLng('lng')

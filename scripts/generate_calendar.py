@@ -123,6 +123,23 @@ def make_uid(item_id, title):
     return f"{slug}@4dasistas.ca"
 
 
+def dedupe_items(items):
+    """Remove repeated records for the same event title and start date."""
+    aliases = {"muslimah market bazaar workshops": "muslimah market"}
+    seen = set()
+    unique = []
+    for item in items:
+        title = re.sub(r"[^a-z0-9 ]", "", str(item.get("title", "")).lower())
+        title = re.sub(r"\s+", " ", title).strip()
+        title = aliases.get(title, title)
+        start = item.get("calDate") or item.get("eventDate") or item.get("date", "")
+        key = (title, str(start))
+        if key not in seen:
+            seen.add(key)
+            unique.append(item)
+    return unique
+
+
 def build_description(item):
     """Build the DESCRIPTION field from item fields."""
     parts = []
@@ -196,7 +213,7 @@ def generate_ics(dry_run=False):
             continue
         with open(filepath, "r") as f:
             data = json.load(f)
-        items = data.get("items", [])
+        items = dedupe_items(data.get("items", []))
         category = filename.replace(".json", "").capitalize()
         if category == "Mosquegatherings":
             category = "Mosque Gatherings"
