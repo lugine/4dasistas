@@ -884,6 +884,38 @@
       "lat": 43.6664261,
       "lng": -79.3747054,
       "image": "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWn9x18j2IRBAgO-hgsFNDhs_BTKIDGMw3sXf_zuffuheHAFel_g41Ruv6lpa44_hVJBCpfq_FMhOIkf2FrShlFFGW_IyXX1mcONr9uYs1K4AMrmhHUdzyfkIyORjA71_Zv1hR-Grb0xWFvN=w1000-h1333-k-no"
+    },
+    {
+      "id": "restaurant-zezafoun-syrian-cuisine-toronto",
+      "title": "Zezafoun Syrian Cuisine",
+      "type": "Syrian Restaurant",
+      "desc": "Home-cooked Syrian cuisine and pantry goods, prepared to share Syrian culture with Toronto and beyond.",
+      "location": "4 Manor Rd E, Toronto, ON M4S 1P8",
+      "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Zezafoun+Syrian+Cuisine%2C+4+Manor+Rd+E%2C+Toronto",
+      "website": "https://www.zezafoun.ca/",
+      "instagram": "https://www.instagram.com/zezafounsyriancuisine/",
+      "phone": "+1 416-322-7707",
+      "date": "Tue–Thu 5:00 PM–10:00 PM · Fri–Sat 11:00 AM–10:00 PM · Sun 11:00 AM–9:00 PM · Mon closed",
+      "ownedBy": "Owned by Marcelle Aleid and Yolla Alwardi",
+      "category": "restaurants",
+      "lat": 43.7027066,
+      "lng": -79.3970703
+    },
+    {
+      "id": "restaurant-bait-sitty-mississauga",
+      "title": "Bait Sitty",
+      "type": "Palestinian / Middle Eastern Restaurant",
+      "desc": "Palestinian and Middle Eastern restaurant co-owned by Alaa Damaa and Lama Damaa.",
+      "location": "3145 Dundas St W, Unit 1, Mississauga, ON L5L 5V8",
+      "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Bait+Sitty%2C+3145+Dundas+St+W%2C+Mississauga",
+      "website": "https://baitsittyrestaurant.com/",
+      "instagram": "https://www.instagram.com/baitsittyrestaurant/",
+      "phone": "+1 647-400-0488",
+      "date": "Mon 5:00 PM–11:00 PM · Tue–Wed 11:00 AM–11:00 PM · Thu 11:00 AM–12:00 AM · Fri 11:00 AM–1:00 AM · Sat 10:00 AM–1:00 AM · Sun 10:00 AM–11:00 PM",
+      "ownedBy": "Co-owned by Alaa Damaa and Lama Damaa",
+      "category": "restaurants",
+      "lat": 43.5198631,
+      "lng": -79.6857604
     }
   ]
 }
