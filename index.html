@@ -384,7 +384,11 @@
   .map-embed{ width:100%; height:160px; border:0; border-radius:10px; margin-bottom:10px; }
 
   .resource-map{ width:100%; height:65vh; min-height:420px; border:2px solid var(--charcoal); border-radius:14px; overflow:hidden; }
-  .calendar-map{ width:100%; height:65vh; min-height:420px; border:2px solid var(--charcoal); border-radius:14px; overflow:hidden; background:#e5f4fb; }
+  .calendar-map{ width:100%; height:65vh; min-height:420px; border:2px solid var(--charcoal); border-radius:14px; overflow:hidden; background:#e5f4fb; position:relative; }
+  .trip-preview-popup{ position:absolute; left:12px; right:12px; bottom:12px; background:var(--card); border:2px solid var(--charcoal); border-radius:14px; padding:16px 18px; box-shadow:4px 4px 0 var(--charcoal); z-index:20; }
+  .trip-preview-popup h4{ font-family:'Space Grotesk',sans-serif; font-size:16px; margin:0 4px 6px 0; padding-right:26px; }
+  .trip-preview-popup p{ font-size:13px; color:var(--muted); margin:2px 0; }
+  .trip-preview-close{ position:absolute; top:10px; right:12px; background:none; border:none; font-size:20px; line-height:1; cursor:pointer; color:var(--charcoal); }
 
   .resource-map-wrapper{ display:flex; gap:16px; align-items:flex-start; }
   .resource-map-wrapper .resource-map{ flex:1; }
@@ -1022,7 +1026,15 @@ function buildDateMap(items, year, month){
 
 function renderTripEarthView(targetId='calendar-view', mapId='tripEarthMap', selectedItems=itemsForCategory('trips'), replaceTarget=true){
   const el = document.getElementById(targetId);
-  if(replaceTarget) el.innerHTML = `<div id="${mapId}" class="calendar-map"></div>`;
+  if(replaceTarget) el.innerHTML = `<div id="${mapId}" class="calendar-map">
+    <div class="trip-preview-popup" id="tripPreviewPopup" style="display:none;">
+      <button class="trip-preview-close" id="tripPreviewClose" type="button" aria-label="Close">×</button>
+      <h4 id="tripPreviewTitle"></h4>
+      <p id="tripPreviewLocation"></p>
+      <p id="tripPreviewDate"></p>
+      <button class="club-guide-btn" id="tripPreviewViewBtn" style="width:100%; text-align:center; margin-top:10px;">View Full Details →</button>
+    </div>
+  </div>`;
 
   const items = selectedItems;
   const points = items
@@ -1031,7 +1043,7 @@ function renderTripEarthView(targetId='calendar-view', mapId='tripEarthMap', sel
       id: item.id,
       lat: item.lat,
       lng: item.lng,
-      color: ['#caaacd','#ddb862','#c3d5e2','#ecc7d2','#a9d6b8','#f1dfb6'][index % 6],
+      color: '#caaacd', // matches --purple / .cat-trip, same color every trip uses in list view
       title: item.title,
       location: item.location || '',
       date: item.date || ''
@@ -1057,7 +1069,7 @@ function renderTripEarthView(targetId='calendar-view', mapId='tripEarthMap', sel
     .ringPropagationSpeed(2)
     .ringRepeatPeriod(700)
     .pointLabel(point => `<strong>${point.title}</strong><br>${point.location}<br>${point.date}`)
-    .onPointClick(point => renderDetail(point.id))
+    .onPointClick(point => showTripPreviewPopup(point))
     .width(document.getElementById(mapId).clientWidth)
     .height(document.getElementById(mapId).clientHeight);
   const globeMaterial = globe.globeMaterial();
@@ -1066,6 +1078,19 @@ function renderTripEarthView(targetId='calendar-view', mapId='tripEarthMap', sel
   globeMaterial.emissiveIntensity = 0;
   globe.controls().autoRotate = true;
   globe.controls().autoRotateSpeed = 0.6;
+}
+
+function showTripPreviewPopup(point){
+  const popup = document.getElementById('tripPreviewPopup');
+  if(!popup) return;
+  document.getElementById('tripPreviewTitle').textContent = point.title;
+  document.getElementById('tripPreviewLocation').textContent = point.location ? `📍 ${point.location}` : '';
+  document.getElementById('tripPreviewDate').textContent = point.date || '';
+  popup.style.display = 'block';
+  const viewBtn = document.getElementById('tripPreviewViewBtn');
+  viewBtn.onclick = () => renderDetail(point.id);
+  const closeBtn = document.getElementById('tripPreviewClose');
+  closeBtn.onclick = () => { popup.style.display = 'none'; };
 }
 
 function renderCalendar(){
