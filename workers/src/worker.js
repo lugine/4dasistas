@@ -16,6 +16,48 @@
  */
 
 const SESSION_TTL = 7 * 24 * 60 * 60; // 7 days in seconds
+const SUBSCRIBER_INDEX_KEY = "daily-list-subscribers";
+const EVENT_FILES = ["sports", "gatherings", "dayactivities", "mosquegatherings", "trips"];
+
+const jsonResponse = (body, status = 200, corsHeaders = {}) => new Response(JSON.stringify(body), {
+  status,
+  headers: { "Content-Type": "application/json", ...corsHeaders },
+});
+
+const escapeHtml = (value) => String(value || "")
+  .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
+  .replace(/"/g, "&quot;").replace(/'/g, "&#039;");
+
+const torontoDate = () => new Intl.DateTimeFormat("en-CA", {
+  timeZone: "America/Toronto", year: "numeric", month: "2-digit", day: "2-digit",
+}).format(new Date());
+
+const weekdayForDate = (dateString) => new Date(`${dateString}T00:00:00Z`).getUTCDay();
+const weekdayNumbers = { sun: 0, mon: 1, tue: 2, wed: 3, thu: 4, fri: 5, sat: 6 };
+
+const eventIsOnDate = (item, dateString) => {
+  if (item.calDate === dateString || item.eventDate === dateString) return true;
+  if (!Array.isArray(item.days) || !item.days.length) return false;
+  if (item.recurStart && dateString < item.recurStart) return false;
+  if (item.recurEnd && dateString > item.recurEnd) return false;
+  return item.days.some(day => weekdayNumbers[String(day).toLowerCase()] === weekdayForDate(dateString));
+};
+
+const readTodayEvents = async (env) => {
+  const origin = env.SITE_ORIGIN || "https://4dasistas.ca";
+  const dateString = torontoDate();
+  const events = [];
+  for (const file of EVENT_FILES) {
+    const response = await fetch(`${origin}/data/${file}.json`, { cf: { cacheTtl: 60 } });
+    if (!response.ok) continue;
+    const data = await response.json();
+    for (const item of data.items || []) {
+      if (file === "trips" && item.tripType === "international") continue;
+      if (eventIsOnDate(item, dateString)) events.push({ ...item, category: file });
+    }
+  }
+  return { dateString, events };
+};
 
 export default {
   async fetch(request, env, ctx) {
@@ -33,6 +75,27 @@ export default {
 
     const url = new URL(request.url);
     const path = url.pathname;
+
+    if (path === "/api/subscribe" && request.method === "POST") {
+      let email;
+      try { email = String((await request.json()).email || "").trim().toLowerCase(); } catch { return jsonResponse({ error: "Invalid request" }, 400, corsHeaders); }
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return jsonResponse({ error: "Valid email required" }, 400, corsHeaders);
+      const index = JSON.parse((await env.SITE_DATA.get(SUBSCRIBER_INDEX_KEY)) || "[]");
+      const existing = index.find(subscriber => subscriber.email === email);
+      if (existing) return jsonResponse({ ok: true }, 200, corsHeaders);
+      const token = crypto.randomUUID();
+      index.push({ email, token, createdAt: Date.now() });
+      await env.SITE_DATA.put(SUBSCRIBER_INDEX_KEY, JSON.stringify(index));
+      return jsonResponse({ ok: true }, 201, corsHeaders);
+    }
+
+    if (path === "/api/unsubscribe" && request.method === "GET") {
+      const token = url.searchParams.get("token");
+      const index = JSON.parse((await env.SITE_DATA.get(SUBSCRIBER_INDEX_KEY)) || "[]");
+      const next = index.filter(subscriber => subscriber.token !== token);
+      await env.SITE_DATA.put(SUBSCRIBER_INDEX_KEY, JSON.stringify(next));
+      return new Response("You have been unsubscribed from the daily 4DASISTAS list.", { headers: { "Content-Type": "text/plain", ...corsHeaders } });
+    }
 
     // ---- Auth helpers ----
 
@@ -245,5 +308,29 @@ export default {
     return new Response("4DASISTAS Worker — use /api/data/:key, /editor, /login, or /logout", {
       headers: { "Content-Type": "text/plain", ...corsHeaders },
     });
+  },
+
+  async scheduled(controller, env, ctx) {
+    if (!env.RESEND_API_KEY) return;
+    const subscribers = JSON.parse((await env.SITE_DATA.get(SUBSCRIBER_INDEX_KEY)) || "[]");
+    if (!subscribers.length) return;
+    const { dateString, events } = await readTodayEvents(env);
+    if (!events.length) return;
+    const origin = env.SITE_ORIGIN || "https://4dasistas.ca";
+    const list = events.map(item => `<li><strong>${escapeHtml(item.title)}</strong><br>${escapeHtml(item.date || "Today")} · ${escapeHtml(item.location || "Location TBA")}</li>`).join("");
+    const subject = `What's on today at 4DASISTAS — ${dateString}`;
+    for (const subscriber of subscribers) {
+      const unsubscribeUrl = `${origin}/api/unsubscribe?token=${encodeURIComponent(subscriber.token)}`;
+      ctx.waitUntil(fetch("https://api.resend.com/emails", {
+        method: "POST",
+        headers: { "Authorization": `Bearer ${env.RESEND_API_KEY}`, "Content-Type": "application/json" },
+        body: JSON.stringify({
+          from: env.FROM_EMAIL || "4DASISTAS <updates@4dasistas.ca>",
+          to: [subscriber.email],
+          subject,
+          html: `<div style="font-family:Arial,sans-serif;max-width:560px;color:#373d3b"><h1 style="color:#caaacd">WHAT'S ON TODAY</h1><p>${escapeHtml(dateString)}</p><ul>${list}</ul><p style="color:#776867;font-size:12px">You are receiving this because you subscribed to the 4DASISTAS daily list. <a href="${unsubscribeUrl}">Unsubscribe</a></p></div>`,
+        }),
+      }));
+    }
   },
 };

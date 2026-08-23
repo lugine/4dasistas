@@ -272,6 +272,12 @@
   .today-event-info{ min-width:0; padding:13px 15px 13px 0; }
   .today-event-info strong{ display:block; font-family:'Space Grotesk',sans-serif; font-size:15px; overflow-wrap:anywhere; }
   .today-event-info span{ display:block; color:var(--muted); font-size:12px; overflow-wrap:anywhere; }
+  .today-subscribe{ margin-top:16px; text-align:center; }
+  .today-subscribe-btn{ width:100%; padding:13px 18px; border:2px solid var(--charcoal); border-radius:999px; background:var(--charcoal); color:var(--cream); font-family:'Space Grotesk',sans-serif; font-size:14px; font-weight:700; cursor:pointer; box-shadow:3px 3px 0 var(--charcoal); }
+  .today-subscribe-form{ display:flex; gap:8px; margin-top:10px; }
+  .today-subscribe-form input{ min-width:0; flex:1; padding:11px 13px; border:2px solid var(--charcoal); border-radius:999px; background:var(--card); color:var(--charcoal); font:inherit; }
+  .today-subscribe-form button{ padding:11px 16px; border:2px solid var(--charcoal); border-radius:999px; background:var(--coral); color:var(--charcoal); font-family:'Space Grotesk',sans-serif; font-weight:700; cursor:pointer; }
+  .today-subscribe-status{ min-height:18px; margin-top:8px; color:var(--muted); font-size:12px; }
 
   .rules-content{ background:var(--card); border:2px solid var(--charcoal); border-radius:16px; padding:24px 22px; box-shadow:3px 3px 0 var(--charcoal); text-align:left; }
   .rules-lead{ font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:17px; margin-bottom:16px; }
@@ -1612,6 +1618,14 @@ el.innerHTML = `<button class="fall-cta-btn" data-hometab="fallsignup">🍂 Join
           <div class="today-event-time">${eventTimeLabel(item)}</div>
           <div class="today-event-info"><strong>${item.title}</strong><span>${eventTypeLabel(item)} · ${item.location || 'Location TBA'}</span></div>
         </div>`).join('') || '<div class="empty">Nothing scheduled today.</div>'}</div>
+      <div class="today-subscribe">
+        <button class="today-subscribe-btn" id="todaySubscribeButton" type="button">Subscribe to this list</button>
+        <form class="today-subscribe-form" id="todaySubscribeForm" style="display:none;">
+          <input type="email" name="email" placeholder="Your email address" aria-label="Your email address" required>
+          <button type="submit">Subscribe</button>
+        </form>
+        <p class="today-subscribe-status" id="todaySubscribeStatus"></p>
+      </div>
     </section>`;
     el.innerHTML = `<div class="home-tiles">${tiles.map(t => `
       <button class="home-tile" style="background:${t.bg};color:${t.fg}" data-hometab="${t.tab}">
@@ -1622,6 +1636,29 @@ el.innerHTML = `<button class="fall-cta-btn" data-hometab="fallsignup">🍂 Join
     document.getElementById('todaySortSelect').addEventListener('change', e => {
       state.eventSort = e.target.value;
       render();
+    });
+    document.getElementById('todaySubscribeButton').addEventListener('click', () => {
+      const form = document.getElementById('todaySubscribeForm');
+      form.style.display = form.style.display === 'none' ? 'flex' : 'none';
+      if(form.style.display === 'flex') form.querySelector('input').focus();
+    });
+    document.getElementById('todaySubscribeForm').addEventListener('submit', async e => {
+      e.preventDefault();
+      const form = e.currentTarget;
+      const status = document.getElementById('todaySubscribeStatus');
+      const submit = form.querySelector('button');
+      submit.disabled = true;
+      status.textContent = 'Subscribing...';
+      try{
+        const response = await fetch('/api/subscribe', { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({email:form.email.value}) });
+        if(!response.ok) throw new Error('Subscription request failed');
+        form.reset();
+        status.textContent = 'You are subscribed. Your daily list will arrive by email.';
+      }catch(error){
+        status.textContent = 'Subscription is temporarily unavailable. Please try again later.';
+      }finally{
+        submit.disabled = false;
+      }
     });
   } else if(state.tab === 'rules'){
     document.getElementById('resourcePagination').innerHTML = '';

@@ -49,6 +49,19 @@ Authentication is session-based. The admin password is never exposed to browsers
 - `GET /editor` — Admin editor UI (requires admin session)
 - `POST /login` — Authenticate with password
 - `GET /logout` — End admin session
+- `POST /api/subscribe` — Subscribe an email to the daily “What’s on Today” list
+- `GET /api/unsubscribe?token=...` — Unsubscribe from the daily list
+
+**Daily email setup**
+
+The Worker sends the current local-day event list once per day through Resend. The list excludes international trips and uses the same public JSON data as the site.
+
+1. Create a Resend account and verify the `4dasistas.ca` sending domain.
+2. Set the API key: `wrangler secret put RESEND_API_KEY`.
+3. Set `SITE_ORIGIN` and `FROM_EMAIL` in `workers/wrangler.toml` to the deployed site and verified sender.
+4. Deploy from `workers` with `npm run deploy`.
+
+The cron is configured for `0 13 * * *` (9:00 AM Toronto during daylight time). Cloudflare cron schedules are UTC; adjust it seasonally if a fixed local delivery time is required.
 
 ## Usage
 
