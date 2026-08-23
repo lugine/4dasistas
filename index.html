@@ -1881,6 +1881,7 @@ function findItem(id){ return ALL_ITEMS.find(e => e.id === id); }
 function renderDetail(id){
   const e = findItem(id);
   if(!e) return;
+  const isResource = resourcesData.includes(e);
 
   let facts = '';
   if(e.location) facts += `<div class="detail-fact"><b>Location:</b> ${e.location}</div>`;
@@ -1895,10 +1896,12 @@ function renderDetail(id){
   if(e.whatsapp) links += `<a class="link-btn primary" href="${e.whatsapp}" target="_blank" rel="noopener">Join WhatsApp Group</a>`;
   if(e.instagram) links += `<a class="link-btn secondary" href="${e.instagram}" target="_blank" rel="noopener">Follow on Instagram</a>`;
   if(e.website) links += `<a class="link-btn secondary" href="${e.website}" target="_blank" rel="noopener">Visit Website</a>`;
+  const resourceMapsUrl = isResource && !e.mapsUrl ? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${e.title} ${e.location || ''}`)}` : e.mapsUrl;
+  if(resourceMapsUrl) links += `<a class="link-btn secondary" href="${resourceMapsUrl}" target="_blank" rel="noopener">View on Google Maps</a>`;
 
   let mapEmbed = '';
-  const mapQuery = (typeof e.lat === 'number' && typeof e.lng === 'number') ? `${e.lat},${e.lng}` : e.location;
-  if(mapQuery && !/tbd|see google maps|shared in|by appointment/i.test(mapQuery)){
+  const mapQuery = (typeof e.lat === 'number' && typeof e.lng === 'number') ? `${e.lat},${e.lng}` : (e.location || (isResource ? e.title : ''));
+  if(mapQuery && (isResource || !/tbd|see google maps|shared in|by appointment/i.test(mapQuery))){
     mapEmbed = `<iframe class="map-embed" loading="lazy" src="https://www.google.com/maps?q=${encodeURIComponent(mapQuery)}&output=embed"></iframe>`;
   }
 
