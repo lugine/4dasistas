@@ -769,6 +769,38 @@
       "lat": 43.6649785,
       "lng": -79.3679433,
       "date": "Confirm current hours directly"
+    },
+    {
+      "id": "cafe-edills-coffee-house",
+      "title": "Edill's Coffee House",
+      "type": "Café / Coffee House",
+      "desc": "East-African-inspired coffee, tea, and brunch-style café founded by Edill Hassan. Menu highlights include Biscoff crème-brûlée latte, tres-leches iced coffee, pistachio and almond croissants, cookies, and pastries. Identified by AfroToronto as a Black Muslim woman-owned café.",
+      "location": "1412 Kennedy Road, Unit 1A, Toronto, ON M1P 2L7",
+      "mapsUrl": "https://maps.app.goo.gl/JsHiBDos1o36t51X6",
+      "website": "https://www.edillscoffeehouse.com/",
+      "instagram": "https://www.instagram.com/edillscoffeehouse/",
+      "phone": "+1 416-901-2217",
+      "date": "Mon–Thu 6:00 AM–9:00 PM · Fri–Sat 6:00 AM–12:00 AM · Sun 9:00 AM–10:00 PM",
+      "ownedBy": "Black Muslim woman-owned",
+      "category": "cafes",
+      "lat": 43.7753,
+      "lng": -79.2825
+    },
+    {
+      "id": "cafe-pastel-toronto",
+      "title": "Cafe Pastel",
+      "type": "Bakery Café",
+      "desc": "Women-led Muslim bakery café founded by Maliha Rahman, specializing in custom cakes, cupcakes, cake jars, cheesecakes, cookies, brownies, pastries, and specialty drinks.",
+      "location": "Trinity Bellwoods, Toronto, ON (Google Maps listing)",
+      "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Cafe+Pastel+Toronto",
+      "website": "https://www.pastelbakes.com/",
+      "instagram": "https://www.instagram.com/cafepastel.ca/",
+      "phone": "+1 416-368-9490",
+      "date": "Wed–Sun 9:00 AM–6:00 PM · Mon–Tue closed",
+      "ownedBy": "Muslim-owned, women-led",
+      "category": "cafes",
+      "lat": 43.6515144,
+      "lng": -79.4106629
     }
   ]
 }
