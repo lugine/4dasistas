@@ -287,6 +287,8 @@
   .fall-option:has(input:disabled){ opacity:0.4; cursor:not-allowed; }
   .fall-option input{ margin-top:3px; flex-shrink:0; width:18px; height:18px; accent-color:var(--rose-deep); }
   .fall-option-emoji{ font-size:20px; line-height:1.3; }
+  .fall-rank-badge{ display:none; align-items:center; justify-content:center; width:22px; height:22px; border-radius:50%; background:var(--charcoal); color:var(--cream); font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:12px; flex-shrink:0; margin-top:1px; }
+  .fall-rank-badge.fall-rank-visible{ display:flex; }
   .fall-option-text{ font-size:13.5px; line-height:1.45; color:#4a4640; }
   .fall-option-text strong{ color:var(--charcoal); font-family:'Space Grotesk',sans-serif; }
   .fall-radio-group{ display:flex; flex-direction:column; gap:10px; margin-top:14px; }
@@ -1233,17 +1235,45 @@ function setupFallSignupForm(){
   const form = document.getElementById('fallSignupForm');
   if(!form) return;
   const checks = [...form.querySelectorAll('input[name="clubs"]')];
-  checks.forEach(cb => cb.addEventListener('change', () => {
-    const checkedCount = checks.filter(c => c.checked).length;
-    checks.forEach(c => { if(!c.checked) c.disabled = checkedCount >= 3; });
-  }));
-
   const otherCheckbox = document.getElementById('fallOtherCheckbox');
   const otherNameInput = document.getElementById('fallOtherName');
+  const rankedField = document.getElementById('fallClubsRanked');
+  let clubOrder = [];
+
+  function updateClubRanks(){
+    checks.forEach(cb => {
+      const badge = cb.closest('.fall-option').querySelector('.fall-rank-badge');
+      badge.textContent = '';
+      badge.classList.remove('fall-rank-visible');
+    });
+    clubOrder.forEach((cb, i) => {
+      const badge = cb.closest('.fall-option').querySelector('.fall-rank-badge');
+      badge.textContent = i + 1;
+      badge.classList.add('fall-rank-visible');
+    });
+    rankedField.value = clubOrder.map((cb, i) => {
+      const label = cb.value === 'Other' ? (otherNameInput.value.trim() || 'Other') : cb.value;
+      return `${i + 1}. ${label}`;
+    }).join(', ');
+  }
+
+  checks.forEach(cb => cb.addEventListener('change', () => {
+    if(cb.checked){
+      if(!clubOrder.includes(cb)) clubOrder.push(cb);
+    } else {
+      clubOrder = clubOrder.filter(c => c !== cb);
+    }
+    const checkedCount = checks.filter(c => c.checked).length;
+    checks.forEach(c => { if(!c.checked) c.disabled = checkedCount >= 3; });
+    updateClubRanks();
+  }));
+
   otherCheckbox.addEventListener('change', () => {
     otherNameInput.style.display = otherCheckbox.checked ? 'block' : 'none';
     if(!otherCheckbox.checked) otherNameInput.value = '';
+    updateClubRanks();
   });
+  otherNameInput.addEventListener('input', updateClubRanks);
 
   form.addEventListener('submit', async e => {
     e.preventDefault();
@@ -1388,16 +1418,19 @@ el.innerHTML = `<button class="fall-cta-btn" data-hometab="fallsignup">🍂 Join
             <input type="tel" name="whatsapp" placeholder="e.g. 416-555-0123" class="fall-text-input">
           </div>
           <div class="fall-section">
-            <h3>Which club(s) are you interested in? <span class="fall-hint">(select exactly 3 — helps us place you if a top choice is full)</span></h3>
+            <h3>Which club(s) are you interested in? <span class="fall-hint">(tap 3 in order — 1st tap = most wanted, 3rd = least desirable)</span></h3>
+            <input type="hidden" name="clubsRanked" id="fallClubsRanked">
             <div class="fall-checkbox-grid" id="fallClubChecks">${FALL_SIGNUP_CLUBS.map(c => `
               <label class="fall-option">
                 <input type="checkbox" name="clubs" value="${c.title}">
+                <span class="fall-rank-badge"></span>
                 <span class="fall-option-emoji">${c.emoji}</span>
                 <span class="fall-option-text"><strong>${c.title}</strong> — ${c.desc}</span>
               </label>`).join('')}
               <div class="fall-option-wrap" id="fallOtherOption">
                 <label class="fall-option">
                   <input type="checkbox" name="clubs" value="Other" id="fallOtherCheckbox">
+                  <span class="fall-rank-badge"></span>
                   <span class="fall-option-emoji">✨</span>
                   <span class="fall-option-text"><strong>Others</strong> — something not listed above? Tell us!</span>
                 </label>
