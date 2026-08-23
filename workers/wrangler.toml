@@ -10,10 +10,11 @@ crons = ["0 13 * * *"] # 9:00 AM America/Toronto during daylight time
 [[kv_namespaces]]
 binding = "SITE_DATA"
 id = "f70e43c88d1043439e400e127faaf90e"
-# Routes - uncomment and modify after deployment
-# routes = [
-#   { pattern = "4dasistas-editor.workers.dev", zone_name = "4dasistas.ca" }
-# ]
+# Route API calls through this Worker while the main site remains on Netlify.
+routes = [
+	{ pattern = "4dasistas.ca/api/*", zone_name = "4dasistas.ca" },
+	{ pattern = "www.4dasistas.ca/api/*", zone_name = "4dasistas.ca" }
+]
 
 # Environment variables
 [vars]

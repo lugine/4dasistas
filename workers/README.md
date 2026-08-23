@@ -61,6 +61,8 @@ The Worker sends the current local-day event list once per day through Resend. T
 3. Set `SITE_ORIGIN` and `FROM_EMAIL` in `workers/wrangler.toml` to the deployed site and verified sender.
 4. Deploy from `workers` with `npm run deploy`.
 
+The site button calls `/api/subscribe`. The API route in `wrangler.toml` must be deployed and the domain must be proxied through Cloudflare; otherwise the site will show “Subscription is temporarily unavailable” because Netlify has no `/api/subscribe` handler.
+
 The cron is configured for `0 13 * * *` (9:00 AM Toronto during daylight time). Cloudflare cron schedules are UTC; adjust it seasonally if a fixed local delivery time is required.
 
 ## Usage

@@ -2088,11 +2088,20 @@ document.getElementById('subFilterRow').addEventListener('click', e => {
   const travelFilter = e.target.closest('[data-travel-filter]');
   if(sportBtn){ state.sportFilter = sportBtn.dataset.sportfilter; state.page = 1; render(); }
   if(gatherBtn){ state.gatherSort = gatherBtn.dataset.gathersort; render(); }
-  if(tripBtn){ state.tripType = tripBtn.dataset.tripfilter; state.page = 1; render(); }
+  if(tripBtn){
+    state.tripType = tripBtn.dataset.tripfilter;
+    if(state.tripType === 'domestic') state.tripView = 'list';
+    state.page = 1;
+    render();
+  }
   if(tripViewBtn){ state.tripView = tripViewBtn.dataset.tripview; render(); }
   if(resourceBtn){ state.resourceFilter = resourceBtn.dataset.resourcefilter; state.resourcePage = 1; render(); }
   if(dirBtn){ state.gatherDir = state.gatherDir==='asc'?'desc':'asc'; render(); }
-  if(travelFilter){ state.tripType = travelFilter.dataset.travelFilter; render(); }
+  if(travelFilter){
+    state.tripType = travelFilter.dataset.travelFilter;
+    if(state.tripType === 'domestic') state.tripView = 'list';
+    render();
+  }
 });
 document.getElementById('directory-view').addEventListener('click', e => {
   const travelView = e.target.closest('[data-travel-view]');
