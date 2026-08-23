@@ -170,8 +170,9 @@
       "organizer": "Meadowvale Islamic Centre",
       "price": "$90",
       "registration": "Women 18+",
-      "desc": "Weekly women’s fitness session led by Meadowvale Islamic Centre.",
+      "desc": "Weekly women-only fitness session led by a certified female instructor, with complete privacy in the gym. Build strength, improve cardiovascular health, and feel your best. Register or inquire via WhatsApp: 647-974-7848.",
       "instagram": "https://www.instagram.com/meadowvaleislamiccentre/",
+      "contact": "647-974-7848",
       "sportKey": "fitness",
       "tag": "Fitness",
       "days": [
@@ -229,6 +230,20 @@
         "thu"
       ],
       "recurStart": "2026-08-20"
+    },
+    {
+      "id": "ism-sisterly-badminton-aug15-2026",
+      "title": "ISM Sisterly Sports Night: Badminton",
+      "date": "Saturday, August 15, 2026 · 5:30–8:00 PM",
+      "calDate": "2026-08-15",
+      "location": "ISM Main",
+      "organizer": "ISM Core",
+      "registration": "RSVP: https://bit.ly/sisterlybadminton",
+      "desc": "Sisterly badminton tournament and sports night. Dinner provided, spectators welcome, and prizes for the winning team.",
+      "website": "https://bit.ly/sisterlybadminton",
+      "instagram": "https://www.instagram.com/ismcore/",
+      "sportKey": "badminton",
+      "tag": "Badminton"
     }
   ]
 }
