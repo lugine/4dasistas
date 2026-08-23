@@ -800,7 +800,42 @@
       "ownedBy": "Muslim-owned, women-led",
       "category": "cafes",
       "lat": 43.6515144,
-      "lng": -79.4106629
+      "lng": -79.4106629,
+      "image": "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWmIMg1UymZEyn1mBXFii-RuTH_2MfKRjsvKTVajwnDQHPeVNH37ioLkKzOkP8c2hf0IGspypneOd-6p3AukYKWqMWjKz3LVEa-NFH-8_wM9qobZssNZvsltc8UrW3ayUcF-8YdFqQp5QHrw=w1500-h1000-k-no"
+    },
+    {
+      "id": "cafe-manal-bashir-pastry-co",
+      "title": "Manal Bashir Pastry Co.",
+      "type": "Bakery Café",
+      "desc": "Boutique dessert studio and café offering handcrafted halal-certified pastries, French entremets, signature tartlets, custom wedding cakes, high tea, cookies, macarons, and fine desserts.",
+      "location": "12 Centre Street, Vaughan, ON L4J 1E9",
+      "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Manal+Bashir+Pastry+Co%2C+12+Centre+Street%2C+Vaughan%2C+ON",
+      "website": "https://www.manalbashirtoronto.com/",
+      "instagram": "https://www.instagram.com/manalbashirtoronto/",
+      "phone": "+1 647-613-2253",
+      "date": "Mon 8:00 AM–5:00 PM · Tue–Fri 8:00 AM–7:00 PM · Sat–Sun 9:00 AM–7:00 PM",
+      "ownedBy": "Women-owned; founded by Manal Bashir",
+      "category": "cafes",
+      "lat": 43.8163956,
+      "lng": -79.4252237,
+      "image": "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWnYQoqwi0nxsPsocvkLeEMS8ywt9IGcqE9or9BthCgVGH6OOEF9PRwRBCVnMC_EZKHhv7cg6X3twn5I7cnexoJX0WtlHXJhkd_Db45Fau9LfjH-vHM7ifuPKKmuLW177uAb8l9f=w1000-h1333-k-no"
+    },
+    {
+      "id": "cafe-sweet-addictions-toronto",
+      "title": "Sweet Addictions",
+      "type": "Cafe / Bakery",
+      "desc": "Halal bakery and café offering fresh pastries, specialty desserts, cupcakes, custom cakes, cupcake flower bouquets, and floral cake vases. Muslim female-led team.",
+      "location": "Toronto, ON (Google Maps listing)",
+      "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Sweet+Addictions+Toronto",
+      "website": "https://www.sweetaddictions.ca/",
+      "instagram": "https://www.instagram.com/sweetaddictions.ca/",
+      "phone": "+1 416-871-8081",
+      "date": "Mon & Sun 10:00 AM–7:30 PM · Tue–Sat 8:00 AM–9:00 PM",
+      "ownedBy": "Muslim female-led team",
+      "category": "cafes",
+      "lat": 43.6664261,
+      "lng": -79.3747054,
+      "image": "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWn9x18j2IRBAgO-hgsFNDhs_BTKIDGMw3sXf_zuffuheHAFel_g41Ruv6lpa44_hVJBCpfq_FMhOIkf2FrShlFFGW_IyXX1mcONr9uYs1K4AMrmhHUdzyfkIyORjA71_Zv1hR-Grb0xWFvN=w1000-h1333-k-no"
     }
   ]
 }

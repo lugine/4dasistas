@@ -269,6 +269,7 @@
 .clubs-grid{ display:grid; grid-template-columns:repeat(2, minmax(0,1fr)); gap:14px; }
   .clubs-grid .club-card{ width:100%; }
   .panel-card{ background:var(--card); border:2px solid var(--charcoal); border-radius:16px; padding:18px; margin-bottom:16px; box-shadow:3px 3px 0 var(--charcoal); text-align:left; }
+  .resource-photo{ width:100%; height:180px; object-fit:cover; display:block; margin:-2px 0 14px; border-radius:10px; background:var(--lightblue); }
 
   .home-tiles{ display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:16px; }
   .home-tile{ display:block; width:100%; text-align:left; border:2px solid var(--charcoal); border-radius:18px; padding:24px 22px; cursor:pointer; box-shadow:4px 4px 0 var(--charcoal); transition:transform 0.12s ease, box-shadow 0.12s ease; font-family:'Inter',sans-serif; position:relative; }
@@ -1255,6 +1256,7 @@ function renderResourceList(){
 
   el.innerHTML = pageItems.map(r => `
     <div class="panel-card">
+      ${r.image ? `<img class="resource-photo" src="${r.image}" alt="${r.title}">` : ''}
       <div class="panel-top">
         <div class="monogram" style="background:${categoryColors[r.category]||'#373d3b'}">${r.title.charAt(0)}</div>
         <div>
