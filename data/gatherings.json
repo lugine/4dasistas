@@ -125,6 +125,18 @@
       "registration": "Ages 18+; bring a friend",
       "desc": "Annual summer gathering with fun activities, opportunities to meet new people, and a rejuvenating khatira. Rain or shine."
     },
+      {
+        "id": "mscca-shabab-social-aug16-2026",
+        "title": "MSCCA Shabab Social",
+        "tag": "Gathering",
+        "date": "Sunday, August 16, 2026 · 4:00–9:00 PM",
+        "eventDate": "2026-08-16",
+        "location": "Mississauga Valley Park",
+        "organizer": "MSCCA",
+        "price": "Free",
+        "registration": "Ages 16–25; registration required",
+        "desc": "Youth social with games, music, food, good vibes, and new connections."
+      },
     {
       "id": "beingme-toronto-2026",
       "title": "Being ME Toronto",

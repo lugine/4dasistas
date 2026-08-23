@@ -51,7 +51,8 @@
       "calDate": "2026-08-23",
       "city": "Scarborough",
       "location": "Scarborough (location shared with confirmed attendees)",
-      "desc": "Build-your-own bouquet, specialty drinks, and a community dessert exchange. Tickets from $49.",
+      "price": "$49",
+      "desc": "Afternoon of collage-making, coffee, matcha, chai, bouquet-building, and a dessert swap featuring homemade treats. Bring something you love to bake.",
       "instagram": "https://www.instagram.com/p/DbvzMSyDrtX/"
     },
     {
@@ -122,6 +123,20 @@
       "organizer": "TMC Sisters Youth",
       "registration": "Spaces limited; register through the link in bio",
       "desc": "Afternoon of kayaking/canoeing followed by a picnic with lunch, snacks, and drinks. Transportation to and from TMC will be available."
+    },
+    {
+      "id": "alhuda-female-youth-niagara-trip-aug30-2026",
+      "title": "Al-Huda Female Youth Day Trip to Niagara Falls",
+      "tag": "Day Activity",
+      "date": "Sunday, August 30, 2026 · Departure at 8:00 AM",
+      "calDate": "2026-08-30",
+      "city": "Niagara Falls",
+      "location": "Departure: Al-Huda Muslim Society",
+      "organizer": "Al-Huda Muslim Youth",
+      "price": "$30 round-trip transportation",
+      "registration": "Sisters 18+; register through the link in bio",
+      "desc": "Female youth day trip to Niagara Falls. Activities may include a boat tour, zipline, Butterfly Conservatory, Clifton Hill, shopping, restaurants, and scenic walks. Attractions, meals, and personal expenses are not included.",
+      "instagram": "https://www.instagram.com/alhudamuslimyouth/"
     }
   ]
 }

@@ -260,6 +260,15 @@
   .home-tile-title{ font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:22px; margin-bottom:6px; padding-right:40px; }
   .home-tile-desc{ font-size:14px; max-width:85%; opacity:0.9; }
   .home-tile-arrow{ position:absolute; top:18px; right:18px; width:28px; height:28px; display:flex; align-items:center; justify-content:center; border-radius:50%; background:rgba(255,255,255,0.55); font-size:20px; font-weight:700; }
+  .today-section{ margin-top:24px; }
+  .today-section h3{ font-family:'Space Grotesk',sans-serif; font-size:22px; margin-bottom:4px; }
+  .today-date{ color:var(--muted); font-size:13px; margin-bottom:14px; }
+  .today-list{ display:flex; flex-direction:column; gap:10px; }
+  .today-event{ display:flex; align-items:center; gap:12px; padding:13px 15px; background:var(--card); border:2px solid var(--charcoal); border-radius:14px; box-shadow:3px 3px 0 var(--charcoal); text-align:left; cursor:pointer; }
+  .today-event .tag{ flex-shrink:0; }
+  .today-event-info{ min-width:0; flex:1; }
+  .today-event-info strong{ display:block; font-family:'Space Grotesk',sans-serif; font-size:15px; overflow-wrap:anywhere; }
+  .today-event-info span{ display:block; color:var(--muted); font-size:12px; overflow-wrap:anywhere; }
 
   .rules-content{ background:var(--card); border:2px solid var(--charcoal); border-radius:16px; padding:24px 22px; box-shadow:3px 3px 0 var(--charcoal); text-align:left; }
   .rules-lead{ font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:17px; margin-bottom:16px; }
@@ -787,6 +796,15 @@ function itemMatchesSearch(item){
 function itemsForCategory(cat){
   const base = itemsForCategoryBase(cat);
   return base.filter(item => itemMatchesSearch(item) && (state.timeFilter === 'past' ? isPastItem(item) : !isPastItem(item)));
+}
+
+function homepageTodayItems(){
+  const dateStr = `${today.getFullYear()}-${pad(today.getMonth()+1)}-${pad(today.getDate())}`;
+  const candidates = [...sportsData, ...gatheringsData, ...dayActivitiesData, ...tripsData, ...mosqueGatheringsData, ...clubCalendarItems()];
+  return candidates.filter(item => {
+    if(tripsData.includes(item) && tripTypeForItem(item) === 'international') return false;
+    return occurrencesInMonth(item, today.getFullYear(), today.getMonth()).includes(dateStr);
+  });
 }
 
 /* ============================================================
@@ -1534,12 +1552,23 @@ el.innerHTML = `<button class="fall-cta-btn" data-hometab="fallsignup">🍂 Join
       {tab:'resources', title: siteText.homeTileResourcesTitle || 'Resources', bg:'#c3d5e2', fg:'#373d3b', desc: siteText.homeTileResourcesDesc || 'Mosques, cafes, shops & restaurants the community supports.'},
       {tab:'homescreen', title: siteText.homeTileHomescreenTitle || 'Add this to your Home Screen', bg:'#A9D6B8', fg:'#373d3b', desc: siteText.homeTileHomescreenDesc || 'Install 4DASISTAS like an app for quick access.'},
     ];
+    const todayItems = homepageTodayItems();
+    const todayDate = `${monthNames[today.getMonth()]} ${today.getDate()}, ${today.getFullYear()}`;
+    const todaySection = `<section class="today-section">
+      <h3>WHAT'S ON TODAY</h3>
+      <p class="today-date">${todayDate}</p>
+      <div class="today-list">${todayItems.map(item => `
+        <div class="today-event" data-id="${item.id}">
+          <span class="tag ${tagClass(item)}">${item.tag || 'Event'}</span>
+          <div class="today-event-info"><strong>${item.title}</strong><span>${item.date || item.location || ''}</span></div>
+        </div>`).join('') || '<div class="empty">Nothing scheduled today.</div>'}</div>
+    </section>`;
     el.innerHTML = `<div class="home-tiles">${tiles.map(t => `
       <button class="home-tile" style="background:${t.bg};color:${t.fg}" data-hometab="${t.tab}">
         <div class="home-tile-title">${t.title}</div>
         <div class="home-tile-desc">${t.desc}</div>
         <div class="home-tile-arrow">→</div>
-      </button>`).join('')}</div>`;
+      </button>`).join('')}</div>${todaySection}`;
   } else if(state.tab === 'rules'){
     document.getElementById('resourcePagination').innerHTML = '';
     el.innerHTML = `
