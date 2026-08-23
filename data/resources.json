@@ -1682,6 +1682,46 @@
       "category": "restaurants",
       "lat": 43.759008,
       "lng": -79.718512
+    },
+    {
+      "id": "my-matcha-cart",
+      "title": "My Matcha Cart",
+      "type": "Matcha & Beverage Cart",
+      "desc": "Mobile matcha cart for birthdays, weddings, and all events.",
+      "instagram": "https://www.instagram.com/mymatchacart/",
+      "website": "https://linktr.ee/mymatchacart",
+      "ownedBy": "Women-owned",
+      "location": "GTA, ON",
+      "category": "bakeries"
+    },
+    {
+      "id": "day-of-by-r",
+      "title": "Day Of by R",
+      "type": "Content Creator / Photography",
+      "desc": "Content creation for events and businesses — behind-the-scenes coverage of your 'Day Of'. Open to travel across the GTA.",
+      "instagram": "https://www.instagram.com/dayofbyr/",
+      "location": "Mississauga | GTA | Open to travel",
+      "category": "bakeries"
+    },
+    {
+      "id": "salam-sips",
+      "title": "Salam Sips",
+      "type": "Beverage Cart / Catering",
+      "desc": "\"Peace in a cup\" — beverage cart for pop-ups, weddings, and corporate events. Taking bookings for 2026.",
+      "instagram": "https://www.instagram.com/salam.sips/",
+      "website": "https://linktr.ee/salamsips",
+      "location": "GTA, ON",
+      "category": "bakeries"
+    },
+    {
+      "id": "faizas-closet",
+      "title": "Faiza's Closet",
+      "type": "Modest Clothing Resale",
+      "desc": "\"Where Tradition meets Trend\" — modest clothing resale boutique. Local pickup and Canada-wide shipping.",
+      "instagram": "https://www.instagram.com/faizaxcloset/",
+      "website": "https://faizaxcloset.com",
+      "location": "Scarborough, ON",
+      "category": "bakeries"
     }
   ]
 }
