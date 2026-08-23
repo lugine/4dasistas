@@ -279,7 +279,10 @@
   .today-filter{ display:flex; justify-content:center; margin-bottom:16px; }
   .today-list{ display:flex; flex-direction:column; gap:10px; }
   .today-event{ display:grid; grid-template-columns:72px minmax(0,1fr); align-items:stretch; gap:12px; padding:0; background:var(--card); border:2px solid var(--charcoal); border-radius:14px; box-shadow:3px 3px 0 var(--charcoal); text-align:left; cursor:pointer; overflow:hidden; }
-  .today-event-time{ display:flex; align-items:center; justify-content:center; padding:14px 7px; background:#f4f7f6; border-right:1px solid rgba(33,30,28,0.12); color:var(--rose-deep); font-family:'Space Grotesk',sans-serif; font-size:12px; font-weight:700; text-align:center; }
+  .today-event.cat-gathering{ color:white; }
+  .today-event.cat-gathering .today-event-time{ color:white; }
+  .today-event-time{ background:rgba(255,255,255,0.34); }
+  .today-event-time{ display:flex; align-items:center; justify-content:center; padding:14px 7px; background:rgba(255,255,255,0.34); border-right:1px solid rgba(33,30,28,0.12); color:var(--rose-deep); font-family:'Space Grotesk',sans-serif; font-size:12px; font-weight:700; text-align:center; }
   .today-event-info{ min-width:0; padding:13px 15px 13px 0; }
   .today-event-info strong{ display:block; font-family:'Space Grotesk',sans-serif; font-size:15px; overflow-wrap:anywhere; }
   .today-event-info span{ display:block; color:var(--muted); font-size:12px; overflow-wrap:anywhere; }
@@ -1647,7 +1650,7 @@ el.innerHTML = `<button class="fall-cta-btn" data-hometab="fallsignup">🍂 Join
         <option value="time" ${state.eventSort === 'time' ? 'selected' : ''}>Time</option><option value="type" ${state.eventSort === 'type' ? 'selected' : ''}>Type</option><option value="location" ${state.eventSort === 'location' ? 'selected' : ''}>Location</option><option value="price" ${state.eventSort === 'price' ? 'selected' : ''}>Price</option>
       </select></label></div>
       <div class="today-list">${todayItems.map(item => `
-        <div class="today-event" data-id="${item.id}">
+        <div class="today-event ${tagClass(item)}" data-id="${item.id}">
           <div class="today-event-time">${eventTimeLabel(item)}</div>
           <div class="today-event-info"><strong>${item.title}</strong><span>${eventTypeLabel(item)} · ${item.location || 'Location TBA'}</span></div>
         </div>`).join('') || '<div class="empty">Nothing scheduled today.</div>'}</div>
