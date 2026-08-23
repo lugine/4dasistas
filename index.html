@@ -299,9 +299,9 @@
   .today-day-btn:disabled{ opacity:0.3; cursor:default; }
   .today-day-btn:focus-visible{ outline:3px solid var(--pink); outline-offset:2px; }
   .today-date{ color:var(--muted); font-size:13px; margin-bottom:10px; text-align:center; }
-  .today-actions{ display:flex; align-items:center; justify-content:center; gap:12px; flex-wrap:wrap; margin-bottom:16px; }
+  .today-actions{ display:flex; align-items:stretch; justify-content:center; gap:12px; flex-wrap:wrap; margin-top:16px; }
   .today-actions .today-subscribe{ margin-top:0; }
-  .today-filter{ display:flex; justify-content:center; margin:0; }
+  .today-filter{ display:flex; justify-content:center; align-items:center; margin:0; }
   .today-list{ display:flex; flex-direction:column; gap:10px; }
   .today-event{ display:grid; grid-template-columns:72px minmax(0,1fr); align-items:stretch; gap:12px; padding:0; background:var(--card); border:2px solid var(--charcoal); border-radius:14px; box-shadow:3px 3px 0 var(--charcoal); text-align:left; cursor:pointer; overflow:hidden; }
   .today-event.cat-sports{ background:#fbd9bb; }
@@ -315,7 +315,7 @@
   .today-event-info{ min-width:0; padding:13px 15px 13px 0; }
   .today-event-info strong{ display:block; font-family:'Space Grotesk',sans-serif; font-size:15px; overflow-wrap:anywhere; }
   .today-event-info span{ display:block; color:var(--muted); font-size:12px; overflow-wrap:anywhere; }
-  .today-subscribe{ margin-top:16px; text-align:center; }
+  .today-subscribe{ margin-top:0; text-align:center; }
   .today-subscribe-btn{ display:inline-block; width:auto; padding:8px 16px; border:1.5px solid rgba(55,61,59,0.4); border-radius:999px; background:none; color:var(--muted); font-family:'Inter',sans-serif; font-size:12.5px; font-weight:600; cursor:pointer; box-shadow:none; }
   .today-subscribe-form{ display:flex; gap:8px; margin-top:10px; }
   .today-subscribe-form input{ min-width:0; flex:1; padding:11px 13px; border:2px solid var(--charcoal); border-radius:999px; background:var(--card); color:var(--charcoal); font:inherit; }
@@ -1752,6 +1752,11 @@ el.innerHTML = `<button class="fall-cta-btn" data-hometab="fallsignup">🍂 Join
     const todaySection = `<section class="today-section">
       <div class="today-heading"><button class="today-day-btn" id="todayPrevious" type="button" aria-label="Previous day" ${state.todayOffset === 0 ? 'disabled' : ''}>‹</button><h3>${state.todayOffset === 0 ? "WHAT'S ON TODAY" : "WHAT'S ON"}</h3><button class="today-day-btn" id="todayNext" type="button" aria-label="Next day">›</button></div>
       <p class="today-date">${todayDate}</p>
+      <div class="today-list">${todayItems.map(item => `
+        <div class="today-event ${tagClass(item)}" data-id="${item.id}">
+          <div class="today-event-time">${eventTimeLabel(item)}</div>
+          <div class="today-event-info"><strong>${item.title}</strong><span>${eventTypeLabel(item)} · ${item.location || 'Location TBA'}</span></div>
+        </div>`).join('') || '<div class="empty">Nothing scheduled today.</div>'}</div>
       <div class="today-actions"><div class="today-filter"><label class="event-sort-label">Sort by <select class="event-sort-select" id="todaySortSelect" aria-label="Sort today's events by">
         <option value="time" ${state.eventSort === 'time' ? 'selected' : ''}>Time</option><option value="type" ${state.eventSort === 'type' ? 'selected' : ''}>Type</option><option value="location" ${state.eventSort === 'location' ? 'selected' : ''}>Location</option><option value="price" ${state.eventSort === 'price' ? 'selected' : ''}>Price</option>
       </select></label></div>
@@ -1763,11 +1768,6 @@ el.innerHTML = `<button class="fall-cta-btn" data-hometab="fallsignup">🍂 Join
         </form>
         <p class="today-subscribe-status" id="todaySubscribeStatus"></p>
       </div></div>
-      <div class="today-list">${todayItems.map(item => `
-        <div class="today-event ${tagClass(item)}" data-id="${item.id}">
-          <div class="today-event-time">${eventTimeLabel(item)}</div>
-          <div class="today-event-info"><strong>${item.title}</strong><span>${eventTypeLabel(item)} · ${item.location || 'Location TBA'}</span></div>
-        </div>`).join('') || '<div class="empty">Nothing scheduled today.</div>'}</div>
     </section>`;
     el.innerHTML = `<div class="home-tiles">${tiles.map(t => `
       <button class="home-tile" style="background:${t.bg};color:${t.fg}" data-hometab="${t.tab}">
