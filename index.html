@@ -139,6 +139,7 @@
   .mental-health-grid .panel-desc{ line-height:1.2; margin-bottom:0; }
   .filter-chip.active{ background:var(--charcoal); color:var(--cream); border-color:var(--charcoal); }
   .filter-select{ font-family:'Inter',sans-serif; font-size:12.5px; font-weight:600; padding:7px 12px; border-radius:999px; border:1.5px solid rgba(33,30,28,0.25); background:white; color:var(--charcoal); }
+  .event-sort-select{ font-family:'Inter',sans-serif; font-size:12.5px; font-weight:600; padding:8px 12px; border-radius:999px; border:1.5px solid rgba(33,30,28,0.25); background:white; color:var(--charcoal); }
   .sort-dir-btn{ font-size:15px; padding:6px 10px; border-radius:999px; border:1.5px solid rgba(33,30,28,0.25); background:white; cursor:pointer; }
   .sub-note{ font-size:11.5px; color:var(--muted); width:100%; margin-top:2px; text-align:center; }
 
@@ -260,13 +261,13 @@
   .home-tile-title{ font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:22px; margin-bottom:6px; padding-right:40px; }
   .home-tile-desc{ font-size:14px; max-width:85%; opacity:0.9; }
   .home-tile-arrow{ position:absolute; top:18px; right:18px; width:28px; height:28px; display:flex; align-items:center; justify-content:center; border-radius:50%; background:rgba(255,255,255,0.55); font-size:20px; font-weight:700; }
-  .today-section{ margin-top:24px; }
-  .today-section h3{ font-family:'Space Grotesk',sans-serif; font-size:22px; margin-bottom:4px; }
-  .today-date{ color:var(--muted); font-size:13px; margin-bottom:14px; }
+  .today-section{ margin-top:28px; }
+  .today-section h3{ font-family:'Space Grotesk',sans-serif; font-size:22px; margin-bottom:4px; text-align:center; }
+  .today-date{ color:var(--muted); font-size:13px; margin-bottom:18px; text-align:center; }
   .today-list{ display:flex; flex-direction:column; gap:10px; }
-  .today-event{ display:flex; align-items:center; gap:12px; padding:13px 15px; background:var(--card); border:2px solid var(--charcoal); border-radius:14px; box-shadow:3px 3px 0 var(--charcoal); text-align:left; cursor:pointer; }
-  .today-event .tag{ flex-shrink:0; }
-  .today-event-info{ min-width:0; flex:1; }
+  .today-event{ display:grid; grid-template-columns:72px minmax(0,1fr); align-items:stretch; gap:12px; padding:0; background:var(--card); border:2px solid var(--charcoal); border-radius:14px; box-shadow:3px 3px 0 var(--charcoal); text-align:left; cursor:pointer; overflow:hidden; }
+  .today-event-time{ display:flex; align-items:center; justify-content:center; padding:14px 7px; background:#f4f7f6; border-right:1px solid rgba(33,30,28,0.12); color:var(--rose-deep); font-family:'Space Grotesk',sans-serif; font-size:12px; font-weight:700; text-align:center; }
+  .today-event-info{ min-width:0; padding:13px 15px 13px 0; }
   .today-event-info strong{ display:block; font-family:'Space Grotesk',sans-serif; font-size:15px; overflow-wrap:anywhere; }
   .today-event-info span{ display:block; color:var(--muted); font-size:12px; overflow-wrap:anywhere; }
 
@@ -470,10 +471,14 @@
     <button class="active" data-view="list">List view</button>
     <button data-view="calendar">Calendar view</button>
   </div>
-  <div class="view-toggle" id="timeToggle">
-    <button class="active" data-time="upcoming">Upcoming</button>
-    <button data-time="past">Past events</button>
-  </div>
+  <label>Sort by
+    <select class="event-sort-select" id="eventSortSelect" aria-label="Sort events by">
+      <option value="time">Time</option>
+      <option value="type">Type</option>
+      <option value="location">Location</option>
+      <option value="price">Price</option>
+    </select>
+  </label>
 </div>
 
 <div class="controls controls-center" id="resourceControlsRow" style="display:none;">
@@ -664,7 +669,7 @@ let state = {
   sportFilter:'all', dayCity:'all', clubFilter:'all',
   gatherSort:'hijab', gatherDir:'asc',
   tripType:'all', tripView:'list', resourceFilter:'all', resourceView:'map', resourcePage:1,
-  timeFilter:'upcoming', page:1,
+  timeFilter:'upcoming', eventSort:'time', page:1,
   returnTab:'',
   calYear: today.getFullYear(), calMonth: today.getMonth(),
 };
@@ -710,13 +715,31 @@ function tagClass(item){
   const mosqueKeywords = ['fiqh','tafseer','salah','quran','tajweed','hifdh','thrive','stand firm','halaqa','prayer','masjid','mnn','ism','icna'];
 
   if(sportsData.includes(item) || item.category === 'sports' || sportsKeywords.some(k => text.includes(k))) return 'cat-sports';
-  if(tripsData.includes(item) || item.category === 'trips' || tripKeywords.some(k => text.includes(k))) return 'cat-trip';
+  if(tripsData.includes(item) || item.category === 'trips') return 'cat-trip';
   if(item.category === 'clubs' || clubsData.includes(item)) return 'cat-club';
-  if(gatheringsData.includes(item) || item.category === 'functions' || gatheringKeywords.some(k => text.includes(k))) return 'cat-gathering';
-  if(dayActivitiesData.includes(item) || item.category === 'dayactivities' || activityKeywords.some(k => text.includes(k))) return 'cat-dayactivity';
-  if(mosqueGatheringsData.includes(item) || item.category === 'mosquegatherings' || mosqueKeywords.some(k => text.includes(k))) return 'cat-mosque';
+  if(gatheringsData.includes(item) || item.category === 'functions') return 'cat-gathering';
+  if(dayActivitiesData.includes(item) || item.category === 'dayactivities') return 'cat-dayactivity';
+  if(mosqueGatheringsData.includes(item) || item.category === 'mosquegatherings') return 'cat-mosque';
+  if(tripKeywords.some(k => text.includes(k))) return 'cat-trip';
+  if(gatheringKeywords.some(k => text.includes(k))) return 'cat-gathering';
+  if(activityKeywords.some(k => text.includes(k))) return 'cat-dayactivity';
+  if(mosqueKeywords.some(k => text.includes(k))) return 'cat-mosque';
 
   return 'cat-resource';
+}
+
+function eventTypeLabel(item){
+  const labels = {
+    'cat-sports':'Sports', 'cat-trip':'Trip', 'cat-club':'Club',
+    'cat-gathering':'Function', 'cat-dayactivity':'Activity', 'cat-mosque':'Mosque Program',
+    'cat-resource':'Resource'
+  };
+  return labels[tagClass(item)] || 'Event';
+}
+
+function eventTimeLabel(item){
+  const match = String(item.date || '').match(/(?:at\s+)?(\d{1,2}(?::\d{2})?\s*(?:AM|PM))(?:\s*[–-]\s*(\d{1,2}(?::\d{2})?\s*(?:AM|PM)))?/i);
+  return match ? match[0] : 'All day';
 }
 
 /* ============================================================
@@ -795,7 +818,14 @@ function itemMatchesSearch(item){
 
 function itemsForCategory(cat){
   const base = itemsForCategoryBase(cat);
-  return base.filter(item => itemMatchesSearch(item) && (state.timeFilter === 'past' ? isPastItem(item) : !isPastItem(item)));
+  const filtered = base.filter(item => itemMatchesSearch(item) && !isPastItem(item));
+  const sortValue = value => String(value || '').toLowerCase();
+  return filtered.sort((first, second) => {
+    if(state.eventSort === 'type') return sortValue(eventTypeLabel(first)).localeCompare(sortValue(eventTypeLabel(second)));
+    if(state.eventSort === 'location') return sortValue(first.location).localeCompare(sortValue(second.location));
+    if(state.eventSort === 'price') return sortValue(first.price).localeCompare(sortValue(second.price));
+    return sortValue(first.date).localeCompare(sortValue(second.date));
+  });
 }
 
 function homepageTodayItems(){
@@ -838,7 +868,7 @@ function renderList(){
       <div class="event-date-badge">${e.date}</div>
       <div class="event-info">
         <h4>${e.title}</h4>
-        <span class="tag ${tagClass(e)}">${e.tag}</span>
+        <span class="tag ${tagClass(e)}">${eventTypeLabel(e)}</span>
       </div>
       <button class="click-btn" data-id="${e.id}">Click me →</button>
     </div>`).join('')}</div>`;
@@ -1559,8 +1589,8 @@ el.innerHTML = `<button class="fall-cta-btn" data-hometab="fallsignup">🍂 Join
       <p class="today-date">${todayDate}</p>
       <div class="today-list">${todayItems.map(item => `
         <div class="today-event" data-id="${item.id}">
-          <span class="tag ${tagClass(item)}">${item.tag || 'Event'}</span>
-          <div class="today-event-info"><strong>${item.title}</strong><span>${item.date || item.location || ''}</span></div>
+          <div class="today-event-time">${eventTimeLabel(item)}</div>
+          <div class="today-event-info"><strong>${item.title}</strong><span>${eventTypeLabel(item)} · ${item.location || 'Location TBA'}</span></div>
         </div>`).join('') || '<div class="empty">Nothing scheduled today.</div>'}</div>
     </section>`;
     el.innerHTML = `<div class="home-tiles">${tiles.map(t => `
@@ -1753,7 +1783,7 @@ function renderDetail(id){
   }
 
   document.getElementById('detailCard').innerHTML = `
-    <span class="tag ${tagClass(e)}">${e.tag}</span>
+    <span class="tag ${tagClass(e)}">${eventTypeLabel(e)}</span>
     <h2>${e.title}</h2>
     <div class="detail-date">${e.date}</div>
     <div class="detail-desc">${e.desc || ''}</div>
@@ -1878,7 +1908,8 @@ function restoreStateFromHash(){
 function syncToggleButtonClasses(){
   document.querySelectorAll('.tab-btn').forEach(b => b.classList.toggle('active', b.dataset.tab === state.tab));
   document.querySelectorAll('#viewToggle button').forEach(b => b.classList.toggle('active', b.dataset.view === state.view));
-  document.querySelectorAll('#timeToggle button').forEach(b => b.classList.toggle('active', b.dataset.time === state.timeFilter));
+  const eventSortSelect = document.getElementById('eventSortSelect');
+  if(eventSortSelect) eventSortSelect.value = state.eventSort;
   document.querySelectorAll('#resourceViewToggle button').forEach(b => b.classList.toggle('active', b.dataset.rview === state.resourceView));
 }
 
@@ -1924,12 +1955,8 @@ document.getElementById('viewToggle').addEventListener('click', e => {
   render();
 });
 
-document.getElementById('timeToggle').addEventListener('click', e => {
-  const btn = e.target.closest('button');
-  if(!btn) return;
-  document.querySelectorAll('#timeToggle button').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-  state.timeFilter = btn.dataset.time;
+document.getElementById('eventSortSelect').addEventListener('change', e => {
+  state.eventSort = e.target.value;
   state.page = 1;
   render();
 });
