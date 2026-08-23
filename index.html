@@ -133,13 +133,15 @@
   .resource-filter-chip{ flex:1 1 150px; min-height:52px; font-family:'Space Grotesk',sans-serif; font-size:14px; font-weight:700; padding:12px 18px; border-radius:14px; border:2px solid var(--charcoal); background:white; color:var(--charcoal); cursor:pointer; box-shadow:2px 2px 0 var(--charcoal); }
   .resource-filter-chip.active{ background:var(--charcoal); color:var(--cream); }
   .resource-filter-row{ display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); max-width:760px; }
-  .mental-health-grid{ display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:6px; align-items:start; }
-  .mental-health-grid .panel-card{ margin:0; padding:14px; }
+  .mental-health-grid{ display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:6px; align-items:stretch; }
+  .mental-health-grid .panel-card{ margin:0; padding:14px; display:flex; flex-direction:column; }
   .mental-health-grid .panel-top{ margin-bottom:6px; }
   .mental-health-grid .panel-desc{ line-height:1.2; margin-bottom:0; }
+  .mental-health-grid .panel-addr{ margin-top:8px; margin-bottom:10px; }
   .mental-health-grid .mental-health-desc{ display:none; }
   .mental-health-grid .mental-health-desc.visible{ display:block; }
   .mental-health-grid .mental-health-more{ margin-top:10px; }
+  .mental-health-grid .panel-links{ margin-top:auto; padding-top:8px; }
   .filter-chip.active{ background:var(--charcoal); color:var(--cream); border-color:var(--charcoal); }
   .filter-select{ font-family:'Inter',sans-serif; font-size:12.5px; font-weight:600; padding:7px 12px; border-radius:999px; border:1.5px solid rgba(33,30,28,0.25); background:white; color:var(--charcoal); }
   .event-sort-label{ display:inline-flex; align-items:center; gap:8px; font-family:'Space Grotesk',sans-serif; font-size:13px; font-weight:700; color:var(--charcoal); }
@@ -262,7 +264,7 @@
     .mental-health-grid .monogram{ width:40px; height:40px; margin:0 auto 7px; font-size:15px; }
     .mental-health-grid .panel-top h4{ font-size:13px; line-height:1.2; overflow-wrap:anywhere; }
     .mental-health-grid .panel-type{ font-size:10px; line-height:1.2; }
-    .mental-health-grid .panel-addr{ font-size:10px; line-height:1.25; overflow-wrap:anywhere; }
+    .mental-health-grid .panel-addr{ font-size:10px; line-height:1.25; overflow-wrap:anywhere; margin-top:6px; margin-bottom:8px; }
     .mental-health-grid .mental-health-more{ width:100%; padding:7px 5px; font-size:10px; }
     .mental-health-grid .panel-links{ display:flex; flex-direction:column; gap:5px; }
     .mental-health-grid .panel-links .link-btn{ width:100%; padding:7px 5px; font-size:10px; text-align:center; }
