@@ -747,6 +747,7 @@ function dedupeEvents(items){
 
 function tagClass(item){
   if(!item) return 'cat-resource';
+  if(resourcesData.includes(item)) return 'cat-resource';
 
   const title = String(item.title || '').toLowerCase();
   const tag = String(item.tag || item.category || '').toLowerCase();
@@ -768,7 +769,6 @@ function tagClass(item){
   if(dayActivitiesData.includes(item) || item.category === 'dayactivities') return 'cat-dayactivity';
   if(gatheringsData.includes(item) || item.category === 'functions') return 'cat-gathering';
   if(mosqueGatheringsData.includes(item) || item.category === 'mosquegatherings') return 'cat-mosque';
-  if(resourcesData.includes(item)) return 'cat-resource';
   if(tripKeywords.some(k => text.includes(k))) return 'cat-trip';
   if(gatheringKeywords.some(k => text.includes(k))) return 'cat-gathering';
   if(activityKeywords.some(k => text.includes(k))) return 'cat-dayactivity';
