@@ -17,6 +17,23 @@
       "email": ""
     },
     {
+      "id": "mnn-friday-family-halaqah-2026",
+      "tag": "Mosque Gathering",
+      "title": "Friday Family Halaqah",
+      "eventDate": "2026-08-21",
+      "date": "Fridays from August 21, 2026 · 8:00–9:00 PM",
+      "location": "MNN Masjid, 3520 Odyssey Dr, Mississauga, ON L5M 0Y9",
+      "organizer": "Muslim Neighbour Nexus (MNN)",
+      "registration": "https://mnnexus.ca/events/friday-family-halaqah/",
+      "desc": "Family-friendly Qur'an and tafseer study with interactive discussions. Live stream and Zoom participation are available.",
+      "instagram": "https://www.instagram.com/officialmnn/",
+      "website": "https://mnnexus.ca/",
+      "days": [
+        "fri"
+      ],
+      "recurStart": "2026-08-21"
+    },
+    {
       "id": "mg-meadowvale-rise-and-fall-insaan-aug21-2026",
       "tag": "Mosque Gathering",
       "title": "The Rise and Fall of Insaan",

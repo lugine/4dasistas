@@ -151,14 +151,58 @@
     },
     {
       "id": "ccmw-women-who-inspire-awards-2026",
-      "title": "CCMW Women Who Inspire Awards",
+      "title": "Women Who Inspire Awards 2026",
       "tag": "Function",
-      "date": "Saturday, November 8, 2026 · 10:00 AM–3:00 PM",
+      "date": "Sunday, November 8, 2026 · Afternoon event; time TBA",
       "eventDate": "2026-11-08",
-      "location": "Novotel Toronto North York",
-      "organizer": "CCMW National",
-      "desc": "Brunch, keynote, panel, poetry, scholarship presentation, and a vendor market by CCMW.",
-      "instagram": "https://www.instagram.com/ccmwnational/"
+      "location": "Novotel Hotel, 3 Park Home Ave, North York, ON M2N 6L3",
+      "mapsUrl": "https://maps.google.com/?q=Novotel+Hotel+North+York",
+      "organizer": "Canadian Council of Muslim Women (CCMW)",
+      "registration": "https://www.ccmw.com/scholarship/women-who-inspire-awards-2026/",
+      "desc": "Celebrating Canadian Muslim women in leadership, advocacy, mentorship, and community impact. Includes a vendor market supporting Muslim-owned businesses.",
+      "instagram": "https://www.instagram.com/ccmwnational/",
+      "website": "https://www.ccmw.com/"
+    },
+    {
+      "id": "icna-canada-convention-2026",
+      "title": "ICNA Canada Convention 2026",
+      "tag": "Function",
+      "date": "Saturday, October 10, 2026 · 10:00 AM",
+      "eventDate": "2026-10-10",
+      "location": "International Centre, Halls 2–3, 6900 Airport Rd, Mississauga, ON L4V 1E8",
+      "mapsUrl": "https://maps.google.com/?q=International+Centre+Mississauga",
+      "organizer": "ICNA Canada",
+      "price": "Early bird $30",
+      "registration": "https://www.zeffy.com/en-CA/ticketing/icna-canada-convention--2026",
+      "desc": "Annual Islamic convention with programs for all ages.",
+      "instagram": "https://www.instagram.com/icnasisterscanada/",
+      "website": "https://icna.ca/"
+    },
+    {
+      "id": "toronto-muslim-singles-night-market-2026",
+      "title": "Toronto Muslim Singles Night Market & Social Mixer",
+      "tag": "Gathering",
+      "date": "Sunday, September 6, 2026 · 5:00 PM",
+      "eventDate": "2026-09-06",
+      "location": "125b McCormack St, Toronto, ON",
+      "mapsUrl": "https://maps.google.com/?q=125b+McCormack+St+Toronto",
+      "organizer": "TBA",
+      "registration": "https://www.eventbrite.com/e/toronto-muslim-singles-night-market-social-mixer-tickets-1996385075502",
+      "desc": "Muslim singles social event in a night market format.",
+      "website": "https://www.eventbrite.com/d/canada--toronto/muslim/"
+    },
+    {
+      "id": "muslim-women-floral-mindset-workshop-2026",
+      "title": "Muslim Women Floral & Mindset Workshop",
+      "tag": "Gathering",
+      "date": "Thursday, August 27, 2026 · 3:00 PM",
+      "eventDate": "2026-08-27",
+      "location": "185 Queens Quay E, Toronto, ON",
+      "mapsUrl": "https://maps.google.com/?q=185+Queens+Quay+E+Toronto",
+      "organizer": "TBA",
+      "registration": "https://www.eventbrite.com/e/muslim-women-floral-mindset-workshop-august-27-toronto-tickets-1997795480060",
+      "desc": "Muslim women-focused floral and mindset workshop.",
+      "website": "https://www.eventbrite.com/d/canada--toronto/muslim/"
     }
   ]
 }

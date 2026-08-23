@@ -138,17 +138,20 @@
       "title": "Hijabi Ballers FSeries",
       "date": "Sundays, September 6–27, 2026 · 1:30–3:30 PM",
       "eventDate": "2026-09-06",
-      "location": "Sweat Society, East York",
+      "location": "Sweat Society, 45 Cranfield Rd, East York, ON M4B 3H6",
       "organizer": "Hijabi Ballers",
       "price": "Registration opens August 24 at 7 PM",
       "registration": "Women only; registration opens Aug 24 at 7 PM",
-      "desc": "A women-only Sunday basketball series with a community-focused, beginner-friendly vibe.",
+      "desc": "Four-week women-only functional strength training program for all fitness levels, led by certified Muslim female trainers. $20 per 4-week cohort with a healthy snack bar after each session.",
       "instagram": "https://www.instagram.com/hijabiballers/",
+      "website": "https://www.hijabiballers.com/fseries",
       "sportKey": "basketball",
       "tag": "Basketball",
       "days": [
         "sun"
-      ]
+      ],
+      "recurStart": "2026-09-06",
+      "recurEnd": "2026-09-27"
     },
     {
       "id": "isna-run-against-hunger-2026",
@@ -247,6 +250,37 @@
       "instagram": "https://www.instagram.com/ismcore/",
       "sportKey": "badminton",
       "tag": "Badminton"
+    },
+    {
+      "id": "sokoon-weekly-muslim-runs-2026",
+      "title": "Sokoon Society Weekly Muslim Runs",
+      "date": "Saturdays · 6:00 PM; Sundays · 12:00 PM",
+      "eventDate": "2026-08-22",
+      "location": "Love Park (Saturdays); Harbourfront Centre Public Square (Sundays), Toronto",
+      "organizer": "Sokoon Society",
+      "registration": "RSVP via Instagram bio",
+      "desc": "Ongoing social runs for Muslims of all fitness levels, with Saturday and Sunday routes.",
+      "instagram": "https://www.instagram.com/sokoonsociety/",
+      "sportKey": "running",
+      "tag": "Running",
+      "days": [
+        "sat",
+        "sun"
+      ]
+    },
+    {
+      "id": "tcs-toronto-waterfront-womensfitsauga-2026",
+      "title": "TCS Toronto Waterfront Marathon: Group Participation",
+      "date": "Saturday, October 17, 2026 · 9:00 AM",
+      "calDate": "2026-10-17",
+      "location": "Toronto Waterfront",
+      "organizer": "WomensFitSauga",
+      "registration": "https://sweatpals.com/host/womensfitsauga",
+      "desc": "Women’s fitness group participation in the TCS Toronto Waterfront Marathon.",
+      "instagram": "https://www.instagram.com/womensfitsauga/",
+      "website": "https://linktr.ee/womensfitsauga",
+      "sportKey": "running",
+      "tag": "Running"
     }
   ]
 }
