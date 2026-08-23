@@ -78,6 +78,13 @@ npx wrangler deploy
 
 **Status:** IDLE
 **Last updated by:** Claude (chat)
+**Last updated:** 2026-08-23 (final)
+
+**2026-08-23 (final) — Claude (chat) — `index.html`** — Fixed calendar gap bug (Aug/Oct and any future month starting deep into the week): mobile calendar uses a 4-column grid, but leading empty-cell padding was still calculated for a 7-column weekday-aligned grid, creating a blank row. Padding now skipped entirely on mobile (weekday-row is already hidden there, so alignment was meaningless anyway). Also fixed zebra-stripe row math to match actual column count.
+
+
+**Status:** IDLE
+**Last updated by:** Claude (chat)
 **Last updated:** 2026-08-23 (later still)
 
 **2026-08-23 (later still) — Claude (chat) — `index.html`, `data/resources.json`** — Added ISNA Cares to mental health resources. Fixed mental health card grid (unequal heights, location text bleeding into buttons) via align-items:stretch + flex column cards + explicit spacing. Made subscribe-to-list button smaller/subtler. Fixed travel globe: pin colors now match list view's single consistent purple (was a meaningless rotating 6-color palette before); added a tap-to-preview popup before navigating to full detail, fixing accidental instant-navigation on mobile.
