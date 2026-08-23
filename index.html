@@ -133,10 +133,10 @@
   .resource-filter-chip{ flex:1 1 150px; min-height:52px; font-family:'Space Grotesk',sans-serif; font-size:14px; font-weight:700; padding:12px 18px; border-radius:14px; border:2px solid var(--charcoal); background:white; color:var(--charcoal); cursor:pointer; box-shadow:2px 2px 0 var(--charcoal); }
   .resource-filter-chip.active{ background:var(--charcoal); color:var(--cream); }
   .resource-filter-row{ display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); max-width:760px; }
-  .mental-health-grid{ display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; align-items:start; }
+  .mental-health-grid{ display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:6px; align-items:start; }
   .mental-health-grid .panel-card{ margin:0; padding:14px; }
   .mental-health-grid .panel-top{ margin-bottom:6px; }
-  .mental-health-grid .panel-desc{ line-height:1.35; margin-bottom:0; }
+  .mental-health-grid .panel-desc{ line-height:1.2; margin-bottom:0; }
   .filter-chip.active{ background:var(--charcoal); color:var(--cream); border-color:var(--charcoal); }
   .filter-select{ font-family:'Inter',sans-serif; font-size:12.5px; font-weight:600; padding:7px 12px; border-radius:999px; border:1.5px solid rgba(33,30,28,0.25); background:white; color:var(--charcoal); }
   .sort-dir-btn{ font-size:15px; padding:6px 10px; border-radius:999px; border:1.5px solid rgba(33,30,28,0.25); background:white; cursor:pointer; }
@@ -219,7 +219,7 @@
     .home-tile-desc{ font-size:13px; max-width:78%; }
     .rules-content{ padding:20px 16px; }
     .club-guide-actions, .home-tiles{ grid-template-columns:1fr; }
-    .home-tile[data-hometab="homescreen"]{ grid-column:1; }
+    .home-tile[data-hometab="homescreen"]{ grid-column:1 / -1; width:100%; justify-self:center; }
     .cat-filter-btn{ padding:12px 20px; font-size:13px; }
     .wa-fixed-btn svg{ width:16px; height:16px; }
     header{ padding-top:54px; }
@@ -253,7 +253,7 @@
 
   .home-tiles{ display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:16px; }
   .home-tile{ display:block; width:100%; text-align:left; border:2px solid var(--charcoal); border-radius:18px; padding:24px 22px; cursor:pointer; box-shadow:4px 4px 0 var(--charcoal); transition:transform 0.12s ease, box-shadow 0.12s ease; font-family:'Inter',sans-serif; position:relative; }
-  .home-tile[data-hometab="homescreen"]{ padding-top:14px; padding-bottom:14px; min-height:74px; align-self:center; grid-column:2; }
+  .home-tile[data-hometab="homescreen"]{ padding-top:14px; padding-bottom:14px; min-height:74px; align-self:center; justify-self:center; width:50%; grid-column:1 / -1; }
   .home-tile:hover{ transform:translate(-2px,-2px); box-shadow:6px 6px 0 var(--charcoal); }
   .home-tile-title{ font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:22px; margin-bottom:6px; padding-right:40px; }
   .home-tile-desc{ font-size:14px; max-width:85%; opacity:0.9; }
@@ -317,11 +317,11 @@
   .map-embed{ width:100%; height:160px; border:0; border-radius:10px; margin-bottom:10px; }
 
   .resource-map{ width:100%; height:65vh; min-height:420px; border:2px solid var(--charcoal); border-radius:14px; overflow:hidden; }
-  .calendar-map{ width:100%; height:65vh; min-height:420px; border:2px solid var(--charcoal); border-radius:14px; overflow:hidden; }
+  .calendar-map{ width:100%; height:65vh; min-height:420px; border:2px solid var(--charcoal); border-radius:14px; overflow:hidden; background:#e5f4fb; }
 
   .resource-map-wrapper{ display:flex; gap:16px; align-items:flex-start; }
   .resource-map-wrapper .resource-map{ flex:1; }
-  .travel-earth-layout{ display:grid; grid-template-columns:minmax(250px,280px) minmax(0,1fr); gap:16px; align-items:stretch; width:100%; }
+  .travel-earth-layout{ display:grid; grid-template-columns:minmax(300px,340px) minmax(0,1fr); gap:16px; align-items:stretch; width:100%; }
   .travel-trip-list{ width:100%; min-width:0; max-height:65vh; overflow-y:auto; border:2px solid var(--charcoal); border-radius:14px; background:var(--card); padding:16px; order:0; }
   .travel-trip-list h4{ font-family:'Space Grotesk',sans-serif; font-size:15px; margin:0 0 10px; }
   .travel-trip-list .side-item{ padding:9px 0; border-bottom:1px solid rgba(33,30,28,0.1); cursor:pointer; }
@@ -389,7 +389,7 @@
   .disclaimer{ font-size:11px; color:#fff7e6; max-width:440px; margin:0 auto; line-height:1.5; }
   .footer-logo{ display:block; width:min(360px,88vw); height:180px; margin:0 auto; object-fit:cover; object-position:center 68%; image-rendering:auto; }
 
-  .suggest-btn{ display:inline-block; font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:13px; background:none; border:1.5px solid var(--charcoal); color:var(--charcoal); padding:9px 18px; border-radius:999px; cursor:pointer; margin-bottom:2px; text-decoration:none; }
+  .suggest-btn{ display:inline-block; font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:13px; background:var(--blush); border:1.5px solid var(--charcoal); color:var(--charcoal); padding:9px 18px; border-radius:999px; cursor:pointer; margin-bottom:2px; text-decoration:none; }
   .hp-field{ position:absolute; left:-9999px; }
 </style>
 </head>
@@ -869,9 +869,8 @@ function renderTripEarthView(targetId='calendar-view', mapId='tripEarthMap', sel
       date: item.date || ''
     }));
   const globe = Globe()(document.getElementById(mapId))
-    .backgroundColor('#fff7e6')
-    .globeImageUrl('https://unpkg.com/three-globe/example/img/earth-blue-marble.jpg')
-    .bumpImageUrl('https://unpkg.com/three-globe/example/img/earth-topology.png')
+    .backgroundColor('#e5f4fb')
+    .globeImageUrl(null)
     .showGraticules(false)
     .showAtmosphere(true)
     .atmosphereColor('#caaacd')
@@ -893,6 +892,10 @@ function renderTripEarthView(targetId='calendar-view', mapId='tripEarthMap', sel
     .onPointClick(point => renderDetail(point.id))
     .width(document.getElementById(mapId).clientWidth)
     .height(document.getElementById(mapId).clientHeight);
+  const globeMaterial = globe.globeMaterial();
+  globeMaterial.color.set('#c3d5e2');
+  globeMaterial.emissive.set('#a9c7d8');
+  globeMaterial.emissiveIntensity = 0.4;
   globe.controls().autoRotate = true;
   globe.controls().autoRotateSpeed = 0.6;
 }
