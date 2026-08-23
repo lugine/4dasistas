@@ -78,6 +78,13 @@ npx wrangler deploy
 
 **Status:** IDLE
 **Last updated by:** Claude (chat)
+**Last updated:** 2026-08-24 (correction)
+
+**2026-08-24 (correction) — Claude (chat) — `data/resources.json`, deleted `data/smallbusinesses.json`** — Lujane correctly caught that my earlier smallbusinesses.json discovery was wrong/stale. Real answer: 'Small Businesses' is just the display label for `category: "bakeries"` within resources.json (confirmed in both resourceFilterList and eventTypeLabel mappings) - the Worker KV / separate-file theory from my earlier session was based on an outdated version of the code that Kilo has since simplified away. Moved the 4 businesses (My Matcha Cart, Day Of by R, Salam Sips, Faiza's Closet) into resources.json with category:bakeries, matching how Cozy Crumb Maya is actually stored. Deleted the orphaned smallbusinesses.json file entirely since the site never reads from it - leaving it would only cause future confusion.
+
+
+**Status:** IDLE
+**Last updated by:** Claude (chat)
 **Last updated:** 2026-08-24
 
 **2026-08-24 — Claude (chat) — `data/gatherings.json`, `data/mosquegatherings.json`, `data/smallbusinesses.json`** — Added 15 real events/businesses from 17 Instagram screenshots (checked for duplicates against existing 17/33 entries first, found none). IMPORTANT DISCOVERY: `data/smallbusinesses.json` did not exist at all — the live small-businesses data actually lives in a separate Cloudflare Worker KV store (Kilo's 'Worker KV integration'), fetched via a different API entirely, outside the Decap CMS/git-based system everything else uses. Created this file as the missing fallback with 4 real businesses, but flagging: this file is NOT the live/primary source for that category — whoever manages the Worker KV store needs to add entries there too for them to actually show up as primary data.
