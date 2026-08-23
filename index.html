@@ -1168,7 +1168,7 @@ el.innerHTML = sportFilterOptions().map(f => `<button class="filter-chip ${state
       .map(club => `<button class="filter-chip ${state.clubFilter===club.key?'active':''}" data-clubfilter="${club.key}">${club.title}</button>`).join('');
   } else if(state.categoryFilter === 'trips'){
     const types = [{key:'all',label:'All'},{key:'domestic',label:'Domestic'},{key:'international',label:'International'}];
-    const views = [{key:'list',label:'List'},{key:'earth',label:'Earth'}];
+    const views = state.tripType === 'domestic' ? [{key:'list',label:'List'}] : [{key:'list',label:'List'},{key:'earth',label:'Earth'}];
     el.innerHTML = types.map(t => `<button class="filter-chip ${state.tripType===t.key?'active':''}" data-tripfilter="${t.key}">${t.label}</button>`).join('')
       + `<div class="trip-view-toggle" style="display:flex; gap:8px; justify-content:center; width:100%; margin-top:8px;">${views.map(v => `<button class="filter-chip ${state.tripView===v.key?'active':''}" data-tripview="${v.key}">${v.label}</button>`).join('')}</div>`;
   }
@@ -1180,7 +1180,7 @@ function renderTravelFilters(){
   el.innerHTML = `<button class="filter-chip ${state.tripType==='all'?'active':''}" data-travel-filter="all">All</button>
     <button class="filter-chip ${state.tripType==='domestic'?'active':''}" data-travel-filter="domestic">Domestic</button>
     <button class="filter-chip ${state.tripType==='international'?'active':''}" data-travel-filter="international">International</button>
-    <div class="sub-note">Explore the globe, then browse every trip below.</div>`;
+    <div class="sub-note">Domestic trips use List view; the globe is available for international and all trips.</div>`;
 }
 
 /* ============================================================
@@ -1991,6 +1991,7 @@ function restoreStateFromHash(){
     const resourceView = params.get('rview');
     state.resourceView = resourceView === 'instagram' ? 'list' : resourceView;
   }
+  if(state.tripType === 'domestic') state.tripView = 'list';
   if(state.categoryFilter === 'mosquegatherings') state.categoryFilter = 'activities';
 }
 
