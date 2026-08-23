@@ -457,6 +457,8 @@
   .ig-btn{ display:inline-flex; align-items:center; gap:9px; font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:14px; line-height:1; background:linear-gradient(135deg,#f58529,#dd2a7b,#8134af,#515bd4); color:white; padding:12px 22px; border-radius:999px; text-decoration:none; }
   .ig-btn svg{ width:18px; height:18px; flex-shrink:0; display:block; }
   .owned-badge{ display:inline-block; font-size:11px; font-weight:700; color:var(--rose-deep); background:rgba(201,138,150,0.16); padding:3px 10px; border-radius:999px; margin-bottom:8px; }
+  .resource-owner{ margin:10px 0 12px; padding:8px 10px; border-top:1px solid rgba(33,30,28,0.14); border-bottom:1px solid rgba(33,30,28,0.14); color:var(--rose-deep); font-size:12px; line-height:1.35; }
+  .resource-owner strong{ color:var(--charcoal); font-family:'Space Grotesk',sans-serif; }
   .disclaimer{ font-size:11px; color:#fff7e6; max-width:440px; margin:0 auto; line-height:1.5; }
   .footer-logo{ display:block; width:min(360px,88vw); height:180px; margin:0 auto; object-fit:cover; object-position:center 68%; image-rendering:auto; }
 
@@ -1317,7 +1319,7 @@ function renderResourceList(){
           <div class="panel-type">${r.type || 'Organization'}</div>
         </div>
       </div>
-      ${r.ownedBy ? `<div class="owned-badge">${r.ownedBy}</div>` : ''}
+      ${r.ownedBy && ['cafes','restaurants','shops'].includes(r.category) ? `<div class="resource-owner"><strong>Owner:</strong> ${r.ownedBy}</div>` : r.ownedBy ? `<div class="owned-badge">${r.ownedBy}</div>` : ''}
       ${isMentalHealth ? `<div class="panel-desc mental-health-desc" id="mental-desc-${r.id}">${r.desc}</div><button type="button" class="link-btn secondary mental-health-more" data-reveal-resource="mental-desc-${r.id}">Learn More</button>` : `<div class="panel-desc">${r.desc}</div>`}
       ${r.location ? `<div class="panel-addr">📍 ${r.location}${r.date ? ' · ' + r.date : ''}</div>` : '<div class="panel-addr">Location not provided</div>'}
       <div class="panel-links">
