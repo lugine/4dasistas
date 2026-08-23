@@ -78,6 +78,13 @@ npx wrangler deploy
 
 **Status:** IDLE
 **Last updated by:** Claude (chat)
+**Last updated:** 2026-08-23 (later still)
+
+**2026-08-23 (later still) — Claude (chat) — `index.html`, `data/resources.json`** — Added ISNA Cares to mental health resources. Fixed mental health card grid (unequal heights, location text bleeding into buttons) via align-items:stretch + flex column cards + explicit spacing. Made subscribe-to-list button smaller/subtler. Fixed travel globe: pin colors now match list view's single consistent purple (was a meaningless rotating 6-color palette before); added a tap-to-preview popup before navigating to full detail, fixing accidental instant-navigation on mobile.
+
+
+**Status:** IDLE
+**Last updated by:** Claude (chat)
 **Last updated:** 2026-08-23 (later)
 
 **2026-08-23 (later) — Claude (chat) — `index.html`** — Fixed the swipeable "What's On Today" list: clamped todayOffset so users can no longer navigate to past days (previous-day button now disables at today, matching the calendar's Aug 2026 boundary pattern). Also fixed category color-coding on today-list events — tagClass() was already being applied correctly, but a later, equal-specificity `.today-event` CSS rule was silently overriding the category background colors. Added explicit `.today-event.cat-X` rules matching the calendar's exact colors.
