@@ -41,7 +41,7 @@
     --rose: #caaacd;
     --rose-deep: #776867;
     --pink: #caaacd;
-    --coral: #ecc7d2;
+    --coral: #f4b183;
     --blue: #c3d5e2;
     --purple: #caaacd;
     --gold: #ddb862;
@@ -263,7 +263,8 @@
   .home-tile-arrow{ position:absolute; top:18px; right:18px; width:28px; height:28px; display:flex; align-items:center; justify-content:center; border-radius:50%; background:rgba(255,255,255,0.55); font-size:20px; font-weight:700; }
   .today-section{ margin-top:28px; }
   .today-section h3{ font-family:'Space Grotesk',sans-serif; font-size:22px; margin-bottom:4px; text-align:center; }
-  .today-date{ color:var(--muted); font-size:13px; margin-bottom:18px; text-align:center; }
+  .today-date{ color:var(--muted); font-size:13px; margin-bottom:10px; text-align:center; }
+  .today-filter{ display:flex; justify-content:center; margin-bottom:16px; }
   .today-list{ display:flex; flex-direction:column; gap:10px; }
   .today-event{ display:grid; grid-template-columns:72px minmax(0,1fr); align-items:stretch; gap:12px; padding:0; background:var(--card); border:2px solid var(--charcoal); border-radius:14px; box-shadow:3px 3px 0 var(--charcoal); text-align:left; cursor:pointer; overflow:hidden; }
   .today-event-time{ display:flex; align-items:center; justify-content:center; padding:14px 7px; background:#f4f7f6; border-right:1px solid rgba(33,30,28,0.12); color:var(--rose-deep); font-family:'Space Grotesk',sans-serif; font-size:12px; font-weight:700; text-align:center; }
@@ -717,8 +718,8 @@ function tagClass(item){
   if(sportsData.includes(item) || item.category === 'sports' || sportsKeywords.some(k => text.includes(k))) return 'cat-sports';
   if(tripsData.includes(item) || item.category === 'trips') return 'cat-trip';
   if(item.category === 'clubs' || clubsData.includes(item)) return 'cat-club';
-  if(gatheringsData.includes(item) || item.category === 'functions') return 'cat-gathering';
   if(dayActivitiesData.includes(item) || item.category === 'dayactivities') return 'cat-dayactivity';
+  if(gatheringsData.includes(item) || item.category === 'functions') return 'cat-gathering';
   if(mosqueGatheringsData.includes(item) || item.category === 'mosquegatherings') return 'cat-mosque';
   if(tripKeywords.some(k => text.includes(k))) return 'cat-trip';
   if(gatheringKeywords.some(k => text.includes(k))) return 'cat-gathering';
@@ -740,6 +741,14 @@ function eventTypeLabel(item){
 function eventTimeLabel(item){
   const match = String(item.date || '').match(/(?:at\s+)?(\d{1,2}(?::\d{2})?\s*(?:AM|PM))(?:\s*[–-]\s*(\d{1,2}(?::\d{2})?\s*(?:AM|PM)))?/i);
   return match ? match[0] : 'All day';
+}
+
+function eventTimeMinutes(item){
+  const match = String(item.date || '').match(/(\d{1,2})(?::(\d{2}))?\s*(AM|PM)/i);
+  if(!match) return 1440;
+  let hour = Number(match[1]) % 12;
+  if(match[3].toUpperCase() === 'PM') hour += 12;
+  return hour * 60 + Number(match[2] || 0);
 }
 
 /* ============================================================
@@ -818,22 +827,29 @@ function itemMatchesSearch(item){
 
 function itemsForCategory(cat){
   const base = itemsForCategoryBase(cat);
-  const filtered = base.filter(item => itemMatchesSearch(item) && !isPastItem(item));
+  const filtered = base.filter(item => itemMatchesSearch(item));
   const sortValue = value => String(value || '').toLowerCase();
   return filtered.sort((first, second) => {
     if(state.eventSort === 'type') return sortValue(eventTypeLabel(first)).localeCompare(sortValue(eventTypeLabel(second)));
     if(state.eventSort === 'location') return sortValue(first.location).localeCompare(sortValue(second.location));
     if(state.eventSort === 'price') return sortValue(first.price).localeCompare(sortValue(second.price));
-    return sortValue(first.date).localeCompare(sortValue(second.date));
+    const dateCompare = sortValue(first.calDate || first.eventDate).localeCompare(sortValue(second.calDate || second.eventDate));
+    return dateCompare || eventTimeMinutes(first) - eventTimeMinutes(second);
   });
 }
 
 function homepageTodayItems(){
   const dateStr = `${today.getFullYear()}-${pad(today.getMonth()+1)}-${pad(today.getDate())}`;
   const candidates = [...sportsData, ...gatheringsData, ...dayActivitiesData, ...tripsData, ...mosqueGatheringsData, ...clubCalendarItems()];
-  return candidates.filter(item => {
+  const filtered = candidates.filter(item => {
     if(tripsData.includes(item) && tripTypeForItem(item) === 'international') return false;
     return occurrencesInMonth(item, today.getFullYear(), today.getMonth()).includes(dateStr);
+  });
+  return filtered.sort((first, second) => {
+    if(state.eventSort === 'type') return eventTypeLabel(first).localeCompare(eventTypeLabel(second));
+    if(state.eventSort === 'location') return String(first.location || '').localeCompare(String(second.location || ''));
+    if(state.eventSort === 'price') return String(first.price || '').localeCompare(String(second.price || ''));
+    return eventTimeMinutes(first) - eventTimeMinutes(second);
   });
 }
 
@@ -1005,7 +1021,7 @@ function renderCalendar(){
 
   for(let d=1; d<=daysInMonth; d++){
     const dateStr = `${year}-${pad(month+1)}-${pad(d)}`;
-    const dayItems = dateMap[dateStr] || [];
+    const dayItems = [...(dateMap[dateStr] || [])].sort((first, second) => eventTimeMinutes(first) - eventTimeMinutes(second));
     const isToday = dateStr === todayStr;
     const rowClass = row % 2 === 0 ? ' row-even' : ' row-odd';
     html += `<div class="day-cell${isToday?' today':''}${rowClass}"><div class="day-num">${d}</div>`;
@@ -1587,6 +1603,9 @@ el.innerHTML = `<button class="fall-cta-btn" data-hometab="fallsignup">🍂 Join
     const todaySection = `<section class="today-section">
       <h3>WHAT'S ON TODAY</h3>
       <p class="today-date">${todayDate}</p>
+      <div class="today-filter"><label>Sort by <select class="event-sort-select" id="todaySortSelect" aria-label="Sort today's events by">
+        <option value="time" ${state.eventSort === 'time' ? 'selected' : ''}>Time</option><option value="type" ${state.eventSort === 'type' ? 'selected' : ''}>Type</option><option value="location" ${state.eventSort === 'location' ? 'selected' : ''}>Location</option><option value="price" ${state.eventSort === 'price' ? 'selected' : ''}>Price</option>
+      </select></label></div>
       <div class="today-list">${todayItems.map(item => `
         <div class="today-event" data-id="${item.id}">
           <div class="today-event-time">${eventTimeLabel(item)}</div>
@@ -1599,6 +1618,10 @@ el.innerHTML = `<button class="fall-cta-btn" data-hometab="fallsignup">🍂 Join
         <div class="home-tile-desc">${t.desc}</div>
         <div class="home-tile-arrow">→</div>
       </button>`).join('')}</div>${todaySection}`;
+    document.getElementById('todaySortSelect').addEventListener('change', e => {
+      state.eventSort = e.target.value;
+      render();
+    });
   } else if(state.tab === 'rules'){
     document.getElementById('resourcePagination').innerHTML = '';
     el.innerHTML = `

@@ -58,7 +58,9 @@
       "contact": "",
       "price": "~$5 drop-in / league fees vary",
       "sportKey": "softball",
-      "date": "Sunday mornings · Summer–Fall season",
+      "date": "Sundays · 8:00–11:00 AM · Summer–Fall season",
+      "eventDate": "2026-08-30",
+      "recurStart": "2026-08-30",
       "organizer": "Sisterhood Softball League (SSL)",
       "desc": "A Muslim women's slo-pitch softball league in Mississauga, running since 2016.",
       "instagram": "https://www.instagram.com/sisterhoodsoftball/",
@@ -71,7 +73,8 @@
       "tag": "Softball",
       "website": "https://sisterhoodsoftball.com",
       "id": "sport-softball",
-      "calDate": null
+      "calDate": null,
+      "recurStart": "2026-08-30"
     },
     {
       "sportKey": "padel",
@@ -156,7 +159,7 @@
     {
       "id": "isna-run-against-hunger-2026",
       "title": "ISNA Run Against Hunger",
-      "date": "Saturday, September 13, 2026 · 10:00 AM–4:00 PM",
+      "date": "Sunday, September 13, 2026 · 10:00 AM–4:00 PM",
       "eventDate": "2026-09-13",
       "location": "J.C. Saddington Park, Mississauga",
       "organizer": "ISNA Canada",
@@ -200,7 +203,8 @@
       "tag": "League",
       "days": [
         "sun"
-      ]
+      ],
+      "recurStart": "2026-09-20"
     },
     {
       "id": "sisters-martial-arts-kickboxing-2026",

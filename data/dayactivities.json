@@ -46,6 +46,20 @@
       "website": "https://muslimlink.ca/events/toronto"
     },
     {
+      "id": "muslim-women-floral-mindset-workshop-2026",
+      "title": "Muslim Women Floral & Mindset Workshop",
+      "tag": "Day Activity",
+      "date": "Thursday, August 27, 2026 · 3:00 PM",
+      "calDate": "2026-08-27",
+      "city": "Toronto",
+      "location": "185 Queens Quay E, Toronto, ON",
+      "mapsUrl": "https://maps.google.com/?q=185+Queens+Quay+E+Toronto",
+      "organizer": "TBA",
+      "registration": "https://www.eventbrite.com/e/muslim-women-floral-mindset-workshop-august-27-toronto-tickets-1997795480060",
+      "desc": "Muslim women-focused floral and mindset workshop.",
+      "website": "https://www.eventbrite.com/d/canada--toronto/muslim/"
+    },
+    {
       "id": "tubing-koraa-aug23",
       "title": "Tubing the Rapids",
       "tag": "Day Activity",
@@ -138,20 +152,6 @@
       "organizer": "TMC Sisters Youth",
       "registration": "Spaces limited; register through the link in bio",
       "desc": "Afternoon of kayaking/canoeing followed by a picnic with lunch, snacks, and drinks. Transportation to and from TMC will be available."
-    },
-    {
-      "id": "alhuda-female-youth-niagara-trip-aug30-2026",
-      "title": "Al-Huda Female Youth Day Trip to Niagara Falls",
-      "tag": "Day Activity",
-      "date": "Sunday, August 30, 2026 · Departure at 8:00 AM",
-      "calDate": "2026-08-30",
-      "city": "Niagara Falls",
-      "location": "Departure: Al-Huda Muslim Society",
-      "organizer": "Al-Huda Muslim Youth",
-      "price": "$30 round-trip transportation",
-      "registration": "Sisters 18+; register through the link in bio",
-      "desc": "Female youth day trip to Niagara Falls. Activities may include a boat tour, zipline, Butterfly Conservatory, Clifton Hill, shopping, restaurants, and scenic walks. Attractions, meals, and personal expenses are not included.",
-      "instagram": "https://www.instagram.com/alhudamuslimyouth/"
     }
   ]
 }
