@@ -325,6 +325,12 @@
   .fall-hero{ text-align:center; margin:18px 0 24px; }
   .fall-hero h2{ font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:24px; margin-bottom:10px; }
   .fall-hero p{ font-size:14.5px; color:#4a4640; line-height:1.55; max-width:480px; margin:0 auto; }
+  .fall-hero p + p{ margin-top:12px; }
+  .fall-deadline{ font-weight:600; color:var(--charcoal) !important; }
+  .fall-goodtoknow{ background:var(--tan); }
+  .fall-goodtoknow ul{ margin:10px 0 0; padding-left:18px; display:flex; flex-direction:column; gap:10px; }
+  .fall-goodtoknow li{ font-size:13px; color:#4a4640; line-height:1.5; }
+  .fall-goodtoknow li strong{ color:var(--charcoal); }
   .fall-section{ background:var(--card); border-radius:20px; padding:22px 20px; margin-bottom:16px; box-shadow:0 4px 16px rgba(55,61,59,0.08); }
   .fall-section h3{ font-family:'Space Grotesk',sans-serif; font-size:15.5px; font-weight:700; margin-bottom:4px; }
   .fall-hint{ font-weight:500; font-size:12.5px; color:var(--rose-deep); }
@@ -1398,13 +1404,13 @@ const clubColors = {
 const FALL_SIGNUP_ENDPOINT = 'https://formspree.io/f/mgawqqgk';
 
 const FALL_SIGNUP_CLUBS = [
-  {id:'club-activegaming', emoji:'🎮', title:'Active Gaming', desc:'Escape rooms, VR arenas, challenge venues'},
-  {id:'club-adrenaline', emoji:'⚡', title:'Adrenaline', desc:'Roller-coasters, paintballing, skiing'},
-  {id:'club-theater', emoji:'🎭', title:'Theatre', desc:'Plays, musicals, live shows, improv nights'},
-  {id:'club-cuisine', emoji:'🍽️', title:'Cuisine', desc:'Group dinners, restaurant crawls, cooking nights'},
-  {id:'club-artscrafts', emoji:'🎨', title:'Arts & Crafts', desc:'Painting nights, DIY, crafternoons'},
-  {id:'club-retreats', emoji:'🏞️', title:'Field', desc:'Hiking, horseback riding, farm days, cabin retreats'},
-  {id:'club-adhd', emoji:'🧠', title:'ADHD / Neurodivergence', desc:'Low-pressure space to connect and swap strategies'},
+  {id:'club-activegaming', emoji:'🎮', title:'Active Gaming', desc:'Escape rooms, VR arenas, challenge venues (Activate, CUBE, VR Vibe). For the movers, solvers, competitors.'},
+  {id:'club-adrenaline', emoji:'⚡', title:'Adrenaline', desc:"Roller-coasters, paintballing, skiing. If it gets your heart racing, we're on it."},
+  {id:'club-theater', emoji:'🎭', title:'Theatre', desc:'Plays, musicals, live shows + our own improv nights. Any excuse to be dramatic.'},
+  {id:'club-cuisine', emoji:'🍽️', title:'Cuisine', desc:'Group dinners, cool restaurant crawls, cooking nights & baking workshops. For the girls who plan their week around food.'},
+  {id:'club-artscrafts', emoji:'🎨', title:'Arts & Crafts', desc:'Painting nights, DIY, crafternoons. No talent needed, just vibes & glitter.'},
+  {id:'club-retreats', emoji:'🏞️', title:'Field', desc:'Hiking, horseback riding, farm days, cabin retreats.'},
+  {id:'club-adhd', emoji:'🧠', title:'ADHD / Neurodivergence', desc:'A low-pressure space for neurodivergent sisters to connect, vent, swap strategies, and exist without masking.'},
 ];
 
 function setupFallSignupForm(){
@@ -1585,7 +1591,8 @@ el.innerHTML = `<button class="fall-cta-btn" data-hometab="fallsignup">🍂 Join
       <div class="fall-signup">
         <div class="fall-hero">
           <h2>Pick Your Clubs — Fall Season 🌸</h2>
-          <p>Reply below to choose your club(s) for the season! Max 2 clubs for now — a 3rd can open after 1 month of activity.</p>
+          <p>Fill out the form below to choose your club(s) for the season! Max 2 clubs for now — a 3rd can open after 1 month of activity. Not ready to commit to one of your picks yet? Mention it in the notes below and we'll put you on <strong>STANDBY</strong> for it instead of a firm YES.</p>
+          <p class="fall-deadline">💌 Please submit by <strong>Monday, August 24th</strong> so we can get groups moving!</p>
         </div>
         <form id="fallSignupForm">
           <input type="text" name="_gotcha" class="hp-field" tabindex="-1" autocomplete="off">
@@ -1619,8 +1626,8 @@ el.innerHTML = `<button class="fall-cta-btn" data-hometab="fallsignup">🍂 Join
             </div>
           </div>
           <div class="fall-section">
-            <h3>Why do you want to join this club / what would you like to see?</h3>
-            <textarea name="whyJoin" rows="3" placeholder="Events, frequency, vibe, etc."></textarea>
+            <h3>Why do you want to join this club / what would you like to see? <span class="fall-hint">(mention if you want STANDBY instead of a firm YES for any pick)</span></h3>
+            <textarea name="whyJoin" rows="3" placeholder="Events, frequency, vibe, etc. — and let us know if you're STANDBY on any pick above."></textarea>
           </div>
           <div class="fall-section">
             <h3>Are you interested in leading a club, or do you have a new club idea?</h3>
@@ -1630,9 +1637,19 @@ el.innerHTML = `<button class="fall-cta-btn" data-hometab="fallsignup">🍂 Join
               <label class="fall-option fall-option-compact"><input type="radio" name="leadInterest" value="Not right now"> Not right now</label>
             </div>
           </div>
+          <div class="fall-section fall-goodtoknow">
+            <h3>A few good-to-knows 📋</h3>
+            <ul>
+              <li><strong>Max 12 active members per club.</strong> Uncommunicated inactivity may get you removed — let us know if you're in a busy period, other girls may be waitlisted!</li>
+              <li><strong>🔄 Changing clubs:</strong> life happens — you're free to switch if a club isn't the right fit. Max 2 changes per month.</li>
+              <li><strong>💡 Want to start a new club?</strong> You'll need 1 person with an idea, a DM to an Admin with the club's purpose & proposed activities, and 2 meetups with admin before we publicize/trial it.</li>
+              <li><strong>👑 Leadership:</strong> each member can lead only one club at a time. Admin sits in every club as a backup lead/moderator only. Clubs with 7+ members should have two co-leaders, not one.</li>
+              <li><strong>🚫 Zero tolerance:</strong> any harassment or negativity from a leader or member means a ban from the club and/or community. No cliques, no exclusion, no gatekeeping.</li>
+            </ul>
+          </div>
           <div class="fall-section fall-section-badminton">
             <h3>Badminton Club 🏸</h3>
-            <p>This is our weekly badminton crew — a great way to stay active with the girls! Note: you must be able to drop in at least once a week to join.</p>
+            <p>Same weekly crew, just easier to find & join here — a great way to stay active with the girls! Note: you must be able to drop in at least once a week to join.</p>
             <label class="fall-option fall-option-compact">
               <input type="checkbox" name="badminton" value="Yes, interested in Badminton Club">
               Yes, I'm interested in joining Badminton Club.
