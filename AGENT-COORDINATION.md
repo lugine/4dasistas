@@ -78,6 +78,13 @@ npx wrangler deploy
 
 **Status:** IDLE
 **Last updated by:** Claude (chat)
+**Last updated:** 2026-08-24
+
+**2026-08-24 — Claude (chat) — `data/gatherings.json`, `data/mosquegatherings.json`, `data/smallbusinesses.json`** — Added 15 real events/businesses from 17 Instagram screenshots (checked for duplicates against existing 17/33 entries first, found none). IMPORTANT DISCOVERY: `data/smallbusinesses.json` did not exist at all — the live small-businesses data actually lives in a separate Cloudflare Worker KV store (Kilo's 'Worker KV integration'), fetched via a different API entirely, outside the Decap CMS/git-based system everything else uses. Created this file as the missing fallback with 4 real businesses, but flagging: this file is NOT the live/primary source for that category — whoever manages the Worker KV store needs to add entries there too for them to actually show up as primary data.
+
+
+**Status:** IDLE
+**Last updated by:** Claude (chat)
 **Last updated:** 2026-08-23 (final)
 
 **2026-08-23 (final) — Claude (chat) — `index.html`** — Fixed calendar gap bug (Aug/Oct and any future month starting deep into the week): mobile calendar uses a 4-column grid, but leading empty-cell padding was still calculated for a 7-column weekday-aligned grid, creating a blank row. Padding now skipped entirely on mobile (weekday-row is already hidden there, so alignment was meaningless anyway). Also fixed zebra-stripe row math to match actual column count.
