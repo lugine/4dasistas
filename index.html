@@ -291,7 +291,10 @@
   .home-tile-desc{ font-size:14px; max-width:85%; opacity:0.9; }
   .home-tile-arrow{ position:absolute; top:18px; right:18px; width:28px; height:28px; display:flex; align-items:center; justify-content:center; border-radius:50%; background:rgba(255,255,255,0.55); font-size:20px; font-weight:700; }
   .today-section{ margin-top:28px; }
+  .today-heading{ display:flex; align-items:center; justify-content:center; gap:12px; }
   .today-section h3{ font-family:'Space Grotesk',sans-serif; font-size:22px; margin-bottom:4px; text-align:center; }
+  .today-day-btn{ width:32px; height:32px; border:2px solid var(--charcoal); border-radius:50%; background:var(--card); color:var(--charcoal); font-size:22px; line-height:1; cursor:pointer; display:flex; align-items:center; justify-content:center; }
+  .today-day-btn:focus-visible{ outline:3px solid var(--pink); outline-offset:2px; }
   .today-date{ color:var(--muted); font-size:13px; margin-bottom:10px; text-align:center; }
   .today-filter{ display:flex; justify-content:center; margin-bottom:16px; }
   .today-list{ display:flex; flex-direction:column; gap:10px; }
@@ -719,7 +722,7 @@ let state = {
   sportFilter:'all', dayCity:'all', clubFilter:'all',
   gatherSort:'hijab', gatherDir:'asc',
   tripType:'all', tripView:'list', resourceFilter:'all', resourceView:'map', resourcePage:1,
-  timeFilter:'upcoming', eventSort:'time', page:1,
+  timeFilter:'upcoming', eventSort:'time', todayOffset:0, page:1,
   returnTab:'',
   calYear: today.getFullYear(), calMonth: today.getMonth(),
 };
@@ -912,12 +915,12 @@ function itemsForCategory(cat){
   });
 }
 
-function homepageTodayItems(){
-  const dateStr = `${today.getFullYear()}-${pad(today.getMonth()+1)}-${pad(today.getDate())}`;
+function homepageTodayItems(selectedDate){
+  const dateStr = `${selectedDate.getFullYear()}-${pad(selectedDate.getMonth()+1)}-${pad(selectedDate.getDate())}`;
   const candidates = [...sportsData, ...gatheringsData, ...dayActivitiesData, ...tripsData, ...mosqueGatheringsData, ...clubCalendarItems()];
   const filtered = candidates.filter(item => {
     if(tripsData.includes(item) && tripTypeForItem(item) === 'international') return false;
-    return occurrencesInMonth(item, today.getFullYear(), today.getMonth()).includes(dateStr);
+    return occurrencesInMonth(item, selectedDate.getFullYear(), selectedDate.getMonth()).includes(dateStr);
   });
   return filtered.sort((first, second) => {
     if(state.eventSort === 'type') return eventTypeLabel(first).localeCompare(eventTypeLabel(second));
@@ -1694,10 +1697,12 @@ el.innerHTML = `<button class="fall-cta-btn" data-hometab="fallsignup">🍂 Join
       {tab:'resources', title: siteText.homeTileResourcesTitle || 'Resources', bg:'#c3d5e2', fg:'#373d3b', desc: siteText.homeTileResourcesDesc || 'Mosques, cafes, shops & restaurants the community supports.'},
       {tab:'homescreen', title: siteText.homeTileHomescreenTitle || 'Add this to your Home Screen', bg:'#A9D6B8', fg:'#373d3b', desc: siteText.homeTileHomescreenDesc || 'Install 4DASISTAS like an app for quick access.'},
     ];
-    const todayItems = homepageTodayItems();
-    const todayDate = `${monthNames[today.getMonth()]} ${today.getDate()}, ${today.getFullYear()}`;
+    const selectedToday = new Date(today);
+    selectedToday.setDate(today.getDate() + state.todayOffset);
+    const todayItems = homepageTodayItems(selectedToday);
+    const todayDate = `${monthNames[selectedToday.getMonth()]} ${selectedToday.getDate()}, ${selectedToday.getFullYear()}`;
     const todaySection = `<section class="today-section">
-      <h3>WHAT'S ON TODAY</h3>
+      <div class="today-heading"><button class="today-day-btn" id="todayPrevious" type="button" aria-label="Previous day">‹</button><h3>${state.todayOffset === 0 ? "WHAT'S ON TODAY" : "WHAT'S ON"}</h3><button class="today-day-btn" id="todayNext" type="button" aria-label="Next day">›</button></div>
       <p class="today-date">${todayDate}</p>
       <div class="today-filter"><label class="event-sort-label">Sort by <select class="event-sort-select" id="todaySortSelect" aria-label="Sort today's events by">
         <option value="time" ${state.eventSort === 'time' ? 'selected' : ''}>Time</option><option value="type" ${state.eventSort === 'type' ? 'selected' : ''}>Type</option><option value="location" ${state.eventSort === 'location' ? 'selected' : ''}>Location</option><option value="price" ${state.eventSort === 'price' ? 'selected' : ''}>Price</option>
@@ -1726,6 +1731,19 @@ el.innerHTML = `<button class="fall-cta-btn" data-hometab="fallsignup">🍂 Join
       state.eventSort = e.target.value;
       render();
     });
+    document.getElementById('todayPrevious').addEventListener('click', () => { state.todayOffset--; render(); });
+    document.getElementById('todayNext').addEventListener('click', () => { state.todayOffset++; render(); });
+    let todaySwipeStartX = null;
+    const todaySectionEl = document.querySelector('.today-section');
+    todaySectionEl.addEventListener('touchstart', e => { todaySwipeStartX = e.changedTouches[0].clientX; }, {passive:true});
+    todaySectionEl.addEventListener('touchend', e => {
+      if(todaySwipeStartX === null) return;
+      const deltaX = e.changedTouches[0].clientX - todaySwipeStartX;
+      todaySwipeStartX = null;
+      if(Math.abs(deltaX) < 45) return;
+      state.todayOffset += deltaX < 0 ? 1 : -1;
+      render();
+    }, {passive:true});
     document.getElementById('todaySubscribeButton').addEventListener('click', () => {
       const form = document.getElementById('todaySubscribeForm');
       form.style.display = form.style.display === 'none' ? 'flex' : 'none';
