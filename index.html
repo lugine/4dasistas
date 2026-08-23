@@ -198,6 +198,7 @@
   .day-cell.row-even{ background:#f4f7f6; }
   .day-cell.row-odd{ background:white; }
   .day-num{ font-family:'Space Grotesk',sans-serif; font-size:12px; font-weight:700; color:var(--charcoal); }
+  .day-weekday{ display:none; font-size:10px; font-weight:700; color:var(--rose-deep); text-transform:uppercase; line-height:1.1; }
   .day-pip{ display:block; font-size:9.5px; font-weight:600; padding:2px 4px; border-radius:4px; margin-top:2px; cursor:pointer; line-height:1.25; white-space:normal; overflow-wrap:anywhere; word-break:normal; color:var(--charcoal); }
   .day-pip.cat-gathering{ color:white; }
   .calendar-scope-note{ margin:14px auto 0; max-width:620px; color:var(--muted); font-size:12.5px; line-height:1.45; text-align:center; }
@@ -205,10 +206,11 @@
   @media (max-width:480px){
     main{ padding-left:12px; padding-right:12px; }
     #calendar-view{ overflow-x:auto; padding-bottom:8px; }
-    .weekday-row,.month-grid{ min-width:700px; }
-    .month-grid{ gap:4px; }
+    .weekday-row{ display:none; }
+    .month-grid{ grid-template-columns:repeat(4,minmax(0,1fr)); min-width:0; gap:4px; }
     .day-cell{ min-height:126px; padding:6px 5px; }
     .day-num{ font-size:14px; }
+    .day-weekday{ display:block; }
     .day-pip{ font-size:11px; padding:4px 5px; margin-top:4px; line-height:1.3; }
     .weekday-row div{ font-size:10px; }
     .cal-title{ font-size:17px; min-width:auto; }
@@ -709,6 +711,7 @@ const introText = {
 
 const dayOrder = ['sun','mon','tue','wed','thu','fri','sat'];
 const dayLabelsShort = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+const dayLabelsFull = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
 const monthNames = ['January','February','March','April','May','June','July','August','September','October','November','December'];
 
 function pad(n){ return String(n).padStart(2,'0'); }
@@ -1054,7 +1057,7 @@ function renderCalendar(){
     const dayItems = [...(dateMap[dateStr] || [])].sort((first, second) => eventTimeMinutes(first) - eventTimeMinutes(second));
     const isToday = dateStr === todayStr;
     const rowClass = row % 2 === 0 ? ' row-even' : ' row-odd';
-    html += `<div class="day-cell${isToday?' today':''}${rowClass}"><div class="day-num">${d}</div>`;
+    html += `<div class="day-cell${isToday?' today':''}${rowClass}"><div class="day-weekday">${dayLabelsFull[new Date(year, month, d).getDay()]}</div><div class="day-num">${d}</div>`;
     dayItems.forEach(e => {
       html += `<span class="day-pip ${tagClass(e)}" data-id="${e.id}">${e.title}</span>`;
     });
