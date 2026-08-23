@@ -78,6 +78,13 @@ npx wrangler deploy
 
 **Status:** IDLE
 **Last updated by:** Claude (chat)
+**Last updated:** 2026-08-23 (later)
+
+**2026-08-23 (later) — Claude (chat) — `index.html`** — Fixed the swipeable "What's On Today" list: clamped todayOffset so users can no longer navigate to past days (previous-day button now disables at today, matching the calendar's Aug 2026 boundary pattern). Also fixed category color-coding on today-list events — tagClass() was already being applied correctly, but a later, equal-specificity `.today-event` CSS rule was silently overriding the category background colors. Added explicit `.today-event.cat-X` rules matching the calendar's exact colors.
+
+
+**Status:** IDLE
+**Last updated by:** Claude (chat)
 **Last updated:** 2026-08-23
 
 **2026-08-23 — Claude (chat) — `index.html`** — Updated the Fall signup form (Clubs → 🍂 Join the Fall Season) to match Lujane's full WhatsApp club announcement text. Updated all 7 club descriptions to the announcement's copy (added venue names for Active Gaming, "baking workshops" for Cuisine, etc. — kept Field even though it wasn't in the announcement's club list, per Lujane confirming it's still running, just left off that message). Added the Monday Aug 24 submission deadline to the hero text. Added a STANDBY option — not a new UI control, since the announcement treats it as a free-text reply rather than a structural field: the hero text and the "why join" question now both explicitly prompt people to mention STANDBY there instead of a firm pick, since our ranked-3-clubs selector only supports YES-equivalent picks. Added a new "A few good-to-knows 📋" info section covering the 12-member cap, 2-changes-per-month club-switching limit, new-club process, one-club-per-leader rule, and zero-tolerance policy — all previously undocumented anywhere on the form. Verified locally: full page text render, and submit-validation still correctly blocks/shows combined error message.
