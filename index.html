@@ -1126,7 +1126,10 @@ function renderCalendar(){
     <div class="month-grid">`;
 
   let row = 0;
-  for(let i=0;i<startDay;i++) html += `<div class="day-cell empty"></div>`;
+  const isMobileGrid = window.matchMedia('(max-width:480px)').matches;
+  if(!isMobileGrid){
+    for(let i=0;i<startDay;i++) html += `<div class="day-cell empty"></div>`;
+  }
 
   for(let d=1; d<=daysInMonth; d++){
     const dateStr = `${year}-${pad(month+1)}-${pad(d)}`;
@@ -1138,7 +1141,7 @@ function renderCalendar(){
       html += `<span class="day-pip ${tagClass(e)}" data-id="${e.id}">${e.title}</span>`;
     });
     html += `</div>`;
-    if ((startDay + d) % 7 === 0 && d !== daysInMonth) row++;
+    if ((isMobileGrid ? d : (startDay + d)) % (isMobileGrid ? 4 : 7) === 0 && d !== daysInMonth) row++;
   }
   html += `</div>`;
   if(state.categoryFilter === 'all'){
