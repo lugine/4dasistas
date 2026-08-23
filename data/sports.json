@@ -194,6 +194,41 @@
       "days": [
         "sun"
       ]
+    },
+    {
+      "id": "sisters-martial-arts-kickboxing-2026",
+      "title": "Sisters Martial Arts Program",
+      "date": "Sundays, August 23–September 27, 2026 · 10:30–11:30 AM",
+      "eventDate": "2026-08-23",
+      "location": "Masjid Al-Ezz",
+      "organizer": "Coach Mariam Rana",
+      "registration": "Limited spots; register at https://bit.ly/sisters-kickboxing",
+      "desc": "Six-week beginner-friendly women's-only kickboxing program focused on confidence, strength, and self-defense skills. Sisters 12+. Bring your own gloves.",
+      "website": "https://bit.ly/sisters-kickboxing",
+      "sportKey": "martial-arts",
+      "tag": "Martial Arts",
+      "days": [
+        "sun"
+      ],
+      "recurStart": "2026-08-23",
+      "recurEnd": "2026-09-27"
+    },
+    {
+      "id": "musfit-womens-reformer-pilates-2026",
+      "title": "MusFit Women's Reformer Pilates",
+      "date": "Thursdays · 6:00–7:00 PM",
+      "eventDate": "2026-08-20",
+      "location": "MusFit (see schedule for exact location)",
+      "organizer": "MusFit",
+      "registration": "Check the MusFit schedule for availability",
+      "desc": "Women's Reformer Pilates class listed on the MusFit live schedule.",
+      "website": "https://www.wellnessliving.com/rs/schedule/musfit?k_business=423258&k_class_tab=52270&uid=0&id_class_tab=1",
+      "sportKey": "fitness",
+      "tag": "Pilates",
+      "days": [
+        "thu"
+      ],
+      "recurStart": "2026-08-20"
     }
   ]
 }

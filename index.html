@@ -842,10 +842,6 @@ function renderList(){
    RENDER: APPLE-STYLE MONTH CALENDAR
    ============================================================ */
 function occurrencesInMonth(item, year, month){
-  if(item.calDate){
-    const d = new Date(item.calDate+'T00:00:00');
-    return (d.getFullYear()===year && d.getMonth()===month) ? [item.calDate] : [];
-  }
   if(item.days && item.days.length){
     const dayNums = item.days.map(d => dayOrder.indexOf(d));
     const daysInMonth = new Date(year, month+1, 0).getDate();
@@ -858,6 +854,10 @@ function occurrencesInMonth(item, year, month){
       if(dayNums.includes(dt.getDay())) out.push(dateStr);
     }
     return out;
+  }
+  if(item.calDate){
+    const d = new Date(item.calDate+'T00:00:00');
+    return (d.getFullYear()===year && d.getMonth()===month) ? [item.calDate] : [];
   }
   return [];
 }
