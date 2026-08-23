@@ -299,7 +299,7 @@
   .today-day-btn:disabled{ opacity:0.3; cursor:default; }
   .today-day-btn:focus-visible{ outline:3px solid var(--pink); outline-offset:2px; }
   .today-date{ color:var(--muted); font-size:13px; margin-bottom:10px; text-align:center; }
-  .today-actions{ display:flex; align-items:stretch; justify-content:center; gap:12px; flex-wrap:wrap; margin-top:16px; }
+  .today-actions{ display:flex; align-items:center; justify-content:center; gap:12px; flex-wrap:wrap; margin-top:16px; }
   .today-actions .today-subscribe{ margin-top:0; }
   .today-filter{ display:flex; justify-content:center; align-items:center; margin:0; }
   .today-list{ display:flex; flex-direction:column; gap:10px; }
@@ -315,12 +315,12 @@
   .today-event-info{ min-width:0; padding:13px 15px 13px 0; }
   .today-event-info strong{ display:block; font-family:'Space Grotesk',sans-serif; font-size:15px; overflow-wrap:anywhere; }
   .today-event-info span{ display:block; color:var(--muted); font-size:12px; overflow-wrap:anywhere; }
-  .today-subscribe{ margin-top:0; text-align:center; }
+  .today-subscribe{ position:relative; margin-top:0; text-align:center; }
   .today-subscribe-btn{ display:inline-block; width:auto; padding:8px 16px; border:1.5px solid rgba(55,61,59,0.4); border-radius:999px; background:none; color:var(--muted); font-family:'Inter',sans-serif; font-size:12.5px; font-weight:600; cursor:pointer; box-shadow:none; }
   .today-subscribe-form{ display:flex; gap:8px; margin-top:10px; }
   .today-subscribe-form input{ min-width:0; flex:1; padding:11px 13px; border:2px solid var(--charcoal); border-radius:999px; background:var(--card); color:var(--charcoal); font:inherit; }
   .today-subscribe-form button{ padding:11px 16px; border:2px solid var(--charcoal); border-radius:999px; background:var(--coral); color:var(--charcoal); font-family:'Space Grotesk',sans-serif; font-weight:700; cursor:pointer; }
-  .today-subscribe-status{ min-height:18px; margin-top:8px; color:var(--muted); font-size:12px; }
+  .today-subscribe-status{ position:absolute; top:100%; left:50%; width:max-content; max-width:calc(100vw - 24px); transform:translateX(-50%); min-height:18px; margin-top:8px; color:var(--muted); font-size:12px; }
 
   .rules-content{ background:var(--card); border:2px solid var(--charcoal); border-radius:16px; padding:24px 22px; box-shadow:3px 3px 0 var(--charcoal); text-align:left; }
   .rules-lead{ font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:17px; margin-bottom:16px; }
