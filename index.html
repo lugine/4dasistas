@@ -794,7 +794,7 @@ function eventTypeLabel(item){
   if(resourcesData.includes(item)){
     const resourceLabels = {
       cafes:'Café', shops:'Shop', restaurants:'Restaurant', beautycare:'Health n Beauty',
-      mentalhealth:'Mental Health', bakeries:'Bakery', legal:'Legal Service', mosques:'Mosque'
+      mentalhealth:'Mental Health', bakeries:'Small Business', legal:'Legal Service', mosques:'Mosque'
     };
     return resourceLabels[item.category] || item.type || 'Resource';
   }
@@ -1154,7 +1154,7 @@ const resourceFilterList = [
   {key:'restaurants', label:'Restaurants'},
   {key:'beautycare', label:'Health n Beauty'},
   {key:'mentalhealth', label:'Mental Health'},
-  {key:'bakeries', label:'Bakeries'},
+  {key:'bakeries', label:'Small Businesses'},
   {key:'legal', label:'Legal Services'},
 ];
 
@@ -1662,7 +1662,7 @@ el.innerHTML = `<button class="fall-cta-btn" data-hometab="fallsignup">🍂 Join
       </div>`;
     setupFallSignupForm();
   } else if(state.tab === 'resources'){
-    if(state.resourceView === 'map' && !['mentalhealth','legal'].includes(state.resourceFilter)){
+    if(state.resourceView === 'map' && !['mentalhealth','legal','bakeries'].includes(state.resourceFilter)){
       document.getElementById('resourcePagination').innerHTML = '';
       renderResourceMap();
     } else {
@@ -1977,7 +1977,7 @@ function render(){
   document.getElementById('controlsRow').style.display = isDirectory ? 'none' : 'flex';
   const eventSortLabel = document.getElementById('eventSortLabel');
   if(eventSortLabel) eventSortLabel.style.display = state.view === 'calendar' ? 'none' : 'inline-flex';
-  document.getElementById('resourceControlsRow').style.display = state.tab === 'resources' && !['mentalhealth','legal'].includes(state.resourceFilter) ? 'flex' : 'none';
+  document.getElementById('resourceControlsRow').style.display = state.tab === 'resources' && !['mentalhealth','legal','bakeries'].includes(state.resourceFilter) ? 'flex' : 'none';
   document.getElementById('list-view').style.display = 'none';
   document.getElementById('pagination').style.display = 'none';
   document.getElementById('calendar-view').style.display = 'none';
