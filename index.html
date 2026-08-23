@@ -398,6 +398,7 @@
   .travel-trip-list{ width:100%; min-width:0; max-height:65vh; overflow-y:auto; border:2px solid var(--charcoal); border-radius:14px; background:var(--card); padding:16px; order:0; }
   .travel-trip-list h4{ font-family:'Space Grotesk',sans-serif; font-size:15px; margin:0 0 10px; }
   .travel-trip-list .side-item{ padding:9px 0; border-bottom:1px solid rgba(33,30,28,0.1); cursor:pointer; }
+  .travel-trip-list .side-item.trip-list-item{ padding:9px 9px; border-left:6px solid var(--trip-color); }
   .travel-trip-list .side-item:last-child{ border-bottom:0; }
   .travel-trip-list .side-item strong{ display:block; font-size:13px; }
   .travel-trip-list .side-item span{ display:block; color:var(--muted); font-size:11px; }
@@ -814,6 +815,14 @@ function tagClass(item){
   return 'cat-resource';
 }
 
+function tripColor(item){
+  const palette = ['#e7b86b','#df9f8f','#9bc7b5','#9db9dc','#c8b6e8','#d8a6c1','#b7cda1','#e4c28f'];
+  const key = String(item.id || item.title || 'trip');
+  let hash = 0;
+  for(let index = 0; index < key.length; index++) hash = ((hash << 5) - hash + key.charCodeAt(index)) | 0;
+  return palette[Math.abs(hash) % palette.length];
+}
+
 function eventTypeLabel(item){
   if(resourcesData.includes(item)){
     const resourceLabels = {
@@ -1047,7 +1056,7 @@ function renderTripEarthView(targetId='calendar-view', mapId='tripEarthMap', sel
       id: item.id,
       lat: item.lat,
       lng: item.lng,
-      color: '#caaacd', // matches --purple / .cat-trip, same color every trip uses in list view
+      color: tripColor(item),
       title: item.title,
       location: item.location || '',
       date: item.date || ''
@@ -1551,7 +1560,7 @@ function renderDirectory(){
     document.getElementById('resourcePagination').innerHTML = '';
     const travelItems = state.tripType === 'all' ? tripsData : tripsData.filter(item => tripTypeForItem(item) === state.tripType);
     el.innerHTML = `<div class="travel-earth-layout">
-      <div class="travel-trip-list"><h4>Trips on the globe</h4>${travelItems.map(item => `<div class="side-item" data-id="${item.id}"><strong>${item.title}</strong><span>${item.location || ''} · ${item.date || ''}</span></div>`).join('') || '<div class="side-item"><span>No trips match this filter.</span></div>'}</div>
+      <div class="travel-trip-list"><h4>Trips on the globe</h4>${travelItems.map(item => `<div class="side-item trip-list-item" style="--trip-color:${tripColor(item)}" data-id="${item.id}"><strong>${item.title}</strong><span>${item.location || ''} · ${item.date || ''}</span></div>`).join('') || '<div class="side-item"><span>No trips match this filter.</span></div>'}</div>
       <div id="travelEarthView" class="travel-map"><div id="travelEarthMap" class="calendar-map"></div></div>
     </div>`;
     renderTripEarthView('travelEarthView', 'travelEarthMap', travelItems, false);
