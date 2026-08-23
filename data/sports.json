@@ -90,11 +90,13 @@
       "id": "run4sudan",
       "title": "RUN4SUDAN",
       "date": "Sunday, August 30 @ 9 am - 1 pm",
+      "calDate": "2026-08-30",
       "location": "JC Saddington Park, Mississauga",
       "organizer": "Run 4 Collective, Muslim Hands Canada, Strong Women Toronto, WomensFitSauga",
-      "instagram": "https://www.instagram.com/p/Db6etN9Buk9/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==&igsi=MzRlODBiNWFlZA==",
+      "instagram": "https://www.instagram.com/run4collective/",
       "sportKey": "running",
-      "tag": "Running"
+      "tag": "Running",
+      "desc": "A community run with purpose supporting families in Sudan. Includes a 5K run, 1K walk, and 400m children's race. Registration details to follow."
     },
     {
       "sportKey": "tennis-pickleball",

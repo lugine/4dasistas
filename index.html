@@ -621,7 +621,9 @@ applySiteText();
 
   allResourceItems = [...resourcesData];
   ALL_ITEMS = [...sportsData, ...gatheringsData, ...dayActivitiesData, ...tripsData, ...clubsData, ...organizationsData, ...resourcesData, ...mosqueGatheringsData, ...clubCalendarItems()];
-  EVENT_ITEMS = mixEvents(sportsData, gatheringsData, dayActivitiesData, tripsData, mosqueGatheringsData);
+  // The main calendar is limited to sports, activities, and functions.
+  // Trips, clubs, and mosque programs have their own dedicated calendars.
+  EVENT_ITEMS = mixEvents(sportsData, gatheringsData, dayActivitiesData, [], []);
 }
 
 function mixEvents(sports, gatherings, dayActs, trips, mosqueGatherings){
