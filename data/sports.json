@@ -55,28 +55,6 @@
       "calDate": null
     },
     {
-      "contact": "",
-      "price": "~$5 drop-in / league fees vary",
-      "sportKey": "softball",
-      "date": "Sundays · 8:00–11:00 AM · Summer–Fall season",
-      "eventDate": "2026-08-30",
-      "recurStart": "2026-08-30",
-      "organizer": "Sisterhood Softball League (SSL)",
-      "desc": "A Muslim women's slo-pitch softball league in Mississauga, running since 2016.",
-      "instagram": "https://www.instagram.com/sisterhoodsoftball/",
-      "location": "Mississauga",
-      "days": [
-        "sun"
-      ],
-      "title": "Sisterhood Softball League",
-      "registration": "Registration opens seasonally on Instagram",
-      "tag": "Softball",
-      "website": "https://sisterhoodsoftball.com",
-      "id": "sport-softball",
-      "calDate": null,
-      "recurStart": "2026-08-30"
-    },
-    {
       "sportKey": "padel",
       "date": "Sunday Aug 9th @12pm",
       "organizer": "Sisters Through Faith",
@@ -202,24 +180,6 @@
       "days": [
         "mon"
       ]
-    },
-    {
-      "id": "maa-fall-leagues-2026",
-      "title": "MAA Fall Leagues",
-      "date": "Sundays, September 20–November 29, 2026 · 11:00 AM–1:00 PM",
-      "eventDate": "2026-09-20",
-      "location": "TBA",
-      "organizer": "MAA Sports",
-      "price": "Fees TBA",
-      "registration": "League registration details TBA",
-      "desc": "Flag football league with other sports also expected this fall and fees still to be confirmed.",
-      "website": "https://maasports.ca/",
-      "sportKey": "league",
-      "tag": "League",
-      "days": [
-        "sun"
-      ],
-      "recurStart": "2026-09-20"
     },
     {
       "id": "sisters-martial-arts-kickboxing-2026",
