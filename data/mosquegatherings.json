@@ -404,6 +404,68 @@
       "instagram": "https://www.instagram.com/p/DbOyPO9iXQX/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==&igsi=MzRlODBiNWFlZA==",
       "website": "",
       "email": ""
+    },
+    {
+      "id": "hdm-sewing-workshop-aug29-30-2026",
+      "tag": "Mosque Gathering",
+      "title": "Sewing Workshop",
+      "eventDate": "2026-08-29",
+      "date": "Saturday Aug 29 (during drop-in hours) & Sunday Aug 30, 5-8 PM, 2026",
+      "location": "Muslim Youth Centre (Hamilton Downtown Mosque)",
+      "organizer": "Hamilton Downtown Mosque & Muslim Youth Centre",
+      "registration": "https://docs.google.com/forms/d/e/1FAIpQLSfsp6fhiz4ViiR9Yz_lg9gu-DFyoYwM2Giilc4RjglFeiGRbg/viewform",
+      "desc": "Free two-day sewing workshop open to all girls 13+. Learn minor clothing alterations — shorten an abaya, sew a hijab tear, and more. Registration requested so materials can be prepared. Registration deadline was Aug 22.",
+      "instagram": "https://www.instagram.com/mycgirls_hdm/"
+    },
+    {
+      "id": "sma-fitness-pilates-2026",
+      "tag": "Mosque Gathering",
+      "title": "Women's Fitness and Pilates Class",
+      "eventDate": "2026-06-06",
+      "date": "Saturdays 1:00–2:00 PM, June 6 – August 1, 2026",
+      "location": "Jam'e Abu Bakr Siddique Masjid (Scarborough Muslim Association)",
+      "organizer": "Scarborough Muslim Association, with Tasneem Mughal (Certified Fitness Trainer)",
+      "days": [
+        "sat"
+      ],
+      "recurStart": "2026-06-06",
+      "recurEnd": "2026-08-01",
+      "desc": "Returning women's fitness and pilates class. $60 for 8 classes.",
+      "instagram": "https://www.instagram.com/scarborough_muslim_association/",
+      "website": "https://smacanada.ca/"
+    },
+    {
+      "id": "sma-summer-bbq-jul25-2026",
+      "tag": "Mosque Gathering",
+      "title": "Annual Summer BBQ",
+      "eventDate": "2026-07-25",
+      "date": "July 25, 2026 · 9:00 AM – 9:00 PM",
+      "location": "2665 Lawrence Ave E (Jam'e Abu Bakr Siddique Masjid)",
+      "organizer": "Scarborough Muslim Association",
+      "desc": "Annual summer BBQ with bouncy castle, rides, bazaar, cotton candy, ice cream, and more. Delicious food and entertainment for children — support Muslim businesses in the bazaar.",
+      "instagram": "https://www.instagram.com/scarborough_muslim_association/"
+    },
+    {
+      "id": "sma-taste-of-spice-sept5-2026",
+      "tag": "Mosque Gathering",
+      "title": "Taste of Spice",
+      "eventDate": "2026-09-05",
+      "date": "Saturday, September 5, 2026 · 11 AM – 8 PM",
+      "location": "Jame Abu Bakr Siddique Parking Lot, 2665 Lawrence Ave E, Scarborough, M1P 2S2",
+      "organizer": "Scarborough Muslim Association",
+      "desc": "A day of fun for the whole family — free admission. All proceeds go to SMA's operational costs. All poultry and meat strictly hand-slaughtered halal. Vendor inquiries: text Br. Ismail Chawala at 647-300-9074.",
+      "instagram": "https://www.instagram.com/sma__sisters/"
+    },
+    {
+      "id": "mnn-taste-of-mississauga-sept5-6-2026",
+      "tag": "Mosque Gathering",
+      "title": "Taste of Mississauga",
+      "eventDate": "2026-09-05",
+      "date": "September 5–6, 2026",
+      "location": "Ridgeway Plaza, Mississauga (MNN Mosque)",
+      "organizer": "MNN Mosque",
+      "desc": "Two-day community festival at Ridgeway Plaza — halal food, local vendors, shopping, entertainment, and kids' activities.",
+      "instagram": "https://www.instagram.com/officialmnn/"
     }
   ]
 }
