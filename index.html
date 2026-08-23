@@ -1314,6 +1314,9 @@ function renderResourceMap(){
     <div class="sub-note" id="mapSkippedNote"></div>`;
 
   const filtered = filteredResourceItems();
+  const showUnmapped = ['mentalhealth','legal'].includes(state.resourceFilter);
+  const unmappedListContent = document.getElementById('unmappedListContent');
+  if(unmappedListContent && !showUnmapped) unmappedListContent.style.display = 'none';
   const withCoords = filtered.filter(r => typeof r.lat === 'number' && typeof r.lng === 'number');
   const skipped = filtered.length - withCoords.length;
   if(withCoords.length === 0){
@@ -1350,7 +1353,6 @@ function renderResourceMap(){
   const sideList = document.getElementById('resourceSideList');
   const sideListTitle = document.getElementById('sideListTitle');
   const sideListContent = document.getElementById('sideListContent');
-  const unmappedListContent = document.getElementById('unmappedListContent');
   const mappedItems = withCoords;
   if(mappedItems.length === 0){
     document.getElementById('resourceSideList').style.display = 'none';
