@@ -223,6 +223,12 @@
     .home-tile{ padding:20px 54px 20px 18px; }
     .home-tile-title{ font-size:19px; }
     .home-tile-desc{ font-size:13px; max-width:78%; }
+    .today-list{ display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:7px; }
+    .today-event{ display:block; min-width:0; }
+    .today-event-time{ min-height:32px; padding:7px 5px; border-right:0; border-bottom:1px solid rgba(33,30,28,0.12); font-size:10px; }
+    .today-event-info{ padding:8px; }
+    .today-event-info strong{ font-size:12px; line-height:1.2; }
+    .today-event-info span{ font-size:10px; line-height:1.25; margin-top:3px; }
     .rules-content{ padding:20px 16px; }
     .club-guide-actions, .home-tiles{ grid-template-columns:1fr; }
     .home-tile[data-hometab="homescreen"]{ grid-column:1 / -1; width:100%; justify-self:center; }
