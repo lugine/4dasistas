@@ -137,6 +137,9 @@
   .mental-health-grid .panel-card{ margin:0; padding:14px; }
   .mental-health-grid .panel-top{ margin-bottom:6px; }
   .mental-health-grid .panel-desc{ line-height:1.2; margin-bottom:0; }
+  .mental-health-grid .mental-health-desc{ display:none; }
+  .mental-health-grid .mental-health-desc.visible{ display:block; }
+  .mental-health-grid .mental-health-more{ margin-top:10px; }
   .filter-chip.active{ background:var(--charcoal); color:var(--cream); border-color:var(--charcoal); }
   .filter-select{ font-family:'Inter',sans-serif; font-size:12.5px; font-weight:600; padding:7px 12px; border-radius:999px; border:1.5px solid rgba(33,30,28,0.25); background:white; color:var(--charcoal); }
   .event-sort-label{ display:inline-flex; align-items:center; gap:8px; font-family:'Space Grotesk',sans-serif; font-size:13px; font-weight:700; color:var(--charcoal); }
@@ -253,7 +256,7 @@
     .search-suggestions{ right:0; width:180px; }
     .subfilter-row, .category-row, .tabs { justify-content:center; }
     .resource-filter-row{ grid-template-columns:repeat(2,minmax(0,1fr)); }
-    .mental-health-grid{ grid-template-columns:1fr; }
+    .mental-health-grid{ grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px; }
   }
 
   .ongoing-note{ font-size:13px; color:var(--muted); margin:20px 0 8px; }
@@ -1260,7 +1263,7 @@ function renderResourceList(){
         </div>
       </div>
       ${r.ownedBy ? `<div class="owned-badge">${r.ownedBy}</div>` : ''}
-      <div class="panel-desc">${r.desc}</div>
+      ${isMentalHealth ? `<div class="panel-desc mental-health-desc" id="mental-desc-${r.id}">${r.desc}</div><button type="button" class="link-btn secondary mental-health-more" data-reveal-resource="mental-desc-${r.id}">Learn More</button>` : `<div class="panel-desc">${r.desc}</div>`}
       ${r.location ? `<div class="panel-addr">📍 ${r.location}${r.date ? ' · ' + r.date : ''}</div>` : '<div class="panel-addr">Location not provided</div>'}
       <div class="panel-links">
         ${r.mapsUrl ? `<a class="link-btn secondary" href="${r.mapsUrl}" target="_blank" rel="noopener">View on Google Maps</a>` : ''}
@@ -1270,6 +1273,14 @@ function renderResourceList(){
         ${r.phone ? `<a class="link-btn secondary" href="tel:${r.phone}">${r.phone}</a>` : ''}
       </div>
     </div>`).join('');
+
+  if(isMentalHealth){
+    el.querySelectorAll('[data-reveal-resource]').forEach(button => button.addEventListener('click', () => {
+      const description = document.getElementById(button.dataset.revealResource);
+      description.classList.toggle('visible');
+      button.textContent = description.classList.contains('visible') ? 'Hide Details' : 'Learn More';
+    }));
+  }
 
   if(totalPages <= 1){
     pagEl.innerHTML = '';
