@@ -41,7 +41,7 @@
     --rose: #caaacd;
     --rose-deep: #776867;
     --pink: #caaacd;
-    --coral: #f4b183;
+    --coral: #f7c59f;
     --blue: #c3d5e2;
     --purple: #c8b6e8;
     --gold: #ddb862;
@@ -473,7 +473,7 @@
     <button class="active" data-view="list">List view</button>
     <button data-view="calendar">Calendar view</button>
   </div>
-  <label class="event-sort-label">Sort by
+  <label class="event-sort-label" id="eventSortLabel">Sort by
     <select class="event-sort-select" id="eventSortSelect" aria-label="Sort events by">
       <option value="time">Time</option>
       <option value="type">Type</option>
@@ -778,7 +778,7 @@ function itemsForCategoryBase(cat){
   }
   if(cat === 'activities'){
     const day = state.dayCity === 'all' ? dayActivitiesData : dayActivitiesData.filter(e => e.city === state.dayCity);
-    return [...day, ...mosqueGatheringsData];
+    return day;
   }
   if(cat === 'functions'){
     return gatheringsData;
@@ -1863,6 +1863,8 @@ function render(){
   }
 
   document.getElementById('controlsRow').style.display = isDirectory ? 'none' : 'flex';
+  const eventSortLabel = document.getElementById('eventSortLabel');
+  if(eventSortLabel) eventSortLabel.style.display = state.view === 'calendar' ? 'none' : 'inline-flex';
   document.getElementById('resourceControlsRow').style.display = state.tab === 'resources' && !['mentalhealth','legal'].includes(state.resourceFilter) ? 'flex' : 'none';
   document.getElementById('list-view').style.display = 'none';
   document.getElementById('pagination').style.display = 'none';
