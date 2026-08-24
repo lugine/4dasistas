@@ -78,6 +78,13 @@ npx wrangler deploy
 
 **Status:** IDLE
 **Last updated by:** Claude (chat)
+**Last updated:** 2026-08-24 (mh merge)
+
+**2026-08-24 (mh merge) — Claude (chat) — `index.html`, `data/resources.json`** — Merged Support Groups into Mental Health in Resources (removed as separate filter chip, recategorized the 2 entries to category:mentalhealth, added isSupportGroup:true marker so they're still findable). Dedicated Support Groups page (Events -> Support Groups button) still works correctly via the new marker instead of the old category key. Added 'Mental Health Resources ->' button on that page, navigates to Resources tab filtered to mentalhealth. Caught and fixed my own mistake mid-edit (accidentally deleted variable definitions the function needed) before it got pushed - full runtime simulation confirmed everything works end to end this time, not just static code review.
+
+
+**Status:** IDLE
+**Last updated by:** Claude (chat)
 **Last updated:** 2026-08-24 (sg page)
 
 **2026-08-24 (sg page) — Claude (chat) — `index.html`, `data/resources.json`** — Built a dedicated Support Groups page (new state.tab='supportgroups', added to DIRECTORY_TABS). Entry point: new button in the Events category row ('Support Groups →') that navigates away rather than filtering in place. Back button: reused the existing contextBack pattern (was previously only for Resources->Events) and extended it. Customizable split view: List only / Calendar only / Both, with its own mini-calendar (own month/year state, doesn't affect the main Events calendar). Added calDate to support group entries + new Eldest Daughters entry (Aug 28). Tested via full JSDOM runtime simulation, not just static analysis - confirmed navigation, back button, split layout, and calendar rendering all work (one false alarm: window.matchMedia isn't implemented in jsdom by default, confirmed via polyfill test that this is a testing-environment gap, not a real bug - same pattern already used successfully in the existing main calendar).
