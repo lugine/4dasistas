@@ -421,6 +421,13 @@
   .resource-map-wrapper{ display:flex; gap:16px; align-items:flex-start; }
   .resource-map-wrapper .resource-map{ flex:1; }
   .travel-earth-layout{ display:grid; grid-template-columns:minmax(300px,340px) minmax(0,1fr); gap:16px; align-items:stretch; width:100%; }
+
+  .sg-view-toggle{ display:flex; justify-content:center; gap:8px; margin-bottom:16px; }
+  .sg-view-toggle button{ font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:12.5px; padding:8px 16px; border:1.5px solid var(--charcoal); border-radius:999px; background:white; cursor:pointer; }
+  .sg-view-toggle button.active{ background:var(--charcoal); color:var(--cream); }
+  .sg-split-layout{ display:grid; grid-template-columns:minmax(280px,360px) minmax(0,1fr); gap:16px; align-items:start; width:100%; }
+  .sg-list-pane{ display:flex; flex-direction:column; gap:12px; }
+  .sg-calendar-pane{ border:2px solid var(--charcoal); border-radius:14px; padding:14px; background:var(--card); }
   .travel-trip-list{ width:100%; min-width:0; max-height:65vh; overflow-y:auto; border:2px solid var(--charcoal); border-radius:14px; background:var(--card); padding:16px; order:0; }
   .travel-trip-list h4{ font-family:'Space Grotesk',sans-serif; font-size:15px; margin:0 0 10px; }
   .travel-trip-list .side-item{ padding:9px 0; border-bottom:1px solid rgba(33,30,28,0.1); cursor:pointer; }
@@ -450,6 +457,7 @@
     .resource-map-wrapper{ flex-direction:column; }
     .resource-side-list{ width:100%; max-height:300px; order:2; }
     .travel-earth-layout{ grid-template-columns:1fr; }
+    .sg-split-layout{ grid-template-columns:1fr; }
     .travel-trip-list{ width:100%; max-height:260px; order:2; }
   }
 
@@ -763,6 +771,7 @@ let state = {
   tab:'home', categoryFilter:'all', view:'list',
   sportFilter:'all', dayCity:'all', clubFilter:'all',
   gatherSort:'hijab', gatherDir:'asc',
+  sgView:'both', sgCalYear: today.getFullYear(), sgCalMonth: today.getMonth(),
   tripType:'all', tripView:'list', resourceFilter:'all', resourceView:'map', resourcePage:1,
   timeFilter:'upcoming', eventSort:'soonest', todayOffset:0, page:1,
   returnTab:'',
@@ -784,7 +793,8 @@ const introText = {
   homescreen: "Install 4DASISTAS on your device for fast, app-like access.",
   clubstart: "Everything you need to launch a welcoming, well-run club.",
   clubjoin: "A few simple expectations keep every club welcoming and easy to join.",
-  fallsignup: ""
+  fallsignup: "",
+  supportgroups: "A safe space to find support groups happening across the community."
 };
 
 const dayOrder = ['sun','mon','tue','wed','thu','fri','sat'];
@@ -1070,6 +1080,51 @@ function buildDateMap(items, year, month){
   return map;
 }
 
+function renderSupportGroupCalendar(){
+  const pane = document.getElementById('sgCalendarPane');
+  if(!pane) return;
+  const sgItems = allResourceItems.filter(r => r.category === 'supportgroups');
+  const year = state.sgCalYear, month = state.sgCalMonth;
+  const dateMap = buildDateMap(sgItems, year, month);
+  const first = new Date(year, month, 1);
+  const startDay = first.getDay();
+  const daysInMonth = new Date(year, month+1, 0).getDate();
+  const todayStr = `${today.getFullYear()}-${pad(today.getMonth()+1)}-${pad(today.getDate())}`;
+  const isMobileGrid = window.matchMedia('(max-width:480px)').matches;
+
+  let html = `
+    <div class="cal-header">
+      <button class="cal-nav-btn" id="sgPrevMonth">‹</button>
+      <div class="cal-title">${monthNames[month]} ${year}</div>
+      <button class="cal-nav-btn" id="sgNextMonth">›</button>
+    </div>
+    <div class="weekday-row">${dayLabelsShort.map(d=>`<div>${d}</div>`).join('')}</div>
+    <div class="month-grid">`;
+
+  if(!isMobileGrid){
+    for(let i=0;i<startDay;i++) html += `<div class="day-cell empty"></div>`;
+  }
+  for(let d=1; d<=daysInMonth; d++){
+    const dateStr = `${year}-${pad(month+1)}-${pad(d)}`;
+    const dayItems = dateMap[dateStr] || [];
+    const isToday = dateStr === todayStr;
+    html += `<div class="day-cell${isToday?' today':''}"><div class="day-num">${d}</div>`;
+    dayItems.forEach(e => { html += `<span class="day-pip" style="background:${categoryColors['supportgroups']}" data-id="${e.id}">${e.title}</span>`; });
+    html += `</div>`;
+  }
+  html += `</div>`;
+  pane.innerHTML = html;
+
+  document.getElementById('sgPrevMonth').addEventListener('click', () => {
+    state.sgCalMonth--; if(state.sgCalMonth<0){ state.sgCalMonth=11; state.sgCalYear--; }
+    renderSupportGroupCalendar();
+  });
+  document.getElementById('sgNextMonth').addEventListener('click', () => {
+    state.sgCalMonth++; if(state.sgCalMonth>11){ state.sgCalMonth=0; state.sgCalYear++; }
+    renderSupportGroupCalendar();
+  });
+}
+
 function renderTripEarthView(targetId='calendar-view', mapId='tripEarthMap', selectedItems=itemsForCategory('trips'), replaceTarget=true){
   const el = document.getElementById(targetId);
   if(replaceTarget) el.innerHTML = `<div id="${mapId}" class="calendar-map">
@@ -1288,7 +1343,8 @@ function renderCategoryRow(){
   if(state.tab !== 'events'){ el.style.display = 'none'; el.innerHTML = ''; subEl.style.display = 'none'; return; }
   el.style.display = 'flex';
   subEl.style.display = 'flex';
-  el.innerHTML = categoryList.map(c => `<button class="cat-filter-btn ${state.categoryFilter===c.key?'active':''}" style="background:${c.bg};color:${c.fg};" data-catfilter="${c.key}">${c.label}</button>`).join('');
+  el.innerHTML = categoryList.map(c => `<button class="cat-filter-btn ${state.categoryFilter===c.key?'active':''}" style="background:${c.bg};color:${c.fg};" data-catfilter="${c.key}">${c.label}</button>`).join('')
+    + `<button class="cat-filter-btn" style="background:#d6c2e8;color:#373d3b;" data-navto="supportgroups">Support Groups →</button>`;
 }
 
 function renderSubFilters(){
@@ -1608,7 +1664,37 @@ function setupFallSignupForm(){
 
 function renderDirectory(){
   const el = document.getElementById('directory-view');
-  if(state.tab === 'travel'){
+  if(state.tab === 'supportgroups'){
+    document.getElementById('resourcePagination').innerHTML = '';
+    const sgItems = allResourceItems.filter(r => r.category === 'supportgroups');
+    el.innerHTML = `
+      <div class="sg-view-toggle">
+        <button class="${state.sgView==='list'?'active':''}" data-sgview="list">List only</button>
+        <button class="${state.sgView==='calendar'?'active':''}" data-sgview="calendar">Calendar only</button>
+        <button class="${state.sgView==='both'?'active':''}" data-sgview="both">Both</button>
+      </div>
+      <div class="sg-split-layout">
+        <div class="sg-list-pane" id="sgListPane" style="display:${state.sgView==='calendar'?'none':'block'}">
+          ${sgItems.length ? sgItems.map(r => `
+            <div class="panel-card">
+              <div class="panel-top">
+                <div class="monogram" style="background:${categoryColors[r.category]||'#373d3b'}">${r.title.charAt(0)}</div>
+                <div><h4>${r.title}</h4><div class="panel-type">${r.type||'Support Group'}</div></div>
+              </div>
+              <div class="panel-desc">${r.desc||''}</div>
+              <div class="panel-addr">📍 ${r.location||''}${r.date?' · '+r.date:''}</div>
+              <div class="panel-links">
+                ${r.instagram ? `<a class="link-btn secondary" href="${r.instagram}" target="_blank" rel="noopener">More Info</a>` : ''}
+              </div>
+            </div>`).join('') : '<div class="empty">No support groups listed yet.</div>'}
+        </div>
+        <div class="sg-calendar-pane" id="sgCalendarPane" style="display:${state.sgView==='list'?'none':'block'}"></div>
+      </div>`;
+    if(state.sgView !== 'list') renderSupportGroupCalendar();
+    document.querySelectorAll('.sg-view-toggle button').forEach(btn => {
+      btn.addEventListener('click', () => { state.sgView = btn.dataset.sgview; renderDirectory(); });
+    });
+  } else if(state.tab === 'travel'){
     document.getElementById('resourcePagination').innerHTML = '';
     const travelItems = state.tripType === 'all' ? tripsData : tripsData.filter(item => tripTypeForItem(item) === state.tripType);
     el.innerHTML = `<div class="travel-earth-layout">
@@ -2085,11 +2171,11 @@ function closeDetail(){
 /* ============================================================
    MAIN RENDER
    ============================================================ */
-const DIRECTORY_TABS = ['clubs','resources','home','travel','rules','clubstart','clubjoin','fallsignup','homescreen','subscribe'];
+const DIRECTORY_TABS = ['clubs','resources','home','travel','rules','clubstart','clubjoin','fallsignup','homescreen','subscribe','supportgroups'];
 
 function render(){
   const contextBack = document.getElementById('contextBack');
-  if(contextBack) contextBack.classList.toggle('visible', state.tab === 'resources' && state.returnTab === 'events');
+  if(contextBack) contextBack.classList.toggle('visible', (state.tab === 'resources' && state.returnTab === 'events') || state.tab === 'supportgroups');
   syncToggleButtonClasses();
   const searchShell = document.getElementById('globalSearchShell');
   if(searchShell) searchShell.style.display = 'flex';
@@ -2246,6 +2332,11 @@ document.getElementById('resourceViewToggle').addEventListener('click', e => {
 });
 
 document.getElementById('categoryRow').addEventListener('click', e => {
+  const navBtn = e.target.closest('[data-navto]');
+  if(navBtn){
+    goToTab(navBtn.dataset.navto);
+    return;
+  }
   const btn = e.target.closest('[data-catfilter]');
   if(!btn) return;
   if(btn.dataset.catfilter === 'mosqueprograms'){
@@ -2320,6 +2411,10 @@ document.body.addEventListener('click', e => {
 
 document.getElementById('backBtn').addEventListener('click', closeDetail);
 document.getElementById('contextBackButton').addEventListener('click', () => {
+  if(state.tab === 'supportgroups'){
+    goToTab('home');
+    return;
+  }
   state.returnTab = '';
   goToTab('events');
 });
