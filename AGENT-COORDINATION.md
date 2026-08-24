@@ -78,6 +78,13 @@ npx wrangler deploy
 
 **Status:** IDLE
 **Last updated by:** Claude (chat)
+**Last updated:** 2026-08-24 (session end)
+
+**2026-08-24 (session end) — Claude (chat) — `index.html`, `admin/config.yml`, `data/resources.json`** — Added 3 verified restaurant/cafe entries (Adam's Diner, Falaknuma Restaurant, Edill's Coffee House). Softened calendar blue/coral colors per Lujane's standing preference (softer palette going forward). Built a proper grid layout for Small Businesses (was previously just a plain text list buried in the Map view's unmapped-items sidebar) with Instagram official-embed support via a new `instagramPost` field (CMS-editable) - added the script + processing trigger. Could not find real individual Instagram post URLs via search for the 5 existing small businesses (general web search doesn't reliably index posts from low-follower personal accounts) - asked Lujane to supply the 5 post links directly instead of continuing to guess. Mental health panel 'messiness' complaint not yet addressed - CSS looked properly structured on inspection, requested a screenshot rather than guess blind again.
+
+
+**Status:** IDLE
+**Last updated by:** Claude (chat)
 **Last updated:** 2026-08-24 (final)
 
 **2026-08-24 (final) — Claude (chat) — `index.html`, `data/resources.json`, `admin/config.yml`** — Investigated the ownedBy complaint: field was never actually removed from config.yml, just optional - 24 'missing' entries were mosques (don't have individual owners, expected) and only 4 were real businesses genuinely missing it. Researched and added real owner names for 2 (Curl Lounge: Elisha Gotha, Faiza's Closet: Faiza - business is literally named after her). Could not verify real names for Day Of by R or Salam Sips within reasonable search effort - flagged to Lujane rather than guessing. Made ownedBy required:true in config.yml going forward. Renamed Cafes to 'Cafe & Desserts' everywhere. Added Kunafa King and Carousel Cafe & Bistro with exact owner names provided. Did NOT do an exhaustive permanently-closed check across all 133 resources - that needs real verification per business, flagged as a separate follow-up task rather than guessing.
