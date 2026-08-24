@@ -991,7 +991,7 @@
       "type": "Beauty & Care",
       "website": "https://www.fresha.com/a/the-curl-lounge-toronto-623-kingston-road-dhnf8n5k",
       "id": "beauty-curlounge",
-      "ownedBy": "",
+      "ownedBy": "Elisha Gotha",
       "category": "beautycare",
       "lat": 43.6767
     },
@@ -1721,7 +1721,26 @@
       "instagram": "https://www.instagram.com/faizaxcloset/",
       "website": "https://faizaxcloset.com",
       "location": "Scarborough, ON",
-      "category": "bakeries"
+      "category": "bakeries",
+      "ownedBy": "Faiza"
+    },
+    {
+      "id": "kunafa-king-mississauga",
+      "title": "Kunafa King",
+      "type": "Middle Eastern Desserts",
+      "location": "626 Bloor St, Mississauga",
+      "category": "cafes",
+      "ownedBy": "Suha Abukhousa, with Yahia Alboreeni and Mohammed Abukhousa",
+      "desc": "Palestinian kunafa, baklava and Middle Eastern desserts."
+    },
+    {
+      "id": "carousel-cafe-bistro-toronto",
+      "title": "Carousel Café & Bistro",
+      "type": "Café & Food Incubator",
+      "location": "Daniels Spectrum, 585 Dundas St E, Toronto",
+      "category": "cafes",
+      "ownedBy": "Halima Farah and Humaira Rahman",
+      "desc": "Community café and food-incubator space with rotating vendors."
     }
   ]
 }
