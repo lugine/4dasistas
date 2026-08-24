@@ -316,6 +316,7 @@ collections:
               - { label: "Latitude (for map)", name: "lat", widget: "number", value_type: "float", required: false }
               - { label: "Longitude (for map)", name: "lng", widget: "number", value_type: "float", required: false }
               - { label: "Google Maps link", name: "mapsUrl", widget: "string", required: false }
+              - { label: "Featured Instagram post link (for Small Businesses grid - paste a specific post URL, e.g. instagram.com/p/XXXXX/)", name: "instagramPost", widget: "string", required: false }
               - { label: "Phone", name: "phone", widget: "string", required: false }
               - { label: "Instagram link", name: "instagram", widget: "string", required: false }
               - { label: "Website link", name: "website", widget: "string", required: false }
