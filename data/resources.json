@@ -1769,6 +1769,206 @@
       "ownedBy": "Edill Mohamed",
       "desc": "Black Muslim woman-owned café and brunch venue.",
       "website": "https://www.edillscoffeehouse.com/"
+    },
+    {
+      "id": "shop-just-platters",
+      "title": "Just Platters",
+      "type": "Catering / Grazing",
+      "desc": "Curated brunch buffets and platter-style food for events.",
+      "instagram": "https://www.instagram.com/justplatters_/",
+      "location": "GTA, ON",
+      "ownedBy": "Not publicly specified",
+      "category": "shops"
+    },
+    {
+      "id": "shop-charcuterie-collective",
+      "title": "The Charcuterie Collective",
+      "type": "Charcuterie / Catering",
+      "desc": "Curated charcuterie and event food displays.",
+      "instagram": "https://www.instagram.com/thecharcuterie.collective/",
+      "location": "GTA, ON",
+      "ownedBy": "Not publicly specified",
+      "category": "shops"
+    },
+    {
+      "id": "shop-cookie-crave-toronto",
+      "title": "Cookie Crave Toronto",
+      "type": "Bakery / Desserts",
+      "desc": "Cookies and floral-themed sweet treats for events.",
+      "instagram": "https://www.instagram.com/cookiecravetoronto/",
+      "location": "Toronto, ON",
+      "ownedBy": "Not publicly specified",
+      "category": "shops"
+    },
+    {
+      "id": "shop-karemes-dessert-bar",
+      "title": "Karemes Dessert Bar",
+      "type": "Dessert Catering",
+      "desc": "Specialty desserts and sweet treats for events.",
+      "instagram": "https://www.instagram.com/karemesdessertbar/",
+      "location": "GTA, ON",
+      "ownedBy": "Not publicly specified",
+      "category": "shops"
+    },
+    {
+      "id": "shop-sip-d-co",
+      "title": "Sip D Co",
+      "type": "Café / Specialty Drinks",
+      "desc": "Specialty iced lattes and matcha drinks for events.",
+      "instagram": "https://www.instagram.com/sipdco/",
+      "location": "GTA, ON",
+      "ownedBy": "Not publicly specified",
+      "category": "shops"
+    },
+    {
+      "id": "shop-blooming-gift-shop",
+      "title": "Blooming Gift Shop",
+      "type": "Florist / Gift Shop",
+      "desc": "Runs a Bloom Bar where guests can create and take home their own bouquet.",
+      "instagram": "https://www.instagram.com/bloominggiftshop_/",
+      "location": "GTA, ON",
+      "ownedBy": "Not publicly specified",
+      "category": "shops"
+    },
+    {
+      "id": "shop-caramel-creative-events",
+      "title": "Caramel Creative Events",
+      "type": "Event Décor / Styling",
+      "desc": "Floral and themed event décor and styling.",
+      "instagram": "https://www.instagram.com/caramelcreativeevents/",
+      "location": "GTA, ON",
+      "ownedBy": "Not publicly specified",
+      "category": "shops"
+    },
+    {
+      "id": "shop-signwala-mirror",
+      "title": "Signwala Mirror",
+      "type": "Event Décor / Signage",
+      "desc": "Decorative mirror and signage elements for events.",
+      "instagram": "https://www.instagram.com/signwala.mirror/",
+      "location": "GTA, ON",
+      "ownedBy": "Not publicly specified",
+      "category": "shops"
+    },
+    {
+      "id": "shop-nazra-embroidery",
+      "title": "Nazra Embroidery",
+      "type": "Embroidery / Fashion",
+      "desc": "Local women-owned creative business specializing in embroidery and featured as a curated pop-up vendor.",
+      "instagram": "https://www.instagram.com/nazraembroidery/",
+      "location": "GTA, ON",
+      "ownedBy": "Women-owned",
+      "category": "shops"
+    },
+    {
+      "id": "shop-basma-scarves",
+      "title": "Basma Scarves",
+      "type": "Modest Fashion / Scarves",
+      "desc": "Scarves and modest-fashion accessories from a local women-owned business.",
+      "instagram": "https://www.instagram.com/basmascarves/",
+      "location": "GTA, ON",
+      "ownedBy": "Women-owned",
+      "category": "shops"
+    },
+    {
+      "id": "shop-xara-designs",
+      "title": "Xara Designs",
+      "type": "Fashion / Design",
+      "desc": "Local women-owned creative and design business featured as a pop-up vendor.",
+      "instagram": "https://www.instagram.com/xara_designs/",
+      "location": "GTA, ON",
+      "ownedBy": "Women-owned",
+      "category": "shops"
+    },
+    {
+      "id": "shop-abaan-fragrances",
+      "title": "Abaán Fragrances",
+      "type": "Fragrance / Perfume",
+      "desc": "Local women-owned fragrance business selling perfumes and fragrance products.",
+      "instagram": "https://www.instagram.com/abaanfragrances/",
+      "location": "GTA, ON",
+      "ownedBy": "Women-owned",
+      "category": "shops"
+    },
+    {
+      "id": "shop-bahar-and-bloom",
+      "title": "Bahar & Bloom",
+      "type": "Gifts / Floral / Lifestyle",
+      "desc": "Local women-owned business featured as a curated pop-up vendor.",
+      "instagram": "https://www.instagram.com/baharandbloom/",
+      "location": "GTA, ON",
+      "ownedBy": "Women-owned",
+      "category": "shops"
+    },
+    {
+      "id": "shop-letters-by-haff",
+      "title": "Letters by Haff",
+      "type": "Calligraphy / Stationery",
+      "desc": "Personalized handwritten calligraphy name cards for events.",
+      "instagram": "https://www.instagram.com/lettersbyhaff/",
+      "location": "GTA, ON",
+      "ownedBy": "Not publicly specified",
+      "category": "shops"
+    },
+    {
+      "id": "shop-riah-studios",
+      "title": "Riah Studios",
+      "type": "Photography / Content Creation",
+      "desc": "Professional photography and content coverage for events.",
+      "instagram": "https://www.instagram.com/riahstudios_/",
+      "location": "GTA, ON",
+      "ownedBy": "Not publicly specified",
+      "category": "shops"
+    },
+    {
+      "id": "shop-salam-everyone",
+      "title": "Salam Everyone",
+      "type": "Photography / Content Creation",
+      "desc": "Professional event photography and content coverage.",
+      "instagram": "https://www.instagram.com/salameveryone/",
+      "location": "GTA, ON",
+      "ownedBy": "Not publicly specified",
+      "category": "shops"
+    },
+    {
+      "id": "shop-captured-by-wania",
+      "title": "Captured by Wania",
+      "type": "Photography / Content Creation",
+      "desc": "Professional photography and event content coverage.",
+      "instagram": "https://www.instagram.com/capturedbywania/",
+      "location": "GTA, ON",
+      "ownedBy": "Not publicly specified",
+      "category": "shops"
+    },
+    {
+      "id": "shop-noor-clicks",
+      "title": "Noor Clicks",
+      "type": "Photography / Content Creation",
+      "desc": "Professional photography and event content coverage.",
+      "instagram": "https://www.instagram.com/noorclicks.co/",
+      "location": "GTA, ON",
+      "ownedBy": "Not publicly specified",
+      "category": "shops"
+    },
+    {
+      "id": "shop-ayesha-captures",
+      "title": "Ayesha Captures",
+      "type": "Photography / Content Creation",
+      "desc": "Professional photography and content coverage for events.",
+      "instagram": "https://www.instagram.com/ayesha.captures/",
+      "location": "GTA, ON",
+      "ownedBy": "Not publicly specified",
+      "category": "shops"
+    },
+    {
+      "id": "shop-harma-jewelry",
+      "title": "Harma Jewelry",
+      "type": "Jewelry",
+      "desc": "Jewelry business providing giveaway prizes for events.",
+      "instagram": "https://www.instagram.com/harmajewelry/",
+      "location": "GTA, ON",
+      "ownedBy": "Not publicly specified",
+      "category": "shops"
     }
   ]
 }

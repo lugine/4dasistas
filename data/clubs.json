@@ -63,6 +63,27 @@
       "desc": "A low-pressure space for neurodivergent sisters to connect, vent, swap strategies, and just exist without masking.",
       "signup": "https://chat.whatsapp.com/JgmuY1XU0jrGrDPUvuDPTS",
       "calendarEvents": []
+    },
+    {
+      "id": "club-built-by-her",
+      "title": "Built by Her",
+      "desc": "A coffee circle for Muslimah entrepreneurs and creatives to connect, reflect, and grow together.",
+      "signup": "https://www.instagram.com/deen.journeys/",
+      "calendarEvents": [
+        {
+          "id": "built-by-her-toronto-aug21-2026",
+          "title": "Built by Her: Coffee Circle",
+          "tag": "Club",
+          "date": "Friday, August 21, 2026 · 6:30 PM",
+          "calDate": "2026-08-21",
+          "location": "Café in Midtown/Downtown Toronto (exact venue TBA)",
+          "organizer": "Deen Journeys",
+          "price": "Members $10 · Non-members $20",
+          "registration": "Limited spots; register through the link in bio",
+          "desc": "A curated coffee circle for Muslimah entrepreneurs and creatives with an intentional theme, guided roundtable conversation, practical strategy, shared wisdom, and barakah-centered sisterhood.",
+          "instagram": "https://www.instagram.com/deen.journeys/"
+        }
+      ]
     }
   ]
 }
