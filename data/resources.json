@@ -1741,6 +1741,34 @@
       "category": "cafes",
       "ownedBy": "Halima Farah and Humaira Rahman",
       "desc": "Community café and food-incubator space with rotating vendors."
+    },
+    {
+      "id": "adams-diner-toronto",
+      "title": "Adam's Diner",
+      "type": "Halal Diner",
+      "location": "Toronto, ON",
+      "category": "restaurants",
+      "ownedBy": "Somaiah Elsikely (owner, manager, and cook)",
+      "desc": "Halal-concept diner. Owner Somaiah Elsikely was profiled by Chatelaine as one of 4 women-owned restaurants during COVID-19."
+    },
+    {
+      "id": "falaknuma-restaurant-gta",
+      "title": "Falaknuma Restaurant",
+      "type": "Restaurant",
+      "location": "GTA",
+      "category": "restaurants",
+      "ownedBy": "Arshiya",
+      "desc": "Featured in a public Halal Fest interview with owner Sr. Arshiya, discussing Muslim women in business ownership."
+    },
+    {
+      "id": "edills-coffee-house-scarborough",
+      "title": "Edill's Coffee House",
+      "type": "Café & Brunch",
+      "location": "Scarborough, ON",
+      "category": "cafes",
+      "ownedBy": "Edill Mohamed",
+      "desc": "Black Muslim woman-owned café and brunch venue.",
+      "website": "https://www.edillscoffeehouse.com/"
     }
   ]
 }
