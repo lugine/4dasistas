@@ -1,6 +1,25 @@
 {
   "items": [
     {
+      "id": "sisters-camping-adventure-alberta-2026",
+      "title": "Sisters Camping Adventure (Alberta)",
+      "tag": "Trip",
+      "eventDate": "2026-09-04",
+      "calDate": "2026-09-04",
+      "date": "Friday, September 4–Sunday, September 6, 2026",
+      "location": "Alberta",
+      "organizer": "Al Rashid Mosque Sisters",
+      "price": "$200 CAD",
+      "registration": "https://www.eventbrite.com/e/1994984412080?aff=ebdiglgoogleliveevents",
+      "desc": "Three-day all-inclusive nature getaway with cabin/camp accommodation, halal meals, canoeing, hikes, wall climbing, high-energy games, campfire circle stories, and spiritual community building. Round-trip transport from the mosque is included.",
+      "tripType": "domestic",
+      "type": "Domestic Trip",
+      "category": "trips",
+      "website": "https://www.eventbrite.com/e/1994984412080?aff=ebdiglgoogleliveevents",
+      "lat": 53.9333,
+      "lng": -116.5765
+    },
+    {
       "id": "deen-journeys-orlando-retreat-2026",
       "title": "Deen Journeys Orlando Retreat",
       "tag": "Trip",
