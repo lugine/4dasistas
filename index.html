@@ -921,10 +921,6 @@ function itemsForCategoryBase(cat){
   if(cat === 'trips'){
     return state.tripType === 'all' ? tripsData : tripsData.filter(e => tripTypeForItem(e) === state.tripType);
   }
-  if(cat === 'clubs'){
-    const items = clubCalendarItems();
-    return state.clubFilter === 'all' ? items : items.filter(item => item.clubId === state.clubFilter);
-  }
   if(cat === 'mosqueprograms'){
     return mosqueGatheringsData;
   }
@@ -1251,7 +1247,6 @@ const categoryList = [
   {key:'functions', label:'Functions', bg:'#fae1e4', fg:'#373d3b'},
   {key:'trips', label:'Trips', bg:'#ddb862', fg:'#373d3b'},
   {key:'mosqueprograms', label:'Mosque Programs', bg:'#c3e2d4', fg:'#373d3b'},
-  {key:'clubs', label:'CLUBS', bg:'#caaacd', fg:'#373d3b'},
 ];
 
 const resourceFilterList = [
@@ -1261,12 +1256,13 @@ const resourceFilterList = [
   {key:'restaurants', label:'Restaurants'},
   {key:'beautycare', label:'Health n Beauty'},
   {key:'mentalhealth', label:'Mental Health'},
+  {key:'supportgroups', label:'Support Groups'},
   {key:'bakeries', label:'Small Businesses'},
   {key:'legal', label:'Legal Services'},
 ];
 
 const categoryColors = {
-  mosques:'#c3e2d4', mosqueprograms:'#c3e2d4', cafes:'#ddb862', shops:'#caaacd', restaurants:'#f6c1a8', beautycare:'#ecc7d2', mentalhealth:'#a9d6b8', bakeries:'#f1dfb6', legal:'#c8b6e8'
+  mosques:'#c3e2d4', mosqueprograms:'#c3e2d4', cafes:'#ddb862', shops:'#caaacd', restaurants:'#f6c1a8', beautycare:'#ecc7d2', mentalhealth:'#a9d6b8', supportgroups:'#d6c2e8', bakeries:'#f1dfb6', legal:'#c8b6e8'
 };
 
 function renderResourceFilters(){
@@ -1358,7 +1354,7 @@ function renderResourceList(){
   const el = document.getElementById('directory-view');
   const pagEl = document.getElementById('resourcePagination');
   const filtered = interleaveByCategory(filteredResourceItems());
-  const isMentalHealth = state.resourceFilter === 'mentalhealth';
+  const isMentalHealth = state.resourceFilter === 'mentalhealth' || state.resourceFilter === 'supportgroups';
   const isSmallBiz = state.resourceFilter === 'bakeries';
   el.className = isMentalHealth ? 'mental-health-grid' : isSmallBiz ? 'small-business-grid' : '';
   el.style.display = (isMentalHealth || isSmallBiz) ? 'grid' : 'block';
