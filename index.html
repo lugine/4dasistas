@@ -828,7 +828,7 @@ function tripColor(item){
 function eventTypeLabel(item){
   if(resourcesData.includes(item)){
     const resourceLabels = {
-      cafes:'Café', shops:'Shop', restaurants:'Restaurant', beautycare:'Health n Beauty',
+      cafes:'Cafe & Desserts', shops:'Shop', restaurants:'Restaurant', beautycare:'Health n Beauty',
       mentalhealth:'Mental Health', bakeries:'Small Business', legal:'Legal Service', mosques:'Mosque'
     };
     return resourceLabels[item.category] || item.type || 'Resource';
@@ -1210,7 +1210,7 @@ const categoryList = [
 
 const resourceFilterList = [
   {key:'all', label:'All'},
-  {key:'cafes', label:'Cafes'},
+  {key:'cafes', label:'Cafe & Desserts'},
   {key:'shops', label:'Shops'},
   {key:'restaurants', label:'Restaurants'},
   {key:'beautycare', label:'Health n Beauty'},
