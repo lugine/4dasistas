@@ -78,6 +78,13 @@ npx wrangler deploy
 
 **Status:** IDLE
 **Last updated by:** Claude (chat)
+**Last updated:** 2026-08-24 (support groups)
+
+**2026-08-24 (support groups) — Claude (chat) — `index.html`, `data/gatherings.json`, `data/mosquegatherings.json`, `data/resources.json`** — Moved ISNA Youth Book Club from mosquegatherings to gatherings/functions. Added ISNA High Park Picnic (Aug 30). Removed the 'clubs' category entirely from the Events calendar/list system (was a separate, mostly-unused concept fed by clubCalendarItems() - the top-level GALS CLUBS tab is untouched, only this Events-calendar sub-category is gone). Added new 'Support Groups' Resources category, reusing the Mental Health grid pattern (2-column grid, no calendar view). Added Healing Hearts: Muslim Survivors Group as its first entry.
+
+
+**Status:** IDLE
+**Last updated by:** Claude (chat)
 **Last updated:** 2026-08-24 (AHC)
 
 **2026-08-24 (AHC) — Claude (chat) — `data/gatherings.json`** — Added AHC Community BBQ (Abu Huraira Center, Aug 29 2026).
