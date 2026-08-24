@@ -260,6 +260,30 @@
       "website": "https://linktr.ee/womensfitsauga",
       "sportKey": "running",
       "tag": "Running"
+    },
+    {
+      "id": "pilates-pajamas-sept4-2026",
+      "title": "Pilates & Pajamas",
+      "tag": "Pilates",
+      "eventDate": "2026-09-04",
+      "date": "Friday, September 4, 2026 · 7:00 PM",
+      "location": "Ms Kay Fit Studios, Oakville",
+      "sportKey": "fitness",
+      "desc": "Pilates, but make it a girls' night — pizza, popcorn, movie, and all the cozy girl vibes. Grab your bestie, throw on your cutest PJs. Limited spots.",
+      "instagram": "https://www.instagram.com/reel/DcWHd-bOnsV/",
+      "registration": "Link in bio"
+    },
+    {
+      "id": "muslimfest-pilates-workshop-2026",
+      "title": "MuslimFest Women's Pilates Workshop",
+      "tag": "Pilates",
+      "eventDate": "2026-08-28",
+      "date": "During MuslimFest, August 28–30, 2026 (exact day/time TBD — check registration)",
+      "location": "MuslimFest, Celebration Square, Mississauga",
+      "sportKey": "fitness",
+      "desc": "Exclusive women-only Pilates workshop in collaboration with Physiola Clinics. Privacy prioritized. Limited spots.",
+      "instagram": "https://www.instagram.com/muslimfest/",
+      "registration": "Link in bio"
     }
   ]
 }
