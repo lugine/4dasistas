@@ -326,6 +326,35 @@
       "location": "270 Yorkland Blvd, Toronto",
       "desc": "A fun-filled day for the whole family — BBQ, vendors, sweets, bouncy castles, and more. Giveaway: an iPad Mini (more details coming soon). Free entry, open to everyone.",
       "instagram": "https://www.instagram.com/abuhurairacenter/"
+    },
+    {
+      "id": "isna-youth-book-club-2026",
+      "tag": "Function",
+      "title": "ISNA Youth Book Club",
+      "eventDate": "2026-08-19",
+      "date": "Wednesdays at 7 PM, starting August 19, 2026",
+      "location": "ISNA Canada (ICC) Education Centre, 2200 S Sheridan Way, Mississauga",
+      "organizer": "ISNA Canada",
+      "days": [
+        "wed"
+      ],
+      "recurStart": "2026-08-19",
+      "registration": "https://isnacanada.com/youth",
+      "desc": "A space for Muslim youth to reflect and engage in meaningful discussions through literature. Currently reading 'Perfect Victims & the Politics of Appeal' by Mohammed Elkurd. Book available from Sabiqoun Books — use promo code ISNABOOKCLUB for 20% off.",
+      "category": "functions"
+    },
+    {
+      "id": "isna-high-park-picnic-aug30-2026",
+      "title": "ISNA High Park Picnic",
+      "tag": "Function",
+      "category": "functions",
+      "type": "Community Function",
+      "eventDate": "2026-08-30",
+      "date": "Sunday, August 30, 2026 · 2:30–7:00 PM",
+      "location": "High Park (Site 1) — 1837 Bloor St W, Toronto",
+      "desc": "Community picnic — enjoy the warmth of community during the beautiful summer days.",
+      "instagram": "https://www.instagram.com/jami_isna/",
+      "registration": "https://isnacanada.com/jamipicnic"
     }
   ]
 }
