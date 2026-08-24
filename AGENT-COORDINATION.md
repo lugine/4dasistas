@@ -78,6 +78,13 @@ npx wrangler deploy
 
 **Status:** IDLE
 **Last updated by:** Claude (chat)
+**Last updated:** 2026-08-24 (sg page)
+
+**2026-08-24 (sg page) — Claude (chat) — `index.html`, `data/resources.json`** — Built a dedicated Support Groups page (new state.tab='supportgroups', added to DIRECTORY_TABS). Entry point: new button in the Events category row ('Support Groups →') that navigates away rather than filtering in place. Back button: reused the existing contextBack pattern (was previously only for Resources->Events) and extended it. Customizable split view: List only / Calendar only / Both, with its own mini-calendar (own month/year state, doesn't affect the main Events calendar). Added calDate to support group entries + new Eldest Daughters entry (Aug 28). Tested via full JSDOM runtime simulation, not just static analysis - confirmed navigation, back button, split layout, and calendar rendering all work (one false alarm: window.matchMedia isn't implemented in jsdom by default, confirmed via polyfill test that this is a testing-environment gap, not a real bug - same pattern already used successfully in the existing main calendar).
+
+
+**Status:** IDLE
+**Last updated by:** Claude (chat)
 **Last updated:** 2026-08-24 (support groups)
 
 **2026-08-24 (support groups) — Claude (chat) — `index.html`, `data/gatherings.json`, `data/mosquegatherings.json`, `data/resources.json`** — Moved ISNA Youth Book Club from mosquegatherings to gatherings/functions. Added ISNA High Park Picnic (Aug 30). Removed the 'clubs' category entirely from the Events calendar/list system (was a separate, mostly-unused concept fed by clubCalendarItems() - the top-level GALS CLUBS tab is untouched, only this Events-calendar sub-category is gone). Added new 'Support Groups' Resources category, reusing the Mental Health grid pattern (2-column grid, no calendar view). Added Healing Hearts: Muslim Survivors Group as its first entry.
