@@ -1,6 +1,20 @@
 {
   "items": [
     {
+      "id": "mnn-taste-of-mississauga-sept5-6-2026",
+      "title": "Taste of Mississauga",
+      "tag": "Function",
+      "category": "functions",
+      "type": "Community Function",
+      "eventDate": "2026-09-05",
+      "date": "Saturday–Sunday, September 5–6, 2026 · All day",
+      "location": "Ridgeway Plaza, Mississauga, ON",
+      "organizer": "MNN Mosque",
+      "desc": "Two-day community event at Ridgeway Plaza hosted by MNN Mosque. Confirm the final schedule and activity details directly with MNN.",
+      "website": "https://mnnexus.ca/",
+      "instagram": "https://www.instagram.com/officialmnn/"
+    },
+    {
       "id": "isna-food-festival-2026",
       "title": "ISNA Canada Street Food Festival",
       "date": "September 19-20, 2026",
