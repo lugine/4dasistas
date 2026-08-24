@@ -78,6 +78,13 @@ npx wrangler deploy
 
 **Status:** IDLE
 **Last updated by:** Claude (chat)
+**Last updated:** 2026-08-24 (later)
+
+**2026-08-24 (later) — Claude (chat) — `index.html`, `data/trips.json`** — Fixed 3 things: (1) Functions category color mismatch - nav filter chip used #fae1e4 (light pink) but event cards used cat-gathering's purple; gave functions its own cat-function class matching exactly. (2) Trips globe only showed 4/11 pins - most trips were missing lat/lng entirely; added real coordinates to all 7 missing trips. Also found and removed 5 duplicate trip entries (likely from scheduled task running twice) while in there. (3) Added Soonest/Latest as explicit sort options with real ascending/descending control - previously there was only one always-ascending 'Time' option with no way to reverse it.
+
+
+**Status:** IDLE
+**Last updated by:** Claude (chat)
 **Last updated:** 2026-08-24 (correction)
 
 **2026-08-24 (correction) — Claude (chat) — `data/resources.json`, deleted `data/smallbusinesses.json`** — Lujane correctly caught that my earlier smallbusinesses.json discovery was wrong/stale. Real answer: 'Small Businesses' is just the display label for `category: "bakeries"` within resources.json (confirmed in both resourceFilterList and eventTypeLabel mappings) - the Worker KV / separate-file theory from my earlier session was based on an outdated version of the code that Kilo has since simplified away. Moved the 4 businesses (My Matcha Cart, Day Of by R, Salam Sips, Faiza's Closet) into resources.json with category:bakeries, matching how Cozy Crumb Maya is actually stored. Deleted the orphaned smallbusinesses.json file entirely since the site never reads from it - leaving it would only cause future confusion.
