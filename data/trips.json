@@ -1,6 +1,40 @@
 {
   "items": [
     {
+      "id": "deen-journeys-orlando-retreat-2026",
+      "title": "Deen Journeys Orlando Retreat",
+      "tag": "Trip",
+      "date": "Dates TBA · $100 flash-sale discount ends August 26, 2026",
+      "location": "Orlando, Florida",
+      "organizer": "Deen Journeys",
+      "registration": "Secure a spot through the link in the Deen Journeys Instagram bio; use code ORLANDO before August 26 to save $100.",
+      "desc": "Women-focused retreat in Orlando. The official post confirms only three spots remained and an ORLANDO flash sale; trip dates and itinerary should be confirmed directly with Deen Journeys.",
+      "instagram": "https://www.instagram.com/deen.journeys/p/DcMCeF4RXlW/",
+      "website": "https://www.instagram.com/deen.journeys/",
+      "type": "International Trip",
+      "category": "trips",
+      "lat": 28.538336,
+      "lng": -81.379234
+    },
+    {
+      "id": "deen-journeys-granada-retreat-2027",
+      "title": "Deen Journeys Granada Retreat",
+      "tag": "Trip",
+      "eventDate": "2027-05-26",
+      "calDate": "2027-05-26",
+      "date": "May 26–June 1, 2027",
+      "location": "Granada, Spain",
+      "organizer": "Deen Journeys",
+      "registration": "Limited spots; learn more through the link in the Deen Journeys Instagram bio.",
+      "desc": "Six-night soul-nourishing retreat in the mountains of Southern Spain focused on rest, reflection, reconnection with Allah, and meaningful sisterhood. A deposit is required to secure a spot; Alhambra tickets must be secured two months in advance.",
+      "instagram": "https://www.instagram.com/deen.journeys/p/Dak_sPnGetJ/",
+      "website": "https://www.instagram.com/deen.journeys/",
+      "type": "International Trip",
+      "category": "trips",
+      "lat": 37.1773,
+      "lng": -3.5986
+    },
+    {
       "id": "alhuda-female-youth-niagara-trip-aug30-2026",
       "title": "Al-Huda Female Youth Day Trip to Niagara Falls",
       "tag": "Trip",
