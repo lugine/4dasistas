@@ -160,6 +160,7 @@
   .tag{ display:inline-block; font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:0.03em; padding:3px 9px; border-radius:999px; color:var(--charcoal); }
   .cat-sports{ background:var(--coral); }
   .cat-gathering{ background:var(--pink); color:white; }
+  .cat-function{ background:#fae1e4; color:var(--charcoal); }
   .cat-dayactivity{ background:var(--blue); }
   .cat-trip{ background:var(--purple); }
   .cat-mosque{ background:#c3e2d4; }
@@ -306,6 +307,7 @@
   .today-event{ display:grid; grid-template-columns:72px minmax(0,1fr); align-items:stretch; gap:12px; padding:0; background:var(--card); border:2px solid var(--charcoal); border-radius:14px; box-shadow:3px 3px 0 var(--charcoal); text-align:left; cursor:pointer; overflow:hidden; }
   .today-event.cat-sports{ background:#fbd9bb; }
   .today-event.cat-gathering{ background:#e8cfe2; color:var(--charcoal); }
+  .today-event.cat-function{ background:#fae1e4; color:var(--charcoal); }
   .today-event.cat-gathering .today-event-time{ color:var(--rose-deep); }
   .today-event.cat-dayactivity{ background:#dce8ef; }
   .today-event.cat-trip{ background:#ded5f0; }
@@ -738,7 +740,7 @@ let state = {
   sportFilter:'all', dayCity:'all', clubFilter:'all',
   gatherSort:'hijab', gatherDir:'asc',
   tripType:'all', tripView:'list', resourceFilter:'all', resourceView:'map', resourcePage:1,
-  timeFilter:'upcoming', eventSort:'time', todayOffset:0, page:1,
+  timeFilter:'upcoming', eventSort:'soonest', todayOffset:0, page:1,
   returnTab:'',
   calYear: today.getFullYear(), calMonth: today.getMonth(),
 };
@@ -805,10 +807,10 @@ function tagClass(item){
   if(tripsData.includes(item) || item.category === 'trips') return 'cat-trip';
   if(item.category === 'clubs' || clubsData.includes(item)) return 'cat-club';
   if(dayActivitiesData.includes(item) || item.category === 'dayactivities') return 'cat-dayactivity';
-  if(gatheringsData.includes(item) || item.category === 'functions') return 'cat-gathering';
+  if(gatheringsData.includes(item) || item.category === 'functions') return 'cat-function';
   if(mosqueGatheringsData.includes(item) || item.category === 'mosquegatherings') return 'cat-mosque';
   if(tripKeywords.some(k => text.includes(k))) return 'cat-trip';
-  if(gatheringKeywords.some(k => text.includes(k))) return 'cat-gathering';
+  if(gatheringKeywords.some(k => text.includes(k))) return 'cat-function';
   if(activityKeywords.some(k => text.includes(k))) return 'cat-dayactivity';
   if(mosqueKeywords.some(k => text.includes(k))) return 'cat-mosque';
 
@@ -935,7 +937,8 @@ function itemsForCategory(cat){
     if(state.eventSort === 'location') return sortValue(first.location).localeCompare(sortValue(second.location));
     if(state.eventSort === 'price') return sortValue(first.price).localeCompare(sortValue(second.price));
     const dateCompare = sortValue(first.calDate || first.eventDate).localeCompare(sortValue(second.calDate || second.eventDate));
-    return dateCompare || eventTimeMinutes(first) - eventTimeMinutes(second);
+    const chronological = dateCompare || eventTimeMinutes(first) - eventTimeMinutes(second);
+    return state.eventSort === 'latest' ? -chronological : chronological;
   });
 }
 
@@ -950,7 +953,8 @@ function homepageTodayItems(selectedDate){
     if(state.eventSort === 'type') return eventTypeLabel(first).localeCompare(eventTypeLabel(second));
     if(state.eventSort === 'location') return String(first.location || '').localeCompare(String(second.location || ''));
     if(state.eventSort === 'price') return String(first.price || '').localeCompare(String(second.price || ''));
-    return eventTimeMinutes(first) - eventTimeMinutes(second);
+    const chronological = eventTimeMinutes(first) - eventTimeMinutes(second);
+    return state.eventSort === 'latest' ? -chronological : chronological;
   });
 }
 
@@ -1758,7 +1762,7 @@ el.innerHTML = `<button class="fall-cta-btn" data-hometab="fallsignup">🍂 Join
           <div class="today-event-info"><strong>${item.title}</strong><span>${eventTypeLabel(item)} · ${item.location || 'Location TBA'}</span></div>
         </div>`).join('') || '<div class="empty">Nothing scheduled today.</div>'}</div>
       <div class="today-actions"><div class="today-filter"><label class="event-sort-label">Sort by <select class="event-sort-select" id="todaySortSelect" aria-label="Sort today's events by">
-        <option value="time" ${state.eventSort === 'time' ? 'selected' : ''}>Time</option><option value="type" ${state.eventSort === 'type' ? 'selected' : ''}>Type</option><option value="location" ${state.eventSort === 'location' ? 'selected' : ''}>Location</option><option value="price" ${state.eventSort === 'price' ? 'selected' : ''}>Price</option>
+        <option value="soonest" ${state.eventSort === 'soonest' ? 'selected' : ''}>Soonest</option><option value="latest" ${state.eventSort === 'latest' ? 'selected' : ''}>Latest</option><option value="type" ${state.eventSort === 'type' ? 'selected' : ''}>Type</option><option value="location" ${state.eventSort === 'location' ? 'selected' : ''}>Location</option><option value="price" ${state.eventSort === 'price' ? 'selected' : ''}>Price</option>
       </select></label></div>
       <div class="today-subscribe">
         <button class="today-subscribe-btn" id="todaySubscribeButton" type="button">Subscribe to this list</button>
