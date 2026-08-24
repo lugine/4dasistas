@@ -78,6 +78,13 @@ npx wrangler deploy
 
 **Status:** IDLE
 **Last updated by:** Claude (chat)
+**Last updated:** 2026-08-24 (AHC)
+
+**2026-08-24 (AHC) — Claude (chat) — `data/gatherings.json`** — Added AHC Community BBQ (Abu Huraira Center, Aug 29 2026).
+
+
+**Status:** IDLE
+**Last updated by:** Claude (chat)
 **Last updated:** 2026-08-24 (later)
 
 **2026-08-24 (later) — Claude (chat) — `data/sports.json`, `data/dayactivities.json`, `data/mosquegatherings.json`** — Added 5 real events from Instagram captions with full details already given: Pilates & Pajamas, MuslimFest Women's Pilates Workshop (searched and confirmed real MuslimFest 2026 dates: Aug 28-30), Beads of Strength, Sisters Sip & Paint, ISNA Youth Book Club. Two items NOT added, flagged to Lujane: (1) @saisociety_ HIIT+Acai event has no date in caption and search found nothing - genuinely can't find it; (2) a 9-events Instagram post link was completely inaccessible via search, same Instagram-access limitation as always - asked Lujane to relay the details directly rather than guessing/fabricating 9 events.
