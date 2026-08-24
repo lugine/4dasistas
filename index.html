@@ -10,6 +10,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="4DASISTAS">
 <meta name="format-detection" content="telephone=no">
+<script async src="//www.instagram.com/embed.js"></script>
 <meta name="description" content="4DASISTAS — Community, events, and resources for Muslim women in the GTA. Sports, activities, trips, mosque gatherings, and a directory of local businesses.">
 <meta name="keywords" content="Muslim women, GTA, Toronto, community, events, sports, trips, mosque gatherings, halal, sisterhood, activities, resources">
 <meta property="og:title" content="4DASISTAS — Community for Muslim Women in the GTA">
@@ -142,6 +143,10 @@
   .mental-health-grid .mental-health-desc.visible{ display:block; }
   .mental-health-grid .mental-health-more{ margin-top:10px; }
   .mental-health-grid .panel-links{ margin-top:auto; padding-top:8px; }
+
+  .small-business-grid{ display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; align-items:stretch; }
+  .small-business-grid .panel-card{ margin:0; padding:14px; display:flex; flex-direction:column; }
+  .small-business-grid .panel-links{ margin-top:auto; padding-top:8px; }
   .filter-chip.active{ background:var(--charcoal); color:var(--cream); border-color:var(--charcoal); }
   .filter-select{ font-family:'Inter',sans-serif; font-size:12.5px; font-weight:600; padding:7px 12px; border-radius:999px; border:1.5px solid rgba(33,30,28,0.25); background:white; color:var(--charcoal); }
   .event-sort-label{ display:inline-flex; align-items:center; gap:8px; font-family:'Space Grotesk',sans-serif; font-size:13px; font-weight:700; color:var(--charcoal); }
@@ -269,6 +274,15 @@
     .mental-health-grid .mental-health-more{ width:100%; padding:7px 5px; font-size:10px; }
     .mental-health-grid .panel-links{ display:flex; flex-direction:column; gap:5px; }
     .mental-health-grid .panel-links .link-btn{ width:100%; padding:7px 5px; font-size:10px; text-align:center; }
+    .small-business-grid{ gap:8px; }
+    .small-business-grid .panel-card{ padding:12px 9px; }
+    .small-business-grid .panel-top{ display:block; text-align:center; }
+    .small-business-grid .monogram{ width:40px; height:40px; margin:0 auto 7px; font-size:15px; }
+    .small-business-grid .panel-top h4{ font-size:13px; line-height:1.2; overflow-wrap:anywhere; }
+    .small-business-grid .panel-type{ font-size:10px; line-height:1.2; }
+    .small-business-grid .panel-addr{ font-size:10px; line-height:1.25; overflow-wrap:anywhere; }
+    .small-business-grid .panel-links{ display:flex; flex-direction:column; gap:5px; }
+    .small-business-grid .panel-links .link-btn{ width:100%; padding:7px 5px; font-size:10px; text-align:center; }
   }
 
   .ongoing-note{ font-size:13px; color:var(--muted); margin:20px 0 8px; }
@@ -1313,8 +1327,9 @@ function renderResourceList(){
   const pagEl = document.getElementById('resourcePagination');
   const filtered = interleaveByCategory(filteredResourceItems());
   const isMentalHealth = state.resourceFilter === 'mentalhealth';
-  el.className = isMentalHealth ? 'mental-health-grid' : '';
-  el.style.display = isMentalHealth ? 'grid' : 'block';
+  const isSmallBiz = state.resourceFilter === 'bakeries';
+  el.className = isMentalHealth ? 'mental-health-grid' : isSmallBiz ? 'small-business-grid' : '';
+  el.style.display = (isMentalHealth || isSmallBiz) ? 'grid' : 'block';
 
   if(filtered.length === 0){ el.innerHTML = '<div class="empty">Nothing here yet.</div>'; pagEl.innerHTML=''; return; }
 
@@ -1327,6 +1342,7 @@ function renderResourceList(){
   el.innerHTML = pageItems.map(r => `
     <div class="panel-card">
       ${r.image ? `<img class="resource-photo" src="${r.image}" alt="${r.title}">` : ''}
+      ${isSmallBiz && r.instagramPost ? `<blockquote class="instagram-media" data-instgrm-permalink="${r.instagramPost}" data-instgrm-version="14" style="margin:0 0 10px;width:100%;"></blockquote>` : ''}
       <div class="panel-top">
         <div class="monogram" style="background:${categoryColors[r.category]||'#373d3b'}">${r.title.charAt(0)}</div>
         <div>
@@ -1352,6 +1368,10 @@ function renderResourceList(){
       description.classList.toggle('visible');
       button.textContent = description.classList.contains('visible') ? 'Hide Details' : 'Learn More';
     }));
+  }
+
+  if(isSmallBiz && window.instgrm && window.instgrm.Embeds){
+    window.instgrm.Embeds.process();
   }
 
   if(totalPages <= 1){
