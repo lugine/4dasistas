@@ -78,6 +78,13 @@ npx wrangler deploy
 
 **Status:** IDLE
 **Last updated by:** Claude (chat)
+**Last updated:** 2026-08-24 (final)
+
+**2026-08-24 (final) — Claude (chat) — `index.html`, `data/resources.json`, `admin/config.yml`** — Investigated the ownedBy complaint: field was never actually removed from config.yml, just optional - 24 'missing' entries were mosques (don't have individual owners, expected) and only 4 were real businesses genuinely missing it. Researched and added real owner names for 2 (Curl Lounge: Elisha Gotha, Faiza's Closet: Faiza - business is literally named after her). Could not verify real names for Day Of by R or Salam Sips within reasonable search effort - flagged to Lujane rather than guessing. Made ownedBy required:true in config.yml going forward. Renamed Cafes to 'Cafe & Desserts' everywhere. Added Kunafa King and Carousel Cafe & Bistro with exact owner names provided. Did NOT do an exhaustive permanently-closed check across all 133 resources - that needs real verification per business, flagged as a separate follow-up task rather than guessing.
+
+
+**Status:** IDLE
+**Last updated by:** Claude (chat)
 **Last updated:** 2026-08-24 (later)
 
 **2026-08-24 (later) — Claude (chat) — `index.html`, `data/trips.json`** — Fixed 3 things: (1) Functions category color mismatch - nav filter chip used #fae1e4 (light pink) but event cards used cat-gathering's purple; gave functions its own cat-function class matching exactly. (2) Trips globe only showed 4/11 pins - most trips were missing lat/lng entirely; added real coordinates to all 7 missing trips. Also found and removed 5 duplicate trip entries (likely from scheduled task running twice) while in there. (3) Added Soonest/Latest as explicit sort options with real ascending/descending control - previously there was only one always-ascending 'Time' option with no way to reverse it.
