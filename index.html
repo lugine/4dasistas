@@ -213,6 +213,14 @@
   .day-pip{ display:block; font-size:9.5px; font-weight:600; padding:2px 4px; border-radius:4px; margin-top:2px; cursor:pointer; line-height:1.25; white-space:normal; overflow-wrap:anywhere; word-break:normal; color:var(--charcoal); }
   .day-pip.cat-gathering{ color:white; }
   .calendar-scope-note{ margin:14px auto 0; max-width:620px; color:var(--muted); font-size:12.5px; line-height:1.45; text-align:center; }
+  .calendar-day-detail{ margin:18px auto 0; max-width:680px; padding:16px; border-top:2px solid var(--charcoal); }
+  .calendar-day-detail h3{ font-family:'Space Grotesk',sans-serif; font-size:19px; margin-bottom:10px; }
+  .calendar-day-events{ display:flex; flex-direction:column; gap:8px; }
+  .calendar-day-event{ display:grid; grid-template-columns:110px minmax(0,1fr); gap:12px; align-items:center; padding:12px 14px; background:var(--card); border:1.5px solid rgba(33,30,28,0.18); border-left:8px solid var(--event-color); border-radius:8px; text-align:left; cursor:pointer; }
+  .calendar-day-event-time{ color:var(--rose-deep); font-family:'Space Grotesk',sans-serif; font-size:12px; font-weight:700; }
+  .calendar-day-event-title{ font-family:'Space Grotesk',sans-serif; font-size:15px; font-weight:700; overflow-wrap:anywhere; }
+  .calendar-day-event-type{ color:var(--muted); font-size:12px; }
+  .day-cell:not(.empty){ cursor:pointer; }
 
   @media (max-width:480px){
     main{ padding-left:12px; padding-right:12px; }
@@ -855,6 +863,15 @@ function eventTypeLabel(item){
   return labels[tagClass(item)] || 'Event';
 }
 
+function eventColor(item){
+  const colors = {
+    'cat-sports':'var(--coral)', 'cat-trip':'var(--purple)', 'cat-club':'var(--pink)',
+    'cat-gathering':'var(--pink)', 'cat-dayactivity':'var(--blue)', 'cat-mosque':'#c3e2d4',
+    'cat-resource':'#A9D6B8'
+  };
+  return colors[tagClass(item)] || 'var(--card)';
+}
+
 function eventTimeLabel(item){
   const match = String(item.date || '').match(/(?:at\s+)?(\d{1,2}(?::\d{2})?\s*(?:AM|PM))(?:\s*[–-]\s*(\d{1,2}(?::\d{2})?\s*(?:AM|PM)))?/i);
   return match ? match[0] : 'All day';
@@ -1167,19 +1184,30 @@ function renderCalendar(){
     const dayItems = [...(dateMap[dateStr] || [])].sort((first, second) => eventTimeMinutes(first) - eventTimeMinutes(second));
     const isToday = dateStr === todayStr;
     const rowClass = row % 2 === 0 ? ' row-even' : ' row-odd';
-    html += `<div class="day-cell${isToday?' today':''}${rowClass}"><div class="day-weekday">${dayLabelsFull[new Date(year, month, d).getDay()]}</div><div class="day-num">${d}</div>`;
+    html += `<div class="day-cell${isToday?' today':''}${rowClass}" data-calendar-date="${dateStr}"><div class="day-weekday">${dayLabelsFull[new Date(year, month, d).getDay()]}</div><div class="day-num">${d}</div>`;
     dayItems.forEach(e => {
       html += `<span class="day-pip ${tagClass(e)}" data-id="${e.id}">${e.title}</span>`;
     });
     html += `</div>`;
     if ((isMobileGrid ? d : (startDay + d)) % (isMobileGrid ? 4 : 7) === 0 && d !== daysInMonth) row++;
   }
-  html += `</div>`;
+  html += `</div><div class="calendar-day-detail" id="calendarDayDetail"><p class="calendar-scope-note">Select a date to see its full schedule.</p></div>`;
   if(state.categoryFilter === 'all'){
     html += `<p class="calendar-scope-note">Trips, Clubs, and Mosque Programs are not included here. Check their respective tabs for their calendars.</p>`;
   }
 
   document.getElementById('calendar-view').innerHTML = html;
+  document.getElementById('calendar-view').addEventListener('click', event => {
+    if(event.target.closest('[data-id]')) return;
+    const dayCell = event.target.closest('[data-calendar-date]');
+    if(!dayCell) return;
+    const dateStr = dayCell.dataset.calendarDate;
+    const dayItems = [...(dateMap[dateStr] || [])].sort((first, second) => eventTimeMinutes(first) - eventTimeMinutes(second));
+    const detail = document.getElementById('calendarDayDetail');
+    const selected = new Date(`${dateStr}T00:00:00`);
+    const heading = `${dayLabelsFull[selected.getDay()]}, ${monthNames[selected.getMonth()]} ${selected.getDate()}`;
+    detail.innerHTML = `<h3>${heading}</h3><div class="calendar-day-events">${dayItems.map(item => `<div class="calendar-day-event" style="--event-color:${eventColor(item)}" data-id="${item.id}"><div class="calendar-day-event-time">${eventTimeLabel(item)}</div><div><div class="calendar-day-event-title">${item.title}</div><div class="calendar-day-event-type">${eventTypeLabel(item)} · ${item.location || 'Location TBA'}</div></div></div>`).join('') || '<p class="calendar-scope-note">Nothing scheduled for this day.</p>'}</div>`;
+  });
 
   document.getElementById('prevMonth').addEventListener('click', () => {
     if(state.calYear === MIN_YEAR && state.calMonth === MIN_MONTH) return;
