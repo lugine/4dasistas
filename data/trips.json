@@ -11,7 +11,9 @@
       "price": "$30 round-trip transportation",
       "registration": "Sisters 18+; register through the link in bio",
       "desc": "Female youth day trip to Niagara Falls. Activities may include a boat tour, zipline, Butterfly Conservatory, Clifton Hill, shopping, restaurants, and scenic walks. Attractions, meals, and personal expenses are not included.",
-      "instagram": "https://www.instagram.com/alhudamuslimyouth/"
+      "instagram": "https://www.instagram.com/alhudamuslimyouth/",
+      "lat": 43.0896,
+      "lng": -79.0849
     },
     {
       "id": "mwtg-oman-2026",
@@ -81,7 +83,9 @@
       "price": "See themwtg.com for pricing",
       "desc": "Group trip to Jordan with The Muslim Women's Travel Group — female-only, fully organized. Not GTA-based, open to join from anywhere.",
       "instagram": "https://www.instagram.com/the.mwtg/",
-      "website": "https://themwtg.com/trip-2026/"
+      "website": "https://themwtg.com/trip-2026/",
+      "lat": 31.9454,
+      "lng": 35.9284
     },
     {
       "id": "sisters-getaway-granada-2026",
@@ -93,7 +97,9 @@
       "location": "Alpujarra Mountains and Granada, Spain",
       "desc": "Women’s getaway to Granada and the Alpujarra Mountains with meals, pool time, wellness, and an Alhambra tour.",
       "website": "https://sistersgetaway.wetravel.com/trips/august-24-30th-2026-with-sisters-getaway-to-granada-sisters-getaway-56521944",
-      "instagram": "https://www.instagram.com/sistersgetawayofficial/"
+      "instagram": "https://www.instagram.com/sistersgetawayofficial/",
+      "lat": 37.1773,
+      "lng": -3.5986
     },
     {
       "id": "onepath-macedonia-kosovo-2026",
@@ -105,7 +111,9 @@
       "location": "Macedonia and Kosovo",
       "desc": "Women-only group trip with OnePath Travel covering cultural and scenic highlights across Macedonia and Kosovo.",
       "website": "https://travelonepath.com/",
-      "instagram": "https://www.instagram.com/onepath.travel/"
+      "instagram": "https://www.instagram.com/onepath.travel/",
+      "lat": 41.9981,
+      "lng": 21.4254
     },
     {
       "id": "muslim-hikers-mount-toubkal-2026",
@@ -117,7 +125,9 @@
       "location": "Mount Toubkal, Morocco",
       "desc": "Two-day guided trek to 4,167 m with Muslim Hikers — a challenging but rewarding mountain adventure.",
       "website": "https://www.instagram.com/muslim.hikers/",
-      "instagram": "https://www.instagram.com/muslim.hikers/"
+      "instagram": "https://www.instagram.com/muslim.hikers/",
+      "lat": 31.0595,
+      "lng": -7.9151
     },
     {
       "id": "onepath-japan-2026",
@@ -129,7 +139,9 @@
       "location": "Osaka, Kyoto, Nara, and Tokyo",
       "desc": "Women-only group trip to Japan with OnePath Travel, including major cultural cities and a well-paced itinerary.",
       "website": "https://travelonepath.com/",
-      "instagram": "https://www.instagram.com/onepath.travel/"
+      "instagram": "https://www.instagram.com/onepath.travel/",
+      "lat": 35.6762,
+      "lng": 139.6503
     },
     {
       "id": "mawa-jordan-2026",
@@ -141,62 +153,9 @@
       "location": "Jordan",
       "desc": "Eight-day hiking trip covering Petra, Wadi Rum, Jordan’s highest peak, and a cooking class.",
       "website": "https://mawacollective.com/trips",
-      "instagram": "https://www.instagram.com/mawa.collective/"
-    },
-    {
-      "id": "sisters-getaway-granada-2026",
-      "title": "Sisters Getaway Granada",
-      "tag": "Trip",
-      "eventDate": "2026-08-24",
-      "date": "August 24–30, 2026",
-      "location": "Alpujarra Mountains and Granada, Spain",
-      "desc": "Women’s getaway to Granada and the Alpujarra Mountains with meals, pool time, wellness, and an Alhambra tour.",
-      "website": "https://sistersgetaway.wetravel.com/trips/august-24-30th-2026-with-sisters-getaway-to-granada-sisters-getaway-56521944",
-      "instagram": "https://www.instagram.com/sistersgetawayofficial/"
-    },
-    {
-      "id": "onepath-macedonia-kosovo-2026",
-      "title": "OnePath Macedonia and Kosovo",
-      "tag": "Trip",
-      "eventDate": "2026-09-30",
-      "date": "September 30–October 4, 2026",
-      "location": "Macedonia and Kosovo",
-      "desc": "Women-only group trip with OnePath Travel covering cultural and scenic highlights across Macedonia and Kosovo.",
-      "website": "https://travelonepath.com/",
-      "instagram": "https://www.instagram.com/onepath.travel/"
-    },
-    {
-      "id": "muslim-hikers-mount-toubkal-2026",
-      "title": "Muslim Hikers Mount Toubkal",
-      "tag": "Trip",
-      "eventDate": "2026-10-02",
-      "date": "October 2–5, 2026",
-      "location": "Mount Toubkal, Morocco",
-      "desc": "Two-day guided trek to 4,167 m with Muslim Hikers — a challenging but rewarding mountain adventure.",
-      "website": "https://www.instagram.com/muslim.hikers/",
-      "instagram": "https://www.instagram.com/muslim.hikers/"
-    },
-    {
-      "id": "onepath-japan-2026",
-      "title": "OnePath Japan",
-      "tag": "Trip",
-      "eventDate": "2026-10-15",
-      "date": "October 15–25, 2026",
-      "location": "Osaka, Kyoto, Nara, and Tokyo",
-      "desc": "Women-only group trip to Japan with OnePath Travel, including major cultural cities and a well-paced itinerary.",
-      "website": "https://travelonepath.com/",
-      "instagram": "https://www.instagram.com/onepath.travel/"
-    },
-    {
-      "id": "mawa-jordan-2026",
-      "title": "Ma'wa Jordan",
-      "tag": "Trip",
-      "eventDate": "2026-11-14",
-      "date": "November 14–21, 2026",
-      "location": "Jordan",
-      "desc": "Eight-day hiking trip covering Petra, Wadi Rum, Jordan’s highest peak, and a cooking class.",
-      "website": "https://mawacollective.com/trips",
-      "instagram": "https://www.instagram.com/mawa.collective/"
+      "instagram": "https://www.instagram.com/mawa.collective/",
+      "lat": 31.9454,
+      "lng": 35.9284
     }
   ]
 }
