@@ -842,12 +842,13 @@ function tagClass(item){
   const activityKeywords = ['workshop','wellness','social','bake','bouquet','prep','fun day','family fun','creative','writing','atelier'];
   const mosqueKeywords = ['fiqh','tafseer','salah','quran','tajweed','hifdh','thrive','stand firm','halaqa','prayer','masjid','mnn','ism','icna'];
 
-  if(sportsData.includes(item) || item.category === 'sports' || sportsKeywords.some(k => text.includes(k))) return 'cat-sports';
+  if(sportsData.includes(item) || item.category === 'sports') return 'cat-sports';
   if(tripsData.includes(item) || item.category === 'trips') return 'cat-trip';
   if(item.category === 'clubs' || clubsData.includes(item)) return 'cat-club';
   if(dayActivitiesData.includes(item) || item.category === 'dayactivities') return 'cat-dayactivity';
   if(gatheringsData.includes(item) || item.category === 'functions') return 'cat-function';
   if(mosqueGatheringsData.includes(item) || item.category === 'mosquegatherings') return 'cat-mosque';
+  if(sportsKeywords.some(k => text.includes(k))) return 'cat-sports';
   if(tripKeywords.some(k => text.includes(k))) return 'cat-trip';
   if(gatheringKeywords.some(k => text.includes(k))) return 'cat-function';
   if(activityKeywords.some(k => text.includes(k))) return 'cat-dayactivity';
@@ -874,7 +875,7 @@ function eventTypeLabel(item){
   }
   const labels = {
     'cat-sports':'Sports', 'cat-trip':'Trip', 'cat-club':'Club',
-    'cat-gathering':'Function', 'cat-dayactivity':'Activity', 'cat-mosque':'Mosque Program',
+    'cat-gathering':'Function', 'cat-function':'Function', 'cat-dayactivity':'Activity', 'cat-mosque':'Mosque Program',
     'cat-resource':'Resource'
   };
   return labels[tagClass(item)] || 'Event';
@@ -883,7 +884,7 @@ function eventTypeLabel(item){
 function eventColor(item){
   const colors = {
     'cat-sports':'var(--coral)', 'cat-trip':'var(--purple)', 'cat-club':'var(--pink)',
-    'cat-gathering':'var(--pink)', 'cat-dayactivity':'var(--blue)', 'cat-mosque':'#c3e2d4',
+    'cat-gathering':'var(--pink)', 'cat-function':'var(--pink)', 'cat-dayactivity':'var(--blue)', 'cat-mosque':'#c3e2d4',
     'cat-resource':'#A9D6B8'
   };
   return colors[tagClass(item)] || 'var(--card)';
@@ -2337,6 +2338,7 @@ document.getElementById('categoryRow').addEventListener('click', e => {
     goToTab('travel');
     return;
   }
+  if(btn.dataset.catfilter === 'activities') state.view = 'calendar';
   state.categoryFilter = btn.dataset.catfilter;
   state.page = 1;
   render();
