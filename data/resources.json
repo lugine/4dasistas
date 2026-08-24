@@ -1974,23 +1974,25 @@
       "id": "healing-hearts-muslim-survivors-group",
       "title": "Healing Hearts: Muslim Survivors Group",
       "type": "Support Group",
-      "category": "supportgroups",
+      "category": "mentalhealth",
       "location": "Online",
       "date": "October 14, 2026 · 11:00 AM – 12:00 PM (UTC-4)",
       "ownedBy": "Community-run support group",
       "desc": "A gathering space for Muslim individuals who identify as having experienced sexual violence, sexual harassment, and/or gender-based violence. Participants discuss healing, faith, and community-building.",
-      "calDate": "2026-10-14"
+      "calDate": "2026-10-14",
+      "isSupportGroup": true
     },
     {
       "id": "eldest-daughters-support-group",
       "title": "Eldest Daughters",
       "type": "Support Group",
-      "category": "supportgroups",
+      "category": "mentalhealth",
       "calDate": "2026-08-28",
       "date": "Friday, August 28, 2026 · 6:00–7:30 PM · Online",
       "ownedBy": "Community-run support group",
       "desc": "A support space for eldest daughters to connect and process shared experiences together.",
-      "instagram": "https://www.instagram.com/p/DcOkpTNOQ9W/"
+      "instagram": "https://www.instagram.com/p/DcOkpTNOQ9W/",
+      "isSupportGroup": true
     }
   ]
 }
