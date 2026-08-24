@@ -1488,7 +1488,8 @@
       "instagram": "https://www.instagram.com/khalilcenter/",
       "date": "Every Monday · 11:00 AM–12:00 PM CST",
       "ownedBy": "Khalil Center",
-      "category": "mentalhealth"
+      "category": "supportgroups",
+      "isSupportGroup": true
     },
     {
       "id": "restaurant-walima-mississauga",
@@ -1992,13 +1993,14 @@
       "ownedBy": "Community-run support group",
       "desc": "A gathering space for Muslim individuals who identify as having experienced sexual violence, sexual harassment, and/or gender-based violence. Participants discuss healing, faith, and community-building.",
       "calDate": "2026-10-14",
-      "isSupportGroup": true
+      "isSupportGroup": true,
+      "category": "supportgroups"
     },
     {
       "id": "eldest-daughters-support-group",
       "title": "Eldest Daughters",
       "type": "Support Group",
-      "category": "mentalhealth",
+      "category": "supportgroups",
       "calDate": "2026-08-28",
       "date": "Friday, August 28, 2026 · 6:00–7:30 PM · Online",
       "ownedBy": "Community-run support group",

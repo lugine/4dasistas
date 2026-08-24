@@ -142,6 +142,7 @@
   .mental-health-grid .mental-health-desc{ display:none; }
   .mental-health-grid .mental-health-desc.visible{ display:block; }
   .mental-health-grid .mental-health-more{ margin-top:10px; }
+  .mental-health-support-link{ display:block; width:100%; margin:16px 0; text-align:center; }
   .mental-health-grid .panel-links{ margin-top:auto; padding-top:8px; }
 
   .small-business-grid{ display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; align-items:stretch; }
@@ -1448,6 +1449,8 @@ function renderResourceList(){
       description.classList.toggle('visible');
       button.textContent = description.classList.contains('visible') ? 'Hide Details' : 'Learn More';
     }));
+    el.insertAdjacentHTML('beforeend', '<button type="button" class="link-btn secondary mental-health-support-link" id="mentalHealthSupportLink">View Support Groups →</button>');
+    document.getElementById('mentalHealthSupportLink').addEventListener('click', () => goToTab('supportgroups'));
   }
 
   if(isSmallBiz && window.instgrm && window.instgrm.Embeds){
