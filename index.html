@@ -1083,7 +1083,7 @@ function buildDateMap(items, year, month){
 function renderSupportGroupCalendar(){
   const pane = document.getElementById('sgCalendarPane');
   if(!pane) return;
-  const sgItems = allResourceItems.filter(r => r.category === 'supportgroups');
+  const sgItems = allResourceItems.filter(r => r.isSupportGroup === true);
   const year = state.sgCalYear, month = state.sgCalMonth;
   const dateMap = buildDateMap(sgItems, year, month);
   const first = new Date(year, month, 1);
@@ -1311,7 +1311,6 @@ const resourceFilterList = [
   {key:'restaurants', label:'Restaurants'},
   {key:'beautycare', label:'Health n Beauty'},
   {key:'mentalhealth', label:'Mental Health'},
-  {key:'supportgroups', label:'Support Groups'},
   {key:'bakeries', label:'Small Businesses'},
   {key:'legal', label:'Legal Services'},
 ];
@@ -1410,7 +1409,7 @@ function renderResourceList(){
   const el = document.getElementById('directory-view');
   const pagEl = document.getElementById('resourcePagination');
   const filtered = interleaveByCategory(filteredResourceItems());
-  const isMentalHealth = state.resourceFilter === 'mentalhealth' || state.resourceFilter === 'supportgroups';
+  const isMentalHealth = state.resourceFilter === 'mentalhealth';
   const isSmallBiz = state.resourceFilter === 'bakeries';
   el.className = isMentalHealth ? 'mental-health-grid' : isSmallBiz ? 'small-business-grid' : '';
   el.style.display = (isMentalHealth || isSmallBiz) ? 'grid' : 'block';
@@ -1666,8 +1665,9 @@ function renderDirectory(){
   const el = document.getElementById('directory-view');
   if(state.tab === 'supportgroups'){
     document.getElementById('resourcePagination').innerHTML = '';
-    const sgItems = allResourceItems.filter(r => r.category === 'supportgroups');
+    const sgItems = allResourceItems.filter(r => r.isSupportGroup === true);
     el.innerHTML = `
+      <button class="link-btn secondary" id="sgToMentalHealthBtn" style="margin-bottom:14px;">Mental Health Resources →</button>
       <div class="sg-view-toggle">
         <button class="${state.sgView==='list'?'active':''}" data-sgview="list">List only</button>
         <button class="${state.sgView==='calendar'?'active':''}" data-sgview="calendar">Calendar only</button>
@@ -1693,6 +1693,11 @@ function renderDirectory(){
     if(state.sgView !== 'list') renderSupportGroupCalendar();
     document.querySelectorAll('.sg-view-toggle button').forEach(btn => {
       btn.addEventListener('click', () => { state.sgView = btn.dataset.sgview; renderDirectory(); });
+    });
+    document.getElementById('sgToMentalHealthBtn').addEventListener('click', () => {
+      state.resourceFilter = 'mentalhealth';
+      state.resourcePage = 1;
+      goToTab('resources');
     });
   } else if(state.tab === 'travel'){
     document.getElementById('resourcePagination').innerHTML = '';
