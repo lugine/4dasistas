@@ -2096,6 +2096,10 @@ function generateCustomICS(){
    DETAIL VIEW
    ============================================================ */
 function findItem(id){ return ALL_ITEMS.find(e => e.id === id); }
+function firstUrl(value){
+  const match = String(value || '').match(/https?:\/\/[^\s)]+/i);
+  return match ? match[0] : '';
+}
 
 function renderDetail(id){
   const e = findItem(id);
@@ -2106,12 +2110,14 @@ function renderDetail(id){
   if(e.location) facts += `<div class="detail-fact"><b>Location:</b> ${e.location}</div>`;
   if(e.organizer) facts += `<div class="detail-fact"><b>Organizer:</b> ${e.organizer}${e.contact ? ' · ' + e.contact : ''}</div>`;
   if(e.price) facts += `<div class="detail-fact"><b>Price:</b> ${e.price}</div>`;
-  if(e.registration) facts += `<div class="detail-fact"><b>Registration:</b> ${e.registration}</div>`;
+  const registrationUrl = firstUrl(e.registration);
+  if(e.registration && !registrationUrl) facts += `<div class="detail-fact"><b>Registration:</b> ${e.registration}</div>`;
   if(e.type) facts += `<div class="detail-fact"><b>Type:</b> ${e.type}</div>`;
   if(e.tripType) facts += `<div class="detail-fact"><b>Trip type:</b> ${e.tripType}</div>`;
   if(e.email) facts += `<div class="detail-fact"><b>Email:</b> ${e.email}</div>`;
 
   let links = '';
+  if(registrationUrl) links += `<a class="link-btn primary" href="${registrationUrl}" target="_blank" rel="noopener">Register / Join</a>`;
   if(e.whatsapp) links += `<a class="link-btn primary" href="${e.whatsapp}" target="_blank" rel="noopener">Join WhatsApp Group</a>`;
   if(e.instagram) links += `<a class="link-btn secondary" href="${e.instagram}" target="_blank" rel="noopener">Follow on Instagram</a>`;
   if(e.website) links += `<a class="link-btn secondary" href="${e.website}" target="_blank" rel="noopener">Visit Website</a>`;
