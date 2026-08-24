@@ -612,6 +612,8 @@
   <a class="subscribe-fallback" id="subscribeFallback" href="#" target="_blank" rel="noopener">or download the file directly</a>
 </div>
 
+<p class="page-disclaimer" id="pageDisclaimer">Details change often, so always confirm dates, prices, locations, and any "hijab-off"/private-space claims directly with the organizer before attending.</p>
+
 <footer>
   <a class="suggest-btn" href="mailto:lujanealdimasi@gmail.com?subject=4DASISTAS%20Suggestion">✎ Suggest a change</a>
   <div class="footer-btns">
@@ -626,8 +628,6 @@
   </div>
   <img class="footer-logo" src="assets/OFFICIAL%20LOGO.png" alt="Not a cult (Yet)">
 </footer>
-
-<p class="page-disclaimer" id="pageDisclaimer">Details change often, so always confirm dates, prices, locations, and any "hijab-off"/private-space claims directly with the organizer before attending.</p>
 
 <script>
 /* ============================================================
@@ -1407,7 +1407,6 @@ function interleaveByCategory(items){
 }
 
 function renderResourceList(){
-  const RES_PAGE_SIZE = 6;
   const el = document.getElementById('directory-view');
   const pagEl = document.getElementById('resourcePagination');
   const filtered = interleaveByCategory(filteredResourceItems());
@@ -1418,11 +1417,7 @@ function renderResourceList(){
 
   if(filtered.length === 0){ el.innerHTML = '<div class="empty">Nothing here yet.</div>'; pagEl.innerHTML=''; return; }
 
-  const totalPages = Math.ceil(filtered.length / RES_PAGE_SIZE);
-  if(state.resourcePage > totalPages) state.resourcePage = totalPages;
-  if(state.resourcePage < 1) state.resourcePage = 1;
-  const start = (state.resourcePage - 1) * RES_PAGE_SIZE;
-  const pageItems = filtered.slice(start, start + RES_PAGE_SIZE);
+  const pageItems = filtered;
 
   el.innerHTML = pageItems.map(r => `
     <div class="panel-card">
@@ -1459,17 +1454,7 @@ function renderResourceList(){
     window.instgrm.Embeds.process();
   }
 
-  if(totalPages <= 1){
-    pagEl.innerHTML = '';
-  } else {
-    pagEl.innerHTML = `
-      <button class="page-btn" id="resPrevPage" ${state.resourcePage===1?'disabled':''}>← Prev</button>
-      <span class="page-info">Page ${state.resourcePage} of ${totalPages}</span>
-      <button class="page-btn" id="resNextPage" ${state.resourcePage===totalPages?'disabled':''}>Next →</button>
-    `;
-    document.getElementById('resPrevPage').addEventListener('click', () => { state.resourcePage--; renderResourceList(); window.scrollTo({top:0, behavior:'smooth'}); });
-    document.getElementById('resNextPage').addEventListener('click', () => { state.resourcePage++; renderResourceList(); window.scrollTo({top:0, behavior:'smooth'}); });
-  }
+  pagEl.innerHTML = '';
 }
 
 function renderResourceMap(){
@@ -1482,23 +1467,13 @@ function renderResourceMap(){
     </div>
     <div id="resourceMapContainer" class="resource-map"></div>
   </div>
-    <div class="unmapped-resource-list" id="unmappedListContent"></div>
     <div class="map-legend">
       ${legendItems.map(f => `<span><i style="background:${categoryColors[f.key]}"></i> ${f.label}</span>`).join('')}
     </div>
-    <div class="sub-note" id="mapSkippedNote"></div>`;
+    </div>`;
 
   const filtered = filteredResourceItems();
-  const showUnmapped = ['mentalhealth','legal'].includes(state.resourceFilter);
-  const unmappedListContent = document.getElementById('unmappedListContent');
-  if(unmappedListContent && !showUnmapped) unmappedListContent.style.display = 'none';
   const withCoords = filtered.filter(r => typeof r.lat === 'number' && typeof r.lng === 'number');
-  const skipped = filtered.length - withCoords.length;
-  if(withCoords.length === 0){
-    document.getElementById('mapSkippedNote').textContent = 'No mapped resources.';
-  } else if(skipped > 0){
-    document.getElementById('mapSkippedNote').textContent = `${skipped} item${skipped>1?'s':''} without a mapped address — check List view for those.`;
-  }
 
   if(leafletMap){ leafletMap.remove(); leafletMap = null; }
 
@@ -1538,15 +1513,9 @@ function renderResourceMap(){
         <span>${r.type || ''}${r.location ? ' · ' + r.location : ''}</span>
       </div>
     `).join('');
-  const unmappedItems = filtered.filter(r => typeof r.lat !== 'number' || typeof r.lng !== 'number');
-  const unmappedHeading = state.resourceFilter === 'bakeries' ? 'Small businesses' : `Not mapped (${unmappedItems.length})`;
-  unmappedListContent.innerHTML = `<h4>${unmappedHeading}</h4>${unmappedItems.map(r => `
-    <div class="side-item" data-id="${r.id}">
-      <strong>${r.title}</strong><span>${r.type || 'Resource'} · Location not provided</span>
-    </div>`).join('') || '<div class="side-item"><span>All resources have mapped locations.</span></div>'}`;
   sideListTitle.textContent = `Mapped resources (${mappedItems.length})`;
 
-  document.querySelectorAll('#resourceSideList .side-item, #unmappedListContent .side-item').forEach(item => {
+  document.querySelectorAll('#resourceSideList .side-item').forEach(item => {
       item.addEventListener('click', () => {
         const id = item.dataset.id;
         const found = allResourceItems.find(r => r.id === id);
