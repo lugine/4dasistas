@@ -311,7 +311,7 @@ collections:
               - { label: "Type (e.g. Boutique, Bakery & Café)", name: "type", widget: "string" }
               - { label: "Location", name: "location", widget: "location-autocomplete" }
               - { label: "Hours / date info", name: "date", widget: "string", required: false }
-              - { label: "Ownership note", name: "ownedBy", widget: "string", required: false }
+              - { label: "Ownership note (required)", name: "ownedBy", widget: "string", required: true, hint: "Every business needs a real owner name here — do not leave blank." }
               - { label: "Description", name: "desc", widget: "text" }
               - { label: "Latitude (for map)", name: "lat", widget: "number", value_type: "float", required: false }
               - { label: "Longitude (for map)", name: "lng", widget: "number", value_type: "float", required: false }
