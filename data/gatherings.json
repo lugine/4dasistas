@@ -1,6 +1,21 @@
 {
   "items": [
     {
+      "id": "built-by-her-toronto-aug21-2026",
+      "title": "Built by Her: Coffee Circle",
+      "tag": "Function",
+      "category": "functions",
+      "type": "Entrepreneur and Creative Coffee Circle",
+      "eventDate": "2026-08-21",
+      "date": "Friday, August 21, 2026 · 6:30 PM",
+      "location": "Café in Midtown/Downtown Toronto (exact venue TBA)",
+      "organizer": "Deen Journeys",
+      "price": "Members $10 · Non-members $20",
+      "registration": "Limited spots; register through the link in bio",
+      "desc": "A curated coffee circle for Muslimah entrepreneurs and creatives with an intentional theme, guided roundtable conversation, practical strategy, shared wisdom, and barakah-centered sisterhood.",
+      "instagram": "https://www.instagram.com/deen.journeys/"
+    },
+    {
       "id": "mnn-taste-of-mississauga-sept5-6-2026",
       "title": "Taste of Mississauga",
       "tag": "Function",
