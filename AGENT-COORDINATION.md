@@ -78,6 +78,13 @@ npx wrangler deploy
 
 **Status:** IDLE
 **Last updated by:** Claude (chat)
+**Last updated:** 2026-08-24 (later)
+
+**2026-08-24 (later) — Claude (chat) — `data/sports.json`, `data/dayactivities.json`, `data/mosquegatherings.json`** — Added 5 real events from Instagram captions with full details already given: Pilates & Pajamas, MuslimFest Women's Pilates Workshop (searched and confirmed real MuslimFest 2026 dates: Aug 28-30), Beads of Strength, Sisters Sip & Paint, ISNA Youth Book Club. Two items NOT added, flagged to Lujane: (1) @saisociety_ HIIT+Acai event has no date in caption and search found nothing - genuinely can't find it; (2) a 9-events Instagram post link was completely inaccessible via search, same Instagram-access limitation as always - asked Lujane to relay the details directly rather than guessing/fabricating 9 events.
+
+
+**Status:** IDLE
+**Last updated by:** Claude (chat)
 **Last updated:** 2026-08-24 (session end)
 
 **2026-08-24 (session end) — Claude (chat) — `index.html`, `admin/config.yml`, `data/resources.json`** — Added 3 verified restaurant/cafe entries (Adam's Diner, Falaknuma Restaurant, Edill's Coffee House). Softened calendar blue/coral colors per Lujane's standing preference (softer palette going forward). Built a proper grid layout for Small Businesses (was previously just a plain text list buried in the Map view's unmapped-items sidebar) with Instagram official-embed support via a new `instagramPost` field (CMS-editable) - added the script + processing trigger. Could not find real individual Instagram post URLs via search for the 5 existing small businesses (general web search doesn't reliably index posts from low-follower personal accounts) - asked Lujane to supply the 5 post links directly instead of continuing to guess. Mental health panel 'messiness' complaint not yet addressed - CSS looked properly structured on inspection, requested a screenshot rather than guess blind again.
@@ -93,6 +100,9 @@ npx wrangler deploy
 **Status:** IDLE
 **Last updated by:** Claude (chat)
 **Last updated:** 2026-08-24 (later)
+
+**2026-08-24 (later) — Claude (chat) — `data/sports.json`, `data/dayactivities.json`, `data/mosquegatherings.json`** — Added 5 real events from Instagram captions with full details already given: Pilates & Pajamas, MuslimFest Women's Pilates Workshop (searched and confirmed real MuslimFest 2026 dates: Aug 28-30), Beads of Strength, Sisters Sip & Paint, ISNA Youth Book Club. Two items NOT added, flagged to Lujane: (1) @saisociety_ HIIT+Acai event has no date in caption and search found nothing - genuinely can't find it; (2) a 9-events Instagram post link was completely inaccessible via search, same Instagram-access limitation as always - asked Lujane to relay the details directly rather than guessing/fabricating 9 events.
+
 
 **2026-08-24 (later) — Claude (chat) — `index.html`, `data/trips.json`** — Fixed 3 things: (1) Functions category color mismatch - nav filter chip used #fae1e4 (light pink) but event cards used cat-gathering's purple; gave functions its own cat-function class matching exactly. (2) Trips globe only showed 4/11 pins - most trips were missing lat/lng entirely; added real coordinates to all 7 missing trips. Also found and removed 5 duplicate trip entries (likely from scheduled task running twice) while in there. (3) Added Soonest/Latest as explicit sort options with real ascending/descending control - previously there was only one always-ascending 'Time' option with no way to reverse it.
 
