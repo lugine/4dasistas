@@ -1,6 +1,7 @@
 {
   "items": [
     {
+      "eventDate": "2026-08-18",
       "city": "Mississauga",
       "date": "9pm on August 18th, 2026",
       "desc": "",
@@ -12,17 +13,7 @@
       "calDate": "2026-08-18"
     },
     {
-      "city": "Toronto",
-      "date": "June 28th, 2026 @2pm",
-      "desc": "a bouquet making workshop, but with the sweetest lil twist!! tickets can be found in the link in our bio🎟️\nhttps://www.instagram.com/p/DZlTgUVD_hK/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==&igsi=MzRlODBiNWFlZA==",
-      "instagram": "https://www.instagram.com/p/DZlTgUVD_hK/",
-      "location": "Toronto (see Instagram for exact venue)",
-      "title": "Floral Affairs",
-      "tag": "Day Activity",
-      "id": "floralaffairs_torontomuslimahs",
-      "calDate": "2026-06-28"
-    },
-    {
+      "eventDate": "2026-08-22",
       "city": "Mississauga",
       "date": "August 22, 2026 · 1:00–8:00 PM",
       "desc": "80+ vendors, pay-what-you-can charity market — food, art, spa, workshops & speakers.",
@@ -35,6 +26,7 @@
       "calDate": "2026-08-22"
     },
     {
+      "eventDate": "2026-08-27",
       "city": "Toronto",
       "date": "Thursday, August 27, 2026 · 3:00 PM",
       "organizer": "TBA",
@@ -49,6 +41,7 @@
       "calDate": "2026-08-27"
     },
     {
+      "eventDate": "2026-08-23",
       "city": "Elora",
       "date": "Sunday, August 23, 2026 · Drop in 10 AM–4 PM",
       "desc": "Tubing down the rapids with the girls — lunch provided after. Best for comfortable swimmers, spots limited.",
@@ -60,6 +53,7 @@
       "calDate": "2026-08-23"
     },
     {
+      "eventDate": "2026-08-25",
       "price": "$49",
       "city": "Scarborough",
       "date": "August 23, 2026 · 12:00 PM",
@@ -72,6 +66,7 @@
       "calDate": "2026-08-23"
     },
     {
+      "eventDate": "2026-08-29",
       "city": "Mississauga",
       "date": "August 29, 2026 · 11:00 AM",
       "organizer": "The Muslim Sisters Corner GTA",
@@ -85,6 +80,7 @@
       "calDate": "2026-08-29"
     },
     {
+      "eventDate": "2026-09-12",
       "city": "Toronto",
       "date": "September 12, 2026 · 4:00 PM",
       "desc": "Custom lip gloss bar, Palestine mirror decoden workshop, specialty café drink & 15% off Mieluna's menu. Early bird spots limited.",
@@ -96,6 +92,7 @@
       "calDate": "2026-09-12"
     },
     {
+      "eventDate": "2026-08-30",
       "price": "$10",
       "city": "Mississauga",
       "date": "Saturday, August 30, 2026 · 1:00–4:00 PM",
@@ -109,6 +106,7 @@
       "calDate": "2026-08-30"
     },
     {
+      "eventDate": "2026-08-31",
       "city": "TBA",
       "date": "Monday, August 31, 2026 · 2:00–6:00 PM",
       "desc": "Girls-only pool day and cookout with pool access, cookout food, mocktails, games, socializing, and sisterhood.",
@@ -120,6 +118,7 @@
       "calDate": "2026-08-31"
     },
     {
+      "eventDate": "2026-08-26",
       "city": "TBA",
       "date": "Tuesday, August 25, 2026",
       "organizer": "TMC Sisters Youth",
@@ -132,7 +131,7 @@
       "calDate": "2026-08-25"
     },
     {
-      "eventDate": "2026-09-18",
+      "eventDate": "2026-08-25",
       "city": "Toronto",
       "date": "Friday, September 18, 2026 · 6:00 PM",
       "desc": "An evening for teen girls to connect, create, and chat about friendships, confidence, stress & wellness. Beads, bonding & real talk. Dinner + bracelet making included.",
@@ -144,6 +143,7 @@
       "id": "beads-of-strength-sept18-2026"
     },
     {
+      "eventDate": "2026-09-26",
       "price": "$185 CAD",
       "city": "GTA",
       "date": "Saturday–Sunday, September 26–27, 2026",
@@ -156,6 +156,18 @@
       "website": "https://shetravels.ca/",
       "id": "she-travels-toronto-ranch-sep26-2026",
       "calDate": "2026-09-26"
+    },
+    {
+      "tag": "Workshop",
+      "title": "Ladies Daff Workshop",
+      "eventDate": "2026-11-01",
+      "days": [
+        "sun"
+      ],
+      "recurEnd": "2026-11-29",
+      "instagram": "https://www.instagram.com/p/DcWBXXYtavW/?utm_source=ig_web_copy_link&igsi=MzRlODBiNWFlZA==",
+      "desc": "5 Weeks Online Ladies Daff Workshop",
+      "id": "daff"
     }
   ]
 }
