@@ -73,13 +73,15 @@ npx wrangler deploy
 
 **Status:** IDLE
 **Last updated by:** Cline agent (VS Code)
-**Last updated:** 2026-08-25 (audit fixes round 2)
+**Last updated:** 2026-08-25 (multi-type event filter)
 
 ---
 
 ## Recent Activity Log
 
 _(most recent first — add new entries to the top, trim past ~15)_
+
+- 2026-08-25 — Cline (VS Code) — `index.html` — New "Event types ▾" multi-select dropdown beside the List/Calendar toggle on the Calendar tab: checkboxes for Sports / Activities / Functions / Trips / Mosque Programs / Support Groups (any combination, no min/max), themed to site palette (lilac accents, per-type colored dots matching category chips). Union-filters through itemsForCategoryBase so BOTH list and calendar views respect it; sub-filter rows step aside with a note while active; calendar scope-note lists chosen types; chip clicks and Calendar re-entry clear selection; selection persists in URL hash (#…&types=). All/Clear shortcuts; outside-click closes panel. Tested via full jsdom runtime simulation — 15/15 assertions passed (boot, tab nav, panel open, single+multi selection, union counts 14→17, badge counts, list+calendar rendering under filter, clear action, chip reset, hash write/restore) + node --check syntax validation.
 
 - 2026-08-25 — Cline (VS Code) — `admin/index.html` — Rolled Decap pin 3.15.1 → 3.14.1: Lujane reported ALL widget:date fields (eventDate/recurStart/recurEnd) missing from forms while string/select fields rendered — and the 3.15.1 bundle logs an internally inconsistent version set (cms-app 3.15.1 + cms-core 3.17.1), pointing at a mid-year core refactor breaking date-control registration. 3.14.1 (June build) predates it and is verified serving HTTP 200. Also: symptom pattern equally matches browsers still caching the OLD anchored config.yml — Lujane must deploy latest AND clear site data (or test incognito) before judging.
 

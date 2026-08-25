@@ -505,6 +505,22 @@
 
   .suggest-btn{ display:inline-block; font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:13px; background:var(--blush); border:1.5px solid var(--charcoal); color:var(--charcoal); padding:9px 18px; border-radius:999px; cursor:pointer; margin-bottom:2px; text-decoration:none; }
   .hp-field{ position:absolute; left:-9999px; }
+/* Event-types multi-select dropdown */
+.type-multi-wrap{position:relative}
+.type-multi-btn{font-family:inherit;font-size:14px;background:#fff;border:1.5px solid #e4d7bd;color:#373d3b;font-weight:700;padding:9px 16px;border-radius:999px;cursor:pointer;display:inline-flex;align-items:center;gap:6px}
+.type-multi-btn:hover{border-color:#caaacd;background:#faf3e6}
+.type-multi-btn.active{background:#caaacd;border-color:#caaacd;color:#fff7e6}
+#typeMultiCount{font-size:.85em;opacity:.85}
+.type-multi-panel{display:none;position:absolute;top:calc(100% + 8px);left:0;z-index:70;background:#fffdf7;border:1px solid #eadfce;border-radius:14px;box-shadow:0 10px 28px rgba(55,61,59,.18);padding:10px;min-width:250px;text-align:left}
+.type-multi-panel.open{display:block}
+.type-multi-row{display:flex;align-items:center;gap:10px;padding:7px 10px;border-radius:10px;cursor:pointer;font-size:14px;font-weight:600;color:#373d3b}
+.type-multi-row:hover{background:#faf3e6}
+.type-multi-row input[type=checkbox]{accent-color:#caaacd;width:16px;height:16px;margin:0}
+.type-dot{width:12px;height:12px;border-radius:50%;flex:none}
+.type-multi-actions{display:flex;gap:8px;margin-top:6px;padding-top:8px;border-top:1px dashed #e4d7bd}
+.type-multi-actions button{flex:1;background:#fff7e6;border:1px solid #caaacd;color:#373d3b;border-radius:999px;padding:6px 8px;font-size:12.5px;font-weight:700;cursor:pointer}
+.type-multi-actions button:hover{background:#f3e6fb}
+.type-multi-note{margin:8px 0 0;font-size:11.5px;color:#776867;line-height:1.35}
 </style>
 </head>
 <body>
@@ -572,6 +588,22 @@
   <div class="view-toggle" id="viewToggle">
     <button class="active" data-view="list">List view</button>
     <button data-view="calendar">Calendar view</button>
+  </div>
+  <div class="type-multi-wrap" id="typeMultiWrap">
+    <button type="button" class="type-multi-btn" id="typeMultiBtn">Event types <span id="typeMultiCount"></span> ▾</button>
+    <div class="type-multi-panel" id="typeMultiPanel">
+      <label class="type-multi-row"><input type="checkbox" value="sports"><span class="type-dot" style="background:#f4b183"></span>Sports</label>
+      <label class="type-multi-row"><input type="checkbox" value="activities"><span class="type-dot" style="background:#c3d5e2"></span>Activities</label>
+      <label class="type-multi-row"><input type="checkbox" value="functions"><span class="type-dot" style="background:#fae1e4"></span>Functions</label>
+      <label class="type-multi-row"><input type="checkbox" value="trips"><span class="type-dot" style="background:#ddb862"></span>Trips</label>
+      <label class="type-multi-row"><input type="checkbox" value="mosqueprograms"><span class="type-dot" style="background:#c3e2d4"></span>Mosque Programs</label>
+      <label class="type-multi-row"><input type="checkbox" value="supportgroups"><span class="type-dot" style="background:#d6c2e8"></span>Support Groups</label>
+      <div class="type-multi-actions">
+        <button type="button" data-typemulti-action="all">All types</button>
+        <button type="button" data-typemulti-action="clear">Clear</button>
+      </div>
+      <p class="type-multi-note">Pick any combination — replaces the category buttons while active.</p>
+    </div>
   </div>
   <label class="event-sort-label" id="eventSortLabel">Sort by
     <select class="event-sort-select" id="eventSortSelect" aria-label="Sort events by">
@@ -808,6 +840,7 @@ let state = {
   sgView:'both', sgCalYear: today.getFullYear(), sgCalMonth: today.getMonth(),
   tripType:'all', tripView:'list', resourceFilter:'all', resourceView:'map', resourcePage:1,
   timeFilter:'upcoming', eventSort:'soonest', todayOffset:0, page:1,
+  typeSel:[],
   returnTab:'',
   calYear: today.getFullYear(), calMonth: today.getMonth(),
 };
@@ -951,7 +984,34 @@ function clubCalendarItems(){
   })));
 }
 
+/* Event-types multi-select: lets users combine any of the six event types
+   (incl. Trips / Mosque Programs / Support Groups, which normally live on
+   their own tabs) into one list or calendar view. */
+const TYPE_MULTI_NAMES = {sports:'Sports',activities:'Activities',functions:'Functions',trips:'Trips',mosqueprograms:'Mosque Programs',supportgroups:'Support Groups'};
+const TYPE_MULTI_ALL = ['sports','activities','functions','trips','mosqueprograms','supportgroups'];
+function typeMultiActive(){ return Array.isArray(state.typeSel) && state.typeSel.length > 0; }
+
 function itemsForCategoryBase(cat){
+  if(typeMultiActive()){
+    const pools = {
+      sports: sportsData,
+      activities: dayActivitiesData,
+      functions: gatheringsData,
+      trips: tripsData,
+      mosqueprograms: mosqueGatheringsData,
+      supportgroups: allResourceItems.filter(r => r.isSupportGroup === true),
+    };
+    const seen = new Set();
+    const out = [];
+    state.typeSel.forEach(key => {
+      (pools[key] || []).forEach(item => {
+        if(seen.has(item.id)) return;
+        seen.add(item.id);
+        out.push({ ...item });
+      });
+    });
+    return out;
+  }
   if(cat === 'all') return EVENT_ITEMS;
   if(cat === 'sports'){
     return state.sportFilter === 'all' ? sportsData : sportsData.filter(e => e.sportKey === state.sportFilter);
@@ -1232,7 +1292,7 @@ function showTripPreviewPopup(point){
 function renderCalendar(){
   const items = itemsForCategory(state.categoryFilter);
 
-  if(state.categoryFilter === 'trips' && state.tripView === 'earth'){
+  if(state.categoryFilter === 'trips' && state.tripView === 'earth' && !typeMultiActive()){
     const hasMappedTrips = items.some(item => typeof item.lat === 'number' && typeof item.lng === 'number');
     if(hasMappedTrips){
       document.getElementById('calendar-view').style.display = 'block';
@@ -1280,7 +1340,10 @@ function renderCalendar(){
     if ((isMobileGrid ? d : (startDay + d)) % (isMobileGrid ? 4 : 7) === 0 && d !== daysInMonth) row++;
   }
   html += `</div><div class="calendar-day-detail" id="calendarDayDetail"><p class="calendar-scope-note">Select a date to see its full schedule.</p></div>`;
-  if(state.categoryFilter === 'all'){
+  if(typeMultiActive()){
+    const names = state.typeSel.map(k => TYPE_MULTI_NAMES[k] || k).join(' · ');
+    html += `<p class="calendar-scope-note">Showing ${names} in this calendar.</p>`;
+  } else if(state.categoryFilter === 'all'){
     html += `<p class="calendar-scope-note">Trips, Clubs, and Mosque Programs are not included here. Check their respective tabs for their calendars.</p>`;
   }
 
@@ -1385,6 +1448,10 @@ function renderSubFilters(){
   const el = document.getElementById('subFilterRow');
   el.className = 'subfilter-row';
   el.innerHTML = '';
+  if(typeMultiActive()){
+    el.innerHTML = '<div class="sub-note">“Event types” filter is active — clear it in the Event types menu to bring these options back.</div>';
+    return;
+  }
 
   if(state.categoryFilter === 'sports'){
 el.innerHTML = sportFilterOptions().map(f => `<button class="filter-chip ${state.sportFilter===f.key?'active':''}" data-sportfilter="${f.key}">${f.label}</button>`).join('');
@@ -2267,6 +2334,7 @@ function syncStateToHash(){
   params.set('time', state.timeFilter);
   params.set('rfilter', state.resourceFilter);
   params.set('rview', state.resourceView);
+  if(Array.isArray(state.typeSel) && state.typeSel.length) params.set('types', state.typeSel.join(','));
   history.replaceState(null, '', location.pathname + location.search + '#' + params.toString());
 }
 
@@ -2284,6 +2352,7 @@ function restoreStateFromHash(){
     state.resourceView = resourceView === 'instagram' ? 'list' : resourceView;
   }
   if(state.tripType === 'domestic') state.tripView = 'list';
+  if(params.has('types')) state.typeSel = params.get('types').split(',').filter(k => TYPE_MULTI_NAMES[k]);
   if(state.categoryFilter === 'mosquegatherings') state.categoryFilter = 'activities';
 }
 
@@ -2305,6 +2374,8 @@ function goToTab(tabName){
   if(tabName === 'events'){
     state.categoryFilter = 'all';
     state.view = 'calendar';
+    state.typeSel = [];
+    updateTypeMultiUI();
   }
   state.page = 1;
   render();
@@ -2360,6 +2431,8 @@ document.getElementById('categoryRow').addEventListener('click', e => {
   }
   const btn = e.target.closest('[data-catfilter]');
   if(!btn) return;
+  state.typeSel = [];
+  updateTypeMultiUI();
   if(btn.dataset.catfilter === 'mosqueprograms'){
     state.categoryFilter = 'mosqueprograms';
     state.view = 'calendar';
@@ -2432,6 +2505,37 @@ document.body.addEventListener('click', e => {
   if(!trigger) return;
   location.hash = '#/event/' + trigger.dataset.id;
 });
+
+/* ---- Event-types multi-select ---- */
+const typePanel = document.getElementById('typeMultiPanel');
+const typeMultiBtn = document.getElementById('typeMultiBtn');
+function updateTypeMultiUI(){
+  const sel = typeMultiActive() ? state.typeSel : [];
+  typeMultiBtn.classList.toggle('active', sel.length > 0);
+  document.getElementById('typeMultiCount').textContent = sel.length ? `(${sel.length})` : '';
+  typePanel.querySelectorAll('input[type=checkbox]').forEach(cb => { cb.checked = sel.includes(cb.value); });
+}
+typeMultiBtn.addEventListener('click', e => {
+  e.stopPropagation();
+  typePanel.classList.toggle('open');
+});
+document.addEventListener('click', e => {
+  if(!e.target.closest('.type-multi-wrap')) typePanel.classList.remove('open');
+});
+typePanel.addEventListener('change', e => {
+  if(!e.target.matches('input[type=checkbox]')) return;
+  state.typeSel = [...typePanel.querySelectorAll('input:checked')].map(cb => cb.value).filter(v => TYPE_MULTI_NAMES[v]);
+  state.page = 1;
+  updateTypeMultiUI();
+  render();
+});
+typePanel.querySelectorAll('[data-typemulti-action]').forEach(btn => btn.addEventListener('click', () => {
+  state.typeSel = btn.dataset.typemultiAction === 'all' ? [...TYPE_MULTI_ALL] : [];
+  state.page = 1;
+  updateTypeMultiUI();
+  render();
+}));
+updateTypeMultiUI();
 
 document.getElementById('backBtn').addEventListener('click', closeDetail);
 document.getElementById('contextBackButton').addEventListener('click', () => {
