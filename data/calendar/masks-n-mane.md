@@ -1,5 +1,5 @@
 ---
-section: functions
+section: activities
 title: Masks n Mane
 eventDate: 2026-09-27
 time: 16:00
