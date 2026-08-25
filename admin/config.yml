@@ -159,6 +159,8 @@ collections:
 - name: sports
   label: Sports
   folder: data/calendar
+  extension: json
+  format: json
   filter:
     field: section
     value: sports
@@ -246,6 +248,8 @@ collections:
 - name: dayactivities
   label: Calendar Activities
   folder: data/calendar
+  extension: json
+  format: json
   filter:
     field: section
     value: activities
@@ -323,6 +327,8 @@ collections:
 - name: gatherings
   label: Calendar Functions
   folder: data/calendar
+  extension: json
+  format: json
   filter:
     field: section
     value: functions
@@ -400,6 +406,8 @@ collections:
 - name: trips
   label: Calendar Trips
   folder: data/calendar
+  extension: json
+  format: json
   filter:
     field: section
     value: trips
@@ -477,6 +485,8 @@ collections:
 - name: mosquegatherings
   label: Mosque Programs
   folder: data/calendar
+  extension: json
+  format: json
   filter:
     field: section
     value: mosqueprograms
@@ -554,6 +564,8 @@ collections:
 - name: supportprograms
   label: Support Programs
   folder: data/calendar
+  extension: json
+  format: json
   filter:
     field: section
     value: supportprograms
@@ -658,6 +670,8 @@ collections:
 - name: res-cafes
   label: Resources - Cafe & Dessert
   folder: data/resources
+  extension: json
+  format: json
   filter:
     field: category
     value: cafes
@@ -741,6 +755,8 @@ collections:
 - name: res-shops
   label: Resources - Shops
   folder: data/resources
+  extension: json
+  format: json
   filter:
     field: category
     value: shops
@@ -817,6 +833,8 @@ collections:
 - name: res-restaurants
   label: Resources - Restaurants
   folder: data/resources
+  extension: json
+  format: json
   filter:
     field: category
     value: restaurants
@@ -893,6 +911,8 @@ collections:
 - name: res-beautycare
   label: Resources - Health n Beauty
   folder: data/resources
+  extension: json
+  format: json
   filter:
     field: category
     value: beautycare
@@ -969,6 +989,8 @@ collections:
 - name: res-mentalhealth
   label: Resources - Mental Health
   folder: data/resources
+  extension: json
+  format: json
   filter:
     field: category
     value: mentalhealth
@@ -1045,6 +1067,8 @@ collections:
 - name: res-bakeries
   label: Resources - Small Businesses
   folder: data/resources
+  extension: json
+  format: json
   filter:
     field: category
     value: bakeries
@@ -1121,6 +1145,8 @@ collections:
 - name: res-legal
   label: Resources - Legal Services
   folder: data/resources
+  extension: json
+  format: json
   filter:
     field: category
     value: legal

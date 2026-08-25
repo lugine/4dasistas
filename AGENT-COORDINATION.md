@@ -57,12 +57,18 @@ on an old build.
 **One-time fix (do this once, then every push auto-deploys):**
 1. Cloudflare dashboard → Workers & Pages → `4dasistas` Worker → Settings → Build.
 2. Connect the `lugine/4dasistas` GitHub repo, branch `main`.
-3. Build command: `python3 scripts/generate_calendar.py`
+3. Build command: `python3 scripts/build_content.py && python3 scripts/generate_calendar.py`
+   **(both scripts, in that order — build_content.py merges the per-entry
+   `data/calendar/*.json` / `data/resources/*.json` files the CMS writes
+   into the aggregate `data/*.json` files this site actually reads. Skip
+   it and every new CMS entry silently never shows up on the live site —
+   this is exactly what happened 2026-08-25, see the log entry below.)**
 4. Deploy command: `npx wrangler deploy` (`wrangler.toml` at repo root defines the asset deploy).
 5. Save.
 
 **Until that's connected**, deploy manually after any merge to `main`:
 ```
+python3 scripts/build_content.py
 python3 scripts/generate_calendar.py
 npx wrangler deploy
 ```
@@ -72,8 +78,10 @@ npx wrangler deploy
 ## Current Status
 
 **Status:** IDLE
-**Last updated by:** Cline agent (VS Code)
-**Last updated:** 2026-08-25 (folder-collection migration)
+**Last updated by:** Claude (chat)
+**Last updated:** 2026-08-25 (later)
+
+**2026-08-25 (later) — Claude (chat) — `admin/config.yml`, `wrangler.toml`, `data/calendar/*.json` (8 new), 8 stray `.md` files deleted** — Root-caused Lujane's report that "many submitted events won't show up on the calendar" (Islamic Biomorphic Art Workshop, Masks n Mane, Sip n Paint, Muslim Film Fest, plus 4 more found while investigating: 3x Boxing Program Launch dates, Macedonia & Kosovo trip). Cause: none of the 13 new folder collections in `admin/config.yml` (from today's earlier folder-collection migration) set `extension`/`format`, so Decap defaults new entries to Markdown (frontmatter + empty body) instead of the `.json` shape `scripts/build_content.py` reads (`load_folder()` explicitly skips anything not ending `.json`) — every *new* entry created since the migration was silently invisible to the site, while edits to pre-existing `.json` entries kept working fine, which is why this looked intermittent rather than totally broken. Fixed by adding `extension: json` + `format: json` to all 13 folder collections (6 `data/calendar`, 7 `data/resources`), and converting the 8 stray `.md` files to matching `.json` (same frontmatter fields, no data lost) then deleting the originals. Ran `build_content.py` — all 8 now appear in the aggregate files with zero warnings — then `generate_calendar.py`, confirmed all 8 titles present in `calendar.ics`. **Also fixed a second, compounding issue**: `wrangler.toml`'s header comment and this file's own "one-time fix" instructions above still said the Cloudflare dashboard Build command should be just `python3 scripts/generate_calendar.py` — missing `build_content.py` entirely, so even correctly-formatted future entries would never reach the aggregate files on deploy. Updated both to the two-script command. **Lujane still needs to verify in the Cloudflare dashboard (Settings → Build) that the actual configured Build command matches** — I can't check or change dashboard settings myself, only what's in this repo.
 
 **2026-08-25 (folder-collection migration) — Cline (VS Code) — `admin/config.yml`, `data/calendar/**` + `data/resources/**` (new, 254 files), regenerated `data/*.json` aggregates, `scripts/build_content.py` (new), `scripts/split_legacy_content.py` (one-time, kept for reference), DELETED `scripts/apply_event_moves.py` + `apply-event-moves.yml`, `README.md`** — Migrated all calendar sections + Resources to Decap FOLDER collections: every listing is now its own small JSON file (data/calendar/<slug>.json with a section field; data/resources/<slug>.json with category), and each CMS tab is a filtered view of those folders. This delivers Lujane's asks natively: per-type filtered tabs in Resources (7) and Sports via its own tab + sportKey field search/sort, native sortable_fields sorting (eventDate/title) in every tab, NO id field anywhere (identifier is the title-derived filename; build injects stable ids from stored/filename), tag auto-fills from title for Activities/Functions, and changing an item's Calendar-tab/Type dropdown OFFICIALLY relocates it - replacing the deleted moveTo machinery. scripts/build_content.py merges folders into the legacy aggregate files the frontend reads (frontend untouched); split_legacy_content.py was the one-time migration (kept for reference). Counts verified lossless vs git HEAD incl. id-set equality for all seven datasets after fixing a slug-collision bug in the splitter. Build command is now: python3 scripts/build_content.py && python3 scripts/generate_calendar.py && npx wrangler deploy (README updated). Validated: YAML parse, 13 folder collections w/ correct filters+defaults+sortable+summary and no id/moveTo fields, jsdom suite 11/11 on rebuilt aggregates, node --check.
 

@@ -3,7 +3,11 @@
 #
 # Connect this repo in the Cloudflare dashboard under Workers & Pages so every
 # push to main deploys automatically — see AGENT-COORDINATION.md for the
-# one-time setup steps. Build command: python3 scripts/generate_calendar.py
+# one-time setup steps.
+# Build command: python3 scripts/build_content.py && python3 scripts/generate_calendar.py
+#   (build_content.py merges the per-entry data/calendar/*.json and
+#   data/resources/*.json files the CMS writes into the aggregate data/*.json
+#   files this site actually reads — skip it and new CMS entries never show up)
 # Deploy command: npx wrangler deploy
 
 name = "4dasistas"
