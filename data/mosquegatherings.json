@@ -2,7 +2,7 @@
   "items": [
     {
       "id": "mnn-friday-family-halaqah-2026",
-      "tag": "Mosque Gathering",
+      "tag": "Mosque Program",
       "title": "Friday Family Halaqah",
       "eventDate": "2026-08-21",
       "date": "Fridays from August 21, 2026 · 8:00–9:00 PM",
@@ -19,7 +19,7 @@
     },
     {
       "id": "mg-meadowvale-rise-and-fall-insaan-aug21-2026",
-      "tag": "Mosque Gathering",
+      "tag": "Mosque Program",
       "title": "The Rise and Fall of Insaan",
       "eventDate": "2026-08-21",
       "date": "Friday, August 21, 2026 · 5:00–6:00 PM",
@@ -30,7 +30,7 @@
     },
     {
       "id": "mg-mam-sisters-only-oct-2026",
-      "tag": "Mosque Gathering",
+      "tag": "Mosque Program",
       "title": "Sister's Only Session",
       "eventDate": "2026-10-18",
       "date": "Friday, October 18th, 2026",
@@ -46,7 +46,7 @@
     },
     {
       "id": "mg-isna-sisters-quran-tajweed",
-      "tag": "Mosque Gathering",
+      "tag": "Mosque Program",
       "title": "Sisters Quran & Tajweed Class",
       "days": [
         "sun"
@@ -64,7 +64,7 @@
     },
     {
       "id": "mg-isna-project-lina",
-      "tag": "Mosque Gathering",
+      "tag": "Mosque Program",
       "title": "Project Lina | Weekly Sisters-Only Convert Program",
       "days": [
         "tue"
@@ -82,7 +82,7 @@
     },
     {
       "id": "mg-hia-sistershorsebackriding",
-      "tag": "Mosque Gathering",
+      "tag": "Mosque Program",
       "title": "Sisters Horseback Riding",
       "date": "Date TBD",
       "location": "Halton Masjid, 4310 Fairview St, Burlington, ON",
@@ -93,7 +93,7 @@
     },
     {
       "id": "mg-hia-faithfriendshipandfunallinoneplace",
-      "tag": "Mosque Gathering",
+      "tag": "Mosque Program",
       "title": "Faith, friendship, and fun all in one place",
       "date": "Date TBD",
       "location": "Halton Masjid, 4310 Fairview St, Burlington, ON",
@@ -104,7 +104,7 @@
     },
     {
       "id": "mg-hia-sisterscraftnight",
-      "tag": "Mosque Gathering",
+      "tag": "Mosque Program",
       "title": "Sisters' Craft Night",
       "date": "Date TBD",
       "location": "Halton Masjid, 4310 Fairview St, Burlington, ON",
@@ -115,7 +115,7 @@
     },
     {
       "id": "mg-hia-summerhikeforsisters",
-      "tag": "Mosque Gathering",
+      "tag": "Mosque Program",
       "title": "Summer Hike for Sisters",
       "date": "Date TBD",
       "location": "Halton Masjid, 4310 Fairview St, Burlington, ON",
@@ -126,7 +126,7 @@
     },
     {
       "id": "mg-hia-sistersislamiccalligraphyworkshop",
-      "tag": "Mosque Gathering",
+      "tag": "Mosque Program",
       "title": "Sisters' Islamic Calligraphy Workshop",
       "date": "Date TBD",
       "location": "Halton Masjid, 4310 Fairview St, Burlington, ON",
@@ -137,7 +137,7 @@
     },
     {
       "id": "mg-hia-potpaintingplanting",
-      "tag": "Mosque Gathering",
+      "tag": "Mosque Program",
       "title": "POT PAINTING PLANTING!",
       "date": "Date TBD",
       "location": "Halton Masjid, 4310 Fairview St, Burlington, ON",
@@ -148,7 +148,7 @@
     },
     {
       "id": "mg-hia-chaichat",
-      "tag": "Mosque Gathering",
+      "tag": "Mosque Program",
       "title": "Chai & Chat",
       "date": "Date TBD",
       "location": "Halton Masjid, 4310 Fairview St, Burlington, ON",
@@ -159,7 +159,7 @@
     },
     {
       "id": "mg-hia-sisterscandlepainting",
-      "tag": "Mosque Gathering",
+      "tag": "Mosque Program",
       "title": "SISTERS CANDLE PAINTING!",
       "date": "Date TBD",
       "location": "Halton Masjid, 4310 Fairview St, Burlington, ON",
@@ -170,7 +170,7 @@
     },
     {
       "id": "mg-hia-heartsawakened",
-      "tag": "Mosque Gathering",
+      "tag": "Mosque Program",
       "title": "Hearts Awakened",
       "date": "Date TBD",
       "location": "Halton Masjid, 4310 Fairview St, Burlington, ON",
@@ -181,7 +181,7 @@
     },
     {
       "id": "mg-sisters-through-faith-fiqh-salah-aug23",
-      "tag": "Mosque Gathering",
+      "tag": "Mosque Program",
       "title": "Sisters Through Faith Fiqh of Salah Halaqa",
       "eventDate": "2026-08-23",
       "date": "Sunday, August 23, 2026 · 2:15–3:15 PM",
@@ -193,7 +193,7 @@
     },
     {
       "id": "mg-sisters-through-faith-fiqh-salah-aug30",
-      "tag": "Mosque Gathering",
+      "tag": "Mosque Program",
       "title": "Sisters Through Faith Fiqh of Salah Halaqa",
       "eventDate": "2026-08-30",
       "date": "Sunday, August 30, 2026 · 2:15–3:15 PM",
@@ -205,7 +205,7 @@
     },
     {
       "id": "mnn-sisters-tafseer-gems-aug26",
-      "tag": "Mosque Gathering",
+      "tag": "Mosque Program",
       "title": "MNN Sisters Tafseer Gems",
       "eventDate": "2026-08-26",
       "date": "Wednesday, August 26, 2026 · 8:45 PM after Maghrib",
@@ -216,7 +216,7 @@
     },
     {
       "id": "mnn-stand-firm-2026",
-      "tag": "Mosque Gathering",
+      "tag": "Mosque Program",
       "title": "MNN Stand FIRM",
       "eventDate": "2026-09-02",
       "days": [
@@ -232,7 +232,7 @@
     },
     {
       "id": "mnn-stand-firm-launch-aug22",
-      "tag": "Mosque Gathering",
+      "tag": "Mosque Program",
       "title": "MNN Stand FIRM Launch",
       "eventDate": "2026-08-22",
       "date": "Friday, August 22, 2026 · 7:00–9:00 PM",
@@ -243,7 +243,7 @@
     },
     {
       "id": "isna-thrive-2026",
-      "tag": "Mosque Gathering",
+      "tag": "Mosque Program",
       "title": "ISNA Thrive",
       "eventDate": "2026-08-24",
       "days": [
@@ -257,7 +257,7 @@
     },
     {
       "id": "mg-hia-youthsistersapplepicking",
-      "tag": "Mosque Gathering",
+      "tag": "Mosque Program",
       "title": "Youth Sister's Apple Picking",
       "date": "Date TBD",
       "location": "Halton Masjid, 4310 Fairview St, Burlington, ON",
@@ -268,7 +268,7 @@
     },
     {
       "id": "mg-hia-connectreflect",
-      "tag": "Mosque Gathering",
+      "tag": "Mosque Program",
       "title": "Connect & Reflect",
       "date": "Date TBD",
       "location": "Halton Masjid, 4310 Fairview St, Burlington, ON",
@@ -279,7 +279,7 @@
     },
     {
       "id": "mg-hia-beadsandbrunch",
-      "tag": "Mosque Gathering",
+      "tag": "Mosque Program",
       "title": "Beads and Brunch",
       "date": "Date TBD",
       "location": "Halton Masjid, 4310 Fairview St, Burlington, ON",
@@ -290,7 +290,7 @@
     },
     {
       "id": "mg-hia-inkinspirationdaughtersoflight",
-      "tag": "Mosque Gathering",
+      "tag": "Mosque Program",
       "title": "Ink & Inspiration (Daughters of Light)",
       "date": "Date TBD",
       "location": "Halton Masjid, 4310 Fairview St, Burlington, ON",
@@ -301,7 +301,7 @@
     },
     {
       "id": "mg-hia-sistersonthecourt",
-      "tag": "Mosque Gathering",
+      "tag": "Mosque Program",
       "title": "Sisters on the Court",
       "date": "Date TBD",
       "location": "Halton Masjid, 4310 Fairview St, Burlington, ON",
@@ -312,7 +312,7 @@
     },
     {
       "id": "mg-hia-sistersyouthtasbeehmakingevent",
-      "tag": "Mosque Gathering",
+      "tag": "Mosque Program",
       "title": "Sisters Youth Tasbeeh Making Event",
       "date": "Date TBD",
       "location": "Halton Masjid, 4310 Fairview St, Burlington, ON",
@@ -323,7 +323,7 @@
     },
     {
       "id": "mg-hia-sisteryouthtotebagpainting",
-      "tag": "Mosque Gathering",
+      "tag": "Mosque Program",
       "title": "Sister Youth Tote Bag Painting",
       "date": "Date TBD",
       "location": "Halton Masjid, 4310 Fairview St, Burlington, ON",
@@ -334,7 +334,7 @@
     },
     {
       "id": "mg-hia-chaiandchatspritualselfcare",
-      "tag": "Mosque Gathering",
+      "tag": "Mosque Program",
       "title": "Chai and Chat (Spritual Self Care)",
       "date": "Date TBD",
       "location": "Halton Masjid, 4310 Fairview St, Burlington, ON",
@@ -345,7 +345,7 @@
     },
     {
       "id": "mg-hia-youthsistersactivate",
-      "tag": "Mosque Gathering",
+      "tag": "Mosque Program",
       "title": "Youth Sisters Activate",
       "date": "Date TBD",
       "location": "Halton Masjid, 4310 Fairview St, Burlington, ON",
@@ -356,7 +356,7 @@
     },
     {
       "id": "mg-hia-sisterstafseerclass",
-      "tag": "Mosque Gathering",
+      "tag": "Mosque Program",
       "title": "Sisters Tafseer Class",
       "date": "Date TBD",
       "location": "Halton Masjid, 4310 Fairview St, Burlington, ON",
@@ -367,7 +367,7 @@
     },
     {
       "id": "mg-hia-sistersyouthbrunch",
-      "tag": "Mosque Gathering",
+      "tag": "Mosque Program",
       "title": "Sisters Youth Brunch",
       "date": "Date TBD",
       "location": "Halton Masjid, 4310 Fairview St, Burlington, ON",
@@ -378,7 +378,7 @@
     },
     {
       "id": "mg-hia-chaiandchat",
-      "tag": "Mosque Gathering",
+      "tag": "Mosque Program",
       "title": "Chai and Chat",
       "date": "Date TBD",
       "location": "Halton Masjid, 4310 Fairview St, Burlington, ON",
@@ -389,7 +389,7 @@
     },
     {
       "id": "mg-almukhlisin-fiqh-of-salah",
-      "tag": "Mosque Gathering",
+      "tag": "Mosque Program",
       "title": "Fiqh of Salah",
       "days": [
         "sun"
@@ -407,7 +407,7 @@
     },
     {
       "id": "hdm-sewing-workshop-aug29-30-2026",
-      "tag": "Mosque Gathering",
+      "tag": "Mosque Program",
       "title": "Sewing Workshop",
       "eventDate": "2026-08-29",
       "date": "Saturday Aug 29 (during drop-in hours) & Sunday Aug 30, 5-8 PM, 2026",
@@ -419,7 +419,7 @@
     },
     {
       "id": "sma-fitness-pilates-2026",
-      "tag": "Mosque Gathering",
+      "tag": "Mosque Program",
       "title": "Women's Fitness and Pilates Class",
       "eventDate": "2026-06-06",
       "date": "Saturdays 1:00–2:00 PM, June 6 – August 1, 2026",
@@ -436,7 +436,7 @@
     },
     {
       "id": "sma-summer-bbq-jul25-2026",
-      "tag": "Mosque Gathering",
+      "tag": "Mosque Program",
       "title": "Annual Summer BBQ",
       "eventDate": "2026-07-25",
       "date": "July 25, 2026 · 9:00 AM – 9:00 PM",
@@ -447,7 +447,7 @@
     },
     {
       "id": "sma-taste-of-spice-sept5-2026",
-      "tag": "Mosque Gathering",
+      "tag": "Mosque Program",
       "title": "Taste of Spice",
       "eventDate": "2026-09-05",
       "date": "Saturday, September 5, 2026 · 11 AM – 8 PM",
@@ -458,7 +458,7 @@
     },
     {
       "id": "mnn-taste-of-mississauga-sept5-6-2026",
-      "tag": "Mosque Gathering",
+      "tag": "Mosque Program",
       "title": "Taste of Mississauga",
       "eventDate": "2026-09-05",
       "date": "September 5–6, 2026",
@@ -469,7 +469,7 @@
     },
     {
       "id": "ipc-sisters-sip-paint-aug30-2026",
-      "tag": "Mosque Gathering",
+      "tag": "Mosque Program",
       "title": "Sisters Sip & Paint (3rd Annual)",
       "eventDate": "2026-08-30",
       "date": "Sunday, August 30, 2026 · 4:00 PM",

@@ -1,0 +1,36 @@
+name: Apply event tab moves
+
+# Editors can relocate a listing to another calendar tab via the CMS
+# "Move this event to another tab?" field. This workflow performs the
+# official move right after any data change lands on main.
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'data/*.json'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  moves:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Apply pending tab moves
+        run: python3 scripts/apply_event_moves.py
+      - name: Commit moves if any
+        run: |
+          if git diff --quiet data/; then
+            echo "No moves to commit"
+          else
+            git config user.name "4DASISTAS Bot"
+            git config user.email "bot@4dasistas.ca"
+            git add data/
+            git commit -m "Auto-apply event tab moves [skip ci]"
+            git push
+          fi

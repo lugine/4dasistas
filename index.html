@@ -523,6 +523,8 @@
 /* TikTok footer button - matches WhatsApp/Instagram pills */
 .tiktok-btn{ display:inline-flex; align-items:center; gap:9px; font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:14px; line-height:1; background:#000; color:white; padding:12px 22px; border-radius:999px; text-decoration:none; }
 .tiktok-btn svg{ width:18px; height:18px; flex-shrink:0; display:block; }
+/* Mental Health support-groups CTA centered across the grid */
+.mh-support-cta{ grid-column:1/-1; display:flex; justify-content:center; margin-top:4px; }
 </style>
 </head>
 <body>
@@ -1566,7 +1568,7 @@ function renderResourceList(){
       description.classList.toggle('visible');
       button.textContent = description.classList.contains('visible') ? 'Hide Details' : 'Learn More';
     }));
-    el.insertAdjacentHTML('beforeend', '<button type="button" class="link-btn secondary mental-health-support-link" id="mentalHealthSupportLink">View Support Groups →</button>');
+    el.insertAdjacentHTML('beforeend', '<div class="mh-support-cta"><button type="button" class="link-btn secondary mental-health-support-link" id="mentalHealthSupportLink">View Support Groups →</button></div>');
     document.getElementById('mentalHealthSupportLink').addEventListener('click', () => goToTab('supportgroups'));
   }
 

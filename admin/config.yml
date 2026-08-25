@@ -110,6 +110,7 @@ collections:
               - { label: "Sport key (Sports only - lowercase, e.g. badminton)", name: "sportKey", widget: "string", required: false }
               - { label: "Partner (optional)", name: "partner", widget: "string", required: false }
               - { label: "Partner Instagram link (optional)", name: "partnerInstagram", widget: "string", required: false }
+              - { label: "Move this event to another tab? (leave blank normally)", name: "moveTo", widget: "select", required: false, options: ["", "sports", "activities", "functions", "trips", "mosqueprograms", "supportprograms"], hint: "Pick ONLY when relocating this listing to a different calendar tab - it moves there automatically after you publish." }
               - { label: "Latitude (map pin)", name: "lat", widget: "number", value_type: "float", required: false }
               - { label: "Longitude (map pin)", name: "lng", widget: "number", value_type: "float", required: false }
               - { label: "Description", name: "desc", widget: "text", required: false }
@@ -160,6 +161,7 @@ collections:
               - { label: "Sport key (Sports only - lowercase, e.g. badminton)", name: "sportKey", widget: "string", required: false }
               - { label: "Partner (optional)", name: "partner", widget: "string", required: false }
               - { label: "Partner Instagram link (optional)", name: "partnerInstagram", widget: "string", required: false }
+              - { label: "Move this event to another tab? (leave blank normally)", name: "moveTo", widget: "select", required: false, options: ["", "sports", "activities", "functions", "trips", "mosqueprograms", "supportprograms"], hint: "Pick ONLY when relocating this listing to a different calendar tab - it moves there automatically after you publish." }
               - { label: "Latitude (map pin)", name: "lat", widget: "number", value_type: "float", required: false }
               - { label: "Longitude (map pin)", name: "lng", widget: "number", value_type: "float", required: false }
               - { label: "Description", name: "desc", widget: "text", required: false }
@@ -210,6 +212,7 @@ collections:
               - { label: "Sport key (Sports only - lowercase, e.g. badminton)", name: "sportKey", widget: "string", required: false }
               - { label: "Partner (optional)", name: "partner", widget: "string", required: false }
               - { label: "Partner Instagram link (optional)", name: "partnerInstagram", widget: "string", required: false }
+              - { label: "Move this event to another tab? (leave blank normally)", name: "moveTo", widget: "select", required: false, options: ["", "sports", "activities", "functions", "trips", "mosqueprograms", "supportprograms"], hint: "Pick ONLY when relocating this listing to a different calendar tab - it moves there automatically after you publish." }
               - { label: "Latitude (map pin)", name: "lat", widget: "number", value_type: "float", required: false }
               - { label: "Longitude (map pin)", name: "lng", widget: "number", value_type: "float", required: false }
               - { label: "Description", name: "desc", widget: "text", required: false }
@@ -260,6 +263,7 @@ collections:
               - { label: "Sport key (Sports only - lowercase, e.g. badminton)", name: "sportKey", widget: "string", required: false }
               - { label: "Partner (optional)", name: "partner", widget: "string", required: false }
               - { label: "Partner Instagram link (optional)", name: "partnerInstagram", widget: "string", required: false }
+              - { label: "Move this event to another tab? (leave blank normally)", name: "moveTo", widget: "select", required: false, options: ["", "sports", "activities", "functions", "trips", "mosqueprograms", "supportprograms"], hint: "Pick ONLY when relocating this listing to a different calendar tab - it moves there automatically after you publish." }
               - { label: "Latitude (map pin)", name: "lat", widget: "number", value_type: "float", required: false }
               - { label: "Longitude (map pin)", name: "lng", widget: "number", value_type: "float", required: false }
               - { label: "Description", name: "desc", widget: "text", required: false }
@@ -310,6 +314,7 @@ collections:
               - { label: "Sport key (Sports only - lowercase, e.g. badminton)", name: "sportKey", widget: "string", required: false }
               - { label: "Partner (optional)", name: "partner", widget: "string", required: false }
               - { label: "Partner Instagram link (optional)", name: "partnerInstagram", widget: "string", required: false }
+              - { label: "Move this event to another tab? (leave blank normally)", name: "moveTo", widget: "select", required: false, options: ["", "sports", "activities", "functions", "trips", "mosqueprograms", "supportprograms"], hint: "Pick ONLY when relocating this listing to a different calendar tab - it moves there automatically after you publish." }
               - { label: "Latitude (map pin)", name: "lat", widget: "number", value_type: "float", required: false }
               - { label: "Longitude (map pin)", name: "lng", widget: "number", value_type: "float", required: false }
               - { label: "Description", name: "desc", widget: "text", required: false }
@@ -360,6 +365,7 @@ collections:
               - { label: "Sport key (Sports only - lowercase, e.g. badminton)", name: "sportKey", widget: "string", required: false }
               - { label: "Partner (optional)", name: "partner", widget: "string", required: false }
               - { label: "Partner Instagram link (optional)", name: "partnerInstagram", widget: "string", required: false }
+              - { label: "Move this event to another tab? (leave blank normally)", name: "moveTo", widget: "select", required: false, options: ["", "sports", "activities", "functions", "trips", "mosqueprograms", "supportprograms"], hint: "Pick ONLY when relocating this listing to a different calendar tab - it moves there automatically after you publish." }
               - { label: "Latitude (map pin)", name: "lat", widget: "number", value_type: "float", required: false }
               - { label: "Longitude (map pin)", name: "lng", widget: "number", value_type: "float", required: false }
               - { label: "Description", name: "desc", widget: "text", required: false }
