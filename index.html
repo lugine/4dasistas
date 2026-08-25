@@ -525,6 +525,12 @@
 .tiktok-btn svg{ width:18px; height:18px; flex-shrink:0; display:block; }
 /* Mental Health support-groups CTA centered across the grid */
 .mh-support-cta{ grid-column:1/-1; display:flex; justify-content:center; margin-top:4px; }
+/* Tapping ANYWHERE in a calendar day cell opens that day's schedule -
+   including on top of event pips. Event details open from the day popup. */
+.month-grid .day-pip{ pointer-events:none; }
+/* Keeps the Add-to-Homescreen tile clearly separated from What's On Today
+   no matter how long the day's list grows. */
+.home-tiles.bottom-row{ margin-top:36px; clear:both; }
 </style>
 </head>
 <body>
@@ -791,11 +797,12 @@ applySiteText();
         if(!item.calDate) item.calDate = item.eventDate;
         if(!item.date || /sample date/i.test(item.date)){
           const d = new Date(item.eventDate + 'T00:00:00');
-          const day = d.getDate();
-          const month = monthNames[d.getMonth()];
-          const year = d.getFullYear();
           const weekday = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'][d.getDay()];
-          item.date = `${weekday}, ${month} ${day}, ${year}`;
+          item.date = `${weekday}, ${monthNames[d.getMonth()]} ${d.getDate()}, ${d.getFullYear()}`;
+        }
+        if(item.endDate && item.endDate >= item.eventDate){
+          const ed = new Date(item.endDate + 'T00:00:00');
+          item.date += ` – ${monthNames[ed.getMonth()]} ${ed.getDate()}, ${ed.getFullYear()}`;
         }
       } else if(!item.date && item.days && item.days.length){
         const dayLabels = item.days.map(d => dayLabelsShort[dayOrder.indexOf(d)]).join(', ');
@@ -961,11 +968,16 @@ function eventColor(item){
 }
 
 function eventTimeLabel(item){
+  if(item.time) return item.time;
   const match = String(item.date || '').match(/(?:at\s+)?(\d{1,2}(?::\d{2})?\s*(?:AM|PM))(?:\s*[–-]\s*(\d{1,2}(?::\d{2})?\s*(?:AM|PM)))?/i);
   return match ? match[0] : 'All day';
 }
 
 function eventTimeMinutes(item){
+  if(item.time){
+    const t = String(item.time).match(/(\d{1,2}):(\d{2})/);
+    if(t) return Number(t[1]) * 60 + Number(t[2]);
+  }
   const match = String(item.date || '').match(/(\d{1,2})(?::(\d{2}))?\s*(AM|PM)/i);
   if(!match) return 1440;
   let hour = Number(match[1]) % 12;
@@ -1167,6 +1179,20 @@ function occurrencesInMonth(item, year, month){
     return out;
   }
   if(item.calDate){
+    // Multi-day events/festivals/trips: expand every day from start to end.
+    if(item.endDate && item.endDate >= item.calDate){
+      const out = [];
+      const cursor = new Date(item.calDate + 'T00:00:00');
+      const stop = new Date(item.endDate + 'T23:59:59');
+      const hardCap = new Date(cursor).setDate(cursor.getDate() + 400); // safety net
+      while(cursor <= stop && cursor.getTime() < hardCap){
+        if(cursor.getFullYear() === year && cursor.getMonth() === month){
+          out.push(`${cursor.getFullYear()}-${pad(cursor.getMonth()+1)}-${pad(cursor.getDate())}`);
+        }
+        cursor.setDate(cursor.getDate() + 1);
+      }
+      return out;
+    }
     const d = new Date(item.calDate+'T00:00:00');
     return (d.getFullYear()===year && d.getMonth()===month) ? [item.calDate] : [];
   }
@@ -1317,12 +1343,9 @@ function renderCalendar(){
   const daysInMonth = new Date(year, month+1, 0).getDate();
   const todayStr = `${today.getFullYear()}-${pad(today.getMonth()+1)}-${pad(today.getDate())}`;
 
-  const MIN_YEAR = 2026, MIN_MONTH = 7; // August 2026 — never go earlier
-  const atMinBoundary = (year === MIN_YEAR && month === MIN_MONTH);
-
   let html = `
     <div class="cal-header">
-      <button class="cal-nav-btn" id="prevMonth" ${atMinBoundary ? 'disabled' : ''}>‹</button>
+      <button class="cal-nav-btn" id="prevMonth">‹</button>
       <div class="cal-title">${monthNames[month]} ${year}</div>
       <button class="cal-nav-btn" id="nextMonth">›</button>
     </div>
@@ -1371,7 +1394,6 @@ function renderCalendar(){
   });
 
   document.getElementById('prevMonth').addEventListener('click', () => {
-    if(state.calYear === MIN_YEAR && state.calMonth === MIN_MONTH) return;
     state.calMonth--; if(state.calMonth<0){ state.calMonth=11; state.calYear--; }
     renderCalendar();
   });
@@ -2005,7 +2027,7 @@ el.innerHTML = `<button class="fall-cta-btn" data-hometab="fallsignup">🍂 Join
         <div class="home-tile-desc">${t.desc}</div>
         <div class="home-tile-arrow">→</div>
       </button>`).join('')}</div>${todaySection}
-      <div class="home-tiles">
+      <div class="home-tiles bottom-row">
         <button class="home-tile" style="background:${homescreenTile.bg};color:${homescreenTile.fg};grid-column:1/-1;justify-self:center;max-width:560px;width:100%" data-hometab="${homescreenTile.tab}">
           <div class="home-tile-title">${homescreenTile.title}</div>
           <div class="home-tile-desc">${homescreenTile.desc}</div>

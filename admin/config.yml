@@ -38,6 +38,17 @@ display_url: https://4dasistas.ca
 # scripts/build_content.py merges the folders into the aggregate data/*.json
 # files the website reads. It runs on every build - do not remove it.
 # ============================================================================
+
+# ============================================================================
+# CONTENT MODEL (folder collections): every listing lives in its own small
+# JSON file - data/calendar/<slug>.json or data/resources/<slug>.json - and
+# each CMS tab below is a FILTERED view of those folders. Consequences:
+#   * NO id field anywhere: the filename (derived from the title) is the id
+#   * changing an item's tab/type dropdown OFFICIALLY relocates it
+#   * sortable_fields give native sorting in every tab's entry list
+# scripts/build_content.py merges the folders into the aggregate data/*.json
+# files the website reads. It runs on every build - do not remove it.
+# ============================================================================
 collections:
 - name: maintenance
   label: Maintenance Mode
@@ -156,6 +167,7 @@ collections:
   identifier_field: title
   sortable_fields:
   - eventDate
+  - endDate
   - title
   summary: '{{title}} - {{eventDate}}'
   fields:
@@ -170,10 +182,6 @@ collections:
     - trips
     - mosqueprograms
     - supportprograms
-  - label: Tag / Type (leave blank to auto-use the title)
-    name: tag
-    widget: string
-    required: false
   - label: Title
     name: title
     widget: string
@@ -182,14 +190,17 @@ collections:
     widget: date
     required: true
     hint: Pick a date - the site builds the display text and places it on the calendar. For recurring events, enter the next upcoming occurrence.
-  - label: Custom date text (optional)
-    name: date
-    widget: string
+  - label: End date (optional - for multi-day events/festivals/trips)
+    name: endDate
+    widget: date
     required: false
-  - label: calDate (internal)
-    name: calDate
-    widget: hidden
+  - label: Time (optional - shown on listings)
+    name: time
+    widget: datetime
     required: false
+    date_format: false
+    time_format: HH:mm
+    format: HH:mm
   - label: Recurring weekdays (leave empty if one-off)
     name: days
     widget: select
@@ -211,99 +222,25 @@ collections:
     name: recurEnd
     widget: date
     required: false
-  - label: City (Activities filter uses this)
-    name: city
-    widget: select
-    required: false
-    options:
-    - Mississauga
-    - Oakville
-    - Toronto
-    - Burlington
-    - Milton
-  - label: Location
+  - label: Location (used for the embedded map on the event page)
     name: location
     widget: location-autocomplete
     required: false
-  - label: Google Maps link
-    name: mapsUrl
+  - label: Link (Instagram or WhatsApp)
+    name: link
     widget: string
     required: false
-  - label: Organizer name
-    name: organizer
-    widget: string
-    required: false
-  - label: Contact
-    name: contact
-    widget: string
-    required: false
-  - label: Price
-    name: price
-    widget: string
-    required: false
-  - label: Registration info
-    name: registration
-    widget: string
-    required: false
-  - label: Registration deadline
-    name: registrationDeadline
-    widget: date
-    required: false
-  - label: Hijab-off confirmed?
-    name: hijabOff
-    widget: select
-    required: false
-    options:
-    - Not specified
-    - 'Yes'
-    - 'No'
-  - label: Trip type (Trips only)
-    name: tripType
-    widget: select
-    required: false
-    options:
-    - domestic
-    - international
-  - label: Sport key (Sports only - lowercase, e.g. badminton)
-    name: sportKey
-    widget: string
-    required: false
-  - label: Partner (optional)
-    name: partner
-    widget: string
-    required: false
-  - label: Partner Instagram link (optional)
-    name: partnerInstagram
-    widget: string
-    required: false
-  - label: Latitude (map pin)
-    name: lat
-    widget: number
-    value_type: float
-    required: false
-  - label: Longitude (map pin)
-    name: lng
-    widget: number
-    value_type: float
-    required: false
+    hint: One link only - Instagram post/profile or WhatsApp group invite.
   - label: Description
     name: desc
     widget: text
     required: false
-  - label: WhatsApp link
-    name: whatsapp
-    widget: string
+  - label: calDate (internal)
+    name: calDate
+    widget: hidden
     required: false
-  - label: Instagram link
-    name: instagram
-    widget: string
-    required: false
-  - label: Website link
-    name: website
-    widget: string
-    required: false
-  - label: Email
-    name: email
+  - label: Sport key (lowercase, e.g. badminton)
+    name: sportKey
     widget: string
     required: false
 - name: dayactivities
@@ -317,6 +254,7 @@ collections:
   identifier_field: title
   sortable_fields:
   - eventDate
+  - endDate
   - title
   summary: '{{title}} - {{eventDate}}'
   fields:
@@ -325,10 +263,6 @@ collections:
     widget: select
     default: activities
     options: *id001
-  - label: Tag / Type (leave blank to auto-use the title)
-    name: tag
-    widget: string
-    required: false
   - label: Title
     name: title
     widget: string
@@ -337,14 +271,17 @@ collections:
     widget: date
     required: true
     hint: Pick a date - the site builds the display text and places it on the calendar. For recurring events, enter the next upcoming occurrence.
-  - label: Custom date text (optional)
-    name: date
-    widget: string
+  - label: End date (optional - for multi-day events/festivals/trips)
+    name: endDate
+    widget: date
     required: false
-  - label: calDate (internal)
-    name: calDate
-    widget: hidden
+  - label: Time (optional - shown on listings)
+    name: time
+    widget: datetime
     required: false
+    date_format: false
+    time_format: HH:mm
+    format: HH:mm
   - label: Recurring weekdays (leave empty if one-off)
     name: days
     widget: select
@@ -366,100 +303,22 @@ collections:
     name: recurEnd
     widget: date
     required: false
-  - label: City (Activities filter uses this)
-    name: city
-    widget: select
-    required: false
-    options:
-    - Mississauga
-    - Oakville
-    - Toronto
-    - Burlington
-    - Milton
-  - label: Location
+  - label: Location (used for the embedded map on the event page)
     name: location
     widget: location-autocomplete
     required: false
-  - label: Google Maps link
-    name: mapsUrl
+  - label: Link (Instagram or WhatsApp)
+    name: link
     widget: string
     required: false
-  - label: Organizer name
-    name: organizer
-    widget: string
-    required: false
-  - label: Contact
-    name: contact
-    widget: string
-    required: false
-  - label: Price
-    name: price
-    widget: string
-    required: false
-  - label: Registration info
-    name: registration
-    widget: string
-    required: false
-  - label: Registration deadline
-    name: registrationDeadline
-    widget: date
-    required: false
-  - label: Hijab-off confirmed?
-    name: hijabOff
-    widget: select
-    required: false
-    options:
-    - Not specified
-    - 'Yes'
-    - 'No'
-  - label: Trip type (Trips only)
-    name: tripType
-    widget: select
-    required: false
-    options:
-    - domestic
-    - international
-  - label: Sport key (Sports only - lowercase, e.g. badminton)
-    name: sportKey
-    widget: string
-    required: false
-  - label: Partner (optional)
-    name: partner
-    widget: string
-    required: false
-  - label: Partner Instagram link (optional)
-    name: partnerInstagram
-    widget: string
-    required: false
-  - label: Latitude (map pin)
-    name: lat
-    widget: number
-    value_type: float
-    required: false
-  - label: Longitude (map pin)
-    name: lng
-    widget: number
-    value_type: float
-    required: false
+    hint: One link only - Instagram post/profile or WhatsApp group invite.
   - label: Description
     name: desc
     widget: text
     required: false
-  - label: WhatsApp link
-    name: whatsapp
-    widget: string
-    required: false
-  - label: Instagram link
-    name: instagram
-    widget: string
-    required: false
-  - label: Website link
-    name: website
-    widget: string
-    required: false
-  - label: Email
-    name: email
-    widget: string
+  - label: calDate (internal)
+    name: calDate
+    widget: hidden
     required: false
 - name: gatherings
   label: Calendar Functions
@@ -472,6 +331,7 @@ collections:
   identifier_field: title
   sortable_fields:
   - eventDate
+  - endDate
   - title
   summary: '{{title}} - {{eventDate}}'
   fields:
@@ -480,10 +340,6 @@ collections:
     widget: select
     default: functions
     options: *id001
-  - label: Tag / Type (leave blank to auto-use the title)
-    name: tag
-    widget: string
-    required: false
   - label: Title
     name: title
     widget: string
@@ -492,14 +348,17 @@ collections:
     widget: date
     required: true
     hint: Pick a date - the site builds the display text and places it on the calendar. For recurring events, enter the next upcoming occurrence.
-  - label: Custom date text (optional)
-    name: date
-    widget: string
+  - label: End date (optional - for multi-day events/festivals/trips)
+    name: endDate
+    widget: date
     required: false
-  - label: calDate (internal)
-    name: calDate
-    widget: hidden
+  - label: Time (optional - shown on listings)
+    name: time
+    widget: datetime
     required: false
+    date_format: false
+    time_format: HH:mm
+    format: HH:mm
   - label: Recurring weekdays (leave empty if one-off)
     name: days
     widget: select
@@ -521,100 +380,22 @@ collections:
     name: recurEnd
     widget: date
     required: false
-  - label: City (Activities filter uses this)
-    name: city
-    widget: select
-    required: false
-    options:
-    - Mississauga
-    - Oakville
-    - Toronto
-    - Burlington
-    - Milton
-  - label: Location
+  - label: Location (used for the embedded map on the event page)
     name: location
     widget: location-autocomplete
     required: false
-  - label: Google Maps link
-    name: mapsUrl
+  - label: Link (Instagram or WhatsApp)
+    name: link
     widget: string
     required: false
-  - label: Organizer name
-    name: organizer
-    widget: string
-    required: false
-  - label: Contact
-    name: contact
-    widget: string
-    required: false
-  - label: Price
-    name: price
-    widget: string
-    required: false
-  - label: Registration info
-    name: registration
-    widget: string
-    required: false
-  - label: Registration deadline
-    name: registrationDeadline
-    widget: date
-    required: false
-  - label: Hijab-off confirmed?
-    name: hijabOff
-    widget: select
-    required: false
-    options:
-    - Not specified
-    - 'Yes'
-    - 'No'
-  - label: Trip type (Trips only)
-    name: tripType
-    widget: select
-    required: false
-    options:
-    - domestic
-    - international
-  - label: Sport key (Sports only - lowercase, e.g. badminton)
-    name: sportKey
-    widget: string
-    required: false
-  - label: Partner (optional)
-    name: partner
-    widget: string
-    required: false
-  - label: Partner Instagram link (optional)
-    name: partnerInstagram
-    widget: string
-    required: false
-  - label: Latitude (map pin)
-    name: lat
-    widget: number
-    value_type: float
-    required: false
-  - label: Longitude (map pin)
-    name: lng
-    widget: number
-    value_type: float
-    required: false
+    hint: One link only - Instagram post/profile or WhatsApp group invite.
   - label: Description
     name: desc
     widget: text
     required: false
-  - label: WhatsApp link
-    name: whatsapp
-    widget: string
-    required: false
-  - label: Instagram link
-    name: instagram
-    widget: string
-    required: false
-  - label: Website link
-    name: website
-    widget: string
-    required: false
-  - label: Email
-    name: email
-    widget: string
+  - label: calDate (internal)
+    name: calDate
+    widget: hidden
     required: false
 - name: trips
   label: Calendar Trips
@@ -627,6 +408,7 @@ collections:
   identifier_field: title
   sortable_fields:
   - eventDate
+  - endDate
   - title
   summary: '{{title}} - {{eventDate}}'
   fields:
@@ -635,10 +417,6 @@ collections:
     widget: select
     default: trips
     options: *id001
-  - label: Tag / Type (leave blank to auto-use the title)
-    name: tag
-    widget: string
-    required: false
   - label: Title
     name: title
     widget: string
@@ -647,13 +425,9 @@ collections:
     widget: date
     required: true
     hint: Pick a date - the site builds the display text and places it on the calendar. For recurring events, enter the next upcoming occurrence.
-  - label: Custom date text (optional)
-    name: date
-    widget: string
-    required: false
-  - label: calDate (internal)
-    name: calDate
-    widget: hidden
+  - label: End date (optional - for multi-day events/festivals/trips)
+    name: endDate
+    widget: date
     required: false
   - label: Recurring weekdays (leave empty if one-off)
     name: days
@@ -676,101 +450,30 @@ collections:
     name: recurEnd
     widget: date
     required: false
-  - label: City (Activities filter uses this)
-    name: city
-    widget: select
-    required: false
-    options:
-    - Mississauga
-    - Oakville
-    - Toronto
-    - Burlington
-    - Milton
-  - label: Location
+  - label: Location (used for the embedded map on the event page)
     name: location
     widget: location-autocomplete
     required: false
-  - label: Google Maps link
-    name: mapsUrl
+  - label: Link (Instagram or WhatsApp)
+    name: link
     widget: string
     required: false
-  - label: Organizer name
-    name: organizer
-    widget: string
-    required: false
-  - label: Contact
-    name: contact
-    widget: string
-    required: false
-  - label: Price
-    name: price
-    widget: string
-    required: false
-  - label: Registration info
-    name: registration
-    widget: string
-    required: false
-  - label: Registration deadline
-    name: registrationDeadline
-    widget: date
-    required: false
-  - label: Hijab-off confirmed?
-    name: hijabOff
-    widget: select
-    required: false
-    options:
-    - Not specified
-    - 'Yes'
-    - 'No'
-  - label: Trip type (Trips only)
-    name: tripType
-    widget: select
-    required: false
-    options:
-    - domestic
-    - international
-  - label: Sport key (Sports only - lowercase, e.g. badminton)
-    name: sportKey
-    widget: string
-    required: false
-  - label: Partner (optional)
-    name: partner
-    widget: string
-    required: false
-  - label: Partner Instagram link (optional)
-    name: partnerInstagram
-    widget: string
-    required: false
-  - label: Latitude (map pin)
-    name: lat
-    widget: number
-    value_type: float
-    required: false
-  - label: Longitude (map pin)
-    name: lng
-    widget: number
-    value_type: float
-    required: false
+    hint: One link only - Instagram post/profile or WhatsApp group invite.
   - label: Description
     name: desc
     widget: text
     required: false
-  - label: WhatsApp link
-    name: whatsapp
-    widget: string
+  - label: calDate (internal)
+    name: calDate
+    widget: hidden
     required: false
-  - label: Instagram link
-    name: instagram
-    widget: string
-    required: false
-  - label: Website link
-    name: website
-    widget: string
-    required: false
-  - label: Email
-    name: email
-    widget: string
-    required: false
+  - label: Trip type
+    name: tripType
+    widget: select
+    default: international
+    options:
+    - domestic
+    - international
 - name: mosquegatherings
   label: Mosque Programs
   folder: data/calendar
@@ -782,6 +485,7 @@ collections:
   identifier_field: title
   sortable_fields:
   - eventDate
+  - endDate
   - title
   summary: '{{title}} - {{eventDate}}'
   fields:
@@ -790,10 +494,6 @@ collections:
     widget: select
     default: mosqueprograms
     options: *id001
-  - label: Tag / Type (leave blank to auto-use the title)
-    name: tag
-    widget: string
-    required: false
   - label: Title
     name: title
     widget: string
@@ -802,14 +502,17 @@ collections:
     widget: date
     required: true
     hint: Pick a date - the site builds the display text and places it on the calendar. For recurring events, enter the next upcoming occurrence.
-  - label: Custom date text (optional)
-    name: date
-    widget: string
+  - label: End date (optional - for multi-day events/festivals/trips)
+    name: endDate
+    widget: date
     required: false
-  - label: calDate (internal)
-    name: calDate
-    widget: hidden
+  - label: Time (optional - shown on listings)
+    name: time
+    widget: datetime
     required: false
+    date_format: false
+    time_format: HH:mm
+    format: HH:mm
   - label: Recurring weekdays (leave empty if one-off)
     name: days
     widget: select
@@ -831,100 +534,22 @@ collections:
     name: recurEnd
     widget: date
     required: false
-  - label: City (Activities filter uses this)
-    name: city
-    widget: select
-    required: false
-    options:
-    - Mississauga
-    - Oakville
-    - Toronto
-    - Burlington
-    - Milton
-  - label: Location
+  - label: Location (used for the embedded map on the event page)
     name: location
     widget: location-autocomplete
     required: false
-  - label: Google Maps link
-    name: mapsUrl
+  - label: Link (Instagram or WhatsApp)
+    name: link
     widget: string
     required: false
-  - label: Organizer name
-    name: organizer
-    widget: string
-    required: false
-  - label: Contact
-    name: contact
-    widget: string
-    required: false
-  - label: Price
-    name: price
-    widget: string
-    required: false
-  - label: Registration info
-    name: registration
-    widget: string
-    required: false
-  - label: Registration deadline
-    name: registrationDeadline
-    widget: date
-    required: false
-  - label: Hijab-off confirmed?
-    name: hijabOff
-    widget: select
-    required: false
-    options:
-    - Not specified
-    - 'Yes'
-    - 'No'
-  - label: Trip type (Trips only)
-    name: tripType
-    widget: select
-    required: false
-    options:
-    - domestic
-    - international
-  - label: Sport key (Sports only - lowercase, e.g. badminton)
-    name: sportKey
-    widget: string
-    required: false
-  - label: Partner (optional)
-    name: partner
-    widget: string
-    required: false
-  - label: Partner Instagram link (optional)
-    name: partnerInstagram
-    widget: string
-    required: false
-  - label: Latitude (map pin)
-    name: lat
-    widget: number
-    value_type: float
-    required: false
-  - label: Longitude (map pin)
-    name: lng
-    widget: number
-    value_type: float
-    required: false
+    hint: One link only - Instagram post/profile or WhatsApp group invite.
   - label: Description
     name: desc
     widget: text
     required: false
-  - label: WhatsApp link
-    name: whatsapp
-    widget: string
-    required: false
-  - label: Instagram link
-    name: instagram
-    widget: string
-    required: false
-  - label: Website link
-    name: website
-    widget: string
-    required: false
-  - label: Email
-    name: email
-    widget: string
+  - label: calDate (internal)
+    name: calDate
+    widget: hidden
     required: false
 - name: supportprograms
   label: Support Programs
@@ -937,6 +562,7 @@ collections:
   identifier_field: title
   sortable_fields:
   - eventDate
+  - endDate
   - title
   summary: '{{title}} - {{eventDate}}'
   fields:
@@ -945,10 +571,6 @@ collections:
     widget: select
     default: supportprograms
     options: *id001
-  - label: Tag / Type (leave blank to auto-use the title)
-    name: tag
-    widget: string
-    required: false
   - label: Title
     name: title
     widget: string
@@ -957,14 +579,17 @@ collections:
     widget: date
     required: true
     hint: Pick a date - the site builds the display text and places it on the calendar. For recurring events, enter the next upcoming occurrence.
-  - label: Custom date text (optional)
-    name: date
-    widget: string
+  - label: End date (optional - for multi-day events/festivals/trips)
+    name: endDate
+    widget: date
     required: false
-  - label: calDate (internal)
-    name: calDate
-    widget: hidden
+  - label: Time (optional - shown on listings)
+    name: time
+    widget: datetime
     required: false
+    date_format: false
+    time_format: HH:mm
+    format: HH:mm
   - label: Recurring weekdays (leave empty if one-off)
     name: days
     widget: select
@@ -986,100 +611,22 @@ collections:
     name: recurEnd
     widget: date
     required: false
-  - label: City (Activities filter uses this)
-    name: city
-    widget: select
-    required: false
-    options:
-    - Mississauga
-    - Oakville
-    - Toronto
-    - Burlington
-    - Milton
-  - label: Location
+  - label: Location (used for the embedded map on the event page)
     name: location
     widget: location-autocomplete
     required: false
-  - label: Google Maps link
-    name: mapsUrl
+  - label: Link (Instagram or WhatsApp)
+    name: link
     widget: string
     required: false
-  - label: Organizer name
-    name: organizer
-    widget: string
-    required: false
-  - label: Contact
-    name: contact
-    widget: string
-    required: false
-  - label: Price
-    name: price
-    widget: string
-    required: false
-  - label: Registration info
-    name: registration
-    widget: string
-    required: false
-  - label: Registration deadline
-    name: registrationDeadline
-    widget: date
-    required: false
-  - label: Hijab-off confirmed?
-    name: hijabOff
-    widget: select
-    required: false
-    options:
-    - Not specified
-    - 'Yes'
-    - 'No'
-  - label: Trip type (Trips only)
-    name: tripType
-    widget: select
-    required: false
-    options:
-    - domestic
-    - international
-  - label: Sport key (Sports only - lowercase, e.g. badminton)
-    name: sportKey
-    widget: string
-    required: false
-  - label: Partner (optional)
-    name: partner
-    widget: string
-    required: false
-  - label: Partner Instagram link (optional)
-    name: partnerInstagram
-    widget: string
-    required: false
-  - label: Latitude (map pin)
-    name: lat
-    widget: number
-    value_type: float
-    required: false
-  - label: Longitude (map pin)
-    name: lng
-    widget: number
-    value_type: float
-    required: false
+    hint: One link only - Instagram post/profile or WhatsApp group invite.
   - label: Description
     name: desc
     widget: text
     required: false
-  - label: WhatsApp link
-    name: whatsapp
-    widget: string
-    required: false
-  - label: Instagram link
-    name: instagram
-    widget: string
-    required: false
-  - label: Website link
-    name: website
-    widget: string
-    required: false
-  - label: Email
-    name: email
-    widget: string
+  - label: calDate (internal)
+    name: calDate
+    widget: hidden
     required: false
 - name: clubs
   label: Gals Clubs

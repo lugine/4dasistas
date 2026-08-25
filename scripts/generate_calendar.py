@@ -178,13 +178,20 @@ def event_to_ics(item, category):
             lines.append(f"RRULE:FREQ=WEEKLY;BYDAY={byday}")
     else:
         lines.append(f"DTSTART;VALUE=DATE:{cal_date.replace('-', '')}")
-        # If there's an end date in the date field, try to parse it
-        date_str = item.get("date", "")
-        end_match = re.search(r"(\d{4})-(\d{2})-(\d{2})", date_str)
-        if end_match:
-            end_date = f"{end_match.group(1)}-{end_match.group(2)}-{end_match.group(3)}"
-            if end_date != cal_date:
-                lines.append(f"DTEND;VALUE=DATE:{end_date.replace('-', '')}")
+        # Structured end date (CMS 'End date' field), then legacy text fallback.
+        end_date = None
+        if item.get("endDate"):
+            end_date = parse_date(item.get("endDate"))
+        if not end_date:
+            date_str = item.get("date", "")
+            end_match = re.search(r"(\d{4})-(\d{2})-(\d{2})", date_str)
+            if end_match:
+                end_date = f"{end_match.group(1)}-{end_match.group(2)}-{end_match.group(3)}"
+        if end_date and end_date != cal_date:
+            from datetime import timedelta
+            y, m, d = map(int, end_date.split('-'))
+            dtend = (datetime(y, m, d) + timedelta(days=1)).strftime('%Y%m%d')
+            lines.append(f"DTEND;VALUE=DATE:{dtend}")
 
     title = escape_ics(item.get("title", "Event"))
     lines.append(f"SUMMARY:{title}")
