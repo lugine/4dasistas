@@ -800,7 +800,7 @@ applySiteText();
           const weekday = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'][d.getDay()];
           item.date = `${weekday}, ${monthNames[d.getMonth()]} ${d.getDate()}, ${d.getFullYear()}`;
         }
-        if(item.endDate && item.endDate >= item.eventDate){
+        if(item.endDate && item.endDate > item.eventDate){
           const ed = new Date(item.endDate + 'T00:00:00');
           item.date += ` – ${monthNames[ed.getMonth()]} ${ed.getDate()}, ${ed.getFullYear()}`;
         }
@@ -2263,7 +2263,8 @@ function renderDetail(id){
   const isResource = resourcesData.includes(e);
 
   let facts = '';
-  if(e.location) facts += `<div class="detail-fact"><b>Location:</b> ${e.location}</div>`;
+  if(e.virtual) facts += `<div class="detail-fact"><b>📍 Virtual event</b>${e.location ? ' · ' + e.location : ''}</div>`;
+  else if(e.location) facts += `<div class="detail-fact"><b>Location:</b> ${e.location}</div>`;
   if(e.organizer) facts += `<div class="detail-fact"><b>Organizer:</b> ${e.organizer}${e.contact ? ' · ' + e.contact : ''}</div>`;
   if(e.price) facts += `<div class="detail-fact"><b>Price:</b> ${e.price}</div>`;
   const registrationUrl = firstUrl(e.registration);
@@ -2277,13 +2278,21 @@ function renderDetail(id){
   if(e.whatsapp) links += `<a class="link-btn primary" href="${e.whatsapp}" target="_blank" rel="noopener">Join WhatsApp Group</a>`;
   if(e.instagram) links += `<a class="link-btn secondary" href="${e.instagram}" target="_blank" rel="noopener">Follow on Instagram</a>`;
   if(e.website) links += `<a class="link-btn secondary" href="${e.website}" target="_blank" rel="noopener">Visit Website</a>`;
+  if(e.link){
+    const linkLabel = /wa\.me|chat\.whatsapp\.com/i.test(e.link) ? 'Join WhatsApp Group'
+      : /instagram\.com/i.test(e.link) ? 'View on Instagram'
+      : 'More Info';
+    links += `<a class="link-btn primary" href="${e.link}" target="_blank" rel="noopener">${linkLabel}</a>`;
+  }
   const resourceMapsUrl = isResource && !e.mapsUrl ? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${e.title} ${e.location || ''}`)}` : e.mapsUrl;
-  if(resourceMapsUrl) links += `<a class="link-btn secondary" href="${resourceMapsUrl}" target="_blank" rel="noopener">View on Google Maps</a>`;
+  if(!e.virtual && resourceMapsUrl) links += `<a class="link-btn secondary" href="${resourceMapsUrl}" target="_blank" rel="noopener">View on Google Maps</a>`;
 
   let mapEmbed = '';
-  const mapQuery = (typeof e.lat === 'number' && typeof e.lng === 'number') ? `${e.lat},${e.lng}` : (e.location || (isResource ? e.title : ''));
-  if(mapQuery && (isResource || !/tbd|see google maps|shared in|by appointment/i.test(mapQuery))){
-    mapEmbed = `<iframe class="map-embed" loading="lazy" src="https://www.google.com/maps?q=${encodeURIComponent(mapQuery)}&output=embed"></iframe>`;
+  if(!e.virtual){
+    const mapQuery = (typeof e.lat === 'number' && typeof e.lng === 'number') ? `${e.lat},${e.lng}` : (e.location || (isResource ? e.title : ''));
+    if(mapQuery && (isResource || !/tbd|see google maps|shared in|by appointment/i.test(mapQuery))){
+      mapEmbed = `<iframe class="map-embed" loading="lazy" src="https://www.google.com/maps?q=${encodeURIComponent(mapQuery)}&output=embed"></iframe>`;
+    }
   }
 
   document.getElementById('detailCard').innerHTML = `

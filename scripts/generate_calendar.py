@@ -15,7 +15,7 @@ import json
 import os
 import re
 import sys
-from datetime import datetime, date
+from datetime import datetime, date, timedelta
 
 try:
     from dateutil.relativedelta import relativedelta
@@ -45,6 +45,7 @@ DATA_FILES = [
     "dayactivities.json",
     "mosquegatherings.json",
     "trips.json",
+    "supportprograms.json",
 ]
 
 DAY_MAP = {
@@ -158,10 +159,18 @@ def event_to_ics(item, category):
     dtstamp = now.strftime("%Y%m%dT%H%M%SZ")
 
     # Determine start date
+    days = item.get("days") or []
     cal_date = item.get("calDate") or item.get("eventDate")
-    if not cal_date:
-        return None
-    cal_date = parse_date(cal_date)
+    if cal_date:
+        cal_date = parse_date(cal_date)
+    if not cal_date and days:
+        # Recurring event with no explicit start date: anchor DTSTART on the
+        # nearest occurrence of its first weekday on/after a fixed epoch, so
+        # re-running the generator always produces the same stable date.
+        first_day = DAY_MAP.get(days[0].lower())
+        weekday_index = {"MO": 0, "TU": 1, "WE": 2, "TH": 3, "FR": 4, "SA": 5, "SU": 6}.get(first_day, 0)
+        epoch = datetime(2024, 1, 1)  # a Monday
+        cal_date = (epoch + timedelta(days=(weekday_index - epoch.weekday()) % 7)).strftime("%Y-%m-%d")
     if not cal_date:
         return None
 
@@ -170,7 +179,6 @@ def event_to_ics(item, category):
     lines.append(f"DTSTAMP:{dtstamp}")
 
     # Recurring vs one-time
-    days = item.get("days", [])
     if days and len(days) > 0:
         byday = ",".join(DAY_MAP.get(d.lower(), d.upper()) for d in days if DAY_MAP.get(d.lower()))
         if byday:
@@ -188,7 +196,6 @@ def event_to_ics(item, category):
             if end_match:
                 end_date = f"{end_match.group(1)}-{end_match.group(2)}-{end_match.group(3)}"
         if end_date and end_date != cal_date:
-            from datetime import timedelta
             y, m, d = map(int, end_date.split('-'))
             dtend = (datetime(y, m, d) + timedelta(days=1)).strftime('%Y%m%d')
             lines.append(f"DTEND;VALUE=DATE:{dtend}")
@@ -239,6 +246,8 @@ def generate_ics(dry_run=False):
             category = "Day Activities"
         elif category == "Trips":
             category = "Trips"
+        elif category == "Supportprograms":
+            category = "Support Programs"
 
         for item in items:
             ics = event_to_ics(item, category)

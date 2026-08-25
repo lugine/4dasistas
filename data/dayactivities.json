@@ -1,19 +1,6 @@
 {
   "items": [
     {
-      "eventDate": "2026-09-18",
-      "city": "Toronto",
-      "date": "Friday, September 18, 2026 · 6:00 PM",
-      "desc": "An evening for teen girls to connect, create, and chat about friendships, confidence, stress & wellness. Beads, bonding & real talk. Dinner + bracelet making included.",
-      "instagram": "https://www.instagram.com/sakeenahcanada/",
-      "location": "Cedarbrook Community Centre",
-      "title": "Beads of Strength",
-      "registration": "Link in bio",
-      "tag": "Day Activity",
-      "id": "beads-of-strength-sept18-2026",
-      "section": "activities"
-    },
-    {
       "price": "$49",
       "city": "Scarborough",
       "date": "August 23, 2026 · 12:00 PM",
@@ -25,6 +12,21 @@
       "id": "bloombake-girlsroom-aug23",
       "calDate": "2026-08-23",
       "section": "activities"
+    },
+    {
+      "section": "activities",
+      "eventDate": "2026-11-01",
+      "time": "13:00",
+      "recurEnd": "2026-11-29",
+      "desc": "Ladies Daff Workshop - Virtual ",
+      "recurStart": "2026-11-01",
+      "days": [
+        "sun"
+      ],
+      "title": "Daff Workshop ",
+      "link": "https://www.instagram.com/p/DcWBXXYtavW/?utm_source=ig_web_copy_link&igsi=MzRlODBiNWFlZA==",
+      "id": "daff-workshop",
+      "tag": "Daff Workshop "
     },
     {
       "city": "Mississauga",

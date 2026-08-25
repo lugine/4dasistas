@@ -60,6 +60,9 @@ def main():
             continue
         if sec in AUTO_TAG_SECTIONS and not item.get('tag'):
             item['tag'] = item.get('title') or ''
+        if not (item.get('days') or item.get('eventDate') or item.get('calDate')):
+            print(f'WARNING: {item.get("id")!r} ("{item.get("title")}") has no days, '
+                  f'eventDate, or calDate — it will never appear on the calendar.')
         buckets[sec].append(item)
 
     for sec, fname in SECTION_FILES.items():

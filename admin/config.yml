@@ -229,7 +229,12 @@ collections:
     widget: list
     required: false
     field: {label: Date, name: date, widget: date}
-  - label: Location (used for the embedded map on the event page)
+  - label: This is a virtual/online event (no physical location)
+    name: virtual
+    widget: boolean
+    default: false
+    required: false
+  - label: Location (used for the embedded map on the event page - leave blank if virtual)
     name: location
     widget: location-autocomplete
     required: false
@@ -317,7 +322,12 @@ collections:
     widget: list
     required: false
     field: {label: Date, name: date, widget: date}
-  - label: Location (used for the embedded map on the event page)
+  - label: This is a virtual/online event (no physical location)
+    name: virtual
+    widget: boolean
+    default: false
+    required: false
+  - label: Location (used for the embedded map on the event page - leave blank if virtual)
     name: location
     widget: location-autocomplete
     required: false
@@ -401,7 +411,12 @@ collections:
     widget: list
     required: false
     field: {label: Date, name: date, widget: date}
-  - label: Location (used for the embedded map on the event page)
+  - label: This is a virtual/online event (no physical location)
+    name: virtual
+    widget: boolean
+    default: false
+    required: false
+  - label: Location (used for the embedded map on the event page - leave blank if virtual)
     name: location
     widget: location-autocomplete
     required: false
@@ -478,7 +493,12 @@ collections:
     widget: list
     required: false
     field: {label: Date, name: date, widget: date}
-  - label: Location (used for the embedded map on the event page)
+  - label: This is a virtual/online event (no physical location)
+    name: virtual
+    widget: boolean
+    default: false
+    required: false
+  - label: Location (used for the embedded map on the event page - leave blank if virtual)
     name: location
     widget: location-autocomplete
     required: false
@@ -569,7 +589,12 @@ collections:
     widget: list
     required: false
     field: {label: Date, name: date, widget: date}
-  - label: Location (used for the embedded map on the event page)
+  - label: This is a virtual/online event (no physical location)
+    name: virtual
+    widget: boolean
+    default: false
+    required: false
+  - label: Location (used for the embedded map on the event page - leave blank if virtual)
     name: location
     widget: location-autocomplete
     required: false
@@ -653,7 +678,12 @@ collections:
     widget: list
     required: false
     field: {label: Date, name: date, widget: date}
-  - label: Location (used for the embedded map on the event page)
+  - label: This is a virtual/online event (no physical location)
+    name: virtual
+    widget: boolean
+    default: false
+    required: false
+  - label: Location (used for the embedded map on the event page - leave blank if virtual)
     name: location
     widget: location-autocomplete
     required: false

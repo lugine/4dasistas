@@ -27,9 +27,14 @@
       "title": "Navigating Divorce: Women Support Group",
       "type": "Women Support Group",
       "desc": "A compassionate and confidential virtual support group for women contemplating divorce, navigating its challenges, or healing from its impact. Offers support, reflection, renewal, and connection with women who understand.",
+      "virtual": true,
       "location": "Virtual via Zoom",
       "website": "https://www.instagram.com/p/DaEG5Njjv27/",
       "instagram": "https://www.instagram.com/khalilcenter/",
+      "days": [
+        "mon"
+      ],
+      "time": "11:00",
       "date": "Every Monday · 11:00 AM–12:00 PM CST",
       "ownedBy": "Khalil Center",
       "section": "supportprograms"
