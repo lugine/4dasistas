@@ -2572,6 +2572,10 @@ document.body.addEventListener('click', e => {
   }
   const trigger = e.target.closest('[data-id]');
   if(!trigger) return;
+  if(trigger.classList.contains('search-suggestion')){
+    const suggestions = document.getElementById('searchSuggestions');
+    if(suggestions) suggestions.style.display = 'none';
+  }
   location.hash = '#/event/' + trigger.dataset.id;
 });
 

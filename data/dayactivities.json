@@ -1,6 +1,21 @@
 {
   "items": [
     {
+      "section": "activities",
+      "eventDate": "2026-10-10",
+      "virtual": false,
+      "time": "12:00",
+      "desc": "Immerse yourself in autumn’s changing colours through en plein air sessions, drawing and painting directly in nature while learning landscape art techniques alongside a creative sisterhood.\n\nGuided by Professional Artist Nora Alkeyat. Templates and materials provided.\n18+ | Sisters only\nSaturday Oct 10 & 17 (2-classes) | 12pm - 2pm\nMeadowvale Community Centre, Program Room 2 | 6655 Glen Erin Dr, Mississauga",
+      "extraDates": [
+        "2026-10-17"
+      ],
+      "location": "6655 Glen Erin Dr, Mississauga, ON L5N 3L4, Canada",
+      "title": "Autumn En Plein Air | Oil Pastel & Painting Course",
+      "link": "https://nomostudio.ca/products/islamic-biomorphic-art-drawing-painting-copy?fbclid=PARlRTSAT6tkFwZG9mAmZkaWQWUNJv8xHK_WHeuWHuDGu-bGggpClTpmV4dG4DYWVtAjEwAHNydGMGYXBwX2lkDzEyNDAyNDU3NDI4NzQxNAABpyHrGXfxpNHbnbRG00qaNafHwURmQk1ErWkHzOooi7jadK5WQBXtHb01mDnh_aem_xaFIyTJ3pNauei3UwV6eJA",
+      "id": "autumn-en-plein-air-oil-pastel-painting-course",
+      "tag": "Autumn En Plein Air | Oil Pastel & Painting Course"
+    },
+    {
       "price": "$49",
       "city": "Scarborough",
       "date": "August 23, 2026 · 12:00 PM",
@@ -131,6 +146,22 @@
       "tag": "Masks n Mane"
     },
     {
+      "section": "activities",
+      "eventDate": "2026-09-26",
+      "virtual": false,
+      "time": "12:00",
+      "desc": "Step into the medieval world of historic book arts in this hands-on painting course. Learn to draw traditional motifs, paint with gouache, and create an ornate border surrounding a poem — through pattern, colour, and storytelling.\n\nGuided by Professional Artist Nora Alkeyat. Templates and materials provided. Every student receives a FREE Medieval Drawing Workbook.\n18+ | Sisters only\nSaturday Sept 26 & Oct 3 (2-classes) | 12pm - 2pm\nMeadowvale Community Centre, Program Room 2 | 6655 Glen Erin Dr, Mississauga",
+      "extraDates": [
+        "2026-10-03"
+      ],
+      "recurStart": "2026-08-25",
+      "location": "6655 Glen Erin Dr, Mississauga, ON L5N 3L4, Canada",
+      "title": "Medieval Painting",
+      "link": "https://nomostudio.ca/products/medieval-manuscript-illumination-painting?fbclid=PARlRTSAT6tetwZG9mAmZkaWQWUNJv8xHK_WHeuWHuDGu-bGggpClTpmV4dG4DYWVtAjEwAHNydGMGYXBwX2lkDzEyNDAyNDU3NDI4NzQxNAABpyHrGXfxpNHbnbRG00qaNafHwURmQk1ErWkHzOooi7jadK5WQBXtHb01mDnh_aem_xaFIyTJ3pNauei3UwV6eJA",
+      "id": "medieval-painting",
+      "tag": "Medieval Painting"
+    },
+    {
       "city": "Toronto",
       "date": "Thursday, August 27, 2026 · 3:00 PM",
       "organizer": "TBA",
@@ -144,6 +175,19 @@
       "id": "muslim-women-floral-mindset-workshop-2026",
       "calDate": "2026-08-27",
       "section": "activities"
+    },
+    {
+      "section": "activities",
+      "eventDate": "2026-09-03",
+      "virtual": false,
+      "time": "18:00",
+      "desc": "An illustrative and meditative oil pastel workshop for women to connect and explore colour through emotion and self-expression, learning techniques in colour theory, abstracted landscapes, layering, texture, and intuitive mark-making.\n\nGuided by Professional Artist Nora Alkeyat. Templates and materials provided. \n18+ | Sisters only \nThursday Sept 3 | 6pm - 8:30pm \nStudio.89 Café, Mississauga",
+      "extraDates": [],
+      "location": "2520 Eglinton Ave W Unit 1, Mississauga, ON L5M 0Y4, Canada",
+      "title": "Oil Pastel Art Therapy",
+      "link": "https://nomostudio.ca/pages/courses?fbclid=PARlRTSAT6tYlwZG9mAmZkaWQWUNJv8xHK_WHeuWHuDGu-bGggpClTpmV4dG4DYWVtAjEwAHNydGMGYXBwX2lkDzEyNDAyNDU3NDI4NzQxNAABpyHrGXfxpNHbnbRG00qaNafHwURmQk1ErWkHzOooi7jadK5WQBXtHb01mDnh_aem_xaFIyTJ3pNauei3UwV6eJA",
+      "id": "oil-pastel-art-therapy",
+      "tag": "Oil Pastel Art Therapy"
     },
     {
       "city": "Mississauga",

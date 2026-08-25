@@ -1,10 +1,13 @@
-name: Regenerate Calendar ICS
+name: Rebuild aggregate data and calendar ICS
 
 on:
   push:
     branches: [main]
     paths:
+      - 'data/calendar/**'
+      - 'data/resources/**'
       - 'data/*.json'
+      - 'scripts/build_content.py'
       - 'scripts/generate_calendar.py'
   schedule:
     - cron: "0 5 * * *"  # Daily at 5 AM UTC
@@ -18,29 +21,32 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      
+
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-          
+
+      - name: Merge per-item CMS files into the aggregate data/*.json files
+        run: python3 scripts/build_content.py
+
       - name: Generate calendar.ics
         run: python3 scripts/generate_calendar.py
 
       - name: Check for changes
         id: changes
         run: |
-          if git diff --quiet calendar.ics; then
+          if git diff --quiet data/*.json calendar.ics; then
             echo "changed=false" >> $GITHUB_OUTPUT
           else
             echo "changed=true" >> $GITHUB_OUTPUT
           fi
-          
+
       - name: Commit and push if changed
         if: steps.changes.outputs.changed == 'true'
         run: |
           git config user.name "4DASISTAS Bot"
           git config user.email "bot@4dasistas.ca"
-          git add calendar.ics
-          git commit -m "Auto-regenerate calendar.ics from JSON data [skip ci]"
+          git add data/*.json calendar.ics
+          git commit -m "Auto-rebuild aggregate data + calendar.ics [skip ci]"
           git push
