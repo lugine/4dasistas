@@ -10,6 +10,33 @@
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCNNUYMc_ZfoPllM182cVMZ8tRs_EzUhoM&libraries=places&loading=async" async defer></script>
   <script src="vendor/decap-cms.js"></script>
   <script>
+    // Force-register a working 'date' control. Some Decap 3.x bundles fail to
+    // expose a control for their own built-in date widget ("No control for
+    // widget 'date'"), so we supply our own native date input. It produces the
+    // exact YYYY-MM-DD value the site, generate_calendar.py, and calendar.ics
+    // already expect - nothing downstream changes.
+    (function () {
+      if (!window.CMS || !window.CMS.registerWidget || typeof createClass !== 'function' || typeof h !== 'function') {
+        console.error('4DASISTAS: Decap CMS globals missing - date control NOT overridden');
+        return;
+      }
+      var DateControl = createClass({
+        handleChange: function (e) { this.props.onChange(e.target.value || ''); },
+        render: function () {
+          return h('input', {
+            id: this.props.forID,
+            type: 'date',
+            className: this.props.classNameWrapper,
+            value: this.props.value || '',
+            onChange: this.handleChange,
+          });
+        },
+      });
+      CMS.registerWidget('date', DateControl);
+      console.log('4DASISTAS: custom date control registered');
+    })();
+  </script>
+  <script>
     // Custom "location-autocomplete" widget: Google Places Autocomplete, with a
     // plain-text fallback if Google Maps fails to load for any reason — the CMS
     // never breaks, it just loses the address-suggestion feature.
