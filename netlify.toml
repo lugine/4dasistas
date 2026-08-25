@@ -1,3 +1,0 @@
-[build]
-  command = "python3 scripts/generate_calendar.py"
-  publish = "."

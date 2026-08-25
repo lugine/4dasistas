@@ -642,14 +642,15 @@ let gatheringsData = [];
 let dayActivitiesData = [];
 let tripsData = [];
 let clubsData = [];
-let organizationsData = [];
 let resourcesData = [];
 let mosqueGatheringsData = [];
+let supportProgramsData = [];
 let allResourceItems = [];
 let ALL_ITEMS = [];
 let EVENT_ITEMS = [];
 let siteText = {};
 
+const failedLoads = [];
 async function fetchDataWithFallback(key, localPath){
   try {
     const res = await fetch(localPath, { cache: 'no-store' });
@@ -658,8 +659,28 @@ async function fetchDataWithFallback(key, localPath){
     return data.items || [];
   } catch (e) {
     console.warn(`Failed to load ${key} from ${localPath}:`, e);
+    failedLoads.push(key);
     return [];
   }
+}
+
+// Visible warning when any data file failed to load — content silently
+// going missing is how outages used to go unnoticed on this site.
+function showLoadWarning(){
+  if(!failedLoads.length) return;
+  if(document.getElementById('loadWarning')) return;
+  const div = document.createElement('div');
+  div.id = 'loadWarning';
+  div.setAttribute('role','alert');
+  div.style.cssText = 'position:fixed;left:12px;right:12px;bottom:76px;z-index:9998;background:#fbeee0;border:1px solid #caaacd;color:#373d3b;padding:10px 14px;border-radius:12px;font-family:sans-serif;font-size:14px;display:flex;gap:10px;align-items:center;justify-content:space-between;box-shadow:0 2px 10px rgba(55,61,59,.18);';
+  div.innerHTML = `<span>⚠ Some content couldn't load (${[...new Set(failedLoads)].join(', ')}). Refresh to try again.</span>`;
+  const btn = document.createElement('button');
+  btn.textContent = 'Dismiss';
+  btn.setAttribute('aria-label','Dismiss loading warning');
+  btn.style.cssText = 'background:#caaacd;color:#fff;border:none;border-radius:8px;padding:6px 12px;cursor:pointer;font-weight:600;white-space:nowrap;';
+  btn.addEventListener('click', () => div.remove());
+  div.appendChild(btn);
+  document.body.appendChild(div);
 }
 
 async function fetchSiteText(){
@@ -694,15 +715,15 @@ function applySiteText(){
 }
 
 async function loadData(){
-const [mosqueGatherings, sports, gatherings, dayactivities, trips, clubs, organizations, resources, text] = await Promise.all([
+const [mosqueGatherings, sports, gatherings, dayactivities, trips, clubs, resources, supportprograms, text] = await Promise.all([
     fetchDataWithFallback('mosquegatherings', 'data/mosquegatherings.json'),
     fetchDataWithFallback('sports', 'data/sports.json'),
     fetchDataWithFallback('gatherings', 'data/gatherings.json'),
     fetchDataWithFallback('dayactivities', 'data/dayactivities.json'),
     fetchDataWithFallback('trips', 'data/trips.json'),
     fetchDataWithFallback('clubs', 'data/clubs.json'),
-    fetchDataWithFallback('organizations', 'data/organizations.json'),
     fetchDataWithFallback('resources', 'data/resources.json'),
+    fetchDataWithFallback('supportprograms', 'data/supportprograms.json'),
     fetchSiteText(),
   ]);
   sportsData = sports;
@@ -710,14 +731,21 @@ const [mosqueGatherings, sports, gatherings, dayactivities, trips, clubs, organi
   dayActivitiesData = dayactivities;
   tripsData = trips;
   clubsData = clubs;
-  organizationsData = organizations;
   resourcesData = resources;
+  supportProgramsData = supportprograms;
+  // Support Programs live in their own file (edited via its own CMS tab with
+  // the same form as every other calendar type) but surface as support-group
+  // entries on the site — same flag the old resources-based entries used.
+  supportProgramsData.forEach(p => {
+    p.category = 'supportgroups';
+    p.isSupportGroup = true;
+  });
 mosqueGatheringsData = mosqueGatherings;
 siteText = text;
 applySiteText();
 
   // Normalize dates so every event has a clean, consistent display date.
-  [sportsData, gatheringsData, dayActivitiesData, tripsData, mosqueGatheringsData].forEach(arr => {
+  [sportsData, gatheringsData, dayActivitiesData, tripsData, mosqueGatheringsData, supportProgramsData].forEach(arr => {
     arr.forEach(item => {
       if(item.eventDate){
         if(!item.calDate) item.calDate = item.eventDate;
@@ -740,9 +768,10 @@ applySiteText();
   dayActivitiesData = dedupeEvents(dayActivitiesData);
   tripsData = dedupeEvents(tripsData);
   mosqueGatheringsData = dedupeEvents(mosqueGatheringsData);
+  supportProgramsData = dedupeEvents(supportProgramsData);
 
-  allResourceItems = [...resourcesData];
-  ALL_ITEMS = [...sportsData, ...gatheringsData, ...dayActivitiesData, ...tripsData, ...clubsData, ...organizationsData, ...resourcesData, ...mosqueGatheringsData, ...clubCalendarItems()];
+  allResourceItems = [...resourcesData, ...supportProgramsData];
+  ALL_ITEMS = [...sportsData, ...gatheringsData, ...dayActivitiesData, ...tripsData, ...clubsData, ...resourcesData, ...supportProgramsData, ...mosqueGatheringsData, ...clubCalendarItems()];
   // The main calendar is limited to sports, activities, and functions.
   // Trips, clubs, and mosque programs have their own dedicated calendars.
   EVENT_ITEMS = mixEvents(sportsData, gatheringsData, dayActivitiesData, [], []);
@@ -788,7 +817,7 @@ const introText = {
   sports: "Somehow there's badminton every single day of the week.",
   activities: "Sports-adjacent outings, workshops, wellness, and social activities.",
   functions: "Markets, festivals, gatherings, and community functions.",
-  trips: "Sample trips below — tell me the real ones and I'll swap them in.",
+  trips: "Women-friendly trips, retreats, and group travel beyond the GTA.",
   mosqueprograms: "Mosque events, prayers, classes, and community gatherings.",
   clubs: "Special-interest clubs the community runs together — sign up to join one.",
   resources: "A directory of Muslim women-owned and Muslim-supporting resources across the GTA.",
@@ -2454,6 +2483,7 @@ restoreStateFromHash();
 loadData().then(() => {
   syncToggleButtonClasses();
   render();
+  showLoadWarning();
   const initMatch = location.hash.match(/^#\/event\/(.+)$/);
   if(initMatch) renderDetail(initMatch[1]);
 }).catch(err => {

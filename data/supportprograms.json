@@ -1,0 +1,35 @@
+{
+  "items": [
+    {
+      "id": "mental-khalil-navigating-divorce-support-group",
+      "title": "Navigating Divorce: Women Support Group",
+      "type": "Women Support Group",
+      "desc": "A compassionate and confidential virtual support group for women contemplating divorce, navigating its challenges, or healing from its impact. Offers support, reflection, renewal, and connection with women who understand.",
+      "location": "Virtual via Zoom",
+      "website": "https://www.instagram.com/p/DaEG5Njjv27/",
+      "instagram": "https://www.instagram.com/khalilcenter/",
+      "date": "Every Monday · 11:00 AM–12:00 PM CST",
+      "ownedBy": "Khalil Center"
+    },
+    {
+      "id": "healing-hearts-muslim-survivors-group",
+      "title": "Healing Hearts: Muslim Survivors Group",
+      "type": "Support Group",
+      "location": "Online",
+      "date": "October 14, 2026 · 11:00 AM – 12:00 PM (UTC-4)",
+      "ownedBy": "Community-run support group",
+      "desc": "A gathering space for Muslim individuals who identify as having experienced sexual violence, sexual harassment, and/or gender-based violence. Participants discuss healing, faith, and community-building.",
+      "calDate": "2026-10-14"
+    },
+    {
+      "id": "eldest-daughters-support-group",
+      "title": "Eldest Daughters",
+      "type": "Support Group",
+      "calDate": "2026-08-28",
+      "date": "Friday, August 28, 2026 · 6:00–7:30 PM · Online",
+      "ownedBy": "Community-run support group",
+      "desc": "A support space for eldest daughters to connect and process shared experiences together.",
+      "instagram": "https://www.instagram.com/p/DcOkpTNOQ9W/"
+    }
+  ]
+}

@@ -61,7 +61,7 @@ const readTodayEvents = async (env) => {
 
 export default {
   async fetch(request, env, ctx) {
-    const ADMIN_PASSWORD = env.ADMIN_PASSWORD || "change-me-in-production";
+    const ADMIN_PASSWORD = env.ADMIN_PASSWORD; // REQUIRED Worker secret — auth fails closed when unset
 
     const corsHeaders = {
       "Access-Control-Allow-Origin": "*",
@@ -149,6 +149,12 @@ export default {
     // ---- Login ----
 
     if (path === "/login" && request.method === "POST") {
+      // Fail closed: if the ADMIN_PASSWORD secret is not configured, never grant a session.
+      if (!ADMIN_PASSWORD) {
+        const headers = new Headers(corsHeaders);
+        headers.set("Location", "/editor?error=2");
+        return new Response(null, { status: 302, headers });
+      }
       const formData = await request.formData();
       const password = formData.get("password");
       if (password && password === ADMIN_PASSWORD) {
@@ -185,7 +191,7 @@ export default {
       const valid = await isValidSession(token);
       if (!valid) {
         if (path === "/editor") {
-          const error = url.searchParams.get("error") === "1";
+          const error = url.searchParams.get("error");
           const html = `<!DOCTYPE html>
 <html>
 <head>
@@ -199,7 +205,7 @@ export default {
 </head>
 <body>
   <h1>4DASISTAS Editor</h1>
-  ${error ? '<p class="error">Invalid password. Please try again.</p>' : ''}
+  ${error === '1' ? '<p class="error">Invalid password. Please try again.</p>' : ''}${error === '2' ? '<p class="error">Server misconfigured: the ADMIN_PASSWORD secret is not set, so nobody can log in. Set it with <code>npx wrangler secret put ADMIN_PASSWORD</code>.</p>' : ''}
   <form method="POST" action="/login">
     <input type="password" name="password" placeholder="Admin password" required autofocus>
     <button type="submit">Login</button>
@@ -263,7 +269,6 @@ export default {
       <option value="dayactivities">Day Activities</option>
       <option value="trips">Trips</option>
       <option value="clubs">Clubs</option>
-      <option value="organizations">Organizations</option>
       <option value="resources">Resources</option>
       <option value="smallbusinesses">Small Businesses</option>
       <option value="mosquegatherings">Mosque Gatherings</option>

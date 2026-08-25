@@ -33,7 +33,8 @@
       "type": "International Trip",
       "category": "trips",
       "lat": 28.538336,
-      "lng": -81.379234
+      "lng": -81.379234,
+      "tripType": "international"
     },
     {
       "id": "deen-journeys-granada-retreat-2027",
@@ -51,7 +52,8 @@
       "type": "International Trip",
       "category": "trips",
       "lat": 37.1773,
-      "lng": -3.5986
+      "lng": -3.5986,
+      "tripType": "international"
     },
     {
       "id": "alhuda-female-youth-niagara-trip-aug30-2026",
@@ -66,7 +68,8 @@
       "desc": "Female youth day trip to Niagara Falls. Activities may include a boat tour, zipline, Butterfly Conservatory, Clifton Hill, shopping, restaurants, and scenic walks. Attractions, meals, and personal expenses are not included.",
       "instagram": "https://www.instagram.com/alhudamuslimyouth/",
       "lat": 43.0896,
-      "lng": -79.0849
+      "lng": -79.0849,
+      "tripType": "domestic"
     },
     {
       "id": "mwtg-oman-2026",
@@ -80,7 +83,8 @@
       "type": "International Trip",
       "category": "trips",
       "lat": 23.588,
-      "lng": 58.3829
+      "lng": 58.3829,
+      "tripType": "international"
     },
     {
       "id": "onepath-kyrgyzstan-2026",
@@ -94,7 +98,8 @@
       "type": "International Trip",
       "category": "trips",
       "lat": 41.2044,
-      "lng": 74.7661
+      "lng": 74.7661,
+      "tripType": "international"
     },
     {
       "id": "sakinah-cappadocia-2026",
@@ -108,7 +113,8 @@
       "type": "Retreat",
       "category": "trips",
       "lat": 38.6431,
-      "lng": 34.8289
+      "lng": 34.8289,
+      "tripType": "international"
     },
     {
       "id": "sisters-getaway-morocco-2026",
@@ -122,7 +128,8 @@
       "type": "Retreat",
       "category": "trips",
       "lat": 31.7917,
-      "lng": -7.0926
+      "lng": -7.0926,
+      "tripType": "international"
     },
     {
       "id": "mwtg-jordan-2026",
@@ -152,7 +159,8 @@
       "website": "https://sistersgetaway.wetravel.com/trips/august-24-30th-2026-with-sisters-getaway-to-granada-sisters-getaway-56521944",
       "instagram": "https://www.instagram.com/sistersgetawayofficial/",
       "lat": 37.1773,
-      "lng": -3.5986
+      "lng": -3.5986,
+      "tripType": "international"
     },
     {
       "id": "onepath-macedonia-kosovo-2026",
@@ -166,7 +174,8 @@
       "website": "https://travelonepath.com/",
       "instagram": "https://www.instagram.com/onepath.travel/",
       "lat": 41.9981,
-      "lng": 21.4254
+      "lng": 21.4254,
+      "tripType": "international"
     },
     {
       "id": "muslim-hikers-mount-toubkal-2026",
@@ -180,7 +189,8 @@
       "website": "https://www.instagram.com/muslim.hikers/",
       "instagram": "https://www.instagram.com/muslim.hikers/",
       "lat": 31.0595,
-      "lng": -7.9151
+      "lng": -7.9151,
+      "tripType": "international"
     },
     {
       "id": "onepath-japan-2026",
@@ -194,7 +204,8 @@
       "website": "https://travelonepath.com/",
       "instagram": "https://www.instagram.com/onepath.travel/",
       "lat": 35.6762,
-      "lng": 139.6503
+      "lng": 139.6503,
+      "tripType": "international"
     },
     {
       "id": "mawa-jordan-2026",
@@ -208,7 +219,8 @@
       "website": "https://mawacollective.com/trips",
       "instagram": "https://www.instagram.com/mawa.collective/",
       "lat": 31.9454,
-      "lng": 35.9284
+      "lng": 35.9284,
+      "tripType": "international"
     }
   ]
 }

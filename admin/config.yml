@@ -22,6 +22,18 @@ public_folder: "/admin/uploads"
 site_url: https://4dasistas.ca
 display_url: https://4dasistas.ca
 
+# ============================================================================
+# CMS TABS (sidebar order):
+#   🛠️ Maintenance Mode · ✏️ Page Text
+#   ALL CALENDAR TYPES — one tab each, all sharing ONE identical item form:
+#     Sports · Calendar Activities · Calendar Functions · Calendar Trips ·
+#     Mosque Programs · Support Programs
+#   👯‍♀️ Gals Clubs · Organizations · 📔 Resources
+#
+# The shared calendar form is defined ONCE with the &calendar_item_form YAML
+# anchor (in the Sports collection) and reused everywhere with *calendar_item_form.
+# Edit fields there only — every calendar tab updates together.
+# ============================================================================
 collections:
 
   - name: "maintenance"
@@ -59,7 +71,7 @@ collections:
           - { label: "Intro line — Sports", name: "introSports", widget: "text" }
           - { label: "Intro line — Activities", name: "introActivities", widget: "text" }
           - { label: "Intro line — Functions", name: "introFunctions", widget: "text" }
-          - { label: "Intro line — Trips (Calendar tab)", name: "introTrips", widget: "text" }
+          - { label: "Intro line — Trips", name: "introTrips", widget: "text" }
           - { label: "Intro line — Mosque Programs", name: "introMosquePrograms", widget: "text" }
           - { label: "Intro line — CLUBS", name: "introClubs", widget: "text" }
           - { label: "Intro line — Resources", name: "introResources", widget: "text" }
@@ -69,6 +81,9 @@ collections:
           - { label: "Intro line — How to Start a Club", name: "introClubstart", widget: "text" }
           - { label: "Intro line — How to Join a Club", name: "introClubjoin", widget: "text" }
 
+  # ----------------------------------------------------------------
+  # ALL CALENDAR TYPES — shared identical form (defined here once).
+  # ----------------------------------------------------------------
   - name: "sports"
     label: "Sports"
     files:
@@ -79,171 +94,109 @@ collections:
           - label: "Items"
             name: "items"
             widget: "list"
-            fields:
-              - { label: "Tag / Type (e.g. Badminton) — change this to switch category", name: "tag", widget: "string" }
+            fields: &calendar_item_form
+              - { label: "Tag / Type (shown on the card, e.g. Badminton)", name: "tag", widget: "string", required: false }
               - { label: "ID (no spaces, unique)", name: "id", widget: "string" }
               - { label: "Title", name: "title", widget: "string" }
-              - { label: "Sport Key (lowercase, e.g. badminton)", name: "sportKey", widget: "string" }
               - label: "Event date (required — pick from calendar)"
                 name: "eventDate"
                 widget: "date"
                 required: true
-                hint: "Pick a date — the site automatically builds the display text and places it on the calendar. For recurring events, enter the next upcoming occurrence."
+                hint: "Pick a date — the site builds the display text and places it on the calendar. For recurring events, enter the next upcoming occurrence."
               - { label: "📝 Custom date text (optional — only for multi-day ranges like 'Sept 5–6'. Leave blank otherwise.)", name: "date", widget: "string", required: false }
-              - { label: "calDate", name: "calDate", widget: "hidden", required: false }
+              - { label: "calDate (internal — leave as shown)", name: "calDate", widget: "hidden", required: false }
               - label: "Recurring weekdays (leave empty if one-off)"
                 name: "days"
                 widget: "select"
                 multiple: true
                 required: false
                 options: ["sun","mon","tue","wed","thu","fri","sat"]
-              - { label: "Recurring: starts on (optional — leave blank for always)", name: "recurStart", widget: "date", required: false }
-              - { label: "Recurring: ends on (optional — leave blank for indefinite)", name: "recurEnd", widget: "date", required: false }
+              - { label: "Recurring: starts on (optional)", name: "recurStart", widget: "date", required: false }
+              - { label: "Recurring: ends on (optional)", name: "recurEnd", widget: "date", required: false }
+              - { label: "City (Activities filter uses this)", name: "city", widget: "select", required: false, options: ["Mississauga", "Oakville", "Toronto", "Burlington", "Milton"] }
               - { label: "Location", name: "location", widget: "location-autocomplete", required: false }
+              - { label: "Google Maps link", name: "mapsUrl", widget: "string", required: false }
               - { label: "Organizer name", name: "organizer", widget: "string", required: false }
               - { label: "Contact", name: "contact", widget: "string", required: false }
               - { label: "Price", name: "price", widget: "string", required: false }
               - { label: "Registration info", name: "registration", widget: "string", required: false }
               - { label: "Registration deadline", name: "registrationDeadline", widget: "date", required: false }
+              - { label: "Hijab-off confirmed?", name: "hijabOff", widget: "select", required: false, options: ["Not specified", "Yes", "No"], default: "Not specified" }
+              - { label: "Trip type (Trips only)", name: "tripType", widget: "select", required: false, options: ["domestic", "international"] }
+              - { label: "Sport key (Sports only — lowercase, e.g. badminton)", name: "sportKey", widget: "string", required: false }
+              - { label: "Partner (optional)", name: "partner", widget: "string", required: false }
+              - { label: "Partner Instagram link (optional)", name: "partnerInstagram", widget: "string", required: false }
+              - { label: "Latitude (map pin)", name: "lat", widget: "number", value_type: "float", required: false }
+              - { label: "Longitude (map pin)", name: "lng", widget: "number", value_type: "float", required: false }
               - { label: "Description", name: "desc", widget: "text", required: false }
               - { label: "WhatsApp link", name: "whatsapp", widget: "string", required: false }
-              - { label: "Instagram link", name: "instagram", widget: "string", required: false }
-              - { label: "Website link", name: "website", widget: "string", required: false }
-              - { label: "Email", name: "email", widget: "string", required: false }
-
-  - name: "gatherings"
-    label: "Activities & Gatherings — Gatherings"
-    files:
-      - file: "data/gatherings.json"
-        label: "Gatherings"
-        name: "gatherings"
-        fields:
-          - label: "Items"
-            name: "items"
-            widget: "list"
-            fields:
-              - { label: "Tag / Type — change this to switch category", name: "tag", widget: "string", default: "Gathering" }
-              - { label: "ID (no spaces, unique)", name: "id", widget: "string" }
-              - { label: "Title", name: "title", widget: "string" }
-              - label: "Event date (required — pick from calendar)"
-                name: "eventDate"
-                widget: "date"
-                required: true
-                hint: "Pick a date — the site automatically builds the display text and places it on the calendar. For recurring events, enter the next upcoming occurrence."
-              - { label: "📝 Custom date text (optional — only for multi-day ranges like 'Sept 5–6'. Leave blank otherwise.)", name: "date", widget: "string", required: false }
-              - { label: "calDate", name: "calDate", widget: "hidden", required: false }
-              - label: "Recurring weekdays (leave empty if one-off/ongoing)"
-                name: "days"
-                widget: "select"
-                multiple: true
-                required: false
-                options: ["sun","mon","tue","wed","thu","fri","sat"]
-              - { label: "Recurring: starts on (optional)", name: "recurStart", widget: "date", required: false }
-              - { label: "Recurring: ends on (optional)", name: "recurEnd", widget: "date", required: false }
-              - { label: "Location", name: "location", widget: "location-autocomplete", required: false }
-              - { label: "Registration deadline", name: "registrationDeadline", widget: "date", required: false }
-              - label: "Hijab-off confirmed?"
-                name: "hijabOff"
-                widget: "select"
-                options: ["Not specified", "Yes", "No"]
-                default: "Not specified"
-                required: false
-              - { label: "Description", name: "desc", widget: "text", required: false }
               - { label: "Instagram link", name: "instagram", widget: "string", required: false }
               - { label: "Website link", name: "website", widget: "string", required: false }
               - { label: "Email", name: "email", widget: "string", required: false }
 
   - name: "dayactivities"
-    label: "Activities & Gatherings — Day Activities"
+    label: "Calendar Activities"
     files:
       - file: "data/dayactivities.json"
-        label: "Day Activities"
+        label: "Calendar Activities"
         name: "dayactivities"
         fields:
           - label: "Items"
             name: "items"
             widget: "list"
-            fields:
-              - { label: "Tag / Type — change this to switch category", name: "tag", widget: "string", default: "Day Activity" }
-              - { label: "ID (no spaces, unique)", name: "id", widget: "string" }
-              - { label: "Title", name: "title", widget: "string" }
-              - label: "Event date (required — pick from calendar)"
-                name: "eventDate"
-                widget: "date"
-                required: true
-                hint: "Pick a date — the site automatically builds the display text and places it on the calendar."
-              - { label: "📝 Custom date text (optional — only for multi-day ranges like 'Sept 5–6'. Leave blank otherwise.)", name: "date", widget: "string", required: false }
-              - { label: "calDate", name: "calDate", widget: "hidden", required: false }
-              - { label: "City", name: "city", widget: "select", options: ["Mississauga", "Oakville", "Toronto", "Burlington", "Milton"] }
-              - { label: "Location", name: "location", widget: "location-autocomplete", required: false }
-              - { label: "Registration deadline", name: "registrationDeadline", widget: "date", required: false }
-              - { label: "Description", name: "desc", widget: "text", required: false }
+            fields: *calendar_item_form
+
+  - name: "gatherings"
+    label: "Calendar Functions"
+    files:
+      - file: "data/gatherings.json"
+        label: "Calendar Functions"
+        name: "gatherings"
+        fields:
+          - label: "Items"
+            name: "items"
+            widget: "list"
+            fields: *calendar_item_form
 
   - name: "trips"
-    label: "Trips"
+    label: "Calendar Trips"
     files:
       - file: "data/trips.json"
-        label: "Trips"
+        label: "Calendar Trips"
         name: "trips"
         fields:
           - label: "Items"
             name: "items"
             widget: "list"
-            fields:
-              - { label: "Tag / Type — change this to switch category", name: "tag", widget: "string", default: "Trip" }
-              - { label: "ID (no spaces, unique)", name: "id", widget: "string" }
-              - { label: "Title", name: "title", widget: "string" }
-              - label: "Event date (required — pick from calendar)"
-                name: "eventDate"
-                widget: "date"
-                required: true
-                hint: "Pick a date — the site automatically builds the display text and places it on the calendar."
-              - { label: "📝 Custom date text (optional — only for multi-day ranges like 'Sept 5–6'. Leave blank otherwise.)", name: "date", widget: "string", required: false }
-              - { label: "calDate", name: "calDate", widget: "hidden", required: false }
-              - { label: "Trip type", name: "tripType", widget: "select", options: ["domestic", "international"] }
-              - { label: "Location", name: "location", widget: "location-autocomplete", required: false }
-              - { label: "Price", name: "price", widget: "string", required: false }
-              - { label: "Registration deadline", name: "registrationDeadline", widget: "date", required: false }
-              - { label: "Description", name: "desc", widget: "text", required: false }
+            fields: *calendar_item_form
 
   - name: "mosquegatherings"
-    label: "Mosque Gatherings"
+    label: "Mosque Programs"
     files:
       - file: "data/mosquegatherings.json"
-        label: "Mosque Gatherings"
+        label: "Mosque Programs"
         name: "mosquegatherings"
         fields:
           - label: "Items"
             name: "items"
             widget: "list"
-            fields:
-              - { label: "Tag / Type — change this to switch category", name: "tag", widget: "string", default: "Mosque Gathering" }
-              - { label: "ID (no spaces, unique)", name: "id", widget: "string" }
-              - { label: "Title", name: "title", widget: "string" }
-              - label: "Event date (required — pick from calendar)"
-                name: "eventDate"
-                widget: "date"
-                required: true
-                hint: "Pick a date — the site automatically builds the display text and places it on the calendar. For recurring events, enter the next upcoming occurrence."
-              - { label: "📝 Custom date text (optional — only for multi-day ranges like 'Sept 5–6'. Leave blank otherwise.)", name: "date", widget: "string", required: false }
-              - label: "Recurring weekdays (leave empty if one-off/ongoing)"
-                name: "days"
-                widget: "select"
-                multiple: true
-                required: false
-                options: ["sun","mon","tue","wed","thu","fri","sat"]
-              - { label: "Recurring: starts on (optional)", name: "recurStart", widget: "date", required: false }
-              - { label: "Recurring: ends on (optional)", name: "recurEnd", widget: "date", required: false }
-              - { label: "calDate", name: "calDate", widget: "hidden", required: false }
-              - { label: "Location", name: "location", widget: "location-autocomplete", required: false }
-              - { label: "Organizer name", name: "organizer", widget: "string", required: false }
-              - { label: "Contact", name: "contact", widget: "string", required: false }
-              - { label: "Description", name: "desc", widget: "text", required: false }
-              - { label: "WhatsApp link", name: "whatsapp", widget: "string", required: false }
-              - { label: "Instagram link", name: "instagram", widget: "string", required: false }
-              - { label: "Website link", name: "website", widget: "string", required: false }
-              - { label: "Email", name: "email", widget: "string", required: false }
+            fields: *calendar_item_form
 
+  - name: "supportprograms"
+    label: "Support Programs"
+    files:
+      - file: "data/supportprograms.json"
+        label: "Support Programs"
+        name: "supportprograms"
+        fields:
+          - label: "Items"
+            name: "items"
+            widget: "list"
+            fields: *calendar_item_form
+
+  # ----------------------------------------------------------------
+  # GALS CLUBS + RESOURCES (directory content)
+  # ----------------------------------------------------------------
   - name: "clubs"
     label: "Gals Clubs"
     files:
@@ -259,71 +212,43 @@ collections:
               - { label: "Title", name: "title", widget: "string" }
               - { label: "Description", name: "desc", widget: "text" }
               - { label: "Sign Up link", name: "signup", widget: "string" }
-              - label: "Club calendar events"
-                name: "calendarEvents"
-                widget: "list"
-                required: false
-                fields:
-                  - { label: "Event ID", name: "id", widget: "string" }
-                  - { label: "Title", name: "title", widget: "string" }
-                  - label: "Event date (required — pick from calendar)"
-                    name: "eventDate"
-                    widget: "date"
-                    required: true
-                    hint: "Pick a date — used to place this event on the calendar. For recurring club events, enter the next upcoming occurrence."
-                  - { label: "📝 Custom date text (optional — only for multi-day ranges like 'Sept 5–6'. Leave blank otherwise.)", name: "date", widget: "string", required: false }
-                  - { label: "calDate", name: "calDate", widget: "hidden", required: false }
-                  - { label: "Recurring weekdays", name: "days", widget: "select", multiple: true, required: false, options: ["sun", "mon", "tue", "wed", "thu", "fri", "sat"] }
-                  - { label: "Location", name: "location", widget: "location-autocomplete", required: false }
-                  - { label: "Description", name: "desc", widget: "text", required: false }
-                  - { label: "Website", name: "website", widget: "string", required: false }
-
-  - name: "organizations"
-    label: "Resources — Organizations"
-    files:
-      - file: "data/organizations.json"
-        label: "Organizations"
-        name: "organizations"
-        fields:
-          - label: "Items"
-            name: "items"
-            widget: "list"
-            fields:
-              - { label: "Category (leave as organizations)", name: "category", widget: "hidden", default: "organizations" }
-              - { label: "ID (no spaces, unique)", name: "id", widget: "string" }
-              - { label: "Title", name: "title", widget: "string" }
-              - { label: "Location", name: "location", widget: "location-autocomplete" }
-              - { label: "Ownership / leadership note", name: "ownedBy", widget: "string" }
-              - { label: "Description", name: "desc", widget: "text" }
-              - { label: "Instagram link", name: "instagram", widget: "string", required: false }
-              - { label: "Website link", name: "website", widget: "string", required: false }
-              - { label: "Email", name: "email", widget: "string", required: false }
+              - { label: "Club logo (path or upload)", name: "logo", widget: "string", required: false }
 
   - name: "resources"
-    label: "Resources — Muslim Women-Owned Resources"
+    label: "Resources"
     files:
       - file: "data/resources.json"
-        label: "Muslim Women-Owned Resources"
+        label: "Resources"
         name: "resources"
         fields:
           - label: "Items"
             name: "items"
             widget: "list"
             fields:
-              - { label: "Category — change this to switch type", name: "category", widget: "select", options: ["cafes", "shops", "restaurants", "beautycare", "mentalhealth", "bakeries", "legal", "mosqueprograms"] }
+              - label: "Type"
+                name: "category"
+                widget: "select"
+                options:
+                  - { label: "Cafe & Dessert", value: "cafes" }
+                  - { label: "Shops", value: "shops" }
+                  - { label: "Restaurants", value: "restaurants" }
+                  - { label: "Health n Beauty", value: "beautycare" }
+                  - { label: "Mental Health", value: "mentalhealth" }
+                  - { label: "Small Businesses", value: "bakeries" }
+                  - { label: "Legal Services", value: "legal" }
+                hint: "Note: 'Small Businesses' is stored under the internal key 'bakeries' (existing site behaviour)."
               - { label: "ID (no spaces, unique)", name: "id", widget: "string" }
               - { label: "Title", name: "title", widget: "string" }
-              - { label: "Type (e.g. Boutique, Bakery & Café)", name: "type", widget: "string" }
+              - { label: "Type line on card (e.g. Boutique, Bakery & Café)", name: "type", widget: "string", required: false }
               - { label: "Location", name: "location", widget: "location-autocomplete" }
               - { label: "Hours / date info", name: "date", widget: "string", required: false }
               - { label: "Ownership note (required)", name: "ownedBy", widget: "string", required: true, hint: "Every business needs a real owner name here — do not leave blank." }
-              - { label: "Description", name: "desc", widget: "text" }
+              - { label: "Description", name: "desc", widget: "text", required: false }
               - { label: "Latitude (for map)", name: "lat", widget: "number", value_type: "float", required: false }
               - { label: "Longitude (for map)", name: "lng", widget: "number", value_type: "float", required: false }
               - { label: "Google Maps link", name: "mapsUrl", widget: "string", required: false }
-              - { label: "Featured Instagram post link (for Small Businesses grid - paste a specific post URL, e.g. instagram.com/p/XXXXX/)", name: "instagramPost", widget: "string", required: false }
+              - { label: "Featured Instagram post link (Small Businesses grid — paste a specific post URL, e.g. instagram.com/p/XXXXX/)", name: "instagramPost", widget: "string", required: false }
               - { label: "Phone", name: "phone", widget: "string", required: false }
               - { label: "Instagram link", name: "instagram", widget: "string", required: false }
               - { label: "Website link", name: "website", widget: "string", required: false }
-
               - { label: "Email", name: "email", widget: "string", required: false }
