@@ -193,6 +193,17 @@ def event_to_ics(item, category):
             dtend = (datetime(y, m, d) + timedelta(days=1)).strftime('%Y%m%d')
             lines.append(f"DTEND;VALUE=DATE:{dtend}")
 
+    # Extra one-off dates: additional days this same event also happens on,
+    # not necessarily consecutive with the main date (e.g. a workshop series).
+    extra_dates = []
+    for entry in item.get("extraDates") or []:
+        raw = entry.get("date") if isinstance(entry, dict) else entry
+        parsed = parse_date(raw) if raw else None
+        if parsed:
+            extra_dates.append(parsed.replace("-", ""))
+    if extra_dates:
+        lines.append(f"RDATE;VALUE=DATE:{','.join(extra_dates)}")
+
     title = escape_ics(item.get("title", "Event"))
     lines.append(f"SUMMARY:{title}")
 

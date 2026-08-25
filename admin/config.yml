@@ -224,6 +224,11 @@ collections:
     name: recurEnd
     widget: date
     required: false
+  - label: Extra one-off dates (optional - for a series on specific days that aren't every week, e.g. a 3-part workshop on Sept 1, 8 and 22)
+    name: extraDates
+    widget: list
+    required: false
+    field: {label: Date, name: date, widget: date}
   - label: Location (used for the embedded map on the event page)
     name: location
     widget: location-autocomplete
@@ -307,6 +312,11 @@ collections:
     name: recurEnd
     widget: date
     required: false
+  - label: Extra one-off dates (optional - for a series on specific days that aren't every week, e.g. a 3-part workshop on Sept 1, 8 and 22)
+    name: extraDates
+    widget: list
+    required: false
+    field: {label: Date, name: date, widget: date}
   - label: Location (used for the embedded map on the event page)
     name: location
     widget: location-autocomplete
@@ -386,6 +396,11 @@ collections:
     name: recurEnd
     widget: date
     required: false
+  - label: Extra one-off dates (optional - for a series on specific days that aren't every week, e.g. a 3-part workshop on Sept 1, 8 and 22)
+    name: extraDates
+    widget: list
+    required: false
+    field: {label: Date, name: date, widget: date}
   - label: Location (used for the embedded map on the event page)
     name: location
     widget: location-autocomplete
@@ -458,6 +473,11 @@ collections:
     name: recurEnd
     widget: date
     required: false
+  - label: Extra one-off dates (optional - for a series on specific days that aren't every week, e.g. a 3-part workshop on Sept 1, 8 and 22)
+    name: extraDates
+    widget: list
+    required: false
+    field: {label: Date, name: date, widget: date}
   - label: Location (used for the embedded map on the event page)
     name: location
     widget: location-autocomplete
@@ -544,6 +564,11 @@ collections:
     name: recurEnd
     widget: date
     required: false
+  - label: Extra one-off dates (optional - for a series on specific days that aren't every week, e.g. a 3-part workshop on Sept 1, 8 and 22)
+    name: extraDates
+    widget: list
+    required: false
+    field: {label: Date, name: date, widget: date}
   - label: Location (used for the embedded map on the event page)
     name: location
     widget: location-autocomplete
@@ -623,6 +648,11 @@ collections:
     name: recurEnd
     widget: date
     required: false
+  - label: Extra one-off dates (optional - for a series on specific days that aren't every week, e.g. a 3-part workshop on Sept 1, 8 and 22)
+    name: extraDates
+    widget: list
+    required: false
+    field: {label: Date, name: date, widget: date}
   - label: Location (used for the embedded map on the event page)
     name: location
     widget: location-autocomplete

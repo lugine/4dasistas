@@ -1057,7 +1057,14 @@ function isPastItem(item){
   // weekly items and dateless/ongoing items are always treated as upcoming.
   if(!item.calDate) return false;
   const todayStr = `${today.getFullYear()}-${pad(today.getMonth()+1)}-${pad(today.getDate())}`;
-  return item.calDate < todayStr;
+  if(item.calDate >= todayStr) return false;
+  // An event with a future one-off date (extraDates) is still upcoming
+  // even if its main date has already passed.
+  if(item.extraDates && item.extraDates.some(ed => {
+    const dateStr = (typeof ed === 'string' ? ed : ed && ed.date) || '';
+    return dateStr >= todayStr;
+  })) return false;
+  return true;
 }
 
 function normalizeSearchText(value){
@@ -1164,39 +1171,51 @@ function renderList(){
 /* ============================================================
    RENDER: APPLE-STYLE MONTH CALENDAR
    ============================================================ */
+function extraDatesInMonth(item, year, month){
+  if(!item.extraDates || !item.extraDates.length) return [];
+  return item.extraDates
+    .map(ed => (typeof ed === 'string' ? ed : ed && ed.date) || '')
+    .filter(dateStr => {
+      if(!dateStr) return false;
+      const d = new Date(dateStr + 'T00:00:00');
+      return d.getFullYear() === year && d.getMonth() === month;
+    });
+}
+
 function occurrencesInMonth(item, year, month){
+  let base = [];
   if(item.days && item.days.length){
     const dayNums = item.days.map(d => dayOrder.indexOf(d));
     const daysInMonth = new Date(year, month+1, 0).getDate();
-    const out = [];
     for(let d=1; d<=daysInMonth; d++){
       const dateStr = `${year}-${pad(month+1)}-${pad(d)}`;
       if(item.recurStart && dateStr < item.recurStart) continue;
       if(item.recurEnd && dateStr > item.recurEnd) continue;
       const dt = new Date(year, month, d);
-      if(dayNums.includes(dt.getDay())) out.push(dateStr);
+      if(dayNums.includes(dt.getDay())) base.push(dateStr);
     }
-    return out;
-  }
-  if(item.calDate){
+  } else if(item.calDate){
     // Multi-day events/festivals/trips: expand every day from start to end.
     if(item.endDate && item.endDate >= item.calDate){
-      const out = [];
       const cursor = new Date(item.calDate + 'T00:00:00');
       const stop = new Date(item.endDate + 'T23:59:59');
       const hardCap = new Date(cursor).setDate(cursor.getDate() + 400); // safety net
       while(cursor <= stop && cursor.getTime() < hardCap){
         if(cursor.getFullYear() === year && cursor.getMonth() === month){
-          out.push(`${cursor.getFullYear()}-${pad(cursor.getMonth()+1)}-${pad(cursor.getDate())}`);
+          base.push(`${cursor.getFullYear()}-${pad(cursor.getMonth()+1)}-${pad(cursor.getDate())}`);
         }
         cursor.setDate(cursor.getDate() + 1);
       }
-      return out;
+    } else {
+      const d = new Date(item.calDate+'T00:00:00');
+      if(d.getFullYear()===year && d.getMonth()===month) base.push(item.calDate);
     }
-    const d = new Date(item.calDate+'T00:00:00');
-    return (d.getFullYear()===year && d.getMonth()===month) ? [item.calDate] : [];
   }
-  return [];
+  // Extra one-off dates (not necessarily consecutive with the above) apply
+  // to any event, recurring or not.
+  const extras = extraDatesInMonth(item, year, month);
+  if(!extras.length) return base;
+  return [...new Set([...base, ...extras])].sort();
 }
 
 function buildDateMap(items, year, month){
