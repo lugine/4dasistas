@@ -201,7 +201,7 @@ collections:
     widget: datetime
     required: false
     date_format: false
-    time_format: HH:mm
+    time_format: "h:mm A"
     format: HH:mm
   - label: Recurring weekdays (leave empty if one-off)
     name: days
@@ -294,7 +294,7 @@ collections:
     widget: datetime
     required: false
     date_format: false
-    time_format: HH:mm
+    time_format: "h:mm A"
     format: HH:mm
   - label: Recurring weekdays (leave empty if one-off)
     name: days
@@ -383,7 +383,7 @@ collections:
     widget: datetime
     required: false
     date_format: false
-    time_format: HH:mm
+    time_format: "h:mm A"
     format: HH:mm
   - label: Recurring weekdays (leave empty if one-off)
     name: days
@@ -561,7 +561,7 @@ collections:
     widget: datetime
     required: false
     date_format: false
-    time_format: HH:mm
+    time_format: "h:mm A"
     format: HH:mm
   - label: Recurring weekdays (leave empty if one-off)
     name: days
@@ -650,7 +650,7 @@ collections:
     widget: datetime
     required: false
     date_format: false
-    time_format: HH:mm
+    time_format: "h:mm A"
     format: HH:mm
   - label: Recurring weekdays (leave empty if one-off)
     name: days

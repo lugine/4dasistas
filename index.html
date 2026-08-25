@@ -967,8 +967,18 @@ function eventColor(item){
   return colors[tagClass(item)] || 'var(--card)';
 }
 
+function formatTime12h(time24){
+  const m = String(time24).match(/^(\d{1,2}):(\d{2})$/);
+  if(!m) return time24;
+  let hour = Number(m[1]);
+  const minute = m[2];
+  const period = hour >= 12 ? 'PM' : 'AM';
+  hour = hour % 12 || 12;
+  return `${hour}:${minute} ${period}`;
+}
+
 function eventTimeLabel(item){
-  if(item.time) return item.time;
+  if(item.time) return formatTime12h(item.time);
   const match = String(item.date || '').match(/(?:at\s+)?(\d{1,2}(?::\d{2})?\s*(?:AM|PM))(?:\s*[–-]\s*(\d{1,2}(?::\d{2})?\s*(?:AM|PM)))?/i);
   return match ? match[0] : 'All day';
 }
