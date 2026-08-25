@@ -81,6 +81,8 @@ npx wrangler deploy
 
 _(most recent first — add new entries to the top, trim past ~15)_
 
+- 2026-08-25 — Cline (VS Code) — `_headers` (new), `admin/index.html` — CMS cache-hardening after Lujane still saw stale widget errors post-fix: added Cloudflare `_headers` making /admin/config.yml + admin pages `no-store` (browser HTTP cache was able to serve the OLD anchored config even after server-side fix — Decap fetches config without cache-busting), and pinned decap script to exact 3.15.1 (verified HTTP 200) instead of floating ^3.0.0 so the bundle can never drift under us again. The admin/uploads 404s in console are expected/handled Decap probing for the not-yet-existing media folder — harmless.
+
 - 2026-08-25 — Cline (VS Code) — `admin/config.yml` — FIX for 'No control for widget date' on every CMS form: Decap 3.15.x mis-builds forms when config.yml uses shared YAML-anchor field blocks or {label,value} select options. Regenerated config with literal per-collection copies of the identical 29-field form + plain-string select options (hint documents friendly names). Verified: no anchor syntax, six forms byte-equal, YAML valid. NOTE FOR ALL AGENTS: do not reintroduce anchors or labeled select options in this file — they break widget rendering on the current Decap version.
 
 - 2026-08-25 — Cline (VS Code) — `admin/index.html` — HOTFIX (incidents): the Decap CDN pin to decap-cms@3.3.6 — a pre-existing uncommitted local edit that went out with 76d3594 — pointed at an npm version that doesn't exist → jsdelivr 404 → /admin rendered blank once Lujane deployed. Reverted to known-good unpkg ^3.0.0 (resolves to 3.15.1; verified HTTP 200 before pushing) in fb77649. Lesson recorded for all agents: never ship a changed CDN URL without curl -I'ing it first.

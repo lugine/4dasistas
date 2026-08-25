@@ -1,0 +1,10 @@
+# Cache rules for the CMS - config must NEVER come from browser cache,
+# otherwise edits to admin/config.yml look like they did nothing.
+/admin/config.yml
+  Cache-Control: no-store, must-revalidate
+
+/admin/index.html
+  Cache-Control: no-store
+
+/admin/
+  Cache-Control: no-store
