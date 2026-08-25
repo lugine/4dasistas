@@ -1,21 +1,18 @@
 {
   "items": [
     {
-      "contact": "+1 (416) 721-4931",
-      "price": "Est. $8",
-      "sportKey": "badminton",
-      "date": "Every Wednesday · 8:00–10:00 PM (varies)",
-      "organizer": "Asma",
-      "desc": "Midweek badminton at River Oaks — timing can shift week to week.",
-      "whatsapp": "https://chat.whatsapp.com/LZNIxPfCU9RCJGLiWPn7k9?s=cl&p=i&ilr=2",
-      "location": "2400 Sixth Line, Oakville, ON L6H 3M8, Canada",
-      "days": [
-        "wed"
-      ],
-      "title": "Drop-In Badminton",
-      "registration": "Prior registration required",
-      "tag": "Badminton",
-      "id": "bad-wed"
+      "sportKey": "padel",
+      "date": "Sunday Aug 9th @12pm",
+      "organizer": "Sisters Through Faith",
+      "desc": "Join us next Sunday at @padeljunctionca with @saisociety_ for Padel & Perspective 🎾🏓\n\nEnjoy great company, fun padel games, a guided conversation on Perspective & how it’s shaped and some yummy açaì 🥣",
+      "instagram": "https://www.instagram.com/sisterssthroughfaith/",
+      "location": "Padel Junction",
+      "title": "Padel & Perspective",
+      "tag": "Padel",
+      "website": "https://www.sistersthroughfaith.ca/",
+      "id": "Padel_SisterthroughFaith",
+      "calDate": "2026-08-29",
+      "section": "sports"
     },
     {
       "contact": "647-292-4043",
@@ -32,65 +29,26 @@
       "title": "ISNA Badminton",
       "registration": "Drop-in",
       "tag": "Badminton",
-      "id": "bad-thu"
+      "id": "bad-thu",
+      "section": "sports"
     },
     {
-      "sportKey": "padel",
-      "date": "Sunday Aug 9th @12pm",
-      "organizer": "Sisters Through Faith",
-      "desc": "Join us next Sunday at @padeljunctionca with @saisociety_ for Padel & Perspective 🎾🏓\n\nEnjoy great company, fun padel games, a guided conversation on Perspective & how it’s shaped and some yummy açaì 🥣",
-      "instagram": "https://www.instagram.com/sisterssthroughfaith/",
-      "location": "Padel Junction",
-      "title": "Padel & Perspective",
-      "tag": "Padel",
-      "website": "https://www.sistersthroughfaith.ca/",
-      "id": "Padel_SisterthroughFaith",
-      "calDate": "2026-08-29"
-    },
-    {
-      "partner": "Arab Run Club",
-      "partnerInstagram": "https://www.instagram.com/arab_runclub/",
-      "sportKey": "running",
-      "date": "Sunday, August 30 @ 9 am - 1 pm",
-      "organizer": "Run 4 Collective, Muslim Hands Canada, Strong Women Toronto, WomensFitSauga",
-      "desc": "Run with purpose to raise funds for a food bank. Choose a 1K walk, 5K run, or 10K run; run solo or gather a team of five. Vendors, BBQ, awards, and more. In partnership with Arab Run Club.",
-      "instagram": "https://www.instagram.com/run4collective/",
-      "location": "JC Saddington Park, Mississauga",
-      "title": "RUN4SUDAN",
-      "registration": "Registration details to follow",
-      "tag": "Running",
-      "id": "run4sudan",
-      "calDate": "2026-08-30"
-    },
-    {
-      "price": "$10 per person",
-      "sportKey": "soccer",
-      "date": "Sunday, August 23, 2026 · 4:00–8:00 PM",
-      "organizer": "ICCO / Hidayah ICCO",
-      "desc": "Sisters soccer tournament for ages 16+. Teams of 7–10. Evening of soccer, sisterhood, and fun. Must be between 18–29 to register for Hidayah programs.",
-      "instagram": "https://www.instagram.com/hidayah__icco/",
-      "location": "ICCO, 2300 Speakman Dr., Mississauga",
-      "title": "Hidayah Sisters Soccer Tournament",
-      "registration": "Mandatory registration required",
-      "tag": "Soccer",
-      "website": "https://centres.macnet.ca/icco/",
-      "id": "hidayah-sisters-soccer-tournament-2026",
-      "calDate": "2026-08-23"
-    },
-    {
-      "sportKey": "tennis-pickleball",
-      "date": "Every Thursday · 8:00 PM",
-      "desc": "Weekly drop-in tennis & pickleball with Muslimah Athletic Club.",
-      "instagram": "https://www.instagram.com/muslimahathleticclub/",
-      "location": "Angela James Tennis Court",
+      "contact": "+1 (416) 721-4931",
+      "price": "Est. $8",
+      "sportKey": "badminton",
+      "date": "Every Wednesday · 8:00–10:00 PM (varies)",
+      "organizer": "Asma",
+      "desc": "Midweek badminton at River Oaks — timing can shift week to week.",
+      "whatsapp": "https://chat.whatsapp.com/LZNIxPfCU9RCJGLiWPn7k9?s=cl&p=i&ilr=2",
+      "location": "2400 Sixth Line, Oakville, ON L6H 3M8, Canada",
       "days": [
-        "thu"
+        "wed"
       ],
-      "title": "Rally Club (Tennis & Pickleball)",
-      "registration": "Drop-in",
-      "tag": "Tennis & Pickleball",
-      "website": "https://linktr.ee/MuslimahAthleticClub",
-      "id": "rallyclub-tennis-pickleball"
+      "title": "Drop-In Badminton",
+      "registration": "Prior registration required",
+      "tag": "Badminton",
+      "id": "bad-wed",
+      "section": "sports"
     },
     {
       "sportKey": "ball-hockey",
@@ -105,7 +63,24 @@
       "registration": "Drop-in",
       "tag": "Ball Hockey",
       "website": "https://linktr.ee/MuslimahAthleticClub",
-      "id": "ballhockey-open-practice"
+      "id": "ballhockey-open-practice",
+      "section": "sports"
+    },
+    {
+      "price": "$10 per person",
+      "sportKey": "soccer",
+      "date": "Sunday, August 23, 2026 · 4:00–8:00 PM",
+      "organizer": "ICCO / Hidayah ICCO",
+      "desc": "Sisters soccer tournament for ages 16+. Teams of 7–10. Evening of soccer, sisterhood, and fun. Must be between 18–29 to register for Hidayah programs.",
+      "instagram": "https://www.instagram.com/hidayah__icco/",
+      "location": "ICCO, 2300 Speakman Dr., Mississauga",
+      "title": "Hidayah Sisters Soccer Tournament",
+      "registration": "Mandatory registration required",
+      "tag": "Soccer",
+      "website": "https://centres.macnet.ca/icco/",
+      "id": "hidayah-sisters-soccer-tournament-2026",
+      "calDate": "2026-08-23",
+      "section": "sports"
     },
     {
       "eventDate": "2026-09-06",
@@ -125,7 +100,23 @@
       "registration": "Women only; registration opens Aug 24 at 7 PM",
       "tag": "Basketball",
       "website": "https://www.hijabiballers.com/fseries",
-      "id": "hijabiballers-fseries-2026"
+      "id": "hijabiballers-fseries-2026",
+      "section": "sports"
+    },
+    {
+      "sportKey": "badminton",
+      "date": "Saturday, August 15, 2026 · 5:30–8:00 PM",
+      "organizer": "ISM Core",
+      "desc": "Sisterly badminton tournament and sports night. Dinner provided, spectators welcome, and prizes for the winning team.",
+      "instagram": "https://www.instagram.com/ismcore/",
+      "location": "ISM Main",
+      "title": "ISM Sisterly Sports Night: Badminton",
+      "registration": "RSVP: https://bit.ly/sisterlybadminton",
+      "tag": "Badminton",
+      "website": "https://bit.ly/sisterlybadminton",
+      "id": "ism-sisterly-badminton-aug15-2026",
+      "calDate": "2026-08-15",
+      "section": "sports"
     },
     {
       "eventDate": "2026-09-13",
@@ -139,7 +130,8 @@
       "registration": "Register via ISNA Canada",
       "tag": "Running",
       "website": "https://isnacanada.com/run",
-      "id": "isna-run-against-hunger-2026"
+      "id": "isna-run-against-hunger-2026",
+      "section": "sports"
     },
     {
       "contact": "647-974-7848",
@@ -157,7 +149,84 @@
       "title": "Meadowvale Sisters Fitness",
       "registration": "Women 18+",
       "tag": "Fitness",
-      "id": "meadowvale-sisters-fitness-2026"
+      "id": "meadowvale-sisters-fitness-2026",
+      "section": "sports"
+    },
+    {
+      "eventDate": "2026-08-20",
+      "sportKey": "fitness",
+      "date": "Thursdays · 6:00–7:00 PM",
+      "organizer": "MusFit",
+      "desc": "Women's Reformer Pilates class listed on the MusFit live schedule.",
+      "recurStart": "2026-08-20",
+      "location": "MusFit (see schedule for exact location)",
+      "days": [
+        "thu"
+      ],
+      "title": "MusFit Women's Reformer Pilates",
+      "registration": "Check the MusFit schedule for availability",
+      "tag": "Pilates",
+      "website": "https://www.wellnessliving.com/rs/schedule/musfit?k_business=423258&k_class_tab=52270&uid=0&id_class_tab=1",
+      "id": "musfit-womens-reformer-pilates-2026",
+      "section": "sports"
+    },
+    {
+      "eventDate": "2026-08-28",
+      "sportKey": "fitness",
+      "date": "During MuslimFest, August 28–30, 2026 (exact day/time TBD — check registration)",
+      "desc": "Exclusive women-only Pilates workshop in collaboration with Physiola Clinics. Privacy prioritized. Limited spots.",
+      "instagram": "https://www.instagram.com/muslimfest/",
+      "location": "MuslimFest, Celebration Square, Mississauga",
+      "title": "MuslimFest Women's Pilates Workshop",
+      "registration": "Link in bio",
+      "tag": "Pilates",
+      "id": "muslimfest-pilates-workshop-2026",
+      "section": "sports"
+    },
+    {
+      "eventDate": "2026-09-04",
+      "sportKey": "fitness",
+      "date": "Friday, September 4, 2026 · 7:00 PM",
+      "desc": "Pilates, but make it a girls' night — pizza, popcorn, movie, and all the cozy girl vibes. Grab your bestie, throw on your cutest PJs. Limited spots.",
+      "instagram": "https://www.instagram.com/reel/DcWHd-bOnsV/",
+      "location": "Ms Kay Fit Studios, Oakville",
+      "title": "Pilates & Pajamas",
+      "registration": "Link in bio",
+      "tag": "Pilates",
+      "id": "pilates-pajamas-sept4-2026",
+      "section": "sports"
+    },
+    {
+      "sportKey": "tennis-pickleball",
+      "date": "Every Thursday · 8:00 PM",
+      "desc": "Weekly drop-in tennis & pickleball with Muslimah Athletic Club.",
+      "instagram": "https://www.instagram.com/muslimahathleticclub/",
+      "location": "Angela James Tennis Court",
+      "days": [
+        "thu"
+      ],
+      "title": "Rally Club (Tennis & Pickleball)",
+      "registration": "Drop-in",
+      "tag": "Tennis & Pickleball",
+      "website": "https://linktr.ee/MuslimahAthleticClub",
+      "id": "rallyclub-tennis-pickleball",
+      "section": "sports"
+    },
+    {
+      "partner": "Arab Run Club",
+      "partnerInstagram": "https://www.instagram.com/arab_runclub/",
+      "sportKey": "running",
+      "date": "Sunday, August 30 @ 9 am - 1 pm",
+      "organizer": "Run 4 Collective, Muslim Hands Canada, Strong Women Toronto, WomensFitSauga",
+      "desc": "Run with purpose to raise funds for a food bank. Choose a 1K walk, 5K run, or 10K run; run solo or gather a team of five. Vendors, BBQ, awards, and more. In partnership with Arab Run Club.",
+      "instagram": "https://www.instagram.com/run4collective/",
+      "location": "JC Saddington Park, Mississauga",
+      "title": "RUN4SUDAN",
+      "registration": "Registration details to follow",
+      "tag": "Running",
+      "id": "run4sudan",
+      "calDate": "2026-08-30",
+      "section": "sports"
     },
     {
       "eventDate": "2026-08-23",
@@ -175,38 +244,8 @@
       "registration": "Limited spots; register at https://bit.ly/sisters-kickboxing",
       "tag": "Martial Arts",
       "website": "https://bit.ly/sisters-kickboxing",
-      "id": "sisters-martial-arts-kickboxing-2026"
-    },
-    {
-      "eventDate": "2026-08-20",
-      "sportKey": "fitness",
-      "date": "Thursdays · 6:00–7:00 PM",
-      "organizer": "MusFit",
-      "desc": "Women's Reformer Pilates class listed on the MusFit live schedule.",
-      "recurStart": "2026-08-20",
-      "location": "MusFit (see schedule for exact location)",
-      "days": [
-        "thu"
-      ],
-      "title": "MusFit Women's Reformer Pilates",
-      "registration": "Check the MusFit schedule for availability",
-      "tag": "Pilates",
-      "website": "https://www.wellnessliving.com/rs/schedule/musfit?k_business=423258&k_class_tab=52270&uid=0&id_class_tab=1",
-      "id": "musfit-womens-reformer-pilates-2026"
-    },
-    {
-      "sportKey": "badminton",
-      "date": "Saturday, August 15, 2026 · 5:30–8:00 PM",
-      "organizer": "ISM Core",
-      "desc": "Sisterly badminton tournament and sports night. Dinner provided, spectators welcome, and prizes for the winning team.",
-      "instagram": "https://www.instagram.com/ismcore/",
-      "location": "ISM Main",
-      "title": "ISM Sisterly Sports Night: Badminton",
-      "registration": "RSVP: https://bit.ly/sisterlybadminton",
-      "tag": "Badminton",
-      "website": "https://bit.ly/sisterlybadminton",
-      "id": "ism-sisterly-badminton-aug15-2026",
-      "calDate": "2026-08-15"
+      "id": "sisters-martial-arts-kickboxing-2026",
+      "section": "sports"
     },
     {
       "eventDate": "2026-08-22",
@@ -223,7 +262,8 @@
       "title": "Sokoon Society Weekly Muslim Runs",
       "registration": "RSVP via Instagram bio",
       "tag": "Running",
-      "id": "sokoon-weekly-muslim-runs-2026"
+      "id": "sokoon-weekly-muslim-runs-2026",
+      "section": "sports"
     },
     {
       "sportKey": "running",
@@ -237,31 +277,8 @@
       "tag": "Running",
       "website": "https://linktr.ee/womensfitsauga",
       "id": "tcs-toronto-waterfront-womensfitsauga-2026",
-      "calDate": "2026-10-17"
-    },
-    {
-      "eventDate": "2026-09-04",
-      "sportKey": "fitness",
-      "date": "Friday, September 4, 2026 · 7:00 PM",
-      "desc": "Pilates, but make it a girls' night — pizza, popcorn, movie, and all the cozy girl vibes. Grab your bestie, throw on your cutest PJs. Limited spots.",
-      "instagram": "https://www.instagram.com/reel/DcWHd-bOnsV/",
-      "location": "Ms Kay Fit Studios, Oakville",
-      "title": "Pilates & Pajamas",
-      "registration": "Link in bio",
-      "tag": "Pilates",
-      "id": "pilates-pajamas-sept4-2026"
-    },
-    {
-      "eventDate": "2026-08-28",
-      "sportKey": "fitness",
-      "date": "During MuslimFest, August 28–30, 2026 (exact day/time TBD — check registration)",
-      "desc": "Exclusive women-only Pilates workshop in collaboration with Physiola Clinics. Privacy prioritized. Limited spots.",
-      "instagram": "https://www.instagram.com/muslimfest/",
-      "location": "MuslimFest, Celebration Square, Mississauga",
-      "title": "MuslimFest Women's Pilates Workshop",
-      "registration": "Link in bio",
-      "tag": "Pilates",
-      "id": "muslimfest-pilates-workshop-2026"
+      "calDate": "2026-10-17",
+      "section": "sports"
     }
   ]
 }

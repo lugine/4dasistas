@@ -1,0 +1,12 @@
+{
+  "id": "restaurant-istar-toronto",
+  "title": "Istar Restaurant",
+  "type": "Somali Restaurant",
+  "desc": "Somali restaurant.",
+  "location": "235 Dixon Rd, Toronto, ON",
+  "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Istar+Restaurant+235+Dixon+Toronto",
+  "instagram": "https://www.instagram.com/istarrestaurant/",
+  "date": "Hours TBA",
+  "ownedBy": "Istarlin Mahamed",
+  "category": "restaurants"
+}

@@ -73,7 +73,9 @@ npx wrangler deploy
 
 **Status:** IDLE
 **Last updated by:** Cline agent (VS Code)
-**Last updated:** 2026-08-25 (multi-type event filter)
+**Last updated:** 2026-08-25 (folder-collection migration)
+
+**2026-08-25 (folder-collection migration) — Cline (VS Code) — `admin/config.yml`, `data/calendar/**` + `data/resources/**` (new, 254 files), regenerated `data/*.json` aggregates, `scripts/build_content.py` (new), `scripts/split_legacy_content.py` (one-time, kept for reference), DELETED `scripts/apply_event_moves.py` + `apply-event-moves.yml`, `README.md`** — Migrated all calendar sections + Resources to Decap FOLDER collections: every listing is now its own small JSON file (data/calendar/<slug>.json with a section field; data/resources/<slug>.json with category), and each CMS tab is a filtered view of those folders. This delivers Lujane's asks natively: per-type filtered tabs in Resources (7) and Sports via its own tab + sportKey field search/sort, native sortable_fields sorting (eventDate/title) in every tab, NO id field anywhere (identifier is the title-derived filename; build injects stable ids from stored/filename), tag auto-fills from title for Activities/Functions, and changing an item's Calendar-tab/Type dropdown OFFICIALLY relocates it - replacing the deleted moveTo machinery. scripts/build_content.py merges folders into the legacy aggregate files the frontend reads (frontend untouched); split_legacy_content.py was the one-time migration (kept for reference). Counts verified lossless vs git HEAD incl. id-set equality for all seven datasets after fixing a slug-collision bug in the splitter. Build command is now: python3 scripts/build_content.py && python3 scripts/generate_calendar.py && npx wrangler deploy (README updated). Validated: YAML parse, 13 folder collections w/ correct filters+defaults+sortable+summary and no id/moveTo fields, jsdom suite 11/11 on rebuilt aggregates, node --check.
 
 ---
 

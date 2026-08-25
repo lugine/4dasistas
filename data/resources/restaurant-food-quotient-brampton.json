@@ -1,0 +1,13 @@
+{
+  "id": "restaurant-food-quotient-brampton",
+  "title": "The Food Quotient",
+  "type": "Plant-Based Meal Delivery and Catering",
+  "desc": "Plant-based meal delivery, takeout, and catering, including halal meal options.",
+  "location": "15 Fisherman Dr, Unit 17, Brampton, ON",
+  "mapsUrl": "https://www.google.com/maps/search/?api=1&query=The+Food+Quotient+15+Fisherman+Dr+Brampton+ON",
+  "date": "Hours TBA",
+  "ownedBy": "Amisha Moorjani",
+  "category": "restaurants",
+  "lat": 43.7131701,
+  "lng": -79.8002937
+}

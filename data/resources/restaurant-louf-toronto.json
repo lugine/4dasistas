@@ -1,0 +1,12 @@
+{
+  "id": "restaurant-louf-toronto",
+  "title": "Louf",
+  "type": "Palestinian Restaurant",
+  "desc": "Palestinian restaurant celebrating Levantine cuisine.",
+  "location": "501 Davenport Rd, Toronto, ON",
+  "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Louf+501+Davenport+Rd+Toronto",
+  "website": "https://www.loufto.com/",
+  "date": "Hours TBA",
+  "ownedBy": "Nicole Mankinen",
+  "category": "restaurants"
+}

@@ -1,7 +1,36 @@
 {
   "items": [
     {
+<<<<<<< HEAD
       "eventDate": "2026-08-18",
+=======
+      "eventDate": "2026-09-18",
+      "city": "Toronto",
+      "date": "Friday, September 18, 2026 · 6:00 PM",
+      "desc": "An evening for teen girls to connect, create, and chat about friendships, confidence, stress & wellness. Beads, bonding & real talk. Dinner + bracelet making included.",
+      "instagram": "https://www.instagram.com/sakeenahcanada/",
+      "location": "Cedarbrook Community Centre",
+      "title": "Beads of Strength",
+      "registration": "Link in bio",
+      "tag": "Day Activity",
+      "id": "beads-of-strength-sept18-2026",
+      "section": "activities"
+    },
+    {
+      "price": "$49",
+      "city": "Scarborough",
+      "date": "August 23, 2026 · 12:00 PM",
+      "desc": "Afternoon of collage-making, coffee, matcha, chai, bouquet-building, and a dessert swap featuring homemade treats. Bring something you love to bake.",
+      "instagram": "https://www.instagram.com/p/DbvzMSyDrtX/",
+      "location": "Scarborough (location shared with confirmed attendees)",
+      "title": "Bloom & Bake",
+      "tag": "Day Activity",
+      "id": "bloombake-girlsroom-aug23",
+      "calDate": "2026-08-23",
+      "section": "activities"
+    },
+    {
+>>>>>>> 7f9928f (Migrate CMS to folder collections: per-listing files, filtered tabs, no IDs)
       "city": "Mississauga",
       "date": "9pm on August 18th, 2026",
       "desc": "",
@@ -10,10 +39,64 @@
       "title": "Cube Challenges",
       "tag": "Day Activity",
       "id": "day-escape",
-      "calDate": "2026-08-18"
+      "calDate": "2026-08-18",
+      "section": "activities"
     },
     {
+<<<<<<< HEAD
       "eventDate": "2026-08-22",
+=======
+      "city": "Toronto",
+      "date": "June 28th, 2026 @2pm",
+      "desc": "a bouquet making workshop, but with the sweetest lil twist!! tickets can be found in the link in our bio🎟️\nhttps://www.instagram.com/p/DZlTgUVD_hK/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==&igsi=MzRlODBiNWFlZA==",
+      "instagram": "https://www.instagram.com/p/DZlTgUVD_hK/",
+      "location": "Toronto (see Instagram for exact venue)",
+      "title": "Floral Affairs",
+      "tag": "Day Activity",
+      "id": "floralaffairs_torontomuslimahs",
+      "calDate": "2026-06-28",
+      "section": "activities"
+    },
+    {
+      "city": "Toronto",
+      "date": "September 12, 2026 · 4:00 PM",
+      "desc": "Custom lip gloss bar, Palestine mirror decoden workshop, specialty café drink & 15% off Mieluna's menu. Early bird spots limited.",
+      "instagram": "https://www.instagram.com/p/DcG676yjveM/",
+      "location": "Mieluna Café, 483 Bay St, Toronto",
+      "title": "Glam Atelier",
+      "tag": "Day Activity",
+      "id": "glamatelier-girlsroom-sep12",
+      "calDate": "2026-09-12",
+      "section": "activities"
+    },
+    {
+      "city": "TBA",
+      "date": "Monday, August 31, 2026 · 2:00–6:00 PM",
+      "desc": "Girls-only pool day and cookout with pool access, cookout food, mocktails, games, socializing, and sisterhood.",
+      "instagram": "https://www.instagram.com/herhijabspace/",
+      "location": "Location shared by HerHijabSpace",
+      "title": "HerHijabSpace Pool Day and Cookout",
+      "tag": "Day Activity",
+      "id": "herhijabspace-pool-day-cookout-aug31-2026",
+      "calDate": "2026-08-31",
+      "section": "activities"
+    },
+    {
+      "price": "$10",
+      "city": "Mississauga",
+      "date": "Saturday, August 30, 2026 · 1:00–4:00 PM",
+      "desc": "A university and college prep workshop for Muslim youth, with lunch provided and mandatory registration.",
+      "instagram": "https://www.instagram.com/hidayah__icco/",
+      "location": "ICCO, 2550 Dunwin Dr, Mississauga",
+      "title": "Your Journey Ahead: University and College Prep",
+      "registration": "Registration mandatory",
+      "tag": "Day Activity",
+      "id": "journey-ahead-icco-aug30",
+      "calDate": "2026-08-30",
+      "section": "activities"
+    },
+    {
+>>>>>>> 7f9928f (Migrate CMS to folder collections: per-listing files, filtered tabs, no IDs)
       "city": "Mississauga",
       "date": "August 22, 2026 · 1:00–8:00 PM",
       "desc": "80+ vendors, pay-what-you-can charity market — food, art, spa, workshops & speakers.",
@@ -23,7 +106,8 @@
       "tag": "Day Activity",
       "website": "https://www.eventbrite.co.uk/e/muslimah-market-attendee-volunteer-content-creator-workshop-tickets-registration-1994915605277",
       "id": "market-salaamgirls-aug22",
-      "calDate": "2026-08-22"
+      "calDate": "2026-08-22",
+      "section": "activities"
     },
     {
       "eventDate": "2026-08-27",
@@ -38,6 +122,7 @@
       "tag": "Day Activity",
       "website": "https://www.eventbrite.com/d/canada--toronto/muslim/",
       "id": "muslim-women-floral-mindset-workshop-2026",
+<<<<<<< HEAD
       "calDate": "2026-08-27"
     },
     {
@@ -64,6 +149,10 @@
       "tag": "Day Activity",
       "id": "bloombake-girlsroom-aug23",
       "calDate": "2026-08-23"
+=======
+      "calDate": "2026-08-27",
+      "section": "activities"
+>>>>>>> 7f9928f (Migrate CMS to folder collections: per-listing files, filtered tabs, no IDs)
     },
     {
       "eventDate": "2026-08-29",
@@ -77,6 +166,7 @@
       "registration": "Tickets available through the link in bio",
       "tag": "Day Activity",
       "id": "pilates-sisterscorner-aug29",
+<<<<<<< HEAD
       "calDate": "2026-08-29"
     },
     {
@@ -141,6 +231,10 @@
       "registration": "Link in bio",
       "tag": "Day Activity",
       "id": "beads-of-strength-sept18-2026"
+=======
+      "calDate": "2026-08-29",
+      "section": "activities"
+>>>>>>> 7f9928f (Migrate CMS to folder collections: per-listing files, filtered tabs, no IDs)
     },
     {
       "eventDate": "2026-09-26",
@@ -155,6 +249,7 @@
       "tag": "Day Activity",
       "website": "https://shetravels.ca/",
       "id": "she-travels-toronto-ranch-sep26-2026",
+<<<<<<< HEAD
       "calDate": "2026-09-26"
     },
     {
@@ -168,6 +263,35 @@
       "instagram": "https://www.instagram.com/p/DcWBXXYtavW/?utm_source=ig_web_copy_link&igsi=MzRlODBiNWFlZA==",
       "desc": "5 Weeks Online Ladies Daff Workshop",
       "id": "daff"
+=======
+      "calDate": "2026-09-26",
+      "section": "activities"
+    },
+    {
+      "city": "TBA",
+      "date": "Tuesday, August 25, 2026",
+      "organizer": "TMC Sisters Youth",
+      "desc": "Afternoon of kayaking/canoeing followed by a picnic with lunch, snacks, and drinks. Transportation to and from TMC will be available.",
+      "location": "Water launch location and TMC transportation details TBA",
+      "title": "TMC Sisters Youth: Sisters Paddle & Picnic",
+      "registration": "Spaces limited; register through the link in bio",
+      "tag": "Day Activity",
+      "id": "tmc-sisters-paddle-picnic-aug25-2026",
+      "calDate": "2026-08-25",
+      "section": "activities"
+    },
+    {
+      "city": "Elora",
+      "date": "Sunday, August 23, 2026 · Drop in 10 AM–4 PM",
+      "desc": "Tubing down the rapids with the girls — lunch provided after. Best for comfortable swimmers, spots limited.",
+      "instagram": "https://www.instagram.com/koraa.ca/",
+      "location": "Elora Gorge",
+      "title": "Tubing the Rapids",
+      "tag": "Day Activity",
+      "id": "tubing-koraa-aug23",
+      "calDate": "2026-08-23",
+      "section": "activities"
+>>>>>>> 7f9928f (Migrate CMS to folder collections: per-listing files, filtered tabs, no IDs)
     }
   ]
 }

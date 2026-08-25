@@ -1,0 +1,15 @@
+{
+  "id": "restaurant-miss-doner-mississauga",
+  "title": "Miss Doner",
+  "type": "Turkish Restaurant",
+  "desc": "Turkish döner, kebabs, and homemade dishes.",
+  "location": "2157 Royal Windsor Dr, Unit 3, Mississauga, ON",
+  "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Miss+Doner+2157+Royal+Windsor+Dr+Mississauga+ON",
+  "website": "https://www.missdoner.ca/",
+  "phone": "+1 905-823-0606",
+  "date": "Confirm current hours directly",
+  "ownedBy": "Ayten Komcu",
+  "category": "restaurants",
+  "lat": 43.5090754,
+  "lng": -79.6333655
+}

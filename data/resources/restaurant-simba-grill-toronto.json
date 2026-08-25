@@ -1,0 +1,15 @@
+{
+  "id": "restaurant-simba-grill-toronto",
+  "title": "Simba Grill",
+  "type": "East African–Indian Restaurant",
+  "desc": "East African–Indian home-style restaurant serving halal food.",
+  "location": "375 Donlands Ave, Toronto, ON",
+  "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Simba+Grill+375+Donlands+Ave+Toronto+ON",
+  "website": "https://www.simbagrilltoronto.com/",
+  "phone": "+1 416-429-6057",
+  "date": "Confirm current hours directly",
+  "ownedBy": "Karima",
+  "category": "restaurants",
+  "lat": 43.6933665,
+  "lng": -79.3423955
+}

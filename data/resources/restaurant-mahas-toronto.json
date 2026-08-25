@@ -1,0 +1,15 @@
+{
+  "id": "restaurant-mahas-toronto",
+  "title": "Maha's",
+  "type": "Egyptian Brunch Restaurant",
+  "desc": "Egyptian brunch spot serving Middle Eastern breakfast and specialty coffee.",
+  "location": "226 Greenwood Ave, Toronto, ON M4L 2R2",
+  "mapsUrl": "https://maps.google.com/?q=Mahas+226+Greenwood+Toronto",
+  "website": "https://www.mahasbrunch.com/",
+  "phone": "+1 416-462-2703",
+  "date": "8:00 AM–4:30 PM daily · Wednesday closed",
+  "ownedBy": "Maha Barsoom",
+  "category": "restaurants",
+  "lat": 43.6716801,
+  "lng": -79.3285772
+}

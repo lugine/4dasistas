@@ -1,0 +1,15 @@
+{
+  "id": "restaurant-rayah-cabbagetown",
+  "title": "Rayah",
+  "type": "Moroccan Restaurant",
+  "desc": "French-Moroccan café, pâtisserie, and restaurant with an entirely halal menu. Desserts include croissants, flan, pastries, and Moroccan/French sweets. Owned by Wafa El Rhazi. Hours are approximately Wednesday–Saturday 10:00 AM–10:00 PM and Sunday until approximately 9:30 PM; confirm directly before visiting.",
+  "location": "Cabbagetown, Toronto, ON (Google Maps listing)",
+  "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Rayah+Cabbagetown+Toronto",
+  "instagram": "https://www.instagram.com/rayahcafe/",
+  "website": "https://www.tripadvisor.com/Restaurant_Review-g155019-d33352064-Reviews-Rayah-Ontario_Toronto.html",
+  "ownedBy": "Owned by Wafa El Rhazi; halal menu",
+  "category": "restaurants",
+  "lat": 43.6649785,
+  "lng": -79.3679433,
+  "date": "Confirm current hours directly"
+}

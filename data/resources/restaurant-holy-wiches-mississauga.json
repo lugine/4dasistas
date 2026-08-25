@@ -1,0 +1,15 @@
+{
+  "id": "restaurant-holy-wiches-mississauga",
+  "title": "Holy Wiches",
+  "type": "Premium Sandwich Restaurant",
+  "desc": "Premium made-to-order sandwiches using roasted meats and signature sauces. Google Maps currently marks this location permanently closed.",
+  "location": "6039 Erin Mills Pkwy, Unit 1B, Mississauga, ON L5N 0G5",
+  "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Holy+Wiches+6039+Erin+Mills+Parkway+Mississauga+ON",
+  "website": "http://www.holywiches.com/",
+  "phone": "+1 905-821-8887",
+  "date": "Permanently closed according to Google Maps",
+  "ownedBy": "Ayisha Mian, with Atif Mahmood",
+  "category": "restaurants",
+  "lat": 43.579745,
+  "lng": -79.7342286
+}

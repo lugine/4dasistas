@@ -1,0 +1,15 @@
+{
+  "id": "restaurant-garlicky-mediterranean-grill-brampton",
+  "title": "Garlicky Mediterranean Grill",
+  "type": "Mediterranean Grill",
+  "desc": "Mediterranean grill and halal food. Google Maps currently marks this location permanently closed.",
+  "location": "275 N Park Dr #26, Brampton, ON L6S 0E9",
+  "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Garlicky+Mediterranean+Grill+2750+North+Park+Dr+Brampton",
+  "website": "http://www.garlickygrill.com/",
+  "phone": "+1 905-458-7008",
+  "date": "Permanently closed according to Google Maps",
+  "ownedBy": "Aisha Emad, with Muhammad Emad Khan",
+  "category": "restaurants",
+  "lat": 43.759008,
+  "lng": -79.718512
+}

@@ -51,11 +51,11 @@ Every event needs a unique `id` (no spaces), a `title`, and an `eventDate`
 Pushing to `main` does **not** auto-deploy yet (see AGENT-COORDINATION.md).
 Until Git integration is connected in the Cloudflare dashboard, deploy by hand:
 
-    python3 scripts/apply_event_moves.py && python3 scripts/generate_calendar.py && npx wrangler deploy
+    python3 scripts/build_content.py && python3 scripts/generate_calendar.py && npx wrangler deploy
 
-**Tip:** set the dashboard Build command to `python3 scripts/apply_event_moves.py && python3 scripts/generate_calendar.py`
-so "Move this event to another tab" choices made in the CMS get applied on every deploy.
-The `Apply event tab moves` GitHub Action also handles this automatically after pushes.
+**Tip:** set the dashboard Build command to `python3 scripts/build_content.py && python3 scripts/generate_calendar.py`
+so the per-listing files in `data/calendar/` and `data/resources/` are merged into the
+aggregate files the website reads on every deploy.
 
 CMS edits commit to GitHub but won't appear on 4dasistas.ca until the deploy
 above runs.

@@ -1,0 +1,15 @@
+{
+  "id": "restaurant-walima-mississauga",
+  "title": "Walima Restaurant",
+  "type": "Kuwaiti and Middle Eastern Restaurant",
+  "desc": "Kuwaiti and Middle Eastern restaurant serving rice platters, lamb, chicken, fish, and lokma. Google Maps currently marks this location permanently closed.",
+  "location": "1185 Dundas St E, Mississauga, ON L4Y 2C6",
+  "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Walima+1185+Dundas+St+E+Mississauga+ON",
+  "website": "http://walimarestaurant.com/",
+  "phone": "+1 905-848-4024",
+  "date": "Permanently closed according to Google Maps",
+  "ownedBy": "Nora Alrifai",
+  "category": "restaurants",
+  "lat": 43.6053492,
+  "lng": -79.5895341
+}

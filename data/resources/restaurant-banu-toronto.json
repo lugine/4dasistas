@@ -1,0 +1,12 @@
+{
+  "id": "restaurant-banu-toronto",
+  "title": "Banu",
+  "type": "Iranian Restaurant",
+  "desc": "Iranian restaurant and bar.",
+  "location": "777 Queen St W, Toronto, ON",
+  "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Banu+777+Queen+St+W+Toronto",
+  "website": "https://www.banutoronto.com/",
+  "date": "Hours TBA",
+  "ownedBy": "Samira Mohyeddin",
+  "category": "restaurants"
+}

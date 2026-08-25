@@ -1,0 +1,18 @@
+{
+  "eventDate": "2026-08-20",
+  "sportKey": "fitness",
+  "date": "Thursdays · 6:00–7:00 PM",
+  "organizer": "MusFit",
+  "desc": "Women's Reformer Pilates class listed on the MusFit live schedule.",
+  "recurStart": "2026-08-20",
+  "location": "MusFit (see schedule for exact location)",
+  "days": [
+    "thu"
+  ],
+  "title": "MusFit Women's Reformer Pilates",
+  "registration": "Check the MusFit schedule for availability",
+  "tag": "Pilates",
+  "website": "https://www.wellnessliving.com/rs/schedule/musfit?k_business=423258&k_class_tab=52270&uid=0&id_class_tab=1",
+  "id": "musfit-womens-reformer-pilates-2026",
+  "section": "sports"
+}

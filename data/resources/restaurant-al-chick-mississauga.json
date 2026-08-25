@@ -1,0 +1,15 @@
+{
+  "id": "restaurant-al-chick-mississauga",
+  "title": "Al Chick",
+  "type": "Fried-Chicken Fusion Restaurant",
+  "desc": "Fried-chicken fusion blending South Asian and Middle Eastern flavours.",
+  "location": "1069 Dundas St W, Mississauga, ON",
+  "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Al+Chick+1069+Dundas+St+W+Mississauga+ON",
+  "website": "https://alchick.ca/",
+  "phone": "+1 905-450-0984",
+  "date": "Confirm current hours directly",
+  "ownedBy": "Robina Tahir, with Tahir Hussain",
+  "category": "restaurants",
+  "lat": 43.5578972,
+  "lng": -79.6429396
+}

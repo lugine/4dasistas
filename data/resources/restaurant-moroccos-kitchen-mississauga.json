@@ -1,0 +1,14 @@
+{
+  "id": "restaurant-moroccos-kitchen-mississauga",
+  "title": "Morocco's Kitchen",
+  "type": "Moroccan Restaurant",
+  "desc": "Moroccan sandwiches and home-style Moroccan food. Google Maps currently marks this location permanently closed.",
+  "location": "3460 Platinum Dr, Unit 24, Mississauga, ON L5M 2S4",
+  "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Moroccos+Kitchen+3460+Platinum+Dr+Mississauga+ON",
+  "phone": "+1 905-607-0046",
+  "date": "Permanently closed according to Google Maps",
+  "ownedBy": "Bothayna Ahmed, with Mona Ahmed",
+  "category": "restaurants",
+  "lat": 43.5377261,
+  "lng": -79.7255575
+}

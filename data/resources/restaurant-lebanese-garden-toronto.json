@@ -1,0 +1,15 @@
+{
+  "id": "restaurant-lebanese-garden-toronto",
+  "title": "Lebanese Garden",
+  "type": "Lebanese Restaurant",
+  "desc": "Affordable Lebanese and Middle Eastern dine-in, takeout, and catering.",
+  "location": "366 College St, Toronto, ON M5T 1S6",
+  "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Lebanese+Garden+366+College+St+Toronto+ON",
+  "website": "https://www.lebanesegarden.ca/",
+  "phone": "+1 416-551-1553",
+  "date": "Confirm current hours directly",
+  "ownedBy": "Mona Ahmed",
+  "category": "restaurants",
+  "lat": 43.6572486,
+  "lng": -79.4045725
+}
