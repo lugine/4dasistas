@@ -280,6 +280,20 @@
       "section": "sports"
     },
     {
+      "section": "sports",
+      "virtual": false,
+      "title": "Sisters' Hike",
+      "eventDate": "2026-08-30",
+      "time": "16:00",
+      "location": "70 Edgedale Rd, St. Catharines, ON L2R 3P4, Canada",
+      "link": "https://www.instagram.com/p/DceN8OtRcmZ/?igsi=bHM5dmllN3M4OXZh",
+      "alsoShowIn": [
+        "trips",
+        "activities"
+      ],
+      "id": "sisters-hike"
+    },
+    {
       "eventDate": "2026-08-23",
       "sportKey": "martial-arts",
       "recurEnd": "2026-09-27",
