@@ -1,10 +1,14 @@
 {
   "contact": "647-292-4043",
+  "section": "sports",
+  "eventDate": "2026-08-06",
   "price": "$5",
   "sportKey": "badminton",
+  "time": "18:00",
+  "recurEnd": "2026-09-24",
   "date": "Every Thursday · 6:00–8:00 PM",
   "organizer": "Lujane",
-  "desc": "Drop-in badminton at ISNA — no sign-up needed, just show up.",
+  "desc": "Drop-in badminton at ISNA — last min just show-ups welcome. All levels. ",
   "whatsapp": "https://chat.whatsapp.com/JBbZDTEo45095qpNOwa9Fy?s=cl&p=i&ilr=2",
   "location": "2200 S Sheridan Way, Mississauga, ON L5J 2M4, Canada",
   "days": [
@@ -13,6 +17,6 @@
   "title": "ISNA Badminton",
   "registration": "Drop-in",
   "tag": "Badminton",
-  "id": "bad-thu",
-  "section": "sports"
+  "link": "https://form.jotform.com/252165014748254",
+  "id": "bad-thu"
 }
