@@ -79,6 +79,13 @@ npx wrangler deploy
 
 **Status:** IDLE
 **Last updated by:** Claude (chat)
+**Last updated:** 2026-08-26 (globe root cause)
+
+**2026-08-26 (globe root cause) — Claude (chat) — `data/calendar/*.json` (5 individual files)** — MAJOR ARCHITECTURE DISCOVERY: `data/calendar/` contains 140 individual per-event JSON files - this is the REAL source of truth, and trips.json/sports.json/etc are auto-regenerated FROM these files (confirmed: after fixing the 5 source files here, trips.json already reflected the fix without me touching it). This explains why my earlier direct trips.json coordinate fixes silently reverted - I was editing a generated artifact, not the source. ALL future data fixes must edit data/calendar/{id}.json, not the legacy per-category files directly. Fixed 5 trips missing coordinates at the true source: macedonia-kosovo, kazakhstan-deen-dunya-retreats, morocco-sisters-retreat-1, lake-muskoka-writers-retreat (Lujane's newest trip - confirmed via commit history this is what prompted her report), and a-deen-retreat-experience (Yunnan). ROOT CAUSE of why coordinates keep going missing: confirmed the Google Places Autocomplete widget only fills the location TEXT field - it does not and structurally cannot auto-populate the separate lat/lng number fields (Decap custom widgets can only control their own field's value, verified via Decap's own docs - no supported mechanism for one widget to write sibling fields without a much larger schema migration to an object-type field, which would break the plain-string location field used everywhere across 150+ existing entries). Told Lujane honestly this is a real technical constraint, not something I'm choosing not to fix. Recommended a website-side safety net (visibly flag trips missing coordinates rather than let them silently disappear from the globe) as a next step if this keeps recurring.
+
+
+**Status:** IDLE
+**Last updated by:** Claude (chat)
 **Last updated:** 2026-08-26 (organizer field)
 
 **2026-08-26 (organizer field) — Claude (chat) — `index.html`, `admin/config.yml`** — Added new optional 'organizedBy' field right under Title in CMS, across all 6 event collections. Displays in italics directly under the event title on the website - added consistently in all 4 places titles show (main list cards, calendar day popup, event detail page, today-list), with size scaled appropriately for each context's density. Kept the old separate 'organizer'+'contact' fact-line field intact for backward compatibility with existing entries that use it (e.g. ISNA badminton) - this is a genuinely new, additional field, not a replacement.
