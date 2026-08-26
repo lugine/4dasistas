@@ -23,6 +23,25 @@
       "section": "supportprograms"
     },
     {
+      "section": "supportprograms",
+      "eventDate": "2026-08-30",
+      "price": "$10",
+      "alsoShowIn": [
+        "mosqueprograms"
+      ],
+      "city": "Mississauga",
+      "date": "Saturday, August 30, 2026 · 1:00–4:00 PM",
+      "desc": "A university and college prep workshop for Muslim youth, with lunch provided and mandatory registration.",
+      "instagram": "https://www.instagram.com/hidayah__icco/",
+      "location": "2550 Dunwin Dr, Mississauga, ON L5L 1T1, Canada",
+      "title": "Your Journey Ahead: University and College Prep",
+      "registration": "Registration mandatory",
+      "tag": "Day Activity",
+      "link": "https://centres.macnet.ca/icco/hidayah-uni-college-prep/",
+      "id": "journey-ahead-icco-aug30",
+      "calDate": "2026-08-30"
+    },
+    {
       "id": "mental-khalil-navigating-divorce-support-group",
       "title": "Navigating Divorce: Women Support Group",
       "type": "Women Support Group",
