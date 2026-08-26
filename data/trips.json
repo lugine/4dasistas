@@ -98,21 +98,21 @@
       "section": "trips"
     },
     {
-      "id": "mwtg-jordan-2026",
-      "title": "The Muslim Women's Travel Group: Jordan",
-      "tag": "Trip",
+      "section": "trips",
+      "lng": 35.9284,
       "eventDate": "2026-05-17",
-      "calDate": "2026-05-17",
-      "date": "May 17–24, 2026",
-      "tripType": "international",
-      "location": "Jordan",
       "price": "See themwtg.com for pricing",
+      "date": "May 17–24, 2026",
       "desc": "Group trip to Jordan with The Muslim Women's Travel Group — female-only, fully organized. Not GTA-based, open to join from anywhere.",
       "instagram": "https://www.instagram.com/the.mwtg/",
+      "location": "Jordan",
+      "title": "MWTG: Jordan",
+      "tag": "Trip",
       "website": "https://themwtg.com/trip-2026/",
-      "lat": 31.9454,
-      "lng": 35.9284,
-      "section": "trips"
+      "id": "mwtg-jordan-2026",
+      "calDate": "2026-05-17",
+      "tripType": "international",
+      "lat": 31.9454
     },
     {
       "id": "mwtg-oman-2026",
