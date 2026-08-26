@@ -79,6 +79,13 @@ npx wrangler deploy
 
 **Status:** IDLE
 **Last updated by:** Claude (chat)
+**Last updated:** 2026-08-25 (virtual fix)
+
+**2026-08-25 (virtual fix) — Claude (chat) — `index.html`, `data/dayactivities.json`** — Fixed virtual events showing 'Location TBA' on the calendar day popup and today-list (2 real code spots that never checked the virtual flag - the event detail page already did this correctly, which is why the bug wasn't caught earlier). Added a shared locationLabel() helper, used consistently now. Also found the actual data bug: Daff Workshop had no virtual field saved at all despite Lujane setting it in DecapBridge - set virtual:true directly. Worth watching if this recurs elsewhere (CMS boolean not saving), or if it was a one-off.
+
+
+**Status:** IDLE
+**Last updated by:** Claude (chat)
 **Last updated:** 2026-08-25 (label fix)
 
 **2026-08-25 (label fix) — Claude (chat) — `admin/config.yml`** — Fixed the confusing CMS category dropdown that showed the internal 'bakeries' key instead of 'Small Businesses' (Lujane couldn't find it as an option, understandably). Used Decap's label/value option syntax to show the friendly name while keeping the underlying data value (bakeries) unchanged - no data migration needed, purely a CMS display fix. Applied via the shared YAML anchor, confirmed it propagated to all 7 resource collections in one edit.
