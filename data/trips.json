@@ -64,7 +64,9 @@
       "location": "North Macedonia",
       "link": "https://www.instagram.com/p/DcbNYyFANwG/?img_index=2&igsi=cGE5NXN1YWU1ZnNh",
       "tripType": "international",
-      "id": "macedonia-kosovo"
+      "id": "macedonia-kosovo",
+      "lat": 41.9981,
+      "lng": 21.4254
     },
     {
       "id": "mawa-jordan-2026",
@@ -257,7 +259,9 @@
       "title": "🇨🇳A Deen Retreat Experience",
       "link": "https://www.instagram.com/reel/Db9_hKFBABK/?igsi=NTVlYnRvazQxajQ=",
       "tripType": "international",
-      "id": "🇨🇳a-deen-retreat-experience"
+      "id": "🇨🇳a-deen-retreat-experience",
+      "lat": 25.0389,
+      "lng": 102.7183
     },
     {
       "section": "trips",
@@ -269,7 +273,9 @@
       "title": "🇰🇿Kazakhstan | Deen Dunya Retreats",
       "link": "https://www.instagram.com/p/DbvRAwhBYbE/?igsi=d3c0dDJsY2w2YjNr",
       "tripType": "international",
-      "id": "🇰🇿kazakhstan-deen-dunya-retreats"
+      "id": "🇰🇿kazakhstan-deen-dunya-retreats",
+      "lat": 43.222,
+      "lng": 76.8512
     },
     {
       "section": "trips",
@@ -281,7 +287,9 @@
       "title": "🇲🇦Morocco Sisters retreat",
       "link": "https://www.instagram.com/p/DcBZ1iKDI-2/?igsi=MTlydmFmM2ZkZGU5aw==",
       "tripType": "international",
-      "id": "🇲🇦morocco-sisters-retreat-1"
+      "id": "🇲🇦morocco-sisters-retreat-1",
+      "lat": 31.6295,
+      "lng": -7.9811
     }
   ]
 }
