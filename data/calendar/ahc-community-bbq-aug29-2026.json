@@ -1,13 +1,16 @@
 {
+  "section": "functions",
   "eventDate": "2026-08-29",
+  "endTime": "20:00",
+  "time": "14:00",
   "date": "Saturday, August 29, 2026 · 2:00 PM – 8:00 PM",
   "desc": "A fun-filled day for the whole family — BBQ, vendors, sweets, bouncy castles, and more. Giveaway: an iPad Mini (more details coming soon). Free entry, open to everyone.",
   "instagram": "https://www.instagram.com/abuhurairacenter/",
-  "location": "270 Yorkland Blvd, Toronto",
-  "title": "AHC Community BBQ",
+  "location": "270 Yorkland Blvd, North York, ON M2J 5C9, Canada",
+  "title": "🍗Community BBQ",
+  "organizedBy": "Abu Huraira Community Center",
   "type": "Community Function",
   "tag": "Function",
   "id": "ahc-community-bbq-aug29-2026",
-  "category": "functions",
-  "section": "functions"
+  "category": "functions"
 }
