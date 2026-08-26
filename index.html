@@ -1401,11 +1401,14 @@ function renderCalendar(){
   const daysInMonth = new Date(year, month+1, 0).getDate();
   const todayStr = `${today.getFullYear()}-${pad(today.getMonth()+1)}-${pad(today.getDate())}`;
 
+  const MIN_YEAR = 2026, MIN_MONTH = 7; // August 2026 — never go earlier
+  const atMinBoundary = (year === MIN_YEAR && month === MIN_MONTH);
+
   let html = `
     <div class="cal-header">
       <button class="cal-nav-btn" id="prevMonth">‹</button>
       <div class="cal-title">${monthNames[month]} ${year}</div>
-      <button class="cal-nav-btn" id="nextMonth">›</button>
+      <button class="cal-nav-btn" id="nextMonth" ${atMinBoundary ? 'disabled' : ''}>›</button>
     </div>
     <div class="weekday-row">${dayLabelsShort.map(d=>`<div>${d}</div>`).join('')}</div>
     <div class="month-grid">`;
@@ -1456,6 +1459,7 @@ function renderCalendar(){
     renderCalendar();
   });
   document.getElementById('nextMonth').addEventListener('click', () => {
+    if(state.calYear === MIN_YEAR && state.calMonth === MIN_MONTH) return;
     state.calMonth--; if(state.calMonth<0){ state.calMonth=11; state.calYear--; }
     renderCalendar();
   });
