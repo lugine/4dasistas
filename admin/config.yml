@@ -171,6 +171,18 @@ collections:
     date_format: false
     time_format: h:mm A
     format: HH:mm
+  - label: End Time (optional)
+    name: endTime
+    widget: datetime
+    required: false
+    date_format: false
+    time_format: h:mm A
+    format: HH:mm
+  - label: This event runs all day (check this instead of filling in times above)
+    name: allDay
+    widget: boolean
+    default: false
+    required: false
   - label: Recurring weekdays (leave empty if one-off)
     name: days
     widget: select
@@ -285,6 +297,18 @@ collections:
     date_format: false
     time_format: h:mm A
     format: HH:mm
+  - label: End Time (optional)
+    name: endTime
+    widget: datetime
+    required: false
+    date_format: false
+    time_format: h:mm A
+    format: HH:mm
+  - label: This event runs all day (check this instead of filling in times above)
+    name: allDay
+    widget: boolean
+    default: false
+    required: false
   - label: Recurring weekdays (leave empty if one-off)
     name: days
     widget: select
@@ -390,6 +414,18 @@ collections:
     date_format: false
     time_format: h:mm A
     format: HH:mm
+  - label: End Time (optional)
+    name: endTime
+    widget: datetime
+    required: false
+    date_format: false
+    time_format: h:mm A
+    format: HH:mm
+  - label: This event runs all day (check this instead of filling in times above)
+    name: allDay
+    widget: boolean
+    default: false
+    required: false
   - label: Recurring weekdays (leave empty if one-off)
     name: days
     widget: select
@@ -611,6 +647,18 @@ collections:
     date_format: false
     time_format: h:mm A
     format: HH:mm
+  - label: End Time (optional)
+    name: endTime
+    widget: datetime
+    required: false
+    date_format: false
+    time_format: h:mm A
+    format: HH:mm
+  - label: This event runs all day (check this instead of filling in times above)
+    name: allDay
+    widget: boolean
+    default: false
+    required: false
   - label: Recurring weekdays (leave empty if one-off)
     name: days
     widget: select
@@ -716,6 +764,18 @@ collections:
     date_format: false
     time_format: h:mm A
     format: HH:mm
+  - label: End Time (optional)
+    name: endTime
+    widget: datetime
+    required: false
+    date_format: false
+    time_format: h:mm A
+    format: HH:mm
+  - label: This event runs all day (check this instead of filling in times above)
+    name: allDay
+    widget: boolean
+    default: false
+    required: false
   - label: Recurring weekdays (leave empty if one-off)
     name: days
     widget: select
