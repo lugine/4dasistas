@@ -79,6 +79,13 @@ npx wrangler deploy
 
 **Status:** IDLE
 **Last updated by:** Claude (chat)
+**Last updated:** 2026-08-26 (organizer field)
+
+**2026-08-26 (organizer field) — Claude (chat) — `index.html`, `admin/config.yml`** — Added new optional 'organizedBy' field right under Title in CMS, across all 6 event collections. Displays in italics directly under the event title on the website - added consistently in all 4 places titles show (main list cards, calendar day popup, event detail page, today-list), with size scaled appropriately for each context's density. Kept the old separate 'organizer'+'contact' fact-line field intact for backward compatibility with existing entries that use it (e.g. ISNA badminton) - this is a genuinely new, additional field, not a replacement.
+
+
+**Status:** IDLE
+**Last updated by:** Claude (chat)
 **Last updated:** 2026-08-26 (boundary restored)
 
 **2026-08-26 (boundary restored) — Claude (chat) — `index.html`** — Re-added the August 2026 minimum-month boundary on the main calendar (this existed early in the project but was silently lost during a later refactor). Correctly attached the disable/guard to id='nextMonth', since that's the button that now goes backward after the recent arrow-direction swap - double-checked the actual current click handlers before touching anything, given how easy it would have been to attach this to the wrong (confusingly-named) button.
