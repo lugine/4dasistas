@@ -79,6 +79,13 @@ npx wrangler deploy
 
 **Status:** IDLE
 **Last updated by:** Claude (chat)
+**Last updated:** 2026-08-25 (cross-listing)
+
+**2026-08-25 (cross-listing) — Claude (chat) — `index.html`, `admin/config.yml`** — Built event cross-listing feature per Lujane's request: a single event can now appear in multiple category calendars (e.g. Hike showing in both Sports and Activities) via new alsoShowIn field, no min/max limit. On 'All Events' it still shows exactly once with one consistent color (its home category's color) - EVENT_ITEMS was already a flat merge of home arrays so this needed no change. Added the field to the CMS across all 6 event collections (sports/activities/functions/trips/mosqueprograms/supportprograms) via safe YAML parse-and-rewrite rather than manual duplication. Tested via runtime simulation before pushing - confirmed cross-listed item appears in both target category views, exactly once on All Events, with correct single color. Also confirmed comma-separated tag text (e.g. 'Pilates, Pickleball') already works today with zero code changes needed, since Tag is just a plain string field.
+
+
+**Status:** IDLE
+**Last updated by:** Claude (chat)
 **Last updated:** 2026-08-25 (muslimfest fix)
 
 **2026-08-25 (muslimfest fix) — Claude (chat) — `data/sports.json`** — Fixed MuslimFest showing only 1 of 3 days on the calendar. Root cause: multi-day support already exists (calDate+endDate expansion, likely built by Kilo), but the entry only had eventDate set (auto-derives calDate) with no endDate at all - editing the description text to say 'Aug 28-30' doesn't touch the actual endDate field that drives calendar placement. Added endDate:2026-08-30. Confirmed the CMS already has a dedicated End Date field for this (noted in config.yml's field list) - Lujane needs to use that specific field, not just the description text, for future multi-day events.
