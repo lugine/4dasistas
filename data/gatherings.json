@@ -310,16 +310,18 @@
       "tag": "Muslim Film Fest"
     },
     {
+      "section": "functions",
       "eventDate": "2026-08-28",
+      "endDate": "2026-08-30",
       "date": "Friday–Sunday, August 28–30, 2026",
       "organizer": "MuslimFest",
       "desc": "MuslimFest returns to Mississauga for a community festival from August 28–30.",
       "instagram": "https://www.instagram.com/muslimfest/",
-      "location": "Mississauga Celebration Square",
+      "location": "300 City Centre Dr, Mississauga, ON L5B 3C1, Canada",
       "title": "MuslimFest Mississauga",
       "tag": "Function",
-      "id": "muslimfest-mississauga-2026",
-      "section": "functions"
+      "link": "https://www.muslimfest.com/",
+      "id": "muslimfest-mississauga-2026"
     },
     {
       "eventDate": "2026-09-26",
