@@ -80,6 +80,21 @@
       "id": "boxing-program-launch-2"
     },
     {
+      "section": "sports",
+      "eventDate": "2026-09-06",
+      "virtual": false,
+      "time": "13:30",
+      "recurEnd": "2026-09-27",
+      "recurStart": "2026-09-06",
+      "location": "45 Cranfield Rd, East York, ON M4B 3E5, Canada",
+      "days": [
+        "sun"
+      ],
+      "title": "F-Series Strength Training | HijabiBallers",
+      "link": "https://www.instagram.com/p/DcUbtA4xJIz/?igsi=MWxuNWExOXZ4NmJqcw==",
+      "id": "f-series-strength-training-hijabiballers"
+    },
+    {
       "price": "$10 per person",
       "sportKey": "soccer",
       "date": "Sunday, August 23, 2026 · 4:00–8:00 PM",
