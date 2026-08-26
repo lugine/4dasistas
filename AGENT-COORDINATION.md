@@ -79,6 +79,13 @@ npx wrangler deploy
 
 **Status:** IDLE
 **Last updated by:** Claude (chat)
+**Last updated:** 2026-08-25 (arrow + globe)
+
+**2026-08-25 (arrow + globe) — Claude (chat) — `index.html`, `data/trips.json`, `admin/config.yml`** — Reversed the main calendar's month arrow direction per Lujane's request. Also fixed globe pins: found 4 trips missing coordinates, not just the 2 mentioned (Macedonia, Yunnan China, Kazakhstan, Morocco - the latter 3 have flag-emoji IDs suggesting automated/scheduled-task additions). REAL root cause found: the trips CMS form never had lat/lng fields at all - nobody using the actual CMS interface has ever had a way to enter coordinates, which is why this keeps recurring. Added required Latitude/Longitude number fields to the trips CMS collection with a hint on how to find them via Google Maps. Honest caveat: this only enforces the requirement for anyone using the actual CMS form - if the scheduled task or a future direct API push bypasses the form, coordinates could still go missing. Recommend I personally validate coordinate completeness whenever pushing trips.json going forward.
+
+
+**Status:** IDLE
+**Last updated by:** Claude (chat)
 **Last updated:** 2026-08-25 (virtual fix)
 
 **2026-08-25 (virtual fix) — Claude (chat) — `index.html`, `data/dayactivities.json`** — Fixed virtual events showing 'Location TBA' on the calendar day popup and today-list (2 real code spots that never checked the virtual flag - the event detail page already did this correctly, which is why the bug wasn't caught earlier). Added a shared locationLabel() helper, used consistently now. Also found the actual data bug: Daff Workshop had no virtual field saved at all despite Lujane setting it in DecapBridge - set virtual:true directly. Worth watching if this recurs elsewhere (CMS boolean not saving), or if it was a one-off.
