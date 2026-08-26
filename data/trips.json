@@ -58,6 +58,17 @@
     },
     {
       "section": "trips",
+      "virtual": false,
+      "tripType": "domestic",
+      "title": "Lake Muskoka Writers Retreat",
+      "eventDate": "2026-09-17",
+      "endDate": "2026-09-20",
+      "location": "Lake Muskoka, Muskoka District Municipality, ON, Canada",
+      "link": "https://www.instagram.com/p/DcEk9pexpDh/?igsi=MWxmcHF3eWhjMmp0aQ==",
+      "id": "lake-muskoka-writers-retreat"
+    },
+    {
+      "section": "trips",
       "title": "Macedonia & Kosovo",
       "eventDate": "2026-09-30",
       "endDate": "2026-10-04",
