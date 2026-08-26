@@ -528,6 +528,17 @@ collections:
     name: location
     widget: location-autocomplete
     required: false
+  - label: Latitude (required - for the globe map. Right-click the spot on Google
+      Maps, click the coordinates to copy)
+    name: lat
+    widget: number
+    value_type: float
+    required: true
+  - label: Longitude (required - see latitude hint)
+    name: lng
+    widget: number
+    value_type: float
+    required: true
   - label: Link (Instagram or WhatsApp)
     name: link
     widget: string
@@ -820,7 +831,8 @@ collections:
     - restaurants
     - beautycare
     - mentalhealth
-    - {label: "Small Businesses", value: bakeries}
+    - label: Small Businesses
+      value: bakeries
     - legal
     hint: Changing this officially moves the listing to another Resources tab.
   - label: Title
