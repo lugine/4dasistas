@@ -79,7 +79,10 @@ npx wrangler deploy
 
 **Status:** IDLE
 **Last updated by:** Claude (chat)
-**Last updated:** 2026-08-26 (day/week/month view)
+**Last updated:** 2026-08-26 (week panel horizontal)
+
+**2026-08-26 (week panel horizontal) — Claude (chat) — `index.html`** — Lujane wanted the new Week view redesigned from a vertical stacked list into a horizontal panel of day columns. Replaced `.week-day-group` (stacked, full-width) with `.week-panel` (flex row, `overflow-x:auto` for mobile/narrow screens) containing 7 `.week-day-col` items, each a fixed 150px column with a compact heading (weekday + short date) and a narrow-friendly stacked event-card style (reused the existing mobile breakpoint's block layout for `.today-event`, scoped to `.week-day-col` instead of a media query). Marked today's own column with `.is-today` (rose-colored heading) so it's easy to spot in the strip. Verified in-browser at 1280px: renders as one flex row, 7 columns, all visible without needing to scroll at that width.
+
 
 **2026-08-26 (day/week/month view) — Claude (chat) — `index.html`** — Added a View selector (Day / Week / Month) to the Home page's "What's On Today" section, placed left of the existing Sort-by dropdown per Lujane's request. Day = existing single-day behavior, unchanged. Week = new `homepageWeekDays()` groups the next 7 days into stacked day-sections (each with its own mini heading + event list, empty-state per day), heading shows the date range ("Aug 26 – Sep 1, 2026"), and the ‹/› buttons + swipe gesture step by 7 days instead of 1 while in this mode. Month doesn't persist as a state value at all - selecting it just calls the existing `goToTab('events')`, which already sets `view:'calendar'` on its own, so it's a one-way jump to the real calendar tab, not a third rendering mode to maintain here. Verified all three in-browser: week shows 7 groups with correct range label, next/prev step by 7 in week mode, switching to month lands on `{tab:'events', view:'calendar'}`, switching back to day correctly clears the week groups.
 

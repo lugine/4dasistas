@@ -332,9 +332,17 @@
   .today-actions .today-subscribe{ margin-top:0; }
   .today-filter{ display:flex; justify-content:center; align-items:center; margin:0; }
   .today-list{ display:flex; flex-direction:column; gap:10px; }
-  .week-day-group{ margin-bottom:18px; }
-  .week-day-group:last-child{ margin-bottom:0; }
-  .week-day-heading{ font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:13px; color:var(--charcoal); margin-bottom:8px; padding-bottom:6px; border-bottom:2px solid rgba(55,61,59,0.12); }
+  .week-panel{ display:flex; gap:10px; overflow-x:auto; padding:2px 2px 8px; -webkit-overflow-scrolling:touch; }
+  .week-day-col{ flex:0 0 150px; min-width:150px; display:flex; flex-direction:column; }
+  .week-day-col.is-today .week-day-heading{ color:var(--rose-deep); }
+  .week-day-heading{ display:flex; flex-direction:column; align-items:center; font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:13px; color:var(--charcoal); margin-bottom:8px; padding-bottom:6px; border-bottom:2px solid rgba(55,61,59,0.12); text-align:center; }
+  .week-day-heading span{ font-weight:600; font-size:11px; color:var(--muted); margin-top:2px; }
+  .week-day-col .today-list{ gap:8px; }
+  .week-day-col .today-event{ display:block; }
+  .week-day-col .today-event-time{ min-height:auto; padding:6px 8px; border-right:0; border-bottom:1px solid rgba(33,30,28,0.12); font-size:10.5px; }
+  .week-day-col .today-event-info{ padding:8px; }
+  .week-day-col .today-event-info span{ display:block; }
+  .week-day-col .empty{ font-size:11.5px; padding:14px 6px; }
   .today-event{ display:grid; grid-template-columns:72px minmax(0,1fr); align-items:stretch; gap:12px; padding:0; background:var(--card); border:2px solid var(--charcoal); border-radius:14px; box-shadow:3px 3px 0 var(--charcoal); text-align:left; cursor:pointer; overflow:hidden; }
   .today-event.cat-sports{ background:#fbd9bb; }
   .today-event.cat-gathering{ background:#e8cfe2; color:var(--charcoal); }
@@ -2089,10 +2097,14 @@ el.innerHTML = `<button class="fall-cta-btn" data-hometab="fallsignup">🍂 Join
       const weekDays = homepageWeekDays(selectedToday);
       const startD = weekDays[0].date, endD = weekDays[6].date;
       todayDate = `${monthNames[startD.getMonth()]} ${startD.getDate()} – ${monthNames[endD.getMonth()]} ${endD.getDate()}, ${endD.getFullYear()}`;
-      todayBodyHtml = weekDays.map(day => `<div class="week-day-group">
-        <div class="week-day-heading">${dayLabelsShort[day.date.getDay()]}, ${monthNames[day.date.getMonth()]} ${day.date.getDate()}</div>
-        <div class="today-list">${day.items.map(todayEventRow).join('') || '<div class="empty">Nothing scheduled.</div>'}</div>
-      </div>`).join('');
+      const todayDateStr = `${today.getFullYear()}-${pad(today.getMonth()+1)}-${pad(today.getDate())}`;
+      todayBodyHtml = `<div class="week-panel">${weekDays.map(day => {
+        const dayStr = `${day.date.getFullYear()}-${pad(day.date.getMonth()+1)}-${pad(day.date.getDate())}`;
+        return `<div class="week-day-col${dayStr === todayDateStr ? ' is-today' : ''}">
+          <div class="week-day-heading">${dayLabelsShort[day.date.getDay()]}<span>${monthNames[day.date.getMonth()].slice(0,3)} ${day.date.getDate()}</span></div>
+          <div class="today-list">${day.items.map(todayEventRow).join('') || '<div class="empty">Nothing on</div>'}</div>
+        </div>`;
+      }).join('')}</div>`;
     } else {
       const todayItems = homepageTodayItems(selectedToday);
       todayDate = `${monthNames[selectedToday.getMonth()]} ${selectedToday.getDate()}, ${selectedToday.getFullYear()}`;
