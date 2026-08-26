@@ -983,12 +983,17 @@ function locationLabel(item){
 }
 
 function eventTimeLabel(item){
-  if(item.time) return formatTime12h(item.time);
+  if(item.allDay) return 'All day';
+  if(item.time){
+    const start = formatTime12h(item.time);
+    return item.endTime ? `${start} – ${formatTime12h(item.endTime)}` : start;
+  }
   const match = String(item.date || '').match(/(?:at\s+)?(\d{1,2}(?::\d{2})?\s*(?:AM|PM))(?:\s*[–-]\s*(\d{1,2}(?::\d{2})?\s*(?:AM|PM)))?/i);
   return match ? match[0] : 'All day';
 }
 
 function eventTimeMinutes(item){
+  if(item.allDay) return 1440;
   if(item.time){
     const t = String(item.time).match(/(\d{1,2}):(\d{2})/);
     if(t) return Number(t[1]) * 60 + Number(t[2]);
