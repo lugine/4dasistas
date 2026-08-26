@@ -1,17 +1,20 @@
 {
-  "id": "mnn-stand-firm-2026",
-  "tag": "Mosque Program",
-  "title": "MNN Stand FIRM",
+  "section": "mosqueprograms",
   "eventDate": "2026-09-02",
+  "price": "$100",
+  "recurEnd": "2026-11-25",
+  "date": "Wednesdays, September 2–November 11, 2026 · 7:00–9:00 PM",
+  "organizer": "MNN",
+  "desc": "12-week program beginning in early September for women ages 18–30.",
+  "instagram": "https://www.instagram.com/officialmnn/",
+  "recurStart": "2026-09-02",
+  "location": "3520 Odyssey Dr, Mississauga, ON L5M 7N4, Canada",
   "days": [
     "wed"
   ],
-  "date": "Wednesdays, September 2–November 11, 2026 · 7:00–9:00 PM",
-  "location": "3520 Odyssey Dr, Mississauga",
-  "organizer": "MNN",
-  "price": "$100",
+  "title": "MNN Stand FIRM",
   "registration": "Ages 18–30",
-  "desc": "12-week program beginning in early September for women ages 18–30.",
-  "instagram": "https://www.instagram.com/officialmnn/",
-  "section": "mosqueprograms"
+  "tag": "Mosque Program",
+  "link": "https://www.instagram.com/p/Db3zbsEvLri/?utm_source=ig_web_copy_link&igsi=NTc4MTIwNjQ2YQ==",
+  "id": "mnn-stand-firm-2026"
 }
