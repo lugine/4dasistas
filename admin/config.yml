@@ -154,6 +154,10 @@ collections:
   - label: Title
     name: title
     widget: string
+  - label: Organized by (optional - shows in italics under the title on the website)
+    name: organizedBy
+    widget: string
+    required: false
   - label: Event date (required - pick from calendar)
     name: eventDate
     widget: date
@@ -280,6 +284,10 @@ collections:
   - label: Title
     name: title
     widget: string
+  - label: Organized by (optional - shows in italics under the title on the website)
+    name: organizedBy
+    widget: string
+    required: false
   - label: Event date (required - pick from calendar)
     name: eventDate
     widget: date
@@ -397,6 +405,10 @@ collections:
   - label: Title
     name: title
     widget: string
+  - label: Organized by (optional - shows in italics under the title on the website)
+    name: organizedBy
+    widget: string
+    required: false
   - label: Event date (required - pick from calendar)
     name: eventDate
     widget: date
@@ -514,6 +526,10 @@ collections:
   - label: Title
     name: title
     widget: string
+  - label: Organized by (optional - shows in italics under the title on the website)
+    name: organizedBy
+    widget: string
+    required: false
   - label: Event date (required - pick from calendar)
     name: eventDate
     widget: date
@@ -630,6 +646,10 @@ collections:
   - label: Title
     name: title
     widget: string
+  - label: Organized by (optional - shows in italics under the title on the website)
+    name: organizedBy
+    widget: string
+    required: false
   - label: Event date (required - pick from calendar)
     name: eventDate
     widget: date
@@ -747,6 +767,10 @@ collections:
   - label: Title
     name: title
     widget: string
+  - label: Organized by (optional - shows in italics under the title on the website)
+    name: organizedBy
+    widget: string
+    required: false
   - label: Event date (required - pick from calendar)
     name: eventDate
     widget: date
