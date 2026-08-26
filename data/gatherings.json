@@ -125,13 +125,17 @@
     },
     {
       "section": "functions",
-      "virtual": false,
-      "title": "Community BBQ | Muslim Welfare Canada ",
       "eventDate": "2026-08-22",
+      "endTime": "14:00",
+      "virtual": false,
+      "time": "11:00",
+      "desc": "Mississauga, we’re firing up the grill this weekend and we’d love to see you there! 🌞🔥\n\nJoin us for our MWC Community BBQ! A chance to enjoy good food, connect with great people, and celebrate the strength of our community. 🤝💛\n\n📍 3490 Mavis Road, Mississauga \n🗓️ Saturday, August 22 \n⏰ 11:00 AM – 2:00 PM\n\nBring your family, friends, and appetite — everyone is welcome.\n",
       "location": "3490 Mavis Rd, Mississauga, ON L5C 1T8, Canada",
+      "title": "🍗Community BBQ ",
+      "organizedBy": "Muslim Welfare Canada ",
       "link": "https://www.instagram.com/p/DcOrgr8OgK4/?igsi=MTlucGlqemRhaWZyZw==",
       "id": "community-bbq-muslim-welfare-canada",
-      "tag": "Community BBQ | Muslim Welfare Canada "
+      "tag": "🍗Community BBQ "
     },
     {
       "eventDate": "2026-11-22",
