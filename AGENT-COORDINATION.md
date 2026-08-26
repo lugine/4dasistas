@@ -79,6 +79,13 @@ npx wrangler deploy
 
 **Status:** IDLE
 **Last updated by:** Claude (chat)
+**Last updated:** 2026-08-26 (end time)
+
+**2026-08-26 (end time) — Claude (chat) — `index.html`, `admin/config.yml`** — Added End Time and All Day fields right after Time, across all 5 event collections that have Time (sports/activities/functions/mosqueprograms/supportprograms). Trips does not have a Time field at all currently, so it was excluded - flagged to Lujane in case that's wanted too. Updated eventTimeLabel/eventTimeMinutes to show a proper range ('6:00 PM – 8:00 PM') when endTime is set, and 'All day' when allDay is checked. Hit one real push conflict mid-task (another commit landed between fetch and push) - re-fetched fresh and reapplied cleanly per protocol rather than force-pushing over it.
+
+
+**Status:** IDLE
+**Last updated by:** Claude (chat)
 **Last updated:** 2026-08-25 (arrow + globe)
 
 **2026-08-25 (arrow + globe) — Claude (chat) — `index.html`, `data/trips.json`, `admin/config.yml`** — Reversed the main calendar's month arrow direction per Lujane's request. Also fixed globe pins: found 4 trips missing coordinates, not just the 2 mentioned (Macedonia, Yunnan China, Kazakhstan, Morocco - the latter 3 have flag-emoji IDs suggesting automated/scheduled-task additions). REAL root cause found: the trips CMS form never had lat/lng fields at all - nobody using the actual CMS interface has ever had a way to enter coordinates, which is why this keeps recurring. Added required Latitude/Longitude number fields to the trips CMS collection with a hint on how to find them via Google Maps. Honest caveat: this only enforces the requirement for anyone using the actual CMS form - if the scheduled task or a future direct API push bypasses the form, coordinates could still go missing. Recommend I personally validate coordinate completeness whenever pushing trips.json going forward.
