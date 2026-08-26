@@ -65,6 +65,8 @@
       "endDate": "2026-09-20",
       "location": "Lake Muskoka, Muskoka District Municipality, ON, Canada",
       "link": "https://www.instagram.com/p/DcEk9pexpDh/?igsi=MWxmcHF3eWhjMmp0aQ==",
+      "lat": 45.017,
+      "lng": -79.5751,
       "id": "lake-muskoka-writers-retreat"
     },
     {
@@ -75,6 +77,8 @@
       "location": "North Macedonia",
       "link": "https://www.instagram.com/p/DcbNYyFANwG/?img_index=2&igsi=cGE5NXN1YWU1ZnNh",
       "tripType": "international",
+      "lat": 41.9981,
+      "lng": 21.4254,
       "id": "macedonia-kosovo"
     },
     {
@@ -268,6 +272,8 @@
       "title": "🇨🇳A Deen Retreat Experience",
       "link": "https://www.instagram.com/reel/Db9_hKFBABK/?igsi=NTVlYnRvazQxajQ=",
       "tripType": "international",
+      "lat": 25.0389,
+      "lng": 102.7183,
       "id": "🇨🇳a-deen-retreat-experience"
     },
     {
@@ -280,6 +286,8 @@
       "title": "🇰🇿Kazakhstan | Deen Dunya Retreats",
       "link": "https://www.instagram.com/p/DbvRAwhBYbE/?igsi=d3c0dDJsY2w2YjNr",
       "tripType": "international",
+      "lat": 43.222,
+      "lng": 76.8512,
       "id": "🇰🇿kazakhstan-deen-dunya-retreats"
     },
     {
@@ -292,6 +300,8 @@
       "title": "🇲🇦Morocco Sisters retreat",
       "link": "https://www.instagram.com/p/DcBZ1iKDI-2/?igsi=MTlydmFmM2ZkZGU5aw==",
       "tripType": "international",
+      "lat": 31.6295,
+      "lng": -7.9811,
       "id": "🇲🇦morocco-sisters-retreat-1"
     }
   ]
