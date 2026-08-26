@@ -245,6 +245,18 @@
       "lng": -7.0926,
       "tripType": "international",
       "section": "trips"
+    },
+    {
+      "section": "trips",
+      "eventDate": "2026-11-22",
+      "endDate": "2026-11-29",
+      "virtual": false,
+      "desc": "Muslim Sisters Retreat in Essaouira, Morocco 🌊☀️\n📅 22-29 November 2026\n\nA 7-day retreat for Muslim women to slow down, reconnect & build real sisterhood\n\nWhat to expect:\n\n✨ Sisterhood, deep talks & heart-to-heart conversations\n🕌 Praying together, reconnecting with Allah & inner peace\n🎨 Activities like horse riding, cooking class, hammam & exploring the Medina\n🏡 Private villa & pool, fresh & healthy Moroccan meals & time offline\n🌊 Beach walks, fun & free time to just be\n",
+      "location": "Morocco",
+      "title": "🇲🇦Morocco Sisters retreat",
+      "link": "https://www.instagram.com/p/DcBZ1iKDI-2/?igsi=MTlydmFmM2ZkZGU5aw==",
+      "tripType": "international",
+      "id": "🇲🇦morocco-sisters-retreat"
     }
   ]
 }
