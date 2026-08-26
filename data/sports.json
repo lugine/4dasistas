@@ -344,6 +344,18 @@
       "id": "tcs-toronto-waterfront-womensfitsauga-2026",
       "calDate": "2026-10-17",
       "section": "sports"
+    },
+    {
+      "section": "sports",
+      "virtual": false,
+      "title": "🥾She Travels - Hike",
+      "eventDate": "2026-09-06",
+      "location": "Sixteen Mile Creek Trail N, Oakville, ON, Canada",
+      "link": "https://www.instagram.com/reel/Dcbu84BRs05/?igsi=djRheGN6c28xb3My",
+      "alsoShowIn": [
+        "activities"
+      ],
+      "id": "🥾she-travels-hike"
     }
   ]
 }
