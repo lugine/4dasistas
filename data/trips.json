@@ -1,21 +1,22 @@
 {
   "items": [
     {
-      "id": "alhuda-female-youth-niagara-trip-aug30-2026",
-      "title": "Al-Huda Female Youth Day Trip to Niagara Falls",
-      "tag": "Trip",
-      "date": "Sunday, August 30, 2026 · Departure at 8:00 AM",
-      "calDate": "2026-08-30",
-      "location": "Departure: Al-Huda Muslim Society",
-      "organizer": "Al-Huda Muslim Youth",
+      "section": "trips",
+      "lng": -79.0849,
+      "eventDate": "2026-08-23",
       "price": "$30 round-trip transportation",
-      "registration": "Sisters 18+; register through the link in bio",
+      "date": "Sunday, August 30, 2026 · Departure at 8:00 AM",
+      "organizer": "Al-Huda Muslim Youth",
       "desc": "Female youth day trip to Niagara Falls. Activities may include a boat tour, zipline, Butterfly Conservatory, Clifton Hill, shopping, restaurants, and scenic walks. Attractions, meals, and personal expenses are not included.",
       "instagram": "https://www.instagram.com/alhudamuslimyouth/",
-      "lat": 43.0896,
-      "lng": -79.0849,
+      "location": "Departure: Al-Huda Muslim Society",
+      "title": "Al-Huda Sisters Trip to Niagara Falls",
+      "registration": "Sisters 18+; register through the link in bio",
+      "tag": "Trip",
+      "id": "alhuda-female-youth-niagara-trip-aug30-2026",
+      "calDate": "2026-08-30",
       "tripType": "domestic",
-      "section": "trips"
+      "lat": 43.0896
     },
     {
       "id": "deen-journeys-granada-retreat-2027",
