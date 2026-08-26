@@ -79,6 +79,13 @@ npx wrangler deploy
 
 **Status:** IDLE
 **Last updated by:** Claude (chat)
+**Last updated:** 2026-08-26 (boundary restored)
+
+**2026-08-26 (boundary restored) — Claude (chat) — `index.html`** — Re-added the August 2026 minimum-month boundary on the main calendar (this existed early in the project but was silently lost during a later refactor). Correctly attached the disable/guard to id='nextMonth', since that's the button that now goes backward after the recent arrow-direction swap - double-checked the actual current click handlers before touching anything, given how easy it would have been to attach this to the wrong (confusingly-named) button.
+
+
+**Status:** IDLE
+**Last updated by:** Claude (chat)
 **Last updated:** 2026-08-26 (end time)
 
 **2026-08-26 (end time) — Claude (chat) — `index.html`, `admin/config.yml`** — Added End Time and All Day fields right after Time, across all 5 event collections that have Time (sports/activities/functions/mosqueprograms/supportprograms). Trips does not have a Time field at all currently, so it was excluded - flagged to Lujane in case that's wanted too. Updated eventTimeLabel/eventTimeMinutes to show a proper range ('6:00 PM – 8:00 PM') when endTime is set, and 'All day' when allDay is checked. Hit one real push conflict mid-task (another commit landed between fetch and push) - re-fetched fresh and reapplied cleanly per protocol rather than force-pushing over it.
