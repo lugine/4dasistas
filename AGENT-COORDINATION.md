@@ -79,6 +79,13 @@ npx wrangler deploy
 
 **Status:** IDLE
 **Last updated by:** Claude (chat)
+**Last updated:** 2026-08-25 (muslimfest fix)
+
+**2026-08-25 (muslimfest fix) — Claude (chat) — `data/sports.json`** — Fixed MuslimFest showing only 1 of 3 days on the calendar. Root cause: multi-day support already exists (calDate+endDate expansion, likely built by Kilo), but the entry only had eventDate set (auto-derives calDate) with no endDate at all - editing the description text to say 'Aug 28-30' doesn't touch the actual endDate field that drives calendar placement. Added endDate:2026-08-30. Confirmed the CMS already has a dedicated End Date field for this (noted in config.yml's field list) - Lujane needs to use that specific field, not just the description text, for future multi-day events.
+
+
+**Status:** IDLE
+**Last updated by:** Claude (chat)
 **Last updated:** 2026-08-25 (final)
 
 **2026-08-25 (final) — Claude (chat) — `admin/config.yml`, `index.html`** — Switched the Time field's CMS picker on all 5 collections that have one (sports/activities/functions/mosqueprograms/supportprograms; trips has no time field) from 24-hour to a 12-hour AM/PM dropdown, per Lujane's request. Changed only `time_format` (the widget's input UI, `HH:mm` → `"h:mm A"`) and left `format` as `HH:mm` (the stored value) untouched, so the stored data shape doesn't change at all and nothing elsewhere needed updating for that half of it. While checking how `time` gets displayed, found `eventTimeLabel()` in `index.html` was returning the raw stored 24-hour string straight to visitors (e.g. "14:00" instead of "2:00 PM") — fixed by adding `formatTime12h()` and routing display through it; `eventTimeMinutes()` (used for sort order) was untouched since it already parsed hours/minutes numerically and didn't care about AM/PM. Verified: `formatTime12h` unit-tested against midnight/noon/single-digit-hour edge cases, and confirmed in-browser that a real item's stored `"12:00"` now renders as `"12:00 PM"`.
