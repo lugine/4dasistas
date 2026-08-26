@@ -162,6 +162,9 @@
   .event-date-badge{ width:84px; flex-shrink:0; font-size:12px; font-weight:600; color:var(--rose-deep); font-family:'Space Grotesk',sans-serif; line-height:1.3; text-align:left; overflow-wrap:break-word; }
   .event-info{ flex:1; min-width:0; text-align:left; }
   .event-info h4{ font-family:'Space Grotesk',sans-serif; font-size:16px; font-weight:600; margin-bottom:4px; text-align:left; }
+  .event-organizer{ font-style:italic; font-size:13px; color:var(--muted); margin:-2px 0 6px; }
+  .today-event-info .event-organizer{ font-size:11px; margin:0; }
+  .calendar-day-event .event-organizer{ font-size:12px; margin:2px 0 0; }
 
   .tag{ display:inline-block; font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:0.03em; padding:3px 9px; border-radius:999px; color:var(--charcoal); }
   .cat-sports{ background:var(--coral); }
@@ -1189,6 +1192,7 @@ function renderList(){
       <div class="event-date-badge">${e.date}</div>
       <div class="event-info">
         <h4>${e.title}</h4>
+        ${e.organizedBy ? `<div class="event-organizer">${e.organizedBy}</div>` : ''}
         <span class="tag ${tagClass(e)}">${eventTypeLabel(e)}</span>
       </div>
       <button class="click-btn" data-id="${e.id}">Click me →</button>
@@ -1449,7 +1453,7 @@ function renderCalendar(){
     const detail = document.getElementById('calendarDayDetail');
     const selected = new Date(`${dateStr}T00:00:00`);
     const heading = `${dayLabelsFull[selected.getDay()]}, ${monthNames[selected.getMonth()]} ${selected.getDate()}`;
-    detail.innerHTML = `<button class="calendar-day-detail-close" type="button" aria-label="Close day schedule">×</button><h3>${heading}</h3><div class="calendar-day-events">${dayItems.map(item => `<div class="calendar-day-event" style="--event-color:${eventColor(item)}" data-id="${item.id}"><div class="calendar-day-event-time">${eventTimeLabel(item)}</div><div><div class="calendar-day-event-title">${item.title}</div><div class="calendar-day-event-type">${eventTypeLabel(item)} · ${locationLabel(item)}</div></div></div>`).join('') || '<p class="calendar-scope-note">Nothing scheduled for this day.</p>'}</div>`;
+    detail.innerHTML = `<button class="calendar-day-detail-close" type="button" aria-label="Close day schedule">×</button><h3>${heading}</h3><div class="calendar-day-events">${dayItems.map(item => `<div class="calendar-day-event" style="--event-color:${eventColor(item)}" data-id="${item.id}"><div class="calendar-day-event-time">${eventTimeLabel(item)}</div><div><div class="calendar-day-event-title">${item.title}</div>${item.organizedBy ? `<div class="event-organizer">${item.organizedBy}</div>` : ''}<div class="calendar-day-event-type">${eventTypeLabel(item)} · ${locationLabel(item)}</div></div></div>`).join('') || '<p class="calendar-scope-note">Nothing scheduled for this day.</p>'}</div>`;
     detail.classList.add('open');
     detail.querySelector('.calendar-day-detail-close').addEventListener('click', () => detail.classList.remove('open'));
   });
@@ -2069,7 +2073,7 @@ el.innerHTML = `<button class="fall-cta-btn" data-hometab="fallsignup">🍂 Join
       <div class="today-list">${todayItems.map(item => `
         <div class="today-event ${tagClass(item)}" data-id="${item.id}">
           <div class="today-event-time">${eventTimeLabel(item)}</div>
-          <div class="today-event-info"><strong>${item.title}</strong><span>${eventTypeLabel(item)} · ${locationLabel(item)}</span></div>
+          <div class="today-event-info"><strong>${item.title}</strong>${item.organizedBy ? `<span class="event-organizer">${item.organizedBy}</span>` : ''}<span>${eventTypeLabel(item)} · ${locationLabel(item)}</span></div>
         </div>`).join('') || '<div class="empty">Nothing scheduled today.</div>'}</div>
       <div class="today-actions"><div class="today-filter"><label class="event-sort-label">Sort by <select class="event-sort-select" id="todaySortSelect" aria-label="Sort today's events by">
         <option value="soonest" ${state.eventSort === 'soonest' ? 'selected' : ''}>Soonest</option><option value="latest" ${state.eventSort === 'latest' ? 'selected' : ''}>Latest</option><option value="type" ${state.eventSort === 'type' ? 'selected' : ''}>Type</option><option value="location" ${state.eventSort === 'location' ? 'selected' : ''}>Location</option><option value="price" ${state.eventSort === 'price' ? 'selected' : ''}>Price</option>
@@ -2341,6 +2345,7 @@ function renderDetail(id){
   document.getElementById('detailCard').innerHTML = `
     <span class="tag ${tagClass(e)}">${eventTypeLabel(e)}</span>
     <h2>${e.title}</h2>
+    ${e.organizedBy ? `<div class="event-organizer">${e.organizedBy}</div>` : ''}
     <div class="detail-date">${e.date}</div>
     <div class="detail-desc">${e.desc || ''}</div>
     <div class="detail-facts">${facts}</div>
