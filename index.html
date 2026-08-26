@@ -1021,6 +1021,23 @@ const TYPE_MULTI_NAMES = {sports:'Sports',activities:'Activities',functions:'Fun
 const TYPE_MULTI_ALL = ['sports','activities','functions','trips','mosqueprograms','supportgroups'];
 function typeMultiActive(){ return Array.isArray(state.typeSel) && state.typeSel.length > 0; }
 
+function crossListedItemsFor(targetCat, homeItems){
+  const allPools = [sportsData, dayActivitiesData, gatheringsData, tripsData, mosqueGatheringsData];
+  const homeIds = new Set(homeItems.map(i => i.id));
+  const seen = new Set();
+  const out = [];
+  allPools.forEach(pool => {
+    pool.forEach(item => {
+      if(homeIds.has(item.id) || seen.has(item.id)) return;
+      if(Array.isArray(item.alsoShowIn) && item.alsoShowIn.includes(targetCat)){
+        seen.add(item.id);
+        out.push(item);
+      }
+    });
+  });
+  return out;
+}
+
 function itemsForCategoryBase(cat){
   if(typeMultiActive()){
     const pools = {
@@ -1044,20 +1061,22 @@ function itemsForCategoryBase(cat){
   }
   if(cat === 'all') return EVENT_ITEMS;
   if(cat === 'sports'){
-    return state.sportFilter === 'all' ? sportsData : sportsData.filter(e => e.sportKey === state.sportFilter);
+    const home = state.sportFilter === 'all' ? sportsData : sportsData.filter(e => e.sportKey === state.sportFilter);
+    return state.sportFilter === 'all' ? [...home, ...crossListedItemsFor('sports', sportsData)] : home;
   }
   if(cat === 'activities'){
     const day = state.dayCity === 'all' ? dayActivitiesData : dayActivitiesData.filter(e => e.city === state.dayCity);
-    return day;
+    return state.dayCity === 'all' ? [...day, ...crossListedItemsFor('activities', dayActivitiesData)] : day;
   }
   if(cat === 'functions'){
-    return gatheringsData;
+    return [...gatheringsData, ...crossListedItemsFor('functions', gatheringsData)];
   }
   if(cat === 'trips'){
-    return state.tripType === 'all' ? tripsData : tripsData.filter(e => tripTypeForItem(e) === state.tripType);
+    const home = state.tripType === 'all' ? tripsData : tripsData.filter(e => tripTypeForItem(e) === state.tripType);
+    return state.tripType === 'all' ? [...home, ...crossListedItemsFor('trips', tripsData)] : home;
   }
   if(cat === 'mosqueprograms'){
-    return mosqueGatheringsData;
+    return [...mosqueGatheringsData, ...crossListedItemsFor('mosqueprograms', mosqueGatheringsData)];
   }
   return [];
 }
