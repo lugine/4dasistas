@@ -820,7 +820,7 @@ collections:
     - restaurants
     - beautycare
     - mentalhealth
-    - bakeries
+    - {label: "Small Businesses", value: bakeries}
     - legal
     hint: Changing this officially moves the listing to another Resources tab.
   - label: Title
