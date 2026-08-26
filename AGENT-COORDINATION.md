@@ -79,6 +79,13 @@ npx wrangler deploy
 
 **Status:** IDLE
 **Last updated by:** Claude (chat)
+**Last updated:** 2026-08-25 (label fix)
+
+**2026-08-25 (label fix) — Claude (chat) — `admin/config.yml`** — Fixed the confusing CMS category dropdown that showed the internal 'bakeries' key instead of 'Small Businesses' (Lujane couldn't find it as an option, understandably). Used Decap's label/value option syntax to show the friendly name while keeping the underlying data value (bakeries) unchanged - no data migration needed, purely a CMS display fix. Applied via the shared YAML anchor, confirmed it propagated to all 7 resource collections in one edit.
+
+
+**Status:** IDLE
+**Last updated by:** Claude (chat)
 **Last updated:** 2026-08-25 (cross-listing)
 
 **2026-08-25 (cross-listing) — Claude (chat) — `index.html`, `admin/config.yml`** — Built event cross-listing feature per Lujane's request: a single event can now appear in multiple category calendars (e.g. Hike showing in both Sports and Activities) via new alsoShowIn field, no min/max limit. On 'All Events' it still shows exactly once with one consistent color (its home category's color) - EVENT_ITEMS was already a flat merge of home arrays so this needed no change. Added the field to the CMS across all 6 event collections (sports/activities/functions/trips/mosqueprograms/supportprograms) via safe YAML parse-and-rewrite rather than manual duplication. Tested via runtime simulation before pushing - confirmed cross-listed item appears in both target category views, exactly once on All Events, with correct single color. Also confirmed comma-separated tag text (e.g. 'Pilates, Pickleball') already works today with zero code changes needed, since Tag is just a plain string field.
