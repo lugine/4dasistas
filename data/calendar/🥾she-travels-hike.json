@@ -1,11 +1,14 @@
 {
   "section": "sports",
-  "virtual": false,
-  "title": "🥾She Travels - Hike",
   "eventDate": "2026-09-06",
-  "location": "Sixteen Mile Creek Trail N, Oakville, ON, Canada",
-  "link": "https://www.instagram.com/reel/Dcbu84BRs05/?igsi=djRheGN6c28xb3My",
   "alsoShowIn": [
-    "activities"
-  ]
+    "activities",
+    "sports"
+  ],
+  "virtual": false,
+  "time": "10:00",
+  "location": "3070 Neyagawa Blvd, Oakville, ON L6M 0P4, Canada",
+  "title": "🌲Hike",
+  "organizedBy": "She Travels",
+  "link": "https://www.instagram.com/reel/Dcbu84BRs05/?igsi=djRheGN6c28xb3My"
 }
