@@ -2171,45 +2171,31 @@ el.innerHTML = `<button class="fall-cta-btn" data-hometab="fallsignup">🍂 Join
       state.todayOffset += step;
       render();
     });
-    let todaySwipeStartX = null, todaySwipeStartY = null, todaySwipeEl = null, todaySwipeLocked = null;
+    let todaySwipeStartX = null, todaySwipeStartY = null, todaySwipeLocked = null;
     const todaySectionEl = document.querySelector('.today-section');
     todaySectionEl.addEventListener('touchstart', e => {
       todaySwipeStartX = e.changedTouches[0].clientX;
       todaySwipeStartY = e.changedTouches[0].clientY;
       todaySwipeLocked = null;
-      todaySwipeEl = todaySectionEl.querySelector('.week-panel, .today-list');
-      if(todaySwipeEl) todaySwipeEl.style.transition = 'none';
     }, {passive:true});
     todaySectionEl.addEventListener('touchmove', e => {
-      if(todaySwipeStartX === null || !todaySwipeEl) return;
+      if(todaySwipeStartX === null) return;
       const deltaX = e.changedTouches[0].clientX - todaySwipeStartX;
       const deltaY = e.changedTouches[0].clientY - todaySwipeStartY;
       if(todaySwipeLocked === null) todaySwipeLocked = Math.abs(deltaX) > Math.abs(deltaY) ? 'x' : 'y';
-      if(todaySwipeLocked !== 'x') return;
-      e.preventDefault();
-      todaySwipeEl.style.transform = `translateX(${deltaX}px)`;
-      todaySwipeEl.style.opacity = String(Math.max(0.4, 1 - Math.abs(deltaX) / 300));
+      if(todaySwipeLocked === 'x') e.preventDefault();
     }, {passive:false});
     todaySectionEl.addEventListener('touchend', e => {
-      if(todaySwipeStartX === null || !todaySwipeEl) { todaySwipeStartX = null; return; }
+      if(todaySwipeStartX === null) return;
       const deltaX = e.changedTouches[0].clientX - todaySwipeStartX;
-      const el = todaySwipeEl;
-      todaySwipeStartX = null; todaySwipeEl = null;
-      el.style.transition = 'transform 0.2s ease, opacity 0.2s ease';
-      if(todaySwipeLocked === 'x' && Math.abs(deltaX) >= 45){
-        const step = state.todayViewMode === 'week' ? 7 : 1;
-        const proposedOffset = state.todayOffset + (deltaX < 0 ? step : -step);
-        const direction = deltaX < 0 ? -1 : 1;
-        el.style.transform = `translateX(${direction * 300}px)`;
-        el.style.opacity = '0';
-        setTimeout(() => {
-          state.todayOffset = Math.max(0, proposedOffset);
-          render();
-        }, 180);
-      } else {
-        el.style.transform = 'translateX(0)';
-        el.style.opacity = '1';
-      }
+      const wasHorizontal = todaySwipeLocked === 'x';
+      todaySwipeStartX = null; todaySwipeLocked = null;
+      if(!wasHorizontal || Math.abs(deltaX) < 45) return;
+      // Always move by exactly 1 day per swipe, regardless of Day/Week view,
+      // so users get precise control (e.g. swiping twice to see just the next two days).
+      const proposedOffset = state.todayOffset + (deltaX < 0 ? 1 : -1);
+      state.todayOffset = Math.max(0, proposedOffset);
+      render();
     }, {passive:true});
     document.getElementById('todaySubscribeButton').addEventListener('click', () => {
       const form = document.getElementById('todaySubscribeForm');
