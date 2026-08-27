@@ -210,6 +210,8 @@ npx wrangler deploy
 
 _(most recent first — add new entries to the top, trim past ~15)_
 
+- 2026-08-27 — Cline (VS Code) — `index.html` — Busy days in the homepage Week strip no longer tower as one tall stack: any day with >4 events gets class `multi` (column widens to half the strip, list fans into 2 columns via CSS grid); >8 events gets `multi-wide` (full-strip column, 3 columns of cards). Thresholds applied in the week render (`itemCount`); CSS overrides the base flex-basis/max-width and switches `.today-list` to grid. Works for both mouse-drag and swipe strips. Validated: `node --check`.
+
 - 2026-08-27 — Cline (VS Code) — `index.html` — Added a small "drag or swipe" hint under the homepage Week strip, shown on desktop only via `@media (hover:hover) and (pointer:fine)` (mouse/trackpad devices). Hidden by default so touch-only phones/tablets keep the strip clean. Styled to match the muted/muted aesthetic (11px italic, --muted color, centered). Validated: `node --check` on inline JS.
 
 - 2026-08-27 — Cline (VS Code) — `index.html` — Desktop mouse can now click-and-drag the homepage Week strip to slide to later days (the panel's scrollbar is hidden, so there was no mouse affordance before). Added a mouse-only pointer drag on `.week-panel` (pointerdown → window pointermove sets `scrollLeft` = grab offset, pointerup/pointercancel clean up), `grab`/`grabbing` cursors + `user-select:none` while dragging, and a capture-phase click suppressor so the click that fires on release after a real drag does NOT open the event card's detail page (plain clicks still open details). Touch/pen untouched — they keep the existing native momentum scroll. Validated: `node --check` on inline JS, no conflict markers.

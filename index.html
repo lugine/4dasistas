@@ -349,6 +349,15 @@
   .week-day-col .today-event-info{ padding:8px; }
   .week-day-col .today-event-info span{ display:block; }
   .week-day-col .empty{ font-size:11.5px; padding:14px 6px; }
+  /* Days with lots of events fan out into multiple columns instead of one tall stack.
+     >4 items → 2 columns (column spans ~half the strip), >8 → 3 columns (full strip). */
+  .week-day-col.multi, .week-day-col.multi-wide{ max-width:none; }
+  .week-day-col.multi{ flex:0 0 calc((100% - 10px)/2); }
+  .week-day-col.multi-wide{ flex:0 0 100%; }
+  .week-day-col.multi .today-list,
+  .week-day-col.multi-wide .today-list{ display:grid; align-content:start; }
+  .week-day-col.multi .today-list{ grid-template-columns:repeat(2,minmax(0,1fr)); }
+  .week-day-col.multi-wide .today-list{ grid-template-columns:repeat(3,minmax(0,1fr)); }
   .week-hint{ display:none; text-align:center; font-size:11px; font-style:italic; color:var(--muted); margin:6px 0 0; }
   /* Desktop-only hint: devices with a mouse/trackpad get 'drag or swipe'.
      Touch-only phones/tablets (pointer:coarse) keep the strip clean. */
@@ -2118,7 +2127,10 @@ el.innerHTML = `<button class="fall-cta-btn" data-hometab="fallsignup">🍂 Join
       const todayDateStr = `${today.getFullYear()}-${pad(today.getMonth()+1)}-${pad(today.getDate())}`;
       todayBodyHtml = `<div class="week-panel">${weekDays.map(day => {
         const dayStr = `${day.date.getFullYear()}-${pad(day.date.getMonth()+1)}-${pad(day.date.getDate())}`;
-        return `<div class="week-day-col${dayStr === todayDateStr ? ' is-today' : ''}">
+        const itemCount = day.items.length;
+        // Busy days get a wider column with a multi-column list so they don't tower.
+        const denseClass = itemCount > 8 ? ' multi-wide' : itemCount > 4 ? ' multi' : '';
+        return `<div class="week-day-col${dayStr === todayDateStr ? ' is-today' : ''}${denseClass}">
           <div class="week-day-heading">${dayLabelsShort[day.date.getDay()]}<span>${monthNames[day.date.getMonth()].slice(0,3)} ${day.date.getDate()}</span></div>
           <div class="today-list">${day.items.map(todayEventRow).join('') || '<div class="empty">Nothing on</div>'}</div>
         </div>`;
