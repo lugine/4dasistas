@@ -79,6 +79,13 @@ npx wrangler deploy
 
 **Status:** IDLE
 **Last updated by:** Claude (chat)
+**Last updated:** 2026-08-26 (sport sub-filter cross-list)
+
+**2026-08-26 (sport sub-filter cross-list) — Claude (chat) — `index.html`, `admin/config.yml`, `data/calendar/pickleball-pilates.json`** — Found the actual cause of the weird 'pickleball, pilates' combined filter chip: someone put both sport names as one comma-separated string directly into Sport Key, which only supports a single value and drives the sub-filter chip list directly from raw values. This is a genuinely different mechanism from the top-level alsoShowIn cross-listing built earlier (that's for Sports vs Activities vs Trips etc, not for sub-filters WITHIN Sports like Pickleball vs Pilates). Built the missing piece: new alsoSportKeys field (simple string list) for sub-filter-level cross-listing. Fixed the specific event (sportKey:pickleball, alsoSportKeys:[pilates]) - now shows as two clean separate chips with the event appearing under both. Tested via runtime simulation before pushing - confirmed correct chip generation and correct filtering in both directions.
+
+
+**Status:** IDLE
+**Last updated by:** Claude (chat)
 **Last updated:** 2026-08-26 (week panel horizontal)
 
 **2026-08-26 (week panel horizontal) — Claude (chat) — `index.html`** — Lujane wanted the new Week view redesigned from a vertical stacked list into a horizontal panel of day columns. Replaced `.week-day-group` (stacked, full-width) with `.week-panel` (flex row, `overflow-x:auto` for mobile/narrow screens) containing 7 `.week-day-col` items, each a fixed 150px column with a compact heading (weekday + short date) and a narrow-friendly stacked event-card style (reused the existing mobile breakpoint's block layout for `.today-event`, scoped to `.week-day-col` instead of a media query). Marked today's own column with `.is-today` (rose-colored heading) so it's easy to spot in the strip. Verified in-browser at 1280px: renders as one flex row, 7 columns, all visible without needing to scroll at that width.
