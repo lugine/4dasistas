@@ -1,13 +1,17 @@
 {
+  "section": "activities",
+  "eventDate": "2026-08-23",
   "price": "$49",
   "city": "Scarborough",
+  "time": "12:00",
   "date": "August 23, 2026 · 12:00 PM",
   "desc": "Afternoon of collage-making, coffee, matcha, chai, bouquet-building, and a dessert swap featuring homemade treats. Bring something you love to bake.",
   "instagram": "https://www.instagram.com/p/DbvzMSyDrtX/",
-  "location": "Scarborough (location shared with confirmed attendees)",
-  "title": "Bloom & Bake",
+  "location": "Scarborough, ON, Canada",
+  "title": "🍰Bloom & Bake",
+  "organizedBy": "The Girls Room Toronto",
   "tag": "Day Activity",
+  "link": "https://www.instagram.com/p/Db5-Cn5uGJc/?utm_source=ig_web_copy_link&igsi=MzRlODBiNWFlZA==",
   "id": "bloombake-girlsroom-aug23",
-  "calDate": "2026-08-23",
-  "section": "activities"
+  "calDate": "2026-08-23"
 }
