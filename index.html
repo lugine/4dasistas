@@ -335,8 +335,10 @@
   .today-actions .today-subscribe{ margin-top:0; }
   .today-filter{ display:flex; justify-content:center; align-items:center; margin:0; }
   .today-list{ display:flex; flex-direction:column; gap:10px; }
-  .week-panel{ display:flex; gap:10px; overflow-x:auto; padding:2px 2px 12px; -webkit-overflow-scrolling:touch; overscroll-behavior-x:contain; scrollbar-width:none; }
+  .week-panel{ display:flex; gap:10px; overflow-x:auto; padding:2px 2px 12px; -webkit-overflow-scrolling:touch; overscroll-behavior-x:contain; scrollbar-width:none; cursor:grab; }
   .week-panel::-webkit-scrollbar{ display:none; }
+  .week-panel.is-dragging, .week-panel.is-dragging *{ cursor:grabbing !important; }
+  .week-panel.is-dragging{ user-select:none; -webkit-user-select:none; }
   .week-day-col{ flex:0 0 calc((100% - 20px)/3); min-width:0; max-width:150px; display:flex; flex-direction:column; }
   .week-day-col.is-today .week-day-heading{ color:var(--rose-deep); }
   .week-day-heading{ display:flex; flex-direction:column; align-items:center; font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:13px; color:var(--charcoal); margin-bottom:8px; padding-bottom:6px; border-bottom:2px solid rgba(55,61,59,0.12); text-align:center; }
@@ -1179,6 +1181,7 @@ function homepageTodayItems(selectedDate){
 }
 
 const WEEK_STRIP_DAYS = 31; // continuous free-scrolling day strip on the homepage week view
+let weekDragClickSuppressUntil = 0; // timestamp used to swallow the card-click that follows a mouse drag
 function homepageWeekDays(selectedDate){
   const days = [];
   for(let i = 0; i < WEEK_STRIP_DAYS; i++){
@@ -2216,6 +2219,36 @@ el.innerHTML = `<button class="fall-cta-btn" data-hometab="fallsignup">🍂 Join
       state.todayOffset = Math.max(0, proposedOffset);
       render();
     }, {passive:true});
+    if(isWeekView){
+      const panel = document.querySelector('.week-panel');
+      if(panel){
+        panel.addEventListener('pointerdown', e => {
+          if(e.pointerType !== 'mouse') return; // touch/pen keep native momentum scroll
+          e.preventDefault(); // stop text-selection / native drag while grabbing
+          const startX = e.clientX;
+          const startScrollLeft = panel.scrollLeft;
+          let moved = false;
+          panel.classList.add('is-dragging');
+          const onMove = ev => {
+            const dx = ev.clientX - startX;
+            if(!moved && Math.abs(dx) > 4) moved = true;
+            panel.scrollLeft = startScrollLeft - dx;
+          };
+          const onUp = () => {
+            panel.classList.remove('is-dragging');
+            window.removeEventListener('pointermove', onMove);
+            window.removeEventListener('pointerup', onUp);
+            window.removeEventListener('pointercancel', onUp);
+            // If the pointer actually dragged (not just clicked), swallow the click
+            // that fires on release so event cards don't open their detail page.
+            if(moved) weekDragClickSuppressUntil = Date.now() + 500;
+          };
+          window.addEventListener('pointermove', onMove);
+          window.addEventListener('pointerup', onUp);
+          window.addEventListener('pointercancel', onUp);
+        });
+      }
+    }
     document.getElementById('todaySubscribeButton').addEventListener('click', () => {
       const form = document.getElementById('todaySubscribeForm');
       form.style.display = form.style.display === 'none' ? 'flex' : 'none';
@@ -2724,6 +2757,14 @@ document.body.addEventListener('click', e => {
   }
   location.hash = '#/event/' + trigger.dataset.id;
 });
+// Swallow the click that fires right after a week-strip mouse drag, so it doesn't
+// open an event's detail page. Registered in capture so it runs before the handler above.
+document.addEventListener('click', e => {
+  if(Date.now() < weekDragClickSuppressUntil && e.target.closest('.week-panel')){
+    e.stopPropagation();
+    e.preventDefault();
+  }
+}, true);
 
 /* ---- Event-types multi-select ---- */
 const typePanel = document.getElementById('typeMultiPanel');
