@@ -1,12 +1,16 @@
 {
+  "section": "activities",
+  "eventDate": "2026-08-18",
   "city": "Mississauga",
+  "time": "21:00",
   "date": "9pm on August 18th, 2026",
   "desc": "",
   "instagram": "https://www.instagram.com/4dasistas.ca/",
-  "location": "CUBE Challenges, Mississauga",
+  "location": "3185 Unity Dr, Mississauga, ON L5L 4L5, Canada",
   "title": "Cube Challenges",
+  "organizedBy": "Active Gaming CLub | 4DASISTAS",
   "tag": "Day Activity",
+  "link": "https://4dasistas.ca/#tab=clubs&cat=all&view=calendar&time=upcoming&rfilter=all&rview=map",
   "id": "day-escape",
-  "calDate": "2026-08-18",
-  "section": "activities"
+  "calDate": "2026-08-18"
 }
