@@ -79,6 +79,13 @@ npx wrangler deploy
 
 **Status:** IDLE
 **Last updated by:** Claude (chat)
+**Last updated:** 2026-08-27 (3-day mobile view)
+
+**2026-08-27 (3-day mobile view) — Claude (chat) — `index.html`** — Made mobile Week view show 3 days at once instead of 2. Root cause: .week-day-col had a fixed 150px width regardless of screen size. Added a mobile-only override narrowing it to 105px (desktop untouched). Confirmed .today-event already has a block-layout override specifically for week-day-col context on mobile, so the narrower column doesn't fight with a fixed-width sub-element.
+
+
+**Status:** IDLE
+**Last updated by:** Claude (chat)
 **Last updated:** 2026-08-27 (swipe simplified)
 
 **2026-08-27 (swipe simplified) — Claude (chat) — `index.html`** — Lujane reported the animated swipe I just built caused runaway repeated jumps ('keeps going and going'). Found the actual bug: the previous version used a 180ms setTimeout before updating state, creating a window where a second quick swipe (very likely, given the first gave no clear feedback) could schedule an overlapping second state update, stacking jumps. Reverted to a simple, immediate (no-delay) swipe with no CSS drag animation - removes that whole bug class. Also fixed the step size: swipe now always moves by exactly 1 day regardless of Day/Week view mode (was jumping 7 days at once in week view, which is what actually prompted her original report - she wanted to see 'just the next two days', not skip a whole week). Arrow buttons still use the day/week-aware step size, unchanged, since that wasn't part of the complaint.
