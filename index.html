@@ -230,7 +230,8 @@
 
   @media (max-width:480px){
     main{ padding-left:12px; padding-right:12px; }
-    .week-day-col{ flex:0 0 105px; min-width:105px; }
+    /* (week-day-col width is container-relative calc((100% - 20px)/3) in base CSS —
+       it already guarantees exactly 3 visible columns on any phone, so no override here) */
     .week-day-heading{ font-size:12px; }
     #calendar-view{ overflow-x:auto; padding-bottom:8px; }
     .weekday-row{ display:none; }
@@ -334,8 +335,9 @@
   .today-actions .today-subscribe{ margin-top:0; }
   .today-filter{ display:flex; justify-content:center; align-items:center; margin:0; }
   .today-list{ display:flex; flex-direction:column; gap:10px; }
-  .week-panel{ display:flex; gap:10px; overflow-x:auto; padding:2px 2px 8px; -webkit-overflow-scrolling:touch; }
-  .week-day-col{ flex:0 0 150px; min-width:150px; display:flex; flex-direction:column; }
+  .week-panel{ display:flex; gap:10px; overflow-x:auto; padding:2px 2px 12px; -webkit-overflow-scrolling:touch; overscroll-behavior-x:contain; scrollbar-width:none; }
+  .week-panel::-webkit-scrollbar{ display:none; }
+  .week-day-col{ flex:0 0 calc((100% - 20px)/3); min-width:0; max-width:150px; display:flex; flex-direction:column; }
   .week-day-col.is-today .week-day-heading{ color:var(--rose-deep); }
   .week-day-heading{ display:flex; flex-direction:column; align-items:center; font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:13px; color:var(--charcoal); margin-bottom:8px; padding-bottom:6px; border-bottom:2px solid rgba(55,61,59,0.12); text-align:center; }
   .week-day-heading span{ font-weight:600; font-size:11px; color:var(--muted); margin-top:2px; }
@@ -1176,9 +1178,10 @@ function homepageTodayItems(selectedDate){
   });
 }
 
+const WEEK_STRIP_DAYS = 31; // continuous free-scrolling day strip on the homepage week view
 function homepageWeekDays(selectedDate){
   const days = [];
-  for(let i = 0; i < 7; i++){
+  for(let i = 0; i < WEEK_STRIP_DAYS; i++){
     const d = new Date(selectedDate);
     d.setDate(d.getDate() + i);
     days.push({date: d, items: homepageTodayItems(d)});
@@ -2101,7 +2104,7 @@ el.innerHTML = `<button class="fall-cta-btn" data-hometab="fallsignup">🍂 Join
     let todayDate, todayBodyHtml;
     if(isWeekView){
       const weekDays = homepageWeekDays(selectedToday);
-      const startD = weekDays[0].date, endD = weekDays[6].date;
+      const startD = weekDays[0].date, endD = weekDays[weekDays.length - 1].date;
       todayDate = `${monthNames[startD.getMonth()]} ${startD.getDate()} – ${monthNames[endD.getMonth()]} ${endD.getDate()}, ${endD.getFullYear()}`;
       const todayDateStr = `${today.getFullYear()}-${pad(today.getMonth()+1)}-${pad(today.getDate())}`;
       todayBodyHtml = `<div class="week-panel">${weekDays.map(day => {
@@ -2117,10 +2120,10 @@ el.innerHTML = `<button class="fall-cta-btn" data-hometab="fallsignup">🍂 Join
       todayBodyHtml = `<div class="today-list">${todayItems.map(todayEventRow).join('') || '<div class="empty">Nothing scheduled today.</div>'}</div>`;
     }
     const todayHeading = isWeekView
-      ? (state.todayOffset === 0 ? 'THIS WEEK' : 'THAT WEEK')
+      ? "WHAT'S ON"
       : (state.todayOffset === 0 ? "WHAT'S ON TODAY" : "WHAT'S ON");
     const todaySection = `<section class="today-section">
-      <div class="today-heading"><button class="today-day-btn" id="todayPrevious" type="button" aria-label="${isWeekView ? 'Previous week' : 'Previous day'}" ${state.todayOffset === 0 ? 'disabled' : ''}>‹</button><h3>${todayHeading}</h3><button class="today-day-btn" id="todayNext" type="button" aria-label="${isWeekView ? 'Next week' : 'Next day'}">›</button></div>
+      <div class="today-heading"><button class="today-day-btn" id="todayPrevious" type="button" aria-label="${isWeekView ? 'Previous days' : 'Previous day'}" ${state.todayViewMode !== 'week' && state.todayOffset === 0 ? 'disabled' : ''}>‹</button><h3>${todayHeading}</h3><button class="today-day-btn" id="todayNext" type="button" aria-label="${isWeekView ? 'Next days' : 'Next day'}">›</button></div>
       <p class="today-date">${todayDate}</p>
       ${todayBodyHtml}
       <div class="today-actions"><div class="today-filter"><label class="event-sort-label">View <select class="event-sort-select" id="todayViewSelect" aria-label="Choose calendar view">
@@ -2165,12 +2168,20 @@ el.innerHTML = `<button class="fall-cta-btn" data-hometab="fallsignup">🍂 Join
       render();
     });
     document.getElementById('todayPrevious').addEventListener('click', () => {
-      const step = state.todayViewMode === 'week' ? 7 : 1;
-      if(state.todayOffset > 0){ state.todayOffset = Math.max(0, state.todayOffset - step); render(); }
+      if(state.todayViewMode === 'week'){
+        const panel = document.querySelector('.week-panel');
+        panel.scrollBy({left: -panel.clientWidth, behavior: 'smooth'});
+        return;
+      }
+      if(state.todayOffset > 0){ state.todayOffset = Math.max(0, state.todayOffset - 1); render(); }
     });
     document.getElementById('todayNext').addEventListener('click', () => {
-      const step = state.todayViewMode === 'week' ? 7 : 1;
-      state.todayOffset += step;
+      if(state.todayViewMode === 'week'){
+        const panel = document.querySelector('.week-panel');
+        panel.scrollBy({left: panel.clientWidth, behavior: 'smooth'});
+        return;
+      }
+      state.todayOffset += 1;
       render();
     });
     let todaySwipeStartX = null, todaySwipeStartY = null, todaySwipeLocked = null;
@@ -2181,19 +2192,25 @@ el.innerHTML = `<button class="fall-cta-btn" data-hometab="fallsignup">🍂 Join
       todaySwipeLocked = null;
     }, {passive:true});
     todaySectionEl.addEventListener('touchmove', e => {
+      // Week view: let the panel's native horizontal scroll take over (free/flowy sliding).
+      if(state.todayViewMode === 'week') return;
       if(todaySwipeStartX === null) return;
       const deltaX = e.changedTouches[0].clientX - todaySwipeStartX;
       const deltaY = e.changedTouches[0].clientY - todaySwipeStartY;
       if(todaySwipeLocked === null) todaySwipeLocked = Math.abs(deltaX) > Math.abs(deltaY) ? 'x' : 'y';
+      // Horizontal-lock: suppress page scroll only for day-mode swipes so vertical
+      // page scrolling still works normally.
       if(todaySwipeLocked === 'x') e.preventDefault();
     }, {passive:false});
     todaySectionEl.addEventListener('touchend', e => {
-      if(todaySwipeStartX === null) return;
-      const deltaX = e.changedTouches[0].clientX - todaySwipeStartX;
+      const deltaX = todaySwipeStartX === null ? 0 : e.changedTouches[0].clientX - todaySwipeStartX;
       const wasHorizontal = todaySwipeLocked === 'x';
-      todaySwipeStartX = null; todaySwipeLocked = null;
-      if(!wasHorizontal || Math.abs(deltaX) < 45) return;
-      // Always move by exactly 1 day per swipe, regardless of Day/Week view,
+      todaySwipeStartX = null; todaySwipeStartY = null; todaySwipeLocked = null;
+      // Week view: nothing to re-render — the strip already slid natively.
+      if(state.todayViewMode === 'week') return;
+      if(deltaX === 0 || !wasHorizontal) return;
+      if(Math.abs(deltaX) < 45) return;
+      // Day view: always move by exactly 1 day per swipe, regardless of mode,
       // so users get precise control (e.g. swiping twice to see just the next two days).
       const proposedOffset = state.todayOffset + (deltaX < 0 ? 1 : -1);
       state.todayOffset = Math.max(0, proposedOffset);
