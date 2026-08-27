@@ -1085,7 +1085,9 @@ function itemsForCategoryBase(cat){
   }
   if(cat === 'all') return EVENT_ITEMS;
   if(cat === 'sports'){
-    const home = state.sportFilter === 'all' ? sportsData : sportsData.filter(e => e.sportKey === state.sportFilter);
+    const matchesSportFilter = e => normalizeSportKey(e.sportKey) === state.sportFilter
+      || (e.alsoSportKeys || []).some(k => normalizeSportKey(k) === state.sportFilter);
+    const home = state.sportFilter === 'all' ? sportsData : sportsData.filter(matchesSportFilter);
     return state.sportFilter === 'all' ? [...home, ...crossListedItemsFor('sports', sportsData)] : home;
   }
   if(cat === 'activities'){
@@ -1502,7 +1504,9 @@ function sportFilterLabel(key){
 }
 
 function sportFilterOptions(){
-  const keys = [...new Set(sportsData.map(item => normalizeSportKey(item.sportKey)).filter(Boolean))]
+  const primary = sportsData.map(item => normalizeSportKey(item.sportKey));
+  const secondary = sportsData.flatMap(item => (item.alsoSportKeys || []).map(normalizeSportKey));
+  const keys = [...new Set([...primary, ...secondary].filter(Boolean))]
     .sort((a, b) => a.localeCompare(b));
   return [{key:'all',label:'All'}, ...keys.map(key => ({key, label:sportFilterLabel(key)}))];
 }
