@@ -360,6 +360,21 @@
     },
     {
       "section": "sports",
+      "eventDate": "2026-08-30",
+      "endTime": "21:00",
+      "sportKey": "padel",
+      "virtual": false,
+      "time": "17:45",
+      "desc": "our Sunday plans, sorted 🎾🤍\n\nWe can’t wait to see you on court 🤍\n\n📅 Sunday, August 30\n📍 Court X, Oakville\n🎟️ Limited spots — link in bio",
+      "location": "226 Wyecroft Rd, Oakville, ON L6K 3S3, Canada",
+      "title": "Women's Padel Social",
+      "organizedBy": "womenspadelhaus",
+      "link": "https://www.instagram.com/p/Dce7-84ifhj/?utm_source=ig_web_copy_link&igsi=MzRlODBiNWFlZA==",
+      "allDay": false,
+      "id": "womens-padel-social"
+    },
+    {
+      "section": "sports",
       "virtual": false,
       "title": "🥾She Travels - Hike",
       "eventDate": "2026-09-06",
