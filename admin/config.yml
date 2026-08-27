@@ -240,9 +240,15 @@ collections:
     name: calDate
     widget: hidden
     required: false
-  - label: Sport key (lowercase, e.g. badminton)
+  - label: Sport key (lowercase, ONE sport only, e.g. "badminton" - do NOT put multiple
+      sports here separated by commas)
     name: sportKey
     widget: string
+    required: false
+  - label: Also list this event under these other sports too (optional, no limit -
+      use this for multi-sport events instead of combining them in Sport Key above)
+    name: alsoSportKeys
+    widget: list
     required: false
   - label: Also show in these other calendars too (optional - no limit, event still
       counts once on "All Events")
