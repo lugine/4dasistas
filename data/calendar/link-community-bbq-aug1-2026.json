@@ -1,13 +1,15 @@
 {
+  "section": "functions",
   "eventDate": "2026-08-01",
   "date": "August 1, 2026 · 2–6 PM",
   "desc": "Gather with the Link community for an evening of BBQ, connection, and summer fun. For Brothers & Sisters, ages 18-35. Registration required.",
   "instagram": "https://www.instagram.com/linkcommunityspace/",
-  "location": "Lowville Park, 6207 Lowville Park Rd, Burlington, ON L7P 0A6",
-  "title": "Link Community BBQ",
+  "location": "6207 Lowville Park Rd, Burlington, ON L7P 0A6, Canada",
+  "title": "🍗Community BBQ",
+  "organizedBy": "LINK",
   "type": "Community Function",
   "tag": "Function",
+  "link": "https://www.zeffy.com/en-CA/ticketing/link-bbq",
   "id": "link-community-bbq-aug1-2026",
-  "category": "functions",
-  "section": "functions"
+  "category": "functions"
 }
