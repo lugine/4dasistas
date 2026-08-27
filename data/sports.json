@@ -29,6 +29,7 @@
       "contact": "647-292-4043",
       "section": "sports",
       "eventDate": "2026-08-06",
+      "endTime": "20:00",
       "price": "$5",
       "sportKey": "badminton",
       "time": "18:00",
@@ -41,7 +42,8 @@
       "days": [
         "thu"
       ],
-      "title": "ISNA Badminton",
+      "title": "🏸Badminton Drop-In",
+      "organizedBy": "ISNA",
       "registration": "Drop-in",
       "tag": "Badminton",
       "link": "https://form.jotform.com/252165014748254",
