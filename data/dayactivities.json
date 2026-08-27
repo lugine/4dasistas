@@ -248,6 +248,21 @@
       "id": "tubing-koraa-aug23",
       "calDate": "2026-08-23",
       "section": "activities"
+    },
+    {
+      "section": "activities",
+      "eventDate": "2026-09-01",
+      "endTime": "19:00",
+      "virtual": false,
+      "time": "17:00",
+      "desc": "Make a keychain to take home, play some games, and meet new people! Craft & Chill is a laid-back hangout for first year sisters to unwind, get creative, and make some friends along the way. See you there! ✨🔑\n",
+      "location": "1280 Main St W, Hamilton, ON L8S 1C7, Canada",
+      "title": "✂️Sister's Craft & Chill",
+      "organizedBy": "@macmsa_sisters",
+      "link": "https://www.instagram.com/p/Dcgol4MPAqD/?utm_source=ig_web_copy_link&igsi=MzRlODBiNWFlZA==",
+      "allDay": false,
+      "id": "✂️sisters-craft-chill",
+      "tag": "✂️Sister's Craft & Chill"
     }
   ]
 }
