@@ -225,18 +225,23 @@
       "section": "sports"
     },
     {
+      "alsoSportKeys": [
+        "pilates"
+      ],
       "section": "sports",
       "eventDate": "2026-08-30",
+      "endTime": "17:00",
       "sportKey": "pickleball",
       "virtual": false,
       "time": "14:00",
       "desc": "🗓️ Aug 30, Sunday\n🎾 Pickleball Only: 2–4 PM\n🧘‍♀️Pilates + Pickleball: 3–5 PM\n📍 North York, Toronto (exact address to be provided)\n\nThis is your sign to try a new side quest! 💅🏼\n\nCome move, play, meet new people, and beat the Sunday scaries. \n\nYou can choose your side quest: join us for pickleball only or start with a Pilates flow before hitting the courts for some pickleball fun! 🎾🧘‍♀️\n\nBring your besties or come solo — you’ll leave with a workout, new friends, and hopefully a new obsession! 💗\n\nNo pickleball experience needed; beginners welcome!\nPaddles are available to rent for free.",
+      "extraDates": [
+        "2026-08-23"
+      ],
       "location": "North York, ON, Canada",
       "title": "Pickleball & Pilates",
+      "organizedBy": "thesidequestsclub.to",
       "link": "https://www.instagram.com/p/DcebiPWxJC7/?igsi=MWdraXF6bWd6Y2VraA==",
-      "alsoSportKeys": [
-        "pilates"
-      ],
       "id": "pickleball-pilates"
     },
     {
