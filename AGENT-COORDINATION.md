@@ -79,6 +79,13 @@ npx wrangler deploy
 
 **Status:** IDLE
 **Last updated by:** Claude (chat)
+**Last updated:** 2026-08-27 (swipe simplified)
+
+**2026-08-27 (swipe simplified) — Claude (chat) — `index.html`** — Lujane reported the animated swipe I just built caused runaway repeated jumps ('keeps going and going'). Found the actual bug: the previous version used a 180ms setTimeout before updating state, creating a window where a second quick swipe (very likely, given the first gave no clear feedback) could schedule an overlapping second state update, stacking jumps. Reverted to a simple, immediate (no-delay) swipe with no CSS drag animation - removes that whole bug class. Also fixed the step size: swipe now always moves by exactly 1 day regardless of Day/Week view mode (was jumping 7 days at once in week view, which is what actually prompted her original report - she wanted to see 'just the next two days', not skip a whole week). Arrow buttons still use the day/week-aware step size, unchanged, since that wasn't part of the complaint.
+
+
+**Status:** IDLE
+**Last updated by:** Claude (chat)
 **Last updated:** 2026-08-27 (slider swipe)
 
 **2026-08-27 (slider swipe) — Claude (chat) — `index.html`** — Fixed the What's On Today/Week swipe feeling broken (swipe would show a flash of movement then snap back with no clear feedback). Root cause: there was no touchmove handling at all - nothing visually happened until touchend, when a full silent re-render occurred if the threshold was met, or literally nothing if not - the 'movement then snap back' Lujane described was likely the browser's own default touch-bounce filling that gap. Built a real drag-following slider: live transform+opacity feedback during touchmove (locked to horizontal only, so vertical page scroll still works normally), smooth animated snap-back if released short of the 45px threshold, smooth slide-out-and-refresh if the swipe completes. Not yet live-tested on an actual phone - flagged to Lujane to verify on her device given touch gesture behavior is hard to fully validate without one.
