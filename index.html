@@ -349,6 +349,12 @@
   .week-day-col .today-event-info{ padding:8px; }
   .week-day-col .today-event-info span{ display:block; }
   .week-day-col .empty{ font-size:11.5px; padding:14px 6px; }
+  .week-hint{ display:none; text-align:center; font-size:11px; font-style:italic; color:var(--muted); margin:6px 0 0; }
+  /* Desktop-only hint: devices with a mouse/trackpad get 'drag or swipe'.
+     Touch-only phones/tablets (pointer:coarse) keep the strip clean. */
+  @media (hover:hover) and (pointer:fine){
+    .week-hint{ display:block; }
+  }
   .today-event{ display:grid; grid-template-columns:72px minmax(0,1fr); align-items:stretch; gap:12px; padding:0; background:var(--card); border:2px solid var(--charcoal); border-radius:14px; box-shadow:3px 3px 0 var(--charcoal); text-align:left; cursor:pointer; overflow:hidden; }
   .today-event.cat-sports{ background:#fbd9bb; }
   .today-event.cat-gathering{ background:#e8cfe2; color:var(--charcoal); }
@@ -2116,7 +2122,7 @@ el.innerHTML = `<button class="fall-cta-btn" data-hometab="fallsignup">🍂 Join
           <div class="week-day-heading">${dayLabelsShort[day.date.getDay()]}<span>${monthNames[day.date.getMonth()].slice(0,3)} ${day.date.getDate()}</span></div>
           <div class="today-list">${day.items.map(todayEventRow).join('') || '<div class="empty">Nothing on</div>'}</div>
         </div>`;
-      }).join('')}</div>`;
+      }).join('')}</div><p class="week-hint">drag or swipe</p>`;
     } else {
       const todayItems = homepageTodayItems(selectedToday);
       todayDate = `${monthNames[selectedToday.getMonth()]} ${selectedToday.getDate()}, ${selectedToday.getFullYear()}`;
