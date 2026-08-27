@@ -79,6 +79,13 @@ npx wrangler deploy
 
 **Status:** IDLE
 **Last updated by:** Claude (chat)
+**Last updated:** 2026-08-27 (slider swipe)
+
+**2026-08-27 (slider swipe) — Claude (chat) — `index.html`** — Fixed the What's On Today/Week swipe feeling broken (swipe would show a flash of movement then snap back with no clear feedback). Root cause: there was no touchmove handling at all - nothing visually happened until touchend, when a full silent re-render occurred if the threshold was met, or literally nothing if not - the 'movement then snap back' Lujane described was likely the browser's own default touch-bounce filling that gap. Built a real drag-following slider: live transform+opacity feedback during touchmove (locked to horizontal only, so vertical page scroll still works normally), smooth animated snap-back if released short of the 45px threshold, smooth slide-out-and-refresh if the swipe completes. Not yet live-tested on an actual phone - flagged to Lujane to verify on her device given touch gesture behavior is hard to fully validate without one.
+
+
+**Status:** IDLE
+**Last updated by:** Claude (chat)
 **Last updated:** 2026-08-27 (location display bug)
 
 **2026-08-27 (location display bug) — Claude (chat) — `admin/index.html`** — Investigated Lujane's report of location/time appearing to reset when reopening entries. Checked raw data for 2 recently-edited entries directly (pickleball-pilates, she-travels-hike) - location AND time were both genuinely saved correctly, no real data loss confirmed. Found and fixed the actual cause for location: my custom Google Places widget was swapping to a freshly-created, empty search box once Google Maps finished loading, hiding the input that correctly displayed the saved value underneath - a real display bug I introduced, not a save failure. Fixed by always showing 'Currently saved: X' clearly regardless of load state. Did not find evidence of a similar bug affecting Time specifically (uses Decap's native datetime widget, unrelated to my custom code, and the 2 checked entries had correct time values) - if Lujane still sees time resetting after this fix, need a specific entry ID to investigate further.
