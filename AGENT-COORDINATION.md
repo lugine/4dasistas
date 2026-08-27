@@ -79,6 +79,13 @@ npx wrangler deploy
 
 **Status:** IDLE
 **Last updated by:** Claude (chat)
+**Last updated:** 2026-08-27 (location display bug)
+
+**2026-08-27 (location display bug) — Claude (chat) — `admin/index.html`** — Investigated Lujane's report of location/time appearing to reset when reopening entries. Checked raw data for 2 recently-edited entries directly (pickleball-pilates, she-travels-hike) - location AND time were both genuinely saved correctly, no real data loss confirmed. Found and fixed the actual cause for location: my custom Google Places widget was swapping to a freshly-created, empty search box once Google Maps finished loading, hiding the input that correctly displayed the saved value underneath - a real display bug I introduced, not a save failure. Fixed by always showing 'Currently saved: X' clearly regardless of load state. Did not find evidence of a similar bug affecting Time specifically (uses Decap's native datetime widget, unrelated to my custom code, and the 2 checked entries had correct time values) - if Lujane still sees time resetting after this fix, need a specific entry ID to investigate further.
+
+
+**Status:** IDLE
+**Last updated by:** Claude (chat)
 **Last updated:** 2026-08-26 (sport sub-filter cross-list)
 
 **2026-08-26 (sport sub-filter cross-list) — Claude (chat) — `index.html`, `admin/config.yml`, `data/calendar/pickleball-pilates.json`** — Found the actual cause of the weird 'pickleball, pilates' combined filter chip: someone put both sport names as one comma-separated string directly into Sport Key, which only supports a single value and drives the sub-filter chip list directly from raw values. This is a genuinely different mechanism from the top-level alsoShowIn cross-listing built earlier (that's for Sports vs Activities vs Trips etc, not for sub-filters WITHIN Sports like Pickleball vs Pilates). Built the missing piece: new alsoSportKeys field (simple string list) for sub-filter-level cross-listing. Fixed the specific event (sportKey:pickleball, alsoSportKeys:[pilates]) - now shows as two clean separate chips with the event appearing under both. Tested via runtime simulation before pushing - confirmed correct chip generation and correct filtering in both directions.
