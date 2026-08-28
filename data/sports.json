@@ -415,6 +415,27 @@
       "id": "womens-padel-social"
     },
     {
+      "alsoSportKeys": [
+        "running"
+      ],
+      "section": "sports",
+      "eventDate": "2026-09-05",
+      "endTime": "13:00",
+      "alsoShowIn": [
+        "activities"
+      ],
+      "sportKey": "fitness",
+      "virtual": false,
+      "time": "09:00",
+      "desc": "Assalamu wa rahmatullahi wa barakatu sisters, we hope this reaches you well it\nJoin us for our third annual hike on the lower Don Valley Trail next Saturday.\nROUTE: We will meet at the Big Park/Regent Park at 9:00 am, then walk towards Dundas and River to follow the B. We will then continue on the lower Don Valley trail, and continue to Evergreen Brickworks.\n• Meet at 9:00 AM, depart at 9:30 AM sharp!\nDON'T FORGET TO BRING WATER AND SNACKS!\nWe hope to see you all there!\nFor more information, DM us @habasisters",
+      "location": "Regent Park, Toronto, ON, Canada",
+      "title": "🌲Don Valley Hike",
+      "organizedBy": "Haba Sisters",
+      "link": "https://www.instagram.com/p/Dcl5RG3xvmv/?igsi=MWhobjFtNnc5dDg0cw==",
+      "allDay": false,
+      "id": "🌲don-valley-hike"
+    },
+    {
       "section": "sports",
       "eventDate": "2026-09-06",
       "alsoShowIn": [
