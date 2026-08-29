@@ -1,5 +1,6 @@
 {
   "section": "activities",
+  "virtual": true,
   "eventDate": "2026-11-01",
   "time": "13:00",
   "recurEnd": "2026-11-29",

@@ -1033,10 +1033,19 @@ function cityLabel(item){
   if(item.virtual) return 'Online';
   if(item.city) return item.city;
   const loc = item.location || '';
+  if(!loc) return '';
   for(const city of KNOWN_GTA_CITIES){
     if(loc.includes(city)) return city;
   }
-  return '';
+  // Not a known GTA city (international trips, rural venues) — fall back to
+  // the last meaningful comma-separated segment (usually country/region)
+  // instead of showing nothing at all.
+  const parts = loc.split(',').map(p => p.trim()).filter(Boolean);
+  if(!parts.length) return '';
+  let idx = parts.length - 1;
+  if(/^canada$/i.test(parts[idx]) && idx > 0) idx--;
+  if(/^[A-Z]{2}(\s|$)/.test(parts[idx]) && idx > 0) idx--;
+  return parts[idx].replace(/^and\s+/i, '');
 }
 
 function eventTimeLabel(item){
@@ -1633,7 +1642,7 @@ function renderCalendar(){
     const detail = document.getElementById('calendarDayDetail');
     const selected = new Date(`${dateStr}T00:00:00`);
     const heading = `${dayLabelsFull[selected.getDay()]}, ${monthNames[selected.getMonth()]} ${selected.getDate()}`;
-    detail.innerHTML = `<button class="calendar-day-detail-close" type="button" aria-label="Close day schedule">×</button><h3>${heading}</h3><div class="calendar-day-events">${dayItems.map(item => `<div class="calendar-day-event" style="--event-color:${eventColor(item)}" data-id="${item.id}"><div class="calendar-day-event-time">${eventTimeLabel(item)}</div><div><div class="calendar-day-event-title">${item.title}</div>${item.organizedBy ? `<div class="event-organizer">${item.organizedBy}</div>` : ''}<div class="calendar-day-event-type">${eventTypeLabel(item)} · ${locationLabel(item)}</div></div></div>`).join('') || '<p class="calendar-scope-note">Nothing scheduled for this day.</p>'}</div>`;
+    detail.innerHTML = `<button class="calendar-day-detail-close" type="button" aria-label="Close day schedule">×</button><h3>${heading}</h3><div class="calendar-day-events">${dayItems.map(item => `<div class="calendar-day-event" style="--event-color:${eventColor(item)}" data-id="${item.id}"><div class="calendar-day-event-time">${eventTimeLabel(item)}</div><div><div class="calendar-day-event-title">${item.title}</div>${item.organizedBy ? `<div class="event-organizer">${item.organizedBy}</div>` : ''}${cityLabel(item) ? `<div class="calendar-day-event-type">${cityLabel(item)}</div>` : ''}</div></div>`).join('') || '<p class="calendar-scope-note">Nothing scheduled for this day.</p>'}</div>`;
     detail.classList.add('open');
     detail.querySelector('.calendar-day-detail-close').addEventListener('click', () => detail.classList.remove('open'));
   });
