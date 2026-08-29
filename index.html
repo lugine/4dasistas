@@ -1048,6 +1048,91 @@ function cityLabel(item){
   return parts[idx].replace(/^and\s+/i, '');
 }
 
+/* ============================================================
+   AUTO EMOJI — every event gets a leading emoji: manual override
+   (Decap "Emoji" field) first, then sport/keyword/country detection.
+   ============================================================ */
+const EMOJI_REGEX = /^(\p{Extended_Pictographic}|[\u{1F1E6}-\u{1F1FF}])/u;
+function titleStartsWithEmoji(title){
+  return EMOJI_REGEX.test(String(title || '').trim());
+}
+
+const SPORT_EMOJI = {
+  'badminton': '🏸', 'tennis-pickleball': '🎾', 'pickleball': '🏓', 'padel': '🎾',
+  'ball-hockey': '🏒', 'basketball': '🏀', 'soccer': '⚽', 'volleyball': '🏐',
+  'martial-arts': '🥊', 'boxing': '🥊', 'running': '🏃‍♀️', 'cycling': '🚴‍♀️',
+  'swimming': '🏊‍♀️', 'pilates': '🧘‍♀️', 'fitness': '💪', 'yoga': '🧘‍♀️',
+  'archery': '🏹', 'climbing': '🧗‍♀️', 'skating': '⛸️',
+};
+
+// Ordered [regex, emoji] pairs checked against title+desc — first match wins.
+const KEYWORD_EMOJI_RULES = [
+  [/\bhik(e|ing|ers?)\b/i, '🌲'],
+  [/\bcamp(ing)?\b/i, '⛺'],
+  [/\b(picnic|potluck)\b/i, '🧺'],
+  [/\bbbq|barbecue\b/i, '🍖'],
+  [/\b(brunch|dinner|iftar|suhoor|dining|cuisine|food\s*fest|kitchen)\b/i, '🍽️'],
+  [/\b(bake|baking|cupcake|dessert)\b/i, '🧁'],
+  [/\bmarket|bazaar|vendor\b/i, '🛍️'],
+  [/\b(quran|tajweed|tafseer|tafsir|halaqa|deen|islamic\s*studies)\b/i, '📖'],
+  [/\b(paint|art\s|calligraphy|craft)\b/i, '🎨'],
+  [/\bcandle\b/i, '🕯️'],
+  [/\bpottery|pot\s*painting\b/i, '🏺'],
+  [/\bbook\s*club\b/i, '📚'],
+  [/\bmoney|financial|budget\b/i, '💰'],
+  [/\bsupport\s*group\b/i, '💛'],
+  [/\bchai|tea\b/i, '☕'],
+  [/\bwriting|writers?\b/i, '✍️'],
+  [/\bwaterpark|pool|swim\b/i, '🏊‍♀️'],
+  [/\bboat|paddle|canoe|kayak\b/i, '🛶'],
+  [/\bhorse(back)?\b/i, '🐎'],
+  [/\bski(ing)?\b/i, '⛷️'],
+  [/\bgame\s*night|board\s*game\b/i, '🎲'],
+  [/\bmovie|film\s*fest\b/i, '🎬'],
+  [/\btheat(re|er)|improv\b/i, '🎭'],
+  [/\bbeach\b/i, '🏖️'],
+  [/\bgarden|floral|flower\b/i, '🌸'],
+];
+
+// Ordered [regex, flag] — checked against title+location for trips/travel.
+const COUNTRY_FLAG_RULES = [
+  [/\bjordan\b/i, '🇯🇴'], [/\boman\b/i, '🇴🇲'], [/\bmorocco\b/i, '🇲🇦'],
+  [/\bturkey\b/i, '🇹🇷'], [/\bspain|granada|alpujarra\b/i, '🇪🇸'],
+  [/\bkyrgyzstan\b/i, '🇰🇬'], [/\bkazakhstan\b/i, '🇰🇿'], [/\bjapan|osaka|kyoto|tokyo\b/i, '🇯🇵'],
+  [/\bchina|yunnan\b/i, '🇨🇳'], [/\bsaudi\s*arabia|makkah|madinah\b/i, '🇸🇦'],
+  [/\bmacedonia\b/i, '🇲🇰'], [/\bkosovo\b/i, '🇽🇰'], [/\begypt\b/i, '🇪🇬'],
+  [/\bpalestin/i, '🇵🇸'], [/\bindonesia\b/i, '🇮🇩'], [/\bmalaysia\b/i, '🇲🇾'],
+];
+
+const SECTION_FALLBACK_EMOJI = {
+  sports: '🏅', activities: '🎉', functions: '📅', trips: '✈️',
+  mosqueprograms: '🕌', supportprograms: '💛', clubs: '💫',
+};
+
+function autoEmoji(item){
+  if(!item || !item.section) return ''; // not a calendar event (resource, club listing, etc.)
+  if(item.emoji) return item.emoji; // manual Decap override always wins
+  const text = `${item.title || ''} ${item.desc || ''}`;
+  if(item.sportKey && SPORT_EMOJI[item.sportKey]) return SPORT_EMOJI[item.sportKey];
+  for(const [re, emoji] of KEYWORD_EMOJI_RULES){ if(re.test(text)) return emoji; }
+  if(item.section === 'trips'){
+    const tripText = `${item.title || ''} ${item.location || ''}`;
+    for(const [re, flag] of COUNTRY_FLAG_RULES){ if(re.test(tripText)) return flag; }
+  }
+  return SECTION_FALLBACK_EMOJI[item.section] || '📅';
+}
+
+function emojiTitle(item){
+  const title = item && item.title || '';
+  if(!item || !item.section) return title;
+  // A manual "Emoji" override always wins, even if the title text already
+  // has one baked in — only skip auto-adding when there's no override AND
+  // the title already starts with an emoji.
+  if(!item.emoji && titleStartsWithEmoji(title)) return title;
+  const emoji = autoEmoji(item);
+  return emoji ? `${emoji} ${title}` : title;
+}
+
 function eventTimeLabel(item){
   if(item.allDay) return 'All day';
   if(item.time){
@@ -1274,7 +1359,7 @@ function renderList(){
     <div class="event-card">
       <div class="event-date-badge">${e.date}</div>
       <div class="event-info">
-        <h4>${e.title}</h4>
+        <h4>${emojiTitle(e)}</h4>
         ${e.organizedBy ? `<div class="event-organizer">${e.organizedBy}</div>` : ''}
         <span class="tag ${tagClass(e)}">${eventTypeLabel(e)}</span>
       </div>
@@ -1383,7 +1468,7 @@ function renderSupportGroupCalendar(){
     const dayItems = dateMap[dateStr] || [];
     const isToday = dateStr === todayStr;
     html += `<div class="day-cell${isToday?' today':''}"><div class="day-num">${d}</div>`;
-    dayItems.forEach(e => { html += `<span class="day-pip" style="background:${categoryColors['supportgroups']}" data-id="${e.id}">${e.title}</span>`; });
+    dayItems.forEach(e => { html += `<span class="day-pip" style="background:${categoryColors['supportgroups']}" data-id="${e.id}">${emojiTitle(e)}</span>`; });
     html += `</div>`;
   }
   html += `</div>`;
@@ -1443,7 +1528,7 @@ function renderTripEarthView(targetId='calendar-view', mapId='tripEarthMap', sel
     .ringMaxRadius(6)
     .ringPropagationSpeed(2)
     .ringRepeatPeriod(700)
-    .pointLabel(point => `<strong>${point.title}</strong><br>${point.location}<br>${point.date}`)
+    .pointLabel(point => `<strong>${emojiTitle(point)}</strong><br>${point.location}<br>${point.date}`)
     .onPointClick(point => showTripPreviewPopup(point))
     .width(document.getElementById(mapId).clientWidth)
     .height(document.getElementById(mapId).clientHeight);
@@ -1477,7 +1562,7 @@ function renderCalDayWeek(candidates){
   const eventRow = item => `
     <div class="today-event ${tagClass(item)}" data-id="${item.id}">
       <div class="today-event-time">${eventTimeLabel(item)}</div>
-      <div class="today-event-info"><strong>${item.title}</strong>${item.organizedBy ? `<span class="event-organizer">${item.organizedBy}</span>` : ''}${cityLabel(item) ? `<span>${cityLabel(item)}</span>` : ''}</div>
+      <div class="today-event-info"><strong>${emojiTitle(item)}</strong>${cityLabel(item) ? `<span>${cityLabel(item)}</span>` : ''}</div>
     </div>`;
   let dateLabel, bodyHtml;
   if(isWeek){
@@ -1619,7 +1704,7 @@ function renderCalendar(){
     const rowClass = row % 2 === 0 ? ' row-even' : ' row-odd';
     html += `<div class="day-cell${isToday?' today':''}${rowClass}" data-calendar-date="${dateStr}"><div class="day-weekday">${dayLabelsFull[new Date(year, month, d).getDay()]}</div><div class="day-num">${d}</div>`;
     dayItems.forEach(e => {
-      html += `<span class="day-pip ${tagClass(e)}" data-id="${e.id}">${e.title}</span>`;
+      html += `<span class="day-pip ${tagClass(e)}" data-id="${e.id}">${emojiTitle(e)}</span>`;
     });
     html += `</div>`;
     if ((isMobileGrid ? d : (startDay + d)) % (isMobileGrid ? 4 : 7) === 0 && d !== daysInMonth) row++;
@@ -1642,7 +1727,7 @@ function renderCalendar(){
     const detail = document.getElementById('calendarDayDetail');
     const selected = new Date(`${dateStr}T00:00:00`);
     const heading = `${dayLabelsFull[selected.getDay()]}, ${monthNames[selected.getMonth()]} ${selected.getDate()}`;
-    detail.innerHTML = `<button class="calendar-day-detail-close" type="button" aria-label="Close day schedule">×</button><h3>${heading}</h3><div class="calendar-day-events">${dayItems.map(item => `<div class="calendar-day-event" style="--event-color:${eventColor(item)}" data-id="${item.id}"><div class="calendar-day-event-time">${eventTimeLabel(item)}</div><div><div class="calendar-day-event-title">${item.title}</div>${item.organizedBy ? `<div class="event-organizer">${item.organizedBy}</div>` : ''}${cityLabel(item) ? `<div class="calendar-day-event-type">${cityLabel(item)}</div>` : ''}</div></div>`).join('') || '<p class="calendar-scope-note">Nothing scheduled for this day.</p>'}</div>`;
+    detail.innerHTML = `<button class="calendar-day-detail-close" type="button" aria-label="Close day schedule">×</button><h3>${heading}</h3><div class="calendar-day-events">${dayItems.map(item => `<div class="calendar-day-event" style="--event-color:${eventColor(item)}" data-id="${item.id}"><div class="calendar-day-event-time">${eventTimeLabel(item)}</div><div><div class="calendar-day-event-title">${emojiTitle(item)}</div>${cityLabel(item) ? `<div class="calendar-day-event-type">${cityLabel(item)}</div>` : ''}</div></div>`).join('') || '<p class="calendar-scope-note">Nothing scheduled for this day.</p>'}</div>`;
     detail.classList.add('open');
     detail.querySelector('.calendar-day-detail-close').addEventListener('click', () => detail.classList.remove('open'));
   });
@@ -1717,7 +1802,7 @@ function renderSearchSuggestions(){
   const query = normalizeSearchText(input.value).trim();
   if(!query){ suggestions.innerHTML = ''; suggestions.style.display = 'none'; return; }
   const matches = ALL_ITEMS.filter(item => itemMatchesSearch(item)).slice(0, 8);
-  suggestions.innerHTML = matches.map(item => `<button class="search-suggestion" data-id="${item.id}"><strong>${item.title}</strong><span>${item.type || item.tag || 'Community listing'}</span></button>`).join('');
+  suggestions.innerHTML = matches.map(item => `<button class="search-suggestion" data-id="${item.id}"><strong>${emojiTitle(item)}</strong><span>${item.type || item.tag || 'Community listing'}</span></button>`).join('');
   // Render the panel position:fixed so sticky-nav overflow can never clip it.
   if(matches.length){
     const shell = document.querySelector('.top-search-shell');
@@ -2073,7 +2158,7 @@ function renderDirectory(){
       <div class="travel-trip-list">
         <h4>Trips on the globe</h4>
         <button class="travel-past-toggle" id="travelPastToggle" type="button">${state.tripShowPast ? '← View Upcoming' : 'View Past →'}</button>
-        ${travelItems.map(item => `<div class="side-item trip-list-item" style="--trip-color:${tripColor(item)}" data-id="${item.id}"><strong>${item.title}</strong><span>${item.location || ''} · ${item.date || ''}</span></div>`).join('') || `<div class="side-item"><span>No ${state.tripShowPast ? 'past' : 'upcoming'} trips match this filter.</span></div>`}
+        ${travelItems.map(item => `<div class="side-item trip-list-item" style="--trip-color:${tripColor(item)}" data-id="${item.id}"><strong>${emojiTitle(item)}</strong><span>${item.location || ''} · ${item.date || ''}</span></div>`).join('') || `<div class="side-item"><span>No ${state.tripShowPast ? 'past' : 'upcoming'} trips match this filter.</span></div>`}
       </div>
       <div id="travelEarthView" class="travel-map"><div id="travelEarthMap" class="calendar-map"></div></div>
     </div>`;
@@ -2269,7 +2354,7 @@ el.innerHTML = `<button class="fall-cta-btn" data-hometab="fallsignup">🍂 Join
     const todayEventRow = item => `
         <div class="today-event ${tagClass(item)}" data-id="${item.id}">
           <div class="today-event-time">${eventTimeLabel(item)}</div>
-          <div class="today-event-info"><strong>${item.title}</strong>${item.organizedBy ? `<span class="event-organizer">${item.organizedBy}</span>` : ''}${cityLabel(item) ? `<span>${cityLabel(item)}</span>` : ''}</div>
+          <div class="today-event-info"><strong>${emojiTitle(item)}</strong>${cityLabel(item) ? `<span>${cityLabel(item)}</span>` : ''}</div>
         </div>`;
     let todayDate, todayBodyHtml;
     if(isWeekView){
@@ -2673,7 +2758,7 @@ function renderDetail(id){
 
   document.getElementById('detailCard').innerHTML = `
     <span class="tag ${tagClass(e)}">${eventTypeLabel(e)}</span>
-    <h2>${e.title}</h2>
+    <h2>${emojiTitle(e)}</h2>
     ${e.organizedBy ? `<div class="event-organizer">${e.organizedBy}</div>` : ''}
     <div class="detail-date">${e.date}</div>
     <div class="detail-desc">${e.desc || ''}</div>
