@@ -230,9 +230,9 @@
 
   @media (max-width:480px){
     main{ padding-left:12px; padding-right:12px; }
-    /* (week-day-col width is container-relative calc((100% - 20px)/3) in base CSS —
-       it already guarantees exactly 3 visible columns on any phone, so no override here) */
-    .week-day-heading{ font-size:12px; }
+    /* (week-day-col width is container-relative calc((100% - 30px)/4) in base CSS —
+       it already guarantees exactly 4 visible columns on any phone, so no override here) */
+    .week-day-heading{ font-size:11px; }
     #calendar-view{ overflow-x:auto; padding-bottom:8px; }
     .weekday-row{ display:none; }
     .month-grid{ grid-template-columns:repeat(4,minmax(0,1fr)); min-width:0; gap:4px; }
@@ -339,25 +339,22 @@
   .week-panel::-webkit-scrollbar{ display:none; }
   .week-panel.is-dragging, .week-panel.is-dragging *{ cursor:grabbing !important; }
   .week-panel.is-dragging{ user-select:none; -webkit-user-select:none; }
-  .week-day-col{ flex:0 0 calc((100% - 20px)/3); min-width:0; max-width:150px; display:flex; flex-direction:column; }
+  .week-day-col{ flex:0 0 calc((100% - 30px)/4); min-width:0; max-width:120px; display:flex; flex-direction:column; }
   .week-day-col.is-today .week-day-heading{ color:var(--rose-deep); }
-  .week-day-heading{ display:flex; flex-direction:column; align-items:center; font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:13px; color:var(--charcoal); margin-bottom:8px; padding-bottom:6px; border-bottom:2px solid rgba(55,61,59,0.12); text-align:center; }
-  .week-day-heading span{ font-weight:600; font-size:11px; color:var(--muted); margin-top:2px; }
-  .week-day-col .today-list{ gap:8px; }
+  .week-day-heading{ display:flex; flex-direction:column; align-items:center; font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:12px; color:var(--charcoal); margin-bottom:6px; padding-bottom:5px; border-bottom:2px solid rgba(55,61,59,0.12); text-align:center; }
+  .week-day-heading span{ font-weight:600; font-size:10px; color:var(--muted); margin-top:1px; }
+  .week-day-col .today-list{ gap:6px; }
   .week-day-col .today-event{ display:block; }
-  .week-day-col .today-event-time{ min-height:auto; padding:6px 8px; border-right:0; border-bottom:1px solid rgba(33,30,28,0.12); font-size:10.5px; }
-  .week-day-col .today-event-info{ padding:8px; }
+  .week-day-col .today-event-time{ min-height:auto; padding:5px 6px; border-right:0; border-bottom:1px solid rgba(33,30,28,0.12); font-size:10px; }
+  .week-day-col .today-event-info{ padding:6px; }
   .week-day-col .today-event-info span{ display:block; }
-  .week-day-col .empty{ font-size:11.5px; padding:14px 6px; }
-  /* Days with lots of events fan out into multiple columns instead of one tall stack.
-     >4 items → 2 columns (column spans ~half the strip), >8 → 3 columns (full strip). */
-  .week-day-col.multi, .week-day-col.multi-wide{ max-width:none; }
-  .week-day-col.multi{ flex:0 0 calc((100% - 10px)/2); }
-  .week-day-col.multi-wide{ flex:0 0 100%; }
-  .week-day-col.multi .today-list,
-  .week-day-col.multi-wide .today-list{ display:grid; align-content:start; }
-  .week-day-col.multi .today-list{ grid-template-columns:repeat(2,minmax(0,1fr)); }
-  .week-day-col.multi-wide .today-list{ grid-template-columns:repeat(3,minmax(0,1fr)); }
+  .week-day-col .today-event-info strong{ font-size:12px; }
+  .week-day-col .empty{ font-size:11px; padding:12px 4px; }
+  .week-see-more{ display:block; width:100%; margin-top:2px; padding:6px 4px; border:1.5px dashed rgba(55,61,59,0.35); border-radius:10px; background:transparent; color:var(--rose-deep); font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:10.5px; cursor:pointer; }
+  .week-see-more:hover{ background:rgba(55,61,59,0.06); }
+  .week-hidden-items{ display:flex; flex-direction:column; gap:6px; margin-top:6px; }
+  .week-scrollbar{ position:relative; height:4px; margin:4px 6px 0; background:rgba(55,61,59,0.12); border-radius:999px; overflow:hidden; }
+  .week-scrollbar-thumb{ position:absolute; top:0; left:0; height:100%; background:var(--rose-deep); border-radius:999px; }
   .week-hint{ display:none; text-align:center; font-size:11px; font-style:italic; color:var(--muted); margin:6px 0 0; }
   /* Desktop-only hint: devices with a mouse/trackpad get 'drag or swipe'.
      Touch-only phones/tablets (pointer:coarse) keep the strip clean. */
@@ -2125,16 +2122,22 @@ el.innerHTML = `<button class="fall-cta-btn" data-hometab="fallsignup">🍂 Join
       const startD = weekDays[0].date, endD = weekDays[weekDays.length - 1].date;
       todayDate = `${monthNames[startD.getMonth()]} ${startD.getDate()} – ${monthNames[endD.getMonth()]} ${endD.getDate()}, ${endD.getFullYear()}`;
       const todayDateStr = `${today.getFullYear()}-${pad(today.getMonth()+1)}-${pad(today.getDate())}`;
+      const WEEK_ROWS_VISIBLE = 4;
       todayBodyHtml = `<div class="week-panel">${weekDays.map(day => {
         const dayStr = `${day.date.getFullYear()}-${pad(day.date.getMonth()+1)}-${pad(day.date.getDate())}`;
-        const itemCount = day.items.length;
-        // Busy days get a wider column with a multi-column list so they don't tower.
-        const denseClass = itemCount > 8 ? ' multi-wide' : itemCount > 4 ? ' multi' : '';
-        return `<div class="week-day-col${dayStr === todayDateStr ? ' is-today' : ''}${denseClass}">
+        const visibleItems = day.items.slice(0, WEEK_ROWS_VISIBLE);
+        const hiddenItems = day.items.slice(WEEK_ROWS_VISIBLE);
+        const listHtml = day.items.length
+          ? visibleItems.map(todayEventRow).join('')
+            + (hiddenItems.length ? `<button class="week-see-more" type="button" data-daystr="${dayStr}">+${hiddenItems.length} more</button><div class="week-hidden-items" id="weekHidden-${dayStr}" style="display:none;">${hiddenItems.map(todayEventRow).join('')}</div>` : '')
+          : '<div class="empty">Nothing on</div>';
+        return `<div class="week-day-col${dayStr === todayDateStr ? ' is-today' : ''}">
           <div class="week-day-heading">${dayLabelsShort[day.date.getDay()]}<span>${monthNames[day.date.getMonth()].slice(0,3)} ${day.date.getDate()}</span></div>
-          <div class="today-list">${day.items.map(todayEventRow).join('') || '<div class="empty">Nothing on</div>'}</div>
+          <div class="today-list">${listHtml}</div>
         </div>`;
-      }).join('')}</div><p class="week-hint">drag or swipe</p>`;
+      }).join('')}</div>
+      <div class="week-scrollbar"><div class="week-scrollbar-thumb" id="weekScrollbarThumb"></div></div>
+      <p class="week-hint">drag or swipe</p>`;
     } else {
       const todayItems = homepageTodayItems(selectedToday);
       todayDate = `${monthNames[selectedToday.getMonth()]} ${selectedToday.getDate()}, ${selectedToday.getFullYear()}`;
@@ -2238,7 +2241,29 @@ el.innerHTML = `<button class="fall-cta-btn" data-hometab="fallsignup">🍂 Join
       render();
     }, {passive:true});
     if(isWeekView){
+      document.querySelectorAll('.week-see-more').forEach(btn => {
+        btn.dataset.moreLabel = btn.textContent;
+        btn.addEventListener('click', () => {
+          const hidden = document.getElementById('weekHidden-' + btn.dataset.daystr);
+          if(!hidden) return;
+          const nowHidden = hidden.style.display !== 'none';
+          hidden.style.display = nowHidden ? 'none' : 'flex';
+          btn.textContent = nowHidden ? btn.dataset.moreLabel : 'Show less';
+        });
+      });
       const panel = document.querySelector('.week-panel');
+      const scrollbarThumb = document.getElementById('weekScrollbarThumb');
+      if(panel && scrollbarThumb){
+        const updateScrollbar = () => {
+          const ratio = panel.clientWidth / panel.scrollWidth;
+          const maxScroll = panel.scrollWidth - panel.clientWidth;
+          const scrolled = maxScroll > 0 ? panel.scrollLeft / maxScroll : 0;
+          scrollbarThumb.style.width = Math.max(8, ratio * 100) + '%';
+          scrollbarThumb.style.left = scrolled * (100 - Math.max(8, ratio * 100)) + '%';
+        };
+        updateScrollbar();
+        panel.addEventListener('scroll', updateScrollbar, {passive:true});
+      }
       if(panel){
         panel.addEventListener('pointerdown', e => {
           if(e.pointerType !== 'mouse') return; // touch/pen keep native momentum scroll
