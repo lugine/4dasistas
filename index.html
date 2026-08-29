@@ -61,7 +61,7 @@
   .wordmark{ font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:clamp(32px,7vw,52px); letter-spacing:-0.01em; }
   .wordmark-link{ text-decoration:none; color:inherit; display:inline-block; }
   .wordmark-link:hover .wordmark span{ color:var(--charcoal); }
-  .wordmark span{ color:var(--pink); }
+  .wordmark span{ color:#ce8491; }
   .header-disclaimer{ font-size:11px; color:var(--muted); max-width:440px; margin:8px auto 0; line-height:1.5; text-align:center; }
 
   .wa-fixed-btn{
@@ -316,10 +316,13 @@
 
   .home-tiles{ display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:16px; }
   .home-tile{ display:block; width:100%; text-align:left; border:2px solid var(--charcoal); border-radius:18px; padding:24px 22px; cursor:pointer; box-shadow:4px 4px 0 var(--charcoal); transition:transform 0.12s ease, box-shadow 0.12s ease; font-family:'Inter',sans-serif; position:relative; }
-  .home-tile[data-hometab="homescreen"]{ padding-top:14px; padding-bottom:14px; min-height:74px; align-self:center; justify-self:center; width:100%; grid-column:1 / -1; }
+  .home-tile[data-hometab="homescreen"]{ padding-top:8px; padding-bottom:8px; min-height:auto; align-self:center; justify-self:center; width:100%; grid-column:1 / -1; box-shadow:none; border-color:rgba(55,61,59,0.2); }
+  .home-tile[data-hometab="homescreen"]:hover{ box-shadow:2px 2px 0 rgba(55,61,59,0.2); }
   .home-tile[data-hometab="homescreen"] .home-tile-title,
   .home-tile[data-hometab="homescreen"] .home-tile-desc{ width:100%; padding-right:44px; text-align:center; }
-  .home-tile[data-hometab="homescreen"] .home-tile-desc{ max-width:100%; margin:0 auto; }
+  .home-tile[data-hometab="homescreen"] .home-tile-title{ font-size:14px; margin-bottom:2px; }
+  .home-tile[data-hometab="homescreen"] .home-tile-desc{ max-width:100%; margin:0 auto; font-size:11px; opacity:0.7; }
+  .home-tile[data-hometab="homescreen"] .home-tile-arrow{ width:22px; height:22px; font-size:14px; top:50%; transform:translateY(-50%); }
   .home-tile:hover{ transform:translate(-2px,-2px); box-shadow:6px 6px 0 var(--charcoal); }
   .home-tile-title{ font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:22px; margin-bottom:6px; padding-right:40px; }
   .home-tile-desc{ font-size:14px; max-width:85%; opacity:0.9; }
@@ -462,6 +465,8 @@
   .sg-calendar-pane{ border:2px solid var(--charcoal); border-radius:14px; padding:14px; background:var(--card); }
   .travel-trip-list{ width:100%; min-width:0; max-height:65vh; overflow-y:auto; border:2px solid var(--charcoal); border-radius:14px; background:var(--card); padding:16px; order:0; }
   .travel-trip-list h4{ font-family:'Space Grotesk',sans-serif; font-size:15px; margin:0 0 10px; }
+  .travel-past-toggle{ display:block; width:100%; margin-bottom:12px; padding:8px 10px; border:1.5px dashed rgba(55,61,59,0.35); border-radius:10px; background:transparent; color:var(--rose-deep); font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:12px; cursor:pointer; text-align:center; }
+  .travel-past-toggle:hover{ background:rgba(55,61,59,0.06); }
   .travel-trip-list .side-item{ padding:9px 0; border-bottom:1px solid rgba(33,30,28,0.1); cursor:pointer; }
   .travel-trip-list .side-item.trip-list-item{ padding:9px 9px; border-left:6px solid var(--trip-color); }
   .travel-trip-list .side-item:last-child{ border-bottom:0; }
@@ -893,7 +898,7 @@ let state = {
   sportFilter:'all', dayCity:'all', clubFilter:'all',
   gatherSort:'hijab', gatherDir:'asc',
   sgCalYear: today.getFullYear(), sgCalMonth: today.getMonth(),
-  tripType:'all', tripView:'list', resourceFilter:'all', resourceView:'map', resourcePage:1,
+  tripType:'all', tripView:'list', tripShowPast:false, resourceFilter:'all', resourceView:'map', resourcePage:1,
   timeFilter:'upcoming', eventSort:'soonest', todayOffset:0, todayViewMode:'day', page:1,
   calViewMode:'month', calDayOffset:0,
   typeSel:[],
@@ -2053,11 +2058,20 @@ function renderDirectory(){
     });
   } else if(state.tab === 'travel'){
     document.getElementById('resourcePagination').innerHTML = '';
-    const travelItems = state.tripType === 'all' ? tripsData : tripsData.filter(item => tripTypeForItem(item) === state.tripType);
+    const typeMatched = state.tripType === 'all' ? tripsData : tripsData.filter(item => tripTypeForItem(item) === state.tripType);
+    const travelItems = state.tripShowPast ? typeMatched.filter(isPastItem) : typeMatched.filter(item => !isPastItem(item));
     el.innerHTML = `<div class="travel-earth-layout">
-      <div class="travel-trip-list"><h4>Trips on the globe</h4>${travelItems.map(item => `<div class="side-item trip-list-item" style="--trip-color:${tripColor(item)}" data-id="${item.id}"><strong>${item.title}</strong><span>${item.location || ''} · ${item.date || ''}</span></div>`).join('') || '<div class="side-item"><span>No trips match this filter.</span></div>'}</div>
+      <div class="travel-trip-list">
+        <h4>Trips on the globe</h4>
+        <button class="travel-past-toggle" id="travelPastToggle" type="button">${state.tripShowPast ? '← View Upcoming' : 'View Past →'}</button>
+        ${travelItems.map(item => `<div class="side-item trip-list-item" style="--trip-color:${tripColor(item)}" data-id="${item.id}"><strong>${item.title}</strong><span>${item.location || ''} · ${item.date || ''}</span></div>`).join('') || `<div class="side-item"><span>No ${state.tripShowPast ? 'past' : 'upcoming'} trips match this filter.</span></div>`}
+      </div>
       <div id="travelEarthView" class="travel-map"><div id="travelEarthMap" class="calendar-map"></div></div>
     </div>`;
+    document.getElementById('travelPastToggle').addEventListener('click', () => {
+      state.tripShowPast = !state.tripShowPast;
+      render();
+    });
     renderTripEarthView('travelEarthView', 'travelEarthMap', travelItems, false);
   } else if(state.tab === 'clubs'){
     document.getElementById('resourcePagination').innerHTML = '';
@@ -2239,7 +2253,7 @@ el.innerHTML = `<button class="fall-cta-btn" data-hometab="fallsignup">🍂 Join
       {tab:'clubs', title: siteText.homeTileClubsTitle || 'GALS CLUBS', bg:'#caaacd', fg:'#373d3b', desc: siteText.homeTileClubsDesc || 'Join a standing-interest club, from gaming to ADHD support.'},
       {tab:'resources', title: siteText.homeTileResourcesTitle || 'Resources', bg:'#c3d5e2', fg:'#373d3b', desc: siteText.homeTileResourcesDesc || 'Mosques, cafes, shops & restaurants the community supports.'},
     ];
-    const homescreenTile = {tab:'homescreen', title: siteText.homeTileHomescreenTitle || 'Add this to your Home Screen', bg:'#A9D6B8', fg:'#373d3b', desc: siteText.homeTileHomescreenDesc || 'Install 4DASISTAS like an app for quick access.'};
+    const homescreenTile = {tab:'homescreen', title: siteText.homeTileHomescreenTitle || 'Add this to your Home Screen', bg:'#F1F6F2', fg:'#373d3b', desc: siteText.homeTileHomescreenDesc || 'Install 4DASISTAS like an app for quick access.'};
     const selectedToday = new Date(today);
     selectedToday.setDate(today.getDate() + state.todayOffset);
     const isWeekView = state.todayViewMode === 'week';
