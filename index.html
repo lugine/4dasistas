@@ -907,7 +907,9 @@ let state = {
   typeSel:[],
   returnTab:'',
   calYear: today.getFullYear(), calMonth: today.getMonth(),
-  clubMembersId:null, clubMembersTitle:'', cmView:'auth', cmError:'', cmMembers:[], cmMe:null, cmViewing:null, cmRevealPin:'',
+  clubMembersId:null, clubMembersTitle:'', cmView:'auth', cmError:'', cmMembers:[], cmMe:null, cmRevealPin:'',
+  cmEvents:[], cmEventData:null, cmEventMode:'mine', cmMySlots:[],
+  cmAdminOpen:false, cmAdminLoggedIn:null, cmAdminError:'', cmAdminClub:null, cmAdminEvents:null,
 };
 
 const introText = {
@@ -2194,7 +2196,16 @@ el.innerHTML = `<button class="fall-cta-btn" data-hometab="fallsignup">🍂 Join
           <button class="link-btn secondary" data-club-members="${c.id}" data-club-title="${c.title.replace(/"/g,'&quot;')}">Club Members Schedule</button>
         </div>
       </div>`;
-    }).join('')}</div>`;
+    }).join('')}</div>
+    <div style="text-align:center;margin-top:18px;">
+      <button type="button" class="link-btn secondary" id="clubAdminOpenBtn" style="font-size:11px;padding:6px 14px;opacity:0.65;">🔒 Admin</button>
+    </div>
+    ${renderClubAdminPanel()}`;
+    setTimeout(() => {
+      const adminBtn = document.getElementById('clubAdminOpenBtn');
+      if(adminBtn) adminBtn.addEventListener('click', openClubAdmin);
+      wireClubAdminPanel();
+    }, 0);
   } else if(state.tab === 'clubmembers'){
     document.getElementById('resourcePagination').innerHTML = '';
     renderClubMembersView(el);
@@ -2792,10 +2803,15 @@ function closeDetail(){
 const DIRECTORY_TABS = ['clubs','resources','home','travel','rules','clubstart','clubjoin','fallsignup','homescreen','subscribe','supportgroups','clubmembers'];
 
 /* ============================================================
-   CLUB MEMBERS SCHEDULE (private per-club sign-in + availability)
+   CLUB MEMBERS SCHEDULE (private per-club sign-in + per-event availability)
    ============================================================ */
-const CM_BLOCKS = ['morning','afternoon','evening','night'];
-const CM_BLOCK_LABELS = { morning:'Morning', afternoon:'Afternoon', evening:'Evening', night:'Night' };
+function cmHalfHourLabel(h){
+  const hour24 = Math.floor(h/2);
+  const min = (h%2)*30;
+  const ampm = hour24 < 12 ? 'AM' : 'PM';
+  const hour12 = ((hour24 + 11) % 12) + 1;
+  return hour12 + (min ? ':30' : ':00') + ' ' + ampm;
+}
 let cmPendingPhotoDataUri = null;
 
 function cmSessionKey(clubId){ return 'cmSession:' + clubId; }
@@ -2824,15 +2840,19 @@ function openClubMembers(clubId, title){
   state.clubMembersId = clubId;
   state.clubMembersTitle = title || '';
   state.cmError = '';
+  state.cmEventView = null;
   cmPendingPhotoDataUri = null;
   const session = getCmSession(clubId);
   if(session && session.token){
     state.cmView = 'loading';
     render();
-    cmApi(encodeURIComponent(clubId) + '/members/' + encodeURIComponent(session.id))
-      .then(me => {
+    cmApi(encodeURIComponent(clubId) + '/members')
+      .then(async data => {
+        const me = (data.members || []).find(m => m.id === session.id);
+        if(!me) throw new Error('not found');
         state.cmMe = Object.assign({}, me, { token: session.token });
-        return cmLoadRoster(clubId);
+        state.cmMembers = data.members;
+        await cmLoadEvents(clubId);
       })
       .then(() => { state.cmView = 'dashboard'; render(); })
       .catch(() => { clearCmSession(clubId); state.cmView = 'auth'; state.cmMe = null; render(); });
@@ -2848,19 +2868,9 @@ async function cmLoadRoster(clubId){
   state.cmMembers = (data && data.members) || [];
 }
 
-function cmAvailTableHtml(availability, editable){
-  availability = availability || {};
-  return `<table style="width:100%;border-collapse:collapse;text-align:center;min-width:360px;">
-    <thead><tr><th></th>${dayLabelsShort.map(d => `<th style="padding:6px;font-size:12px;">${d}</th>`).join('')}</tr></thead>
-    <tbody>
-      ${CM_BLOCKS.map(block => `<tr><td style="font-size:11px;text-align:right;padding-right:8px;white-space:nowrap;">${CM_BLOCK_LABELS[block]}</td>${dayOrder.map(day => {
-        const active = (availability[day] || []).includes(block);
-        return editable
-          ? `<td><button type="button" class="cm-cell" data-day="${day}" data-block="${block}" style="width:32px;height:32px;border-radius:8px;border:2px solid var(--charcoal);background:${active ? 'var(--mint,#A9D6B8)' : 'transparent'};cursor:pointer;"></button></td>`
-          : `<td><div style="width:32px;height:32px;border-radius:8px;border:2px solid var(--charcoal);background:${active ? 'var(--mint,#A9D6B8)' : 'transparent'};margin:0 auto;"></div></td>`;
-      }).join('')}</tr>`).join('')}
-    </tbody>
-  </table>`;
+async function cmLoadEvents(clubId){
+  const data = await cmApi(encodeURIComponent(clubId) + '/events');
+  state.cmEvents = (data && data.events) || [];
 }
 
 function renderClubMembersView(el){
@@ -2881,24 +2891,20 @@ function renderClubMembersView(el){
         ${state.cmError ? `<p style="color:#c00;margin-bottom:10px;">${escapeCm(state.cmError)}</p>` : ''}
         <div style="display:flex; flex-direction:column; gap:10px;">
           <input id="cmNameInput" placeholder="Your name" style="padding:12px;border-radius:10px;border:2px solid var(--charcoal);font-size:15px;">
-          <input id="cmPinInput" placeholder="PIN (if you already have one)" inputmode="numeric" maxlength="4" style="padding:12px;border-radius:10px;border:2px solid var(--charcoal);font-size:15px;">
-          <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
-            <button type="button" class="club-guide-btn" id="cmPhotoBtn" style="padding:8px 14px;font-size:12px;">📷 Add profile picture (optional)</button>
-            <span id="cmPhotoPreviewWrap"></span>
-            <input type="file" id="cmPhotoInput" accept="image/*" style="display:none;">
-          </div>
-          <button class="club-guide-btn" id="cmSignInBtn" style="background:var(--lightblue);">Sign In (I already have a PIN)</button>
+          <input id="cmUsernameInput" placeholder="Choose a username (letters/numbers/_, 3-20)" maxlength="20" style="padding:12px;border-radius:10px;border:2px solid var(--charcoal);font-size:15px;">
           <button class="club-guide-btn" id="cmCreateBtn" style="background:var(--blush);">Create My Profile (new member)</button>
         </div>
-        <p style="font-size:11px;color:#776867;margin-top:12px;">Creating a profile gives you a personal PIN to sign back in later — you'll only see it once, so write it down.</p>
+        <hr style="margin:18px 0;border:none;border-top:1px solid #ddd;">
+        <div style="display:flex; flex-direction:column; gap:10px;">
+          <input id="cmUsernameLoginInput" placeholder="Username" style="padding:12px;border-radius:10px;border:2px solid var(--charcoal);font-size:15px;">
+          <input id="cmPinInput" placeholder="PIN" inputmode="numeric" maxlength="4" style="padding:12px;border-radius:10px;border:2px solid var(--charcoal);font-size:15px;">
+          <button class="club-guide-btn" id="cmSignInBtn" style="background:var(--lightblue);">Sign In (I already have a PIN)</button>
+        </div>
+        <p style="font-size:11px;color:#776867;margin-top:12px;">Creating a profile gives you a personal PIN to sign back in later — you'll only see it once, so write it down. Your username can't be taken by anyone else, in any club. You can add a profile picture later, once you're signed in.</p>
       </div>`;
     setTimeout(() => {
-      const photoBtn = document.getElementById('cmPhotoBtn');
-      const photoInput = document.getElementById('cmPhotoInput');
-      photoBtn.addEventListener('click', () => photoInput.click());
-      photoInput.addEventListener('change', () => cmHandlePhotoPick(photoInput, 'cmPhotoPreviewWrap'));
-      document.getElementById('cmSignInBtn').addEventListener('click', cmDoSignIn);
       document.getElementById('cmCreateBtn').addEventListener('click', cmDoCreate);
+      document.getElementById('cmSignInBtn').addEventListener('click', cmDoSignIn);
     }, 0);
     return;
   }
@@ -2909,13 +2915,14 @@ function renderClubMembersView(el){
         <h2>You're in, ${escapeCm(state.cmMe.name)}! 🎉</h2>
         <p class="rules-lead">Your personal PIN is:</p>
         <div style="font-size:40px;font-weight:800;letter-spacing:8px;background:var(--blush);border:2px solid var(--charcoal);border-radius:14px;padding:16px;margin:14px 0;">${escapeCm(state.cmRevealPin)}</div>
-        <p style="font-size:13px;">Save this PIN — you'll need your name + this PIN to sign back in on another device or if you clear your browser.</p>
+        <p style="font-size:13px;">Save this PIN — you'll need your username (@${escapeCm(state.cmMe.username)}) + this PIN to sign back in on another device or if you clear your browser.</p>
         <button class="club-guide-btn" id="cmContinueBtn" style="margin-top:14px;background:var(--charcoal);color:var(--cream);">Continue →</button>
       </div>`;
     setTimeout(() => {
       document.getElementById('cmContinueBtn').addEventListener('click', async () => {
         state.cmView = 'loading'; render();
         await cmLoadRoster(clubId);
+        await cmLoadEvents(clubId);
         state.cmView = 'dashboard'; render();
       });
     }, 0);
@@ -2928,18 +2935,28 @@ function renderClubMembersView(el){
       <button class="back-btn" data-hometab="clubs">← Back to GALS CLUBS</button>
       <div class="rules-content">
         <h2 style="margin-bottom:2px;">${title} — Club Members Schedule</h2>
-        <p style="font-size:13px;margin-bottom:18px;">Signed in as <strong>${escapeCm(me.name)}</strong> · <a href="#" id="cmSwitchLink">not you?</a></p>
+        <p style="font-size:13px;margin-bottom:6px;">Signed in as <strong>${escapeCm(me.name)}</strong> (@${escapeCm(me.username)}) · <a href="#" id="cmSwitchLink">not you?</a></p>
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:20px;">
+          ${me.photo ? `<img src="${me.photo}" alt="" style="width:44px;height:44px;border-radius:50%;object-fit:cover;">` : `<div class="monogram" style="width:44px;height:44px;">${escapeCm((me.name||'?').charAt(0).toUpperCase())}</div>`}
+          <button type="button" class="club-guide-btn" id="cmPhotoBtn" style="padding:8px 14px;font-size:12px;">📷 ${me.photo ? 'Change' : 'Add'} profile picture</button>
+          <input type="file" id="cmPhotoInput" accept="image/*" style="display:none;">
+        </div>
         <h3>Members</h3>
         <div class="clubs-grid" id="cmRoster">${state.cmMembers.map(m => `
-          <div class="panel-card club-card" data-cm-view-member="${m.id}" tabindex="0" role="button" style="text-align:center;cursor:pointer;">
+          <div class="panel-card club-card" style="text-align:center;">
             ${m.photo ? `<img src="${m.photo}" alt="" style="width:56px;height:56px;border-radius:50%;object-fit:cover;margin:0 auto 8px;display:block;">` : `<div class="monogram" style="margin:0 auto 8px;">${escapeCm((m.name || '?').charAt(0).toUpperCase())}</div>`}
-            <h4 style="font-size:14px;">${escapeCm(m.name)}${m.id === me.id ? ' (you)' : ''}</h4>
+            <h4 style="font-size:14px;margin-bottom:2px;">${escapeCm(m.name)}${m.id === me.id ? ' (you)' : ''}</h4>
+            <div style="font-size:11px;color:#776867;">@${escapeCm(m.username)}</div>
           </div>`).join('') || '<p>No members yet — you\'re the first!</p>'}
         </div>
-        <h3 style="margin-top:28px;">My availability</h3>
-        <div style="overflow-x:auto;">${cmAvailTableHtml(me.availability, true)}</div>
-        <button class="club-guide-btn" id="cmSaveAvailBtn" style="margin-top:14px;background:var(--charcoal);color:var(--cream);">Save my availability</button>
-        <span id="cmSaveStatus" style="margin-left:10px;font-size:12px;"></span>
+        <h3 style="margin-top:28px;">Events</h3>
+        <div style="display:flex; flex-direction:column; gap:10px;">
+          ${state.cmEvents.length ? state.cmEvents.map(e => `
+            <button type="button" class="club-guide-btn cm-event-open" data-event-id="${e.id}" style="text-align:left;">
+              <strong>${escapeCm(e.title)}</strong><br>
+              <span style="font-size:12px;font-weight:400;">${escapeCm(e.startDate === e.endDate ? e.startDate : e.startDate + ' – ' + e.endDate)}${e.desc ? ' · ' + escapeCm(e.desc) : ''}</span>
+            </button>`).join('') : '<p>No events yet — check back once an admin schedules one.</p>'}
+        </div>
       </div>`;
     setTimeout(() => {
       document.getElementById('cmSwitchLink').addEventListener('click', e => {
@@ -2947,47 +2964,117 @@ function renderClubMembersView(el){
         clearCmSession(clubId);
         state.cmView = 'auth'; state.cmMe = null; render();
       });
-      el.querySelectorAll('[data-cm-view-member]').forEach(card => {
-        card.addEventListener('click', () => cmViewMember(card.dataset.cmViewMember));
+      const photoBtn = document.getElementById('cmPhotoBtn');
+      const photoInput = document.getElementById('cmPhotoInput');
+      photoBtn.addEventListener('click', () => photoInput.click());
+      photoInput.addEventListener('change', () => cmHandleProfilePhotoPick(photoInput));
+      el.querySelectorAll('.cm-event-open').forEach(btn => {
+        btn.addEventListener('click', () => cmOpenEvent(btn.dataset.eventId));
       });
-      el.querySelectorAll('.cm-cell').forEach(btn => {
-        btn.addEventListener('click', () => {
-          const day = btn.dataset.day, block = btn.dataset.block;
-          const avail = state.cmMe.availability = state.cmMe.availability || {};
-          const list = avail[day] = avail[day] || [];
-          const idx = list.indexOf(block);
-          if(idx >= 0) list.splice(idx, 1); else list.push(block);
-          btn.style.background = list.includes(block) ? 'var(--mint,#A9D6B8)' : 'transparent';
-        });
-      });
-      document.getElementById('cmSaveAvailBtn').addEventListener('click', cmSaveAvailability);
     }, 0);
     return;
   }
 
-  if(state.cmView === 'viewMember'){
-    const m = state.cmViewing;
-    el.innerHTML = `
-      <button class="club-guide-btn" id="cmBackToRoster" style="margin-bottom:14px;">← Back to members</button>
-      <div class="rules-content" style="max-width:420px;margin:0 auto;text-align:center;">
-        ${m.photo ? `<img src="${m.photo}" alt="" style="width:88px;height:88px;border-radius:50%;object-fit:cover;margin:0 auto 12px;display:block;">` : `<div class="monogram" style="width:88px;height:88px;font-size:32px;margin:0 auto 12px;">${escapeCm((m.name || '?').charAt(0).toUpperCase())}</div>`}
-        <h2>${escapeCm(m.name)}</h2>
-        <div style="overflow-x:auto;margin-top:16px;">${cmAvailTableHtml(m.availability, false)}</div>
-      </div>`;
-    setTimeout(() => {
-      document.getElementById('cmBackToRoster').addEventListener('click', () => { state.cmView = 'dashboard'; render(); });
-    }, 0);
+  if(state.cmView === 'event'){
+    renderCmEventView(el);
     return;
   }
 }
 
-async function cmViewMember(id){
+function renderCmEventView(el){
+  const data = state.cmEventData;
+  const event = data.event;
+  const mode = state.cmEventMode; // 'mine' | 'everyone'
+  el.innerHTML = `
+    <button class="club-guide-btn" id="cmBackToDashboard" style="margin-bottom:14px;">← Back to events</button>
+    <div class="rules-content">
+      <h2 style="margin-bottom:2px;">${escapeCm(event.title)}</h2>
+      <p style="font-size:13px;margin-bottom:14px;">${escapeCm(event.startDate === event.endDate ? event.startDate : event.startDate + ' – ' + event.endDate)}${event.desc ? ' · ' + escapeCm(event.desc) : ''}</p>
+      <div style="display:flex;gap:8px;margin-bottom:14px;">
+        <button type="button" class="club-guide-btn cm-mode-btn" data-mode="mine" style="${mode==='mine' ? 'background:var(--charcoal);color:var(--cream);' : ''}">My availability</button>
+        <button type="button" class="club-guide-btn cm-mode-btn" data-mode="everyone" style="${mode==='everyone' ? 'background:var(--charcoal);color:var(--cream);' : ''}">Who's free</button>
+      </div>
+      ${mode === 'mine' ? '<p style="font-size:12px;margin-bottom:8px;">Click a slot, or click-and-drag across several, to mark yourself free (30-min slots). Click again to unmark.</p>' : '<p style="font-size:12px;margin-bottom:8px;">Darker = more people free. Click a slot to see who.</p>'}
+      <div style="overflow-x:auto;" id="cmEventGridWrap">${cmEventGridHtml(event, mode, data)}</div>
+      ${mode === 'mine' ? `<button class="club-guide-btn" id="cmSaveEventBtn" style="margin-top:14px;background:var(--charcoal);color:var(--cream);">Save my availability</button><span id="cmSaveStatus" style="margin-left:10px;font-size:12px;"></span>` : '<div id="cmSlotWho" style="margin-top:14px;font-size:13px;"></div>'}
+    </div>`;
+  setTimeout(() => {
+    document.getElementById('cmBackToDashboard').addEventListener('click', () => { state.cmView = 'dashboard'; render(); });
+    el.querySelectorAll('.cm-mode-btn').forEach(btn => {
+      btn.addEventListener('click', () => { state.cmEventMode = btn.dataset.mode; render(); });
+    });
+    if(mode === 'mine'){
+      cmWireDragGrid(el);
+      document.getElementById('cmSaveEventBtn').addEventListener('click', cmSaveEventAvailability);
+    } else {
+      el.querySelectorAll('.cm-cell[data-slot]').forEach(cell => {
+        cell.addEventListener('click', () => {
+          const slot = cell.dataset.slot;
+          const names = (data.responses.members || []).filter(m => m.slots.includes(slot)).map(m => m.name);
+          document.getElementById('cmSlotWho').textContent = names.length ? ('Free: ' + names.join(', ')) : 'Nobody has marked this slot yet.';
+        });
+      });
+    }
+  }, 0);
+}
+
+function cmEventGridHtml(event, mode, data){
+  const rows = [];
+  for(let h = event.startHour*2; h < event.endHour*2; h++) rows.push(h);
+  const mySlots = new Set(state.cmMySlots || []);
+  const aggregate = (data.responses && data.responses.aggregate) || {};
+  const maxCount = Math.max(1, ...Object.values(aggregate));
+  return `<table style="border-collapse:collapse;text-align:center;min-width:${80 + event.dates.length*46}px;">
+    <thead><tr><th></th>${event.dates.map(d => `<th style="padding:4px;font-size:11px;white-space:nowrap;">${d.slice(5)}</th>`).join('')}</tr></thead>
+    <tbody>
+      ${rows.map(h => `<tr><td style="font-size:10px;text-align:right;padding-right:6px;white-space:nowrap;">${h%2===0 ? cmHalfHourLabel(h) : ''}</td>${event.dates.map(d => {
+        const slot = d + '|' + h;
+        if(mode === 'mine'){
+          const active = mySlots.has(slot);
+          return `<td><button type="button" class="cm-cell" data-slot="${slot}" style="width:38px;height:20px;border:1px solid var(--charcoal);background:${active ? 'var(--mint,#A9D6B8)' : 'transparent'};cursor:pointer;padding:0;"></button></td>`;
+        }
+        const count = aggregate[slot] || 0;
+        const opacity = count ? (0.15 + 0.75 * (count/maxCount)) : 0;
+        return `<td><div class="cm-cell" data-slot="${slot}" style="width:38px;height:20px;border:1px solid var(--charcoal);background:rgba(169,214,184,${opacity});cursor:${count?'pointer':'default'};"></div></td>`;
+      }).join('')}</tr>`).join('')}
+    </tbody>
+  </table>`;
+}
+
+function cmWireDragGrid(el){
+  const cells = el.querySelectorAll('.cm-cell[data-slot]');
+  let dragging = false, paintOn = true;
+  const setCell = (cell, on) => {
+    const slot = cell.dataset.slot;
+    if(!state.cmMySlots) state.cmMySlots = [];
+    const idx = state.cmMySlots.indexOf(slot);
+    if(on && idx === -1) state.cmMySlots.push(slot);
+    if(!on && idx !== -1) state.cmMySlots.splice(idx, 1);
+    cell.style.background = on ? 'var(--mint,#A9D6B8)' : 'transparent';
+  };
+  cells.forEach(cell => {
+    cell.addEventListener('pointerdown', (e) => {
+      e.preventDefault();
+      dragging = true;
+      paintOn = !cell.style.background || cell.style.background === 'transparent';
+      setCell(cell, paintOn);
+    });
+    cell.addEventListener('pointerenter', () => { if(dragging) setCell(cell, paintOn); });
+  });
+  window.addEventListener('pointerup', () => { dragging = false; });
+}
+
+async function cmOpenEvent(eventId){
   const clubId = state.clubMembersId;
   state.cmView = 'loading'; render();
   try {
-    const m = await cmApi(encodeURIComponent(clubId) + '/members/' + encodeURIComponent(id));
-    state.cmViewing = m;
-    state.cmView = 'viewMember';
+    const event = state.cmEvents.find(e => e.id === eventId);
+    const responses = await cmApi(encodeURIComponent(clubId) + '/events/' + encodeURIComponent(eventId) + '/responses');
+    const mine = (responses.members || []).find(m => m.id === state.cmMe.id);
+    state.cmMySlots = mine ? mine.slots.slice() : [];
+    state.cmEventData = { event, responses };
+    state.cmEventMode = 'mine';
+    state.cmView = 'event';
   } catch(err){
     state.cmError = err.message;
     state.cmView = 'dashboard';
@@ -2995,17 +3082,20 @@ async function cmViewMember(id){
   render();
 }
 
-async function cmSaveAvailability(){
+async function cmSaveEventAvailability(){
   const status = document.getElementById('cmSaveStatus');
   const clubId = state.clubMembersId;
   const me = state.cmMe;
+  const eventId = state.cmEventData.event.id;
   status.textContent = 'Saving…';
   try {
-    await cmApi(encodeURIComponent(clubId) + '/members/' + encodeURIComponent(me.id), {
+    const result = await cmApi(encodeURIComponent(clubId) + '/events/' + encodeURIComponent(eventId) + '/responses/' + encodeURIComponent(me.id), {
       method:'PUT',
       headers:{ 'Content-Type':'application/json', 'Authorization':'Bearer ' + me.token },
-      body: JSON.stringify({ availability: me.availability })
+      body: JSON.stringify({ slots: state.cmMySlots })
     });
+    state.cmMySlots = result.slots;
+    state.cmEventData.responses = await cmApi(encodeURIComponent(clubId) + '/events/' + encodeURIComponent(eventId) + '/responses');
     status.textContent = 'Saved ✓';
     setTimeout(() => { if(status) status.textContent = ''; }, 2500);
   } catch(err){
@@ -3013,13 +3103,13 @@ async function cmSaveAvailability(){
   }
 }
 
-function cmHandlePhotoPick(input, previewId){
+function cmHandleProfilePhotoPick(input){
   const file = input.files && input.files[0];
   if(!file) return;
   const reader = new FileReader();
   reader.onload = () => {
     const img = new Image();
-    img.onload = () => {
+    img.onload = async () => {
       const size = 200;
       const canvas = document.createElement('canvas');
       canvas.width = size; canvas.height = size;
@@ -3027,9 +3117,21 @@ function cmHandlePhotoPick(input, previewId){
       const scale = Math.max(size / img.width, size / img.height);
       const w = img.width * scale, h = img.height * scale;
       ctx.drawImage(img, (size - w) / 2, (size - h) / 2, w, h);
-      cmPendingPhotoDataUri = canvas.toDataURL('image/jpeg', 0.75);
-      const wrap = document.getElementById(previewId);
-      if(wrap) wrap.innerHTML = `<img src="${cmPendingPhotoDataUri}" style="width:36px;height:36px;border-radius:50%;object-fit:cover;vertical-align:middle;">`;
+      const dataUri = canvas.toDataURL('image/jpeg', 0.75);
+      const clubId = state.clubMembersId;
+      const me = state.cmMe;
+      try {
+        const updated = await cmApi(encodeURIComponent(clubId) + '/members/' + encodeURIComponent(me.id), {
+          method:'PUT',
+          headers:{ 'Content-Type':'application/json', 'Authorization':'Bearer ' + me.token },
+          body: JSON.stringify({ photo: dataUri })
+        });
+        state.cmMe.photo = updated.photo;
+        await cmLoadRoster(clubId);
+        render();
+      } catch(err){
+        alert('Could not update photo: ' + err.message);
+      }
     };
     img.src = reader.result;
   };
@@ -3039,17 +3141,18 @@ function cmHandlePhotoPick(input, previewId){
 async function cmDoCreate(){
   const clubId = state.clubMembersId;
   const name = document.getElementById('cmNameInput').value.trim();
+  const username = document.getElementById('cmUsernameInput').value.trim();
   if(!name){ state.cmError = 'Enter your name first.'; render(); return; }
+  if(!/^[a-zA-Z0-9_]{3,20}$/.test(username)){ state.cmError = 'Username must be 3-20 characters: letters, numbers, underscore only.'; render(); return; }
   try {
     const data = await cmApi(encodeURIComponent(clubId) + '/members', {
       method:'POST',
-      body: JSON.stringify({ name, photo: cmPendingPhotoDataUri || undefined })
+      body: JSON.stringify({ name, username })
     });
     setCmSession(clubId, { id: data.id, token: data.token });
-    state.cmMe = { id: data.id, name: data.name, photo: cmPendingPhotoDataUri || null, availability: {}, token: data.token };
+    state.cmMe = { id: data.id, name: data.name, username: data.username, photo: null, token: data.token };
     state.cmRevealPin = data.pin;
     state.cmError = '';
-    cmPendingPhotoDataUri = null;
     state.cmView = 'pinReveal';
   } catch(err){
     state.cmError = err.message;
@@ -3059,13 +3162,13 @@ async function cmDoCreate(){
 
 async function cmDoSignIn(){
   const clubId = state.clubMembersId;
-  const name = document.getElementById('cmNameInput').value.trim();
+  const username = document.getElementById('cmUsernameLoginInput').value.trim();
   const pin = document.getElementById('cmPinInput').value.trim();
-  if(!name || !pin){ state.cmError = 'Enter your name and PIN.'; render(); return; }
+  if(!username || !pin){ state.cmError = 'Enter your username and PIN.'; render(); return; }
   try {
     const data = await cmApi(encodeURIComponent(clubId) + '/login', {
       method:'POST',
-      body: JSON.stringify({ name, pin })
+      body: JSON.stringify({ username, pin })
     });
     setCmSession(clubId, { id: data.id, token: data.token });
     state.cmMe = data;
@@ -3073,12 +3176,156 @@ async function cmDoSignIn(){
     state.cmView = 'loading';
     render();
     await cmLoadRoster(clubId);
+    await cmLoadEvents(clubId);
     state.cmView = 'dashboard';
   } catch(err){
     state.cmError = err.message;
   }
   render();
 }
+
+/* ============================================================
+   IN-SITE ADMIN PANEL (small "Admin" button under GALS CLUBS —
+   create/manage per-club events)
+   ============================================================ */
+async function openClubAdmin(){
+  state.cmAdminOpen = true;
+  state.cmAdminError = '';
+  render();
+  window.scrollTo({top:0, behavior:'smooth'});
+  try {
+    const res = await fetch('/api/admin/session', { credentials:'include' });
+    const data = await res.json();
+    state.cmAdminLoggedIn = !!data.loggedIn;
+  } catch { state.cmAdminLoggedIn = false; }
+  render();
+}
+
+async function cmAdminLogin(){
+  const password = document.getElementById('cmAdminPassword').value;
+  try {
+    const res = await fetch('/api/admin/login', { method:'POST', headers:{'Content-Type':'application/json'}, credentials:'include', body: JSON.stringify({ password }) });
+    const data = await res.json();
+    if(!res.ok) throw new Error(data.error || 'Login failed');
+    state.cmAdminLoggedIn = true;
+    state.cmAdminError = '';
+  } catch(err){
+    state.cmAdminError = err.message;
+  }
+  render();
+}
+
+async function cmAdminLogout(){
+  await fetch('/api/admin/logout', { method:'POST', credentials:'include' }).catch(() => {});
+  state.cmAdminLoggedIn = false;
+  render();
+}
+
+async function cmAdminSelectClub(clubId){
+  state.cmAdminClub = clubId;
+  state.cmAdminEvents = null;
+  render();
+  try {
+    const res = await fetch('/api/admin/club-events/' + encodeURIComponent(clubId), { credentials:'include' });
+    const data = await res.json();
+    state.cmAdminEvents = data.events || [];
+  } catch { state.cmAdminEvents = []; }
+  render();
+}
+
+async function cmAdminCreateEvent(){
+  const clubId = state.cmAdminClub;
+  const title = document.getElementById('cmAdminTitle').value.trim();
+  const desc = document.getElementById('cmAdminDesc').value.trim();
+  const startDate = document.getElementById('cmAdminStartDate').value;
+  const endDate = document.getElementById('cmAdminEndDate').value;
+  const startHour = Number(document.getElementById('cmAdminStartHour').value);
+  const endHour = Number(document.getElementById('cmAdminEndHour').value);
+  const status = document.getElementById('cmAdminCreateStatus');
+  try {
+    const res = await fetch('/api/admin/club-events/' + encodeURIComponent(clubId), {
+      method:'POST', headers:{'Content-Type':'application/json'}, credentials:'include',
+      body: JSON.stringify({ title, desc, startDate, endDate, startHour, endHour })
+    });
+    const data = await res.json();
+    if(!res.ok) throw new Error(data.error || 'Could not create event');
+    status.textContent = '';
+    await cmAdminSelectClub(clubId);
+  } catch(err){
+    status.textContent = 'Error: ' + err.message;
+  }
+}
+
+async function cmAdminDeleteEvent(eventId){
+  if(!confirm('Delete this event? This cannot be undone.')) return;
+  const clubId = state.cmAdminClub;
+  await fetch('/api/admin/club-events/' + encodeURIComponent(clubId) + '/' + encodeURIComponent(eventId), { method:'DELETE', credentials:'include' });
+  await cmAdminSelectClub(clubId);
+}
+
+function renderClubAdminPanel(){
+  if(!state.cmAdminOpen) return '';
+  if(state.cmAdminLoggedIn === undefined || state.cmAdminLoggedIn === null){
+    return `<div class="rules-content" style="max-width:360px;margin:16px auto;">Loading…</div>`;
+  }
+  if(!state.cmAdminLoggedIn){
+    return `<div class="rules-content" style="max-width:360px;margin:16px auto;text-align:center;">
+      <h3>Admin Login</h3>
+      ${state.cmAdminError ? `<p style="color:#c00;font-size:13px;">${escapeCm(state.cmAdminError)}</p>` : ''}
+      <input type="password" id="cmAdminPassword" placeholder="Admin password" style="width:100%;padding:10px;border-radius:10px;border:2px solid var(--charcoal);margin-bottom:10px;box-sizing:border-box;">
+      <button class="club-guide-btn" id="cmAdminLoginBtn" style="width:100%;">Log In</button>
+    </div>`;
+  }
+  const clubId = state.cmAdminClub;
+  return `<div class="rules-content" style="max-width:520px;margin:16px auto;">
+    <div style="display:flex;justify-content:space-between;align-items:center;">
+      <h3 style="margin:0;">Club Events Admin</h3>
+      <button class="club-guide-btn" id="cmAdminLogoutBtn" style="padding:6px 12px;font-size:12px;">Log Out</button>
+    </div>
+    <select id="cmAdminClubSelect" style="width:100%;padding:10px;margin:12px 0;border-radius:10px;border:2px solid var(--charcoal);">
+      <option value="">-- Choose a club --</option>
+      ${clubsData.map(c => `<option value="${c.id}" ${clubId===c.id?'selected':''}>${escapeCm(c.title)}</option>`).join('')}
+    </select>
+    ${clubId ? `
+      <div id="cmAdminEventsList">${state.cmAdminEvents === null ? 'Loading…' : (state.cmAdminEvents.length ? state.cmAdminEvents.map(e => `
+        <div style="display:flex;justify-content:space-between;align-items:center;border:2px solid var(--charcoal);border-radius:10px;padding:10px;margin-bottom:8px;">
+          <div><strong>${escapeCm(e.title)}</strong><br><span style="font-size:12px;">${escapeCm(e.startDate)} – ${escapeCm(e.endDate)}, ${e.startHour}:00–${e.endHour}:00</span></div>
+          <button class="cm-admin-delete-event" data-event-id="${e.id}" style="background:#c00;color:#fff;border:none;border-radius:8px;padding:6px 10px;cursor:pointer;">Delete</button>
+        </div>`).join('') : '<p style="font-size:13px;">No events yet for this club.</p>')}</div>
+      <h4 style="margin-top:18px;">Create Event</h4>
+      <div style="display:flex;flex-direction:column;gap:8px;">
+        <input id="cmAdminTitle" placeholder="Event title" style="padding:10px;border-radius:10px;border:2px solid var(--charcoal);">
+        <input id="cmAdminDesc" placeholder="Description (optional)" style="padding:10px;border-radius:10px;border:2px solid var(--charcoal);">
+        <div style="display:flex;gap:8px;">
+          <input id="cmAdminStartDate" type="date" style="flex:1;padding:10px;border-radius:10px;border:2px solid var(--charcoal);">
+          <input id="cmAdminEndDate" type="date" style="flex:1;padding:10px;border-radius:10px;border:2px solid var(--charcoal);">
+        </div>
+        <div style="display:flex;gap:8px;align-items:center;">
+          <label style="font-size:12px;">From hour <input id="cmAdminStartHour" type="number" min="0" max="23" value="9" style="width:60px;padding:8px;border-radius:8px;border:2px solid var(--charcoal);"></label>
+          <label style="font-size:12px;">To hour <input id="cmAdminEndHour" type="number" min="1" max="24" value="21" style="width:60px;padding:8px;border-radius:8px;border:2px solid var(--charcoal);"></label>
+        </div>
+        <button class="club-guide-btn" id="cmAdminCreateBtn" style="background:var(--charcoal);color:var(--cream);">Create Event</button>
+        <span id="cmAdminCreateStatus" style="font-size:12px;color:#c00;"></span>
+      </div>
+    ` : ''}
+  </div>`;
+}
+
+function wireClubAdminPanel(){
+  if(!state.cmAdminOpen) return;
+  const loginBtn = document.getElementById('cmAdminLoginBtn');
+  if(loginBtn) loginBtn.addEventListener('click', cmAdminLogin);
+  const logoutBtn = document.getElementById('cmAdminLogoutBtn');
+  if(logoutBtn) logoutBtn.addEventListener('click', cmAdminLogout);
+  const select = document.getElementById('cmAdminClubSelect');
+  if(select) select.addEventListener('change', () => cmAdminSelectClub(select.value));
+  const createBtn = document.getElementById('cmAdminCreateBtn');
+  if(createBtn) createBtn.addEventListener('click', cmAdminCreateEvent);
+  document.querySelectorAll('.cm-admin-delete-event').forEach(btn => {
+    btn.addEventListener('click', () => cmAdminDeleteEvent(btn.dataset.eventId));
+  });
+}
+
 
 function render(){
   const contextBack = document.getElementById('contextBack');

@@ -11,15 +11,25 @@
  *   GET  /api/data/:key    - Fetch data by key (public read)
  *   POST /api/data/:key    - Update data by key (requires session)
  *
- *   -- Club Members Schedule (per-club private sign-in + availability) --
- *   GET    /api/clubs/:clubId/members              - Roster (name + photo, no PINs)
- *   POST   /api/clubs/:clubId/members              - Create a profile, returns a one-time PIN + session token
- *   POST   /api/clubs/:clubId/login                - Sign in with name+PIN, returns a session token
- *   GET    /api/clubs/:clubId/members/:id          - One member's public profile + availability
- *   PUT    /api/clubs/:clubId/members/:id          - Update own availability/photo (Bearer session token required)
- *   GET    /api/admin/club-members                 - All clubs' rosters (requires admin session)
- *   POST   /api/admin/club-members/:clubId/:id/reset-pin - Issue a member a new PIN (requires admin session)
- *   DELETE /api/admin/club-members/:clubId/:id     - Remove a member (requires admin session)
+ *   -- Club Members Schedule (per-club private sign-in + per-event availability) --
+ *   GET    /api/clubs/:clubId/members                       - Roster (name, username, photo — no PINs)
+ *   POST   /api/clubs/:clubId/members                       - Create a profile (name+username), returns a one-time PIN + session token
+ *   POST   /api/clubs/:clubId/login                         - Sign in with username+PIN, returns a session token
+ *   PUT    /api/clubs/:clubId/members/:id                   - Update own profile photo (Bearer session token required)
+ *   GET    /api/clubs/:clubId/events                        - This club's admin-created events
+ *   GET    /api/clubs/:clubId/events/:eventId/responses     - Every member's availability for one event + aggregate counts
+ *   PUT    /api/clubs/:clubId/events/:eventId/responses/:id - Save own availability for one event (Bearer session token required)
+ *
+ *   -- Admin (session-cookie gated) --
+ *   POST   /api/admin/login                                 - JSON password login for the in-site admin panel (sets the same session cookie as /login)
+ *   POST   /api/admin/logout                                - JSON logout
+ *   GET    /api/admin/session                                - { loggedIn }
+ *   GET    /api/admin/club-members                          - All clubs' rosters
+ *   POST   /api/admin/club-members/:clubId/:id/reset-pin     - Issue a member a new PIN
+ *   DELETE /api/admin/club-members/:clubId/:id               - Remove a member (also frees their username)
+ *   GET    /api/admin/club-events/:clubId                    - This club's events (admin view)
+ *   POST   /api/admin/club-events/:clubId                    - Create an event (title, desc, startDate, endDate, startHour, endHour)
+ *   DELETE /api/admin/club-events/:clubId/:eventId            - Remove an event and its responses
  *
  * Deploy:
  *   wrangler deploy
@@ -31,9 +41,8 @@ const SUBSCRIBER_INDEX_KEY = "daily-list-subscribers";
 const EVENT_FILES = ["sports", "gatherings", "dayactivities", "mosquegatherings", "trips"];
 
 // ---- Club Members Schedule helpers ----
-const CM_DAYS = ["sun", "mon", "tue", "wed", "thu", "fri", "sat"];
-const CM_BLOCKS = ["morning", "afternoon", "evening", "night"];
 const CM_MAX_PHOTO_LEN = 300000; // ~225KB of raw bytes once base64-decoded
+const CM_HALF_HOURS = Array.from({ length: 48 }, (_, i) => i); // 0..47, each = a 30-min slot in a day
 
 const sha256Hex = async (input) => {
   const digest = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(input));
@@ -42,22 +51,18 @@ const sha256Hex = async (input) => {
 
 const randomPin = () => String(Math.floor(1000 + Math.random() * 9000));
 
-const sanitizeAvailability = (input) => {
-  const out = {};
-  if (!input || typeof input !== "object") return out;
-  for (const day of CM_DAYS) {
-    const blocks = Array.isArray(input[day]) ? input[day].filter(b => CM_BLOCKS.includes(b)) : [];
-    if (blocks.length) out[day] = [...new Set(blocks)];
-  }
-  return out;
-};
-
 const sanitizePhoto = (photo) => {
   if (!photo) return null;
   if (typeof photo !== "string" || !photo.startsWith("data:image/") || photo.length > CM_MAX_PHOTO_LEN) return null;
   return photo;
 };
 
+const sanitizeUsername = (input) => {
+  const u = String(input || "").trim().toLowerCase();
+  return /^[a-z0-9_]{3,20}$/.test(u) ? u : null;
+};
+
+// ---- Club members (per-club roster in KV) ----
 const clubMembersKey = (clubId) => `clubmembers:${clubId}`;
 
 const readClubMembers = async (env, clubId) => {
@@ -69,9 +74,23 @@ const writeClubMembers = async (env, clubId, members) => {
   await env.SITE_DATA.put(clubMembersKey(clubId), JSON.stringify(members));
 };
 
-const publicMember = (m) => ({ id: m.id, name: m.name, photo: m.photo || null, availability: m.availability || {} });
-const publicMemberSummary = (m) => ({ id: m.id, name: m.name, photo: m.photo || null });
+const publicMember = (m) => ({ id: m.id, name: m.name, username: m.username, photo: m.photo || null });
+const publicMemberSummary = (m) => ({ id: m.id, name: m.name, username: m.username, photo: m.photo || null });
 
+// ---- Global username uniqueness index ----
+const usernameKey = (username) => `username:${username}`;
+
+const reserveUsername = async (env, username, clubId, memberId) => {
+  await env.SITE_DATA.put(usernameKey(username), JSON.stringify({ clubId, memberId }));
+};
+
+const isUsernameTaken = async (env, username) => (await env.SITE_DATA.get(usernameKey(username))) !== null;
+
+const releaseUsername = async (env, username) => {
+  await env.SITE_DATA.delete(usernameKey(username));
+};
+
+// ---- Member sessions (device sign-in tokens) ----
 const createMemberSession = async (env, clubId, memberId) => {
   const token = crypto.randomUUID();
   await env.SITE_DATA.put(
@@ -92,6 +111,47 @@ const verifyMemberToken = async (env, clubId, memberId, token) => {
   } catch {
     return false;
   }
+};
+
+// ---- Club events (admin-created, members mark availability per event) ----
+const clubEventsKey = (clubId) => `clubevents:${clubId}`;
+const clubEventResponsesKey = (clubId, eventId) => `clubeventresponses:${clubId}:${eventId}`;
+
+const readClubEvents = async (env, clubId) => {
+  const raw = await env.SITE_DATA.get(clubEventsKey(clubId));
+  return raw ? JSON.parse(raw) : [];
+};
+
+const writeClubEvents = async (env, clubId, events) => {
+  await env.SITE_DATA.put(clubEventsKey(clubId), JSON.stringify(events));
+};
+
+const isValidDateString = (s) => typeof s === "string" && /^\d{4}-\d{2}-\d{2}$/.test(s) && !isNaN(Date.parse(s + "T00:00:00Z"));
+
+const dateRange = (startDate, endDate) => {
+  const out = [];
+  let cur = new Date(startDate + "T00:00:00Z");
+  const end = new Date(endDate + "T00:00:00Z");
+  while (cur <= end && out.length < 31) {
+    out.push(cur.toISOString().slice(0, 10));
+    cur = new Date(cur.getTime() + 86400000);
+  }
+  return out;
+};
+
+const sanitizeEventSlots = (input, event) => {
+  if (!Array.isArray(input)) return [];
+  const validDates = new Set(event.dates);
+  const out = new Set();
+  for (const slot of input) {
+    if (typeof slot !== "string") continue;
+    const [date, halfHourStr] = slot.split("|");
+    const halfHour = Number(halfHourStr);
+    if (!validDates.has(date)) continue;
+    if (!Number.isInteger(halfHour) || halfHour < event.startHour * 2 || halfHour >= event.endHour * 2) continue;
+    out.add(`${date}|${halfHour}`);
+  }
+  return [...out];
 };
 
 const jsonResponse = (body, status = 200, corsHeaders = {}) => new Response(JSON.stringify(body), {
@@ -172,11 +232,14 @@ export default {
       return new Response("You have been unsubscribed from the daily 4DASISTAS list.", { headers: { "Content-Type": "text/plain", ...corsHeaders } });
     }
 
-    // ---- Club Members Schedule (public sign-in/profile/availability routes) ----
+    // ---- Club Members Schedule (public sign-in/profile/event-availability routes) ----
 
     const cmMembersMatch = path.match(/^\/api\/clubs\/([^/]+)\/members\/?$/);
     const cmMemberByIdMatch = path.match(/^\/api\/clubs\/([^/]+)\/members\/([^/]+)\/?$/);
     const cmLoginMatch = path.match(/^\/api\/clubs\/([^/]+)\/login\/?$/);
+    const cmEventsMatch = path.match(/^\/api\/clubs\/([^/]+)\/events\/?$/);
+    const cmEventResponsesMatch = path.match(/^\/api\/clubs\/([^/]+)\/events\/([^/]+)\/responses\/?$/);
+    const cmEventResponseByMemberMatch = path.match(/^\/api\/clubs\/([^/]+)\/events\/([^/]+)\/responses\/([^/]+)\/?$/);
 
     if (cmMembersMatch && request.method === "GET") {
       const clubId = decodeURIComponent(cmMembersMatch[1]);
@@ -189,33 +252,35 @@ export default {
       let body;
       try { body = await request.json(); } catch { return jsonResponse({ error: "Invalid request" }, 400, corsHeaders); }
       const name = String(body.name || "").trim().slice(0, 60);
+      const username = sanitizeUsername(body.username);
       if (!name) return jsonResponse({ error: "Name is required" }, 400, corsHeaders);
-      const photo = sanitizePhoto(body.photo);
-      const members = await readClubMembers(env, clubId);
-      if (members.some(m => m.name.toLowerCase() === name.toLowerCase())) {
-        return jsonResponse({ error: "That name is already used in this club. Pick another, or sign in if this is you." }, 409, corsHeaders);
+      if (!username) return jsonResponse({ error: "Username must be 3-20 characters: letters, numbers, underscore only" }, 400, corsHeaders);
+      if (await isUsernameTaken(env, username)) {
+        return jsonResponse({ error: "That username is already taken. Pick another, or sign in if this is you." }, 409, corsHeaders);
       }
+      const members = await readClubMembers(env, clubId);
       const existingHashes = new Set(members.map(m => m.pinHash));
       let pin, pinHash;
       do { pin = randomPin(); pinHash = await sha256Hex(pin); } while (existingHashes.has(pinHash));
-      const member = { id: crypto.randomUUID(), name, pinHash, photo, availability: {}, createdAt: Date.now() };
+      const member = { id: crypto.randomUUID(), name, username, pinHash, photo: null, createdAt: Date.now() };
       members.push(member);
       await writeClubMembers(env, clubId, members);
+      await reserveUsername(env, username, clubId, member.id);
       const token = await createMemberSession(env, clubId, member.id);
-      return jsonResponse({ id: member.id, name: member.name, pin, token }, 201, corsHeaders);
+      return jsonResponse({ id: member.id, name: member.name, username: member.username, pin, token }, 201, corsHeaders);
     }
 
     if (cmLoginMatch && request.method === "POST") {
       const clubId = decodeURIComponent(cmLoginMatch[1]);
       let body;
       try { body = await request.json(); } catch { return jsonResponse({ error: "Invalid request" }, 400, corsHeaders); }
-      const name = String(body.name || "").trim();
+      const username = sanitizeUsername(body.username);
       const pin = String(body.pin || "").trim();
-      if (!name || !pin) return jsonResponse({ error: "Name and PIN are required" }, 400, corsHeaders);
+      if (!username || !pin) return jsonResponse({ error: "Username and PIN are required" }, 400, corsHeaders);
       const members = await readClubMembers(env, clubId);
       const pinHash = await sha256Hex(pin);
-      const member = members.find(m => m.name.toLowerCase() === name.toLowerCase() && m.pinHash === pinHash);
-      if (!member) return jsonResponse({ error: "Name or PIN is incorrect" }, 401, corsHeaders);
+      const member = members.find(m => m.username === username && m.pinHash === pinHash);
+      if (!member) return jsonResponse({ error: "Username or PIN is incorrect" }, 401, corsHeaders);
       const token = await createMemberSession(env, clubId, member.id);
       return jsonResponse({ ...publicMember(member), token }, 200, corsHeaders);
     }
@@ -241,10 +306,53 @@ export default {
       const members = await readClubMembers(env, clubId);
       const member = members.find(m => m.id === memberId);
       if (!member) return jsonResponse({ error: "Not found" }, 404, corsHeaders);
-      if (body.availability !== undefined) member.availability = sanitizeAvailability(body.availability);
       if (body.photo !== undefined) member.photo = sanitizePhoto(body.photo);
       await writeClubMembers(env, clubId, members);
       return jsonResponse(publicMember(member), 200, corsHeaders);
+    }
+
+    if (cmEventsMatch && request.method === "GET") {
+      const clubId = decodeURIComponent(cmEventsMatch[1]);
+      return jsonResponse({ events: await readClubEvents(env, clubId) }, 200, corsHeaders);
+    }
+
+    if (cmEventResponsesMatch && request.method === "GET") {
+      const clubId = decodeURIComponent(cmEventResponsesMatch[1]);
+      const eventId = decodeURIComponent(cmEventResponsesMatch[2]);
+      const [members, raw] = await Promise.all([
+        readClubMembers(env, clubId),
+        env.SITE_DATA.get(clubEventResponsesKey(clubId, eventId)),
+      ]);
+      const responses = raw ? JSON.parse(raw) : {};
+      const aggregate = {};
+      const byMember = [];
+      for (const member of members) {
+        const slots = responses[member.id] || [];
+        if (slots.length) byMember.push({ id: member.id, name: member.name, username: member.username, slots });
+        for (const slot of slots) aggregate[slot] = (aggregate[slot] || 0) + 1;
+      }
+      return jsonResponse({ members: byMember, aggregate }, 200, corsHeaders);
+    }
+
+    if (cmEventResponseByMemberMatch && request.method === "PUT") {
+      const clubId = decodeURIComponent(cmEventResponseByMemberMatch[1]);
+      const eventId = decodeURIComponent(cmEventResponseByMemberMatch[2]);
+      const memberId = decodeURIComponent(cmEventResponseByMemberMatch[3]);
+      let body;
+      try { body = await request.json(); } catch { return jsonResponse({ error: "Invalid request" }, 400, corsHeaders); }
+      const authHeader = request.headers.get("Authorization") || "";
+      const token = authHeader.startsWith("Bearer ") ? authHeader.slice(7) : String(body.token || "");
+      const ok = await verifyMemberToken(env, clubId, memberId, token);
+      if (!ok) return jsonResponse({ error: "Not signed in" }, 401, corsHeaders);
+      const events = await readClubEvents(env, clubId);
+      const event = events.find(e => e.id === eventId);
+      if (!event) return jsonResponse({ error: "Event not found" }, 404, corsHeaders);
+      const key = clubEventResponsesKey(clubId, eventId);
+      const raw = await env.SITE_DATA.get(key);
+      const responses = raw ? JSON.parse(raw) : {};
+      responses[memberId] = sanitizeEventSlots(body.slots, event);
+      await env.SITE_DATA.put(key, JSON.stringify(responses));
+      return jsonResponse({ slots: responses[memberId] }, 200, corsHeaders);
     }
 
     // ---- Auth helpers ----
@@ -332,9 +440,35 @@ export default {
       return new Response(null, { status: 302, headers });
     }
 
+    // ---- JSON admin auth (used by the in-site admin panel under GALS CLUBS) ----
+
+    if (path === "/api/admin/login" && request.method === "POST") {
+      if (!ADMIN_PASSWORD) return jsonResponse({ error: "Server misconfigured: ADMIN_PASSWORD is not set" }, 500, corsHeaders);
+      let body;
+      try { body = await request.json(); } catch { return jsonResponse({ error: "Invalid request" }, 400, corsHeaders); }
+      if (String(body.password || "") !== ADMIN_PASSWORD) return jsonResponse({ error: "Incorrect password" }, 401, corsHeaders);
+      const token = await createSession();
+      const headers = new Headers({ "Content-Type": "application/json", ...corsHeaders });
+      headers.set("Set-Cookie", setSessionCookie(token));
+      return new Response(JSON.stringify({ ok: true }), { status: 200, headers });
+    }
+
+    if (path === "/api/admin/logout" && request.method === "POST") {
+      const token = getSessionToken(request);
+      if (token) await env.SITE_DATA.delete(`session:${token}`).catch(() => {});
+      const headers = new Headers({ "Content-Type": "application/json", ...corsHeaders });
+      headers.set("Set-Cookie", clearSessionCookie());
+      return new Response(JSON.stringify({ ok: true }), { status: 200, headers });
+    }
+
+    if (path === "/api/admin/session" && request.method === "GET") {
+      const loggedIn = await isValidSession(getSessionToken(request));
+      return jsonResponse({ loggedIn }, 200, corsHeaders);
+    }
+
     // ---- Auth guard for editor and writes ----
 
-    const requiresAuth = path === "/editor" || (path.startsWith("/api/data/") && request.method === "POST") || path.startsWith("/api/admin/club-members");
+    const requiresAuth = path === "/editor" || (path.startsWith("/api/data/") && request.method === "POST") || path.startsWith("/api/admin/club-members") || path.startsWith("/api/admin/club-events");
 
     if (requiresAuth) {
       const token = getSessionToken(request);
@@ -404,7 +538,52 @@ export default {
       const clubId = decodeURIComponent(adminDeleteMatch[1]);
       const memberId = decodeURIComponent(adminDeleteMatch[2]);
       const members = await readClubMembers(env, clubId);
+      const member = members.find(m => m.id === memberId);
+      if (member && member.username) await releaseUsername(env, member.username);
       await writeClubMembers(env, clubId, members.filter(m => m.id !== memberId));
+      return jsonResponse({ ok: true }, 200, corsHeaders);
+    }
+
+    // Admin: create/list/delete per-club events
+    const adminEventsMatch = path.match(/^\/api\/admin\/club-events\/([^/]+)\/?$/);
+    if (adminEventsMatch && request.method === "GET") {
+      const clubId = decodeURIComponent(adminEventsMatch[1]);
+      return jsonResponse({ events: await readClubEvents(env, clubId) }, 200, corsHeaders);
+    }
+
+    if (adminEventsMatch && request.method === "POST") {
+      const clubId = decodeURIComponent(adminEventsMatch[1]);
+      let body;
+      try { body = await request.json(); } catch { return jsonResponse({ error: "Invalid request" }, 400, corsHeaders); }
+      const title = String(body.title || "").trim().slice(0, 80);
+      const desc = String(body.desc || "").trim().slice(0, 500);
+      const startDate = String(body.startDate || "");
+      const endDate = String(body.endDate || "");
+      const startHour = Number(body.startHour);
+      const endHour = Number(body.endHour);
+      if (!title) return jsonResponse({ error: "Title is required" }, 400, corsHeaders);
+      if (!isValidDateString(startDate) || !isValidDateString(endDate) || endDate < startDate) {
+        return jsonResponse({ error: "Valid start and end dates are required (end on or after start)" }, 400, corsHeaders);
+      }
+      if (!Number.isInteger(startHour) || !Number.isInteger(endHour) || startHour < 0 || endHour > 24 || endHour <= startHour) {
+        return jsonResponse({ error: "Start/end hour must be whole numbers, 0-24, with end after start" }, 400, corsHeaders);
+      }
+      const dates = dateRange(startDate, endDate);
+      if (!dates.length) return jsonResponse({ error: "Date range is too long (max 31 days)" }, 400, corsHeaders);
+      const event = { id: crypto.randomUUID(), title, desc, startDate, endDate, dates, startHour, endHour, createdAt: Date.now() };
+      const events = await readClubEvents(env, clubId);
+      events.push(event);
+      await writeClubEvents(env, clubId, events);
+      return jsonResponse(event, 201, corsHeaders);
+    }
+
+    const adminEventDeleteMatch = path.match(/^\/api\/admin\/club-events\/([^/]+)\/([^/]+)\/?$/);
+    if (adminEventDeleteMatch && request.method === "DELETE") {
+      const clubId = decodeURIComponent(adminEventDeleteMatch[1]);
+      const eventId = decodeURIComponent(adminEventDeleteMatch[2]);
+      const events = await readClubEvents(env, clubId);
+      await writeClubEvents(env, clubId, events.filter(e => e.id !== eventId));
+      await env.SITE_DATA.delete(clubEventResponsesKey(clubId, eventId)).catch(() => {});
       return jsonResponse({ ok: true }, 200, corsHeaders);
     }
 
@@ -510,7 +689,7 @@ export default {
         return '<h3>' + escapeCmAdmin(clubId) + '</h3><table style="width:100%;border-collapse:collapse;margin-bottom:20px;">' +
           members.map(m => '<tr style="border-bottom:1px solid #ddd;"><td style="padding:6px;">' +
             (m.photo ? '<img src="' + m.photo + '" style="width:28px;height:28px;border-radius:50%;object-fit:cover;vertical-align:middle;margin-right:8px;">' : '') +
-            escapeCmAdmin(m.name) + '</td>' +
+            escapeCmAdmin(m.name) + ' <span style="color:#888;">@' + escapeCmAdmin(m.username || '?') + '</span></td>' +
             '<td style="padding:6px;text-align:right;"><button onclick="resetClubMemberPin(\\'' + clubId + '\\',\\'' + m.id + '\\')">Reset PIN</button> ' +
             '<button onclick="removeClubMember(\\'' + clubId + '\\',\\'' + m.id + '\\')" style="background:#c00;">Remove</button></td></tr>').join('') +
           '</table>';
