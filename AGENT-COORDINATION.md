@@ -79,6 +79,13 @@ npx wrangler deploy
 
 **Status:** IDLE
 **Last updated by:** Claude (chat)
+**Last updated:** 2026-08-30 (formspree connected)
+
+**2026-08-30 (formspree connected) — Claude (chat) — `index.html`** — Swapped the volunteer form's placeholder Formspree URL for Lujane's real endpoint (mkjnonrr). Form is now fully functional end to end.
+
+
+**Status:** IDLE
+**Last updated by:** Claude (chat)
 **Last updated:** 2026-08-30 (volunteer form)
 
 **2026-08-30 (volunteer form) — Claude (chat) — `index.html`** — Renamed FAQ tab label to About (internal data-tab='rules' unchanged, content unchanged - was already Community Rules content mislabeled as FAQ). Added a Want to Volunteer button at the bottom that reveals a form (name, phone, email, checkboxes for Website development/Social media/Outreach/Other-with-textbox), submitting via Formspree. IMPORTANT: uses a placeholder Formspree endpoint (https://formspree.io/f/YOUR_FORM_ID) - Lujane needs to create a real Formspree account/form and swap in her actual endpoint URL before this will actually deliver submissions anywhere. Tested via runtime simulation - confirmed tab label, form toggle, and Other-checkbox-reveals-textbox all work correctly.
