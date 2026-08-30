@@ -11,24 +11,28 @@
  *   GET  /api/data/:key    - Fetch data by key (public read)
  *   POST /api/data/:key    - Update data by key (requires session)
  *
- *   -- Club Members Schedule (per-club private sign-in + per-event availability) --
- *   GET    /api/clubs/:clubId/members                       - Roster (name, username, photo — no PINs)
- *   POST   /api/clubs/:clubId/login                         - Sign in with username+PIN, returns a session token
+ *   -- Club Members Schedule (global identity — one username can belong to several clubs) --
+ *   POST   /api/login                                       - Sign in with username+PIN (no club needed), returns { ...user, clubs:[clubId,...], token }
+ *   GET    /api/clubs/:clubId/members                       - This club's roster (name, username, photo — no PINs)
+ *   GET    /api/users/:id                                   - One member's public profile
+ *   PUT    /api/users/:id                                   - Update own profile photo (Bearer session token required)
  *   (Public self-signup is disabled — only the admin panel creates members, see below)
- *   PUT    /api/clubs/:clubId/members/:id                   - Update own profile photo (Bearer session token required)
  *   GET    /api/clubs/:clubId/events                        - This club's admin-created events
  *   GET    /api/clubs/:clubId/events/:eventId/responses     - Every member's availability for one event + aggregate counts
- *   PUT    /api/clubs/:clubId/events/:eventId/responses/:id - Save own availability for one event (Bearer session token required)
+ *   PUT    /api/clubs/:clubId/events/:eventId/responses/:userId - Save own availability for one event (Bearer session token required)
  *
  *   -- Admin (session-cookie gated) --
  *   POST   /api/admin/login                                 - JSON password login for the in-site admin panel (sets the same session cookie as /login)
  *   POST   /api/admin/logout                                - JSON logout
  *   GET    /api/admin/session                                - { loggedIn }
- *   GET    /api/admin/club-members                          - All clubs' rosters
- *   POST   /api/admin/club-members/:clubId                   - Create a member directly (name, username, optional exact 4-digit pin)
- *   PUT    /api/admin/club-members/:clubId/:id                - Edit a member's name/username/pin (any subset)
+ *   GET    /api/admin/club-members                          - All clubs' rosters (a person in several clubs appears under each)
+ *   POST   /api/admin/club-members/:clubId                   - Add a member to this club — reuses an existing global username if it
+ *                                                                already exists (so the same person can join another club), else
+ *                                                                creates a new global identity (name, username, optional exact 4-digit pin)
+ *   PUT    /api/admin/club-members/:clubId/:id                - Edit a member's name/username/pin (any subset) — edits the global identity
  *   POST   /api/admin/club-members/:clubId/:id/reset-pin     - Issue a member a fresh random PIN
- *   DELETE /api/admin/club-members/:clubId/:id               - Remove a member (also frees their username)
+ *   DELETE /api/admin/club-members/:clubId/:id               - Remove a member from this club only (their identity/other memberships stay;
+ *                                                                the global identity + username are only deleted once they're in zero clubs)
  *   GET    /api/admin/club-events/:clubId                    - This club's events (admin view)
  *   POST   /api/admin/club-events/:clubId                    - Create an event (title, desc, startDate, endDate, startHour, endHour)
  *   DELETE /api/admin/club-events/:clubId/:eventId            - Remove an event and its responses
@@ -67,52 +71,83 @@ const sanitizeUsername = (input) => {
   return /^[a-z0-9_]{3,20}$/.test(u) ? u : null;
 };
 
-// ---- Club members (per-club roster in KV) ----
+// ---- Global member identity: one person, one username, can belong to several clubs ----
+const userKey = (userId) => `user:${userId}`;
+
+const readUser = async (env, userId) => {
+  const raw = await env.SITE_DATA.get(userKey(userId));
+  return raw ? JSON.parse(raw) : null;
+};
+
+const writeUser = async (env, user) => {
+  await env.SITE_DATA.put(userKey(user.id), JSON.stringify(user));
+};
+
+const deleteUser = async (env, userId) => {
+  await env.SITE_DATA.delete(userKey(userId));
+};
+
+const publicUser = (u) => ({ id: u.id, name: u.name, username: u.username, photo: u.photo || null });
+
+// ---- Club membership: each club just holds a list of member userIds ----
 const clubMembersKey = (clubId) => `clubmembers:${clubId}`;
 
-const readClubMembers = async (env, clubId) => {
+const readClubMemberIds = async (env, clubId) => {
   const raw = await env.SITE_DATA.get(clubMembersKey(clubId));
   return raw ? JSON.parse(raw) : [];
 };
 
-const writeClubMembers = async (env, clubId, members) => {
-  await env.SITE_DATA.put(clubMembersKey(clubId), JSON.stringify(members));
+const writeClubMemberIds = async (env, clubId, ids) => {
+  await env.SITE_DATA.put(clubMembersKey(clubId), JSON.stringify(ids));
 };
 
-const publicMember = (m) => ({ id: m.id, name: m.name, username: m.username, photo: m.photo || null });
-const publicMemberSummary = (m) => ({ id: m.id, name: m.name, username: m.username, photo: m.photo || null });
+const resolveClubMembers = async (env, clubId) => {
+  const ids = await readClubMemberIds(env, clubId);
+  const users = await Promise.all(ids.map(id => readUser(env, id)));
+  return users.filter(Boolean);
+};
 
-// ---- Global username uniqueness index ----
+const allClubIdsContaining = async (env, userId) => {
+  const list = await env.SITE_DATA.list({ prefix: "clubmembers:" });
+  const out = [];
+  for (const key of list.keys) {
+    const clubId = key.name.replace("clubmembers:", "");
+    const ids = await readClubMemberIds(env, clubId);
+    if (ids.includes(userId)) out.push(clubId);
+  }
+  return out;
+};
+
+// ---- Global username uniqueness index (username -> userId) ----
 const usernameKey = (username) => `username:${username}`;
 
-const reserveUsername = async (env, username, clubId, memberId) => {
-  await env.SITE_DATA.put(usernameKey(username), JSON.stringify({ clubId, memberId }));
-};
+const findUserIdByUsername = async (env, username) => env.SITE_DATA.get(usernameKey(username));
 
-const isUsernameTaken = async (env, username) => (await env.SITE_DATA.get(usernameKey(username))) !== null;
+const reserveUsername = async (env, username, userId) => {
+  await env.SITE_DATA.put(usernameKey(username), userId);
+};
 
 const releaseUsername = async (env, username) => {
   await env.SITE_DATA.delete(usernameKey(username));
 };
 
-// ---- Member sessions (device sign-in tokens) ----
-const createMemberSession = async (env, clubId, memberId) => {
+// ---- Member sessions (device sign-in tokens, scoped to a user, not a club) ----
+const createMemberSession = async (env, userId) => {
   const token = crypto.randomUUID();
   await env.SITE_DATA.put(
     `membersession:${token}`,
-    JSON.stringify({ clubId, memberId, expiresAt: Date.now() + MEMBER_SESSION_TTL * 1000 }),
+    JSON.stringify({ userId, expiresAt: Date.now() + MEMBER_SESSION_TTL * 1000 }),
     { expirationTtl: MEMBER_SESSION_TTL }
   );
   return token;
 };
 
-const verifyMemberToken = async (env, clubId, memberId, token) => {
+const verifyMemberToken = async (env, userId, token) => {
   if (!token) return false;
   const raw = await env.SITE_DATA.get(`membersession:${token}`);
   if (!raw) return false;
   try {
-    const session = JSON.parse(raw);
-    return session.clubId === clubId && session.memberId === memberId;
+    return JSON.parse(raw).userId === userId;
   } catch {
     return false;
   }
@@ -240,60 +275,57 @@ export default {
     // ---- Club Members Schedule (public sign-in/profile/event-availability routes) ----
 
     const cmMembersMatch = path.match(/^\/api\/clubs\/([^/]+)\/members\/?$/);
-    const cmMemberByIdMatch = path.match(/^\/api\/clubs\/([^/]+)\/members\/([^/]+)\/?$/);
-    const cmLoginMatch = path.match(/^\/api\/clubs\/([^/]+)\/login\/?$/);
+    const userByIdMatch = path.match(/^\/api\/users\/([^/]+)\/?$/);
     const cmEventsMatch = path.match(/^\/api\/clubs\/([^/]+)\/events\/?$/);
     const cmEventResponsesMatch = path.match(/^\/api\/clubs\/([^/]+)\/events\/([^/]+)\/responses\/?$/);
     const cmEventResponseByMemberMatch = path.match(/^\/api\/clubs\/([^/]+)\/events\/([^/]+)\/responses\/([^/]+)\/?$/);
 
-    if (cmMembersMatch && request.method === "GET") {
-      const clubId = decodeURIComponent(cmMembersMatch[1]);
-      const members = await readClubMembers(env, clubId);
-      return jsonResponse({ members: members.map(publicMemberSummary) }, 200, corsHeaders);
-    }
-
-    // Public self-signup is intentionally disabled — only the admin panel creates members
-    // (POST /api/admin/club-members/:clubId), so profiles can never be created by a random visitor.
-
-    if (cmLoginMatch && request.method === "POST") {
-      const clubId = decodeURIComponent(cmLoginMatch[1]);
+    // Global sign-in: username+PIN identifies one person, independent of any club.
+    if (path === "/api/login" && request.method === "POST") {
       let body;
       try { body = await request.json(); } catch { return jsonResponse({ error: "Invalid request" }, 400, corsHeaders); }
       const username = sanitizeUsername(body.username);
       const pin = String(body.pin || "").trim();
       if (!username || !pin) return jsonResponse({ error: "Username and PIN are required" }, 400, corsHeaders);
-      const members = await readClubMembers(env, clubId);
-      const pinHash = await sha256Hex(pin);
-      const member = members.find(m => m.username === username && m.pinHash === pinHash);
-      if (!member) return jsonResponse({ error: "Username or PIN is incorrect" }, 401, corsHeaders);
-      const token = await createMemberSession(env, clubId, member.id);
-      return jsonResponse({ ...publicMember(member), token }, 200, corsHeaders);
+      const userId = await findUserIdByUsername(env, username);
+      const user = userId ? await readUser(env, userId) : null;
+      if (!user || user.pinHash !== await sha256Hex(pin)) {
+        return jsonResponse({ error: "Username or PIN is incorrect" }, 401, corsHeaders);
+      }
+      const token = await createMemberSession(env, user.id);
+      const clubs = await allClubIdsContaining(env, user.id);
+      return jsonResponse({ ...publicUser(user), clubs, token }, 200, corsHeaders);
     }
 
-    if (cmMemberByIdMatch && request.method === "GET") {
-      const clubId = decodeURIComponent(cmMemberByIdMatch[1]);
-      const memberId = decodeURIComponent(cmMemberByIdMatch[2]);
-      const members = await readClubMembers(env, clubId);
-      const member = members.find(m => m.id === memberId);
-      if (!member) return jsonResponse({ error: "Not found" }, 404, corsHeaders);
-      return jsonResponse(publicMember(member), 200, corsHeaders);
+    if (cmMembersMatch && request.method === "GET") {
+      const clubId = decodeURIComponent(cmMembersMatch[1]);
+      const members = await resolveClubMembers(env, clubId);
+      return jsonResponse({ members: members.map(publicUser) }, 200, corsHeaders);
     }
 
-    if (cmMemberByIdMatch && request.method === "PUT") {
-      const clubId = decodeURIComponent(cmMemberByIdMatch[1]);
-      const memberId = decodeURIComponent(cmMemberByIdMatch[2]);
+    // Public self-signup is intentionally disabled — only the admin panel creates members
+    // (POST /api/admin/club-members/:clubId), so profiles can never be created by a random visitor.
+
+    if (userByIdMatch && request.method === "GET") {
+      const userId = decodeURIComponent(userByIdMatch[1]);
+      const user = await readUser(env, userId);
+      if (!user) return jsonResponse({ error: "Not found" }, 404, corsHeaders);
+      return jsonResponse(publicUser(user), 200, corsHeaders);
+    }
+
+    if (userByIdMatch && request.method === "PUT") {
+      const userId = decodeURIComponent(userByIdMatch[1]);
       let body;
       try { body = await request.json(); } catch { return jsonResponse({ error: "Invalid request" }, 400, corsHeaders); }
       const authHeader = request.headers.get("Authorization") || "";
       const token = authHeader.startsWith("Bearer ") ? authHeader.slice(7) : String(body.token || "");
-      const ok = await verifyMemberToken(env, clubId, memberId, token);
+      const ok = await verifyMemberToken(env, userId, token);
       if (!ok) return jsonResponse({ error: "Not signed in" }, 401, corsHeaders);
-      const members = await readClubMembers(env, clubId);
-      const member = members.find(m => m.id === memberId);
-      if (!member) return jsonResponse({ error: "Not found" }, 404, corsHeaders);
-      if (body.photo !== undefined) member.photo = sanitizePhoto(body.photo);
-      await writeClubMembers(env, clubId, members);
-      return jsonResponse(publicMember(member), 200, corsHeaders);
+      const user = await readUser(env, userId);
+      if (!user) return jsonResponse({ error: "Not found" }, 404, corsHeaders);
+      if (body.photo !== undefined) user.photo = sanitizePhoto(body.photo);
+      await writeUser(env, user);
+      return jsonResponse(publicUser(user), 200, corsHeaders);
     }
 
     if (cmEventsMatch && request.method === "GET") {
@@ -305,7 +337,7 @@ export default {
       const clubId = decodeURIComponent(cmEventResponsesMatch[1]);
       const eventId = decodeURIComponent(cmEventResponsesMatch[2]);
       const [members, raw] = await Promise.all([
-        readClubMembers(env, clubId),
+        resolveClubMembers(env, clubId),
         env.SITE_DATA.get(clubEventResponsesKey(clubId, eventId)),
       ]);
       const responses = raw ? JSON.parse(raw) : {};
@@ -322,22 +354,24 @@ export default {
     if (cmEventResponseByMemberMatch && request.method === "PUT") {
       const clubId = decodeURIComponent(cmEventResponseByMemberMatch[1]);
       const eventId = decodeURIComponent(cmEventResponseByMemberMatch[2]);
-      const memberId = decodeURIComponent(cmEventResponseByMemberMatch[3]);
+      const userId = decodeURIComponent(cmEventResponseByMemberMatch[3]);
       let body;
       try { body = await request.json(); } catch { return jsonResponse({ error: "Invalid request" }, 400, corsHeaders); }
       const authHeader = request.headers.get("Authorization") || "";
       const token = authHeader.startsWith("Bearer ") ? authHeader.slice(7) : String(body.token || "");
-      const ok = await verifyMemberToken(env, clubId, memberId, token);
+      const ok = await verifyMemberToken(env, userId, token);
       if (!ok) return jsonResponse({ error: "Not signed in" }, 401, corsHeaders);
+      const memberIds = await readClubMemberIds(env, clubId);
+      if (!memberIds.includes(userId)) return jsonResponse({ error: "Not a member of this club" }, 403, corsHeaders);
       const events = await readClubEvents(env, clubId);
       const event = events.find(e => e.id === eventId);
       if (!event) return jsonResponse({ error: "Event not found" }, 404, corsHeaders);
       const key = clubEventResponsesKey(clubId, eventId);
       const raw = await env.SITE_DATA.get(key);
       const responses = raw ? JSON.parse(raw) : {};
-      responses[memberId] = sanitizeEventSlots(body.slots, event);
+      responses[userId] = sanitizeEventSlots(body.slots, event);
       await env.SITE_DATA.put(key, JSON.stringify(responses));
-      return jsonResponse({ slots: responses[memberId] }, 200, corsHeaders);
+      return jsonResponse({ slots: responses[userId] }, 200, corsHeaders);
     }
 
     // ---- Auth helpers ----
@@ -498,7 +532,7 @@ export default {
       const out = {};
       for (const key of list.keys) {
         const clubId = key.name.replace("clubmembers:", "");
-        out[clubId] = (await readClubMembers(env, clubId)).map(publicMemberSummary);
+        out[clubId] = (await resolveClubMembers(env, clubId)).map(publicUser);
       }
       return jsonResponse(out, 200, corsHeaders);
     }
@@ -508,85 +542,91 @@ export default {
       const clubId = decodeURIComponent(adminClubMembersCreateMatch[1]);
       let body;
       try { body = await request.json(); } catch { return jsonResponse({ error: "Invalid request" }, 400, corsHeaders); }
-      const name = String(body.name || "").trim().slice(0, 60);
       const username = sanitizeUsername(body.username);
-      if (!name) return jsonResponse({ error: "Name is required" }, 400, corsHeaders);
       if (!username) return jsonResponse({ error: "Username must be 3-20 characters: letters, numbers, underscore only" }, 400, corsHeaders);
-      if (await isUsernameTaken(env, username)) {
-        return jsonResponse({ error: "That username is already taken" }, 409, corsHeaders);
+
+      const existingUserId = await findUserIdByUsername(env, username);
+      const memberIds = await readClubMemberIds(env, clubId);
+
+      if (existingUserId) {
+        // This person already has an account elsewhere — just add them to this club too.
+        const user = await readUser(env, existingUserId);
+        if (!user) return jsonResponse({ error: "That username exists but its record is missing — contact support" }, 500, corsHeaders);
+        if (!memberIds.includes(existingUserId)) {
+          memberIds.push(existingUserId);
+          await writeClubMemberIds(env, clubId, memberIds);
+        }
+        return jsonResponse({ id: user.id, name: user.name, username: user.username, addedExisting: true }, 200, corsHeaders);
       }
-      const members = await readClubMembers(env, clubId);
+
+      const name = String(body.name || "").trim().slice(0, 60);
+      if (!name) return jsonResponse({ error: "Name is required" }, 400, corsHeaders);
       let pin = String(body.pin || "").trim();
       if (pin && !/^\d{4}$/.test(pin)) return jsonResponse({ error: "PIN must be exactly 4 digits" }, 400, corsHeaders);
-      if (!pin) {
-        const existingHashes = new Set(members.map(m => m.pinHash));
-        let pinHash;
-        do { pin = randomPin(); pinHash = await sha256Hex(pin); } while (existingHashes.has(pinHash));
-      }
-      const pinHash = await sha256Hex(pin);
-      const member = { id: crypto.randomUUID(), name, username, pinHash, photo: null, createdAt: Date.now() };
-      members.push(member);
-      await writeClubMembers(env, clubId, members);
-      await reserveUsername(env, username, clubId, member.id);
-      return jsonResponse({ id: member.id, name: member.name, username: member.username, pin }, 201, corsHeaders);
+      if (!pin) pin = randomPin();
+      const user = { id: crypto.randomUUID(), name, username, pinHash: await sha256Hex(pin), photo: null, createdAt: Date.now() };
+      await writeUser(env, user);
+      await reserveUsername(env, username, user.id);
+      memberIds.push(user.id);
+      await writeClubMemberIds(env, clubId, memberIds);
+      return jsonResponse({ id: user.id, name: user.name, username: user.username, pin }, 201, corsHeaders);
     }
 
     const adminMemberByIdMatch = path.match(/^\/api\/admin\/club-members\/([^/]+)\/([^/]+)\/?$/);
     if (adminMemberByIdMatch && request.method === "PUT") {
-      const clubId = decodeURIComponent(adminMemberByIdMatch[1]);
-      const memberId = decodeURIComponent(adminMemberByIdMatch[2]);
+      const userId = decodeURIComponent(adminMemberByIdMatch[2]);
       let body;
       try { body = await request.json(); } catch { return jsonResponse({ error: "Invalid request" }, 400, corsHeaders); }
-      const members = await readClubMembers(env, clubId);
-      const member = members.find(m => m.id === memberId);
-      if (!member) return jsonResponse({ error: "Not found" }, 404, corsHeaders);
+      const user = await readUser(env, userId);
+      if (!user) return jsonResponse({ error: "Not found" }, 404, corsHeaders);
       if (body.name !== undefined) {
         const name = String(body.name || "").trim().slice(0, 60);
         if (!name) return jsonResponse({ error: "Name is required" }, 400, corsHeaders);
-        member.name = name;
+        user.name = name;
       }
       if (body.username !== undefined) {
         const username = sanitizeUsername(body.username);
         if (!username) return jsonResponse({ error: "Username must be 3-20 characters: letters, numbers, underscore only" }, 400, corsHeaders);
-        if (username !== member.username) {
-          if (await isUsernameTaken(env, username)) return jsonResponse({ error: "That username is already taken" }, 409, corsHeaders);
-          await releaseUsername(env, member.username);
-          await reserveUsername(env, username, clubId, member.id);
-          member.username = username;
+        if (username !== user.username) {
+          if (await findUserIdByUsername(env, username)) return jsonResponse({ error: "That username is already taken" }, 409, corsHeaders);
+          await releaseUsername(env, user.username);
+          await reserveUsername(env, username, user.id);
+          user.username = username;
         }
       }
       if (body.pin !== undefined) {
         const pin = String(body.pin || "").trim();
         if (!/^\d{4}$/.test(pin)) return jsonResponse({ error: "PIN must be exactly 4 digits" }, 400, corsHeaders);
-        member.pinHash = await sha256Hex(pin);
+        user.pinHash = await sha256Hex(pin);
       }
-      await writeClubMembers(env, clubId, members);
-      return jsonResponse(publicMember(member), 200, corsHeaders);
+      await writeUser(env, user);
+      return jsonResponse(publicUser(user), 200, corsHeaders);
     }
 
     const adminResetMatch = path.match(/^\/api\/admin\/club-members\/([^/]+)\/([^/]+)\/reset-pin\/?$/);
     if (adminResetMatch && request.method === "POST") {
-      const clubId = decodeURIComponent(adminResetMatch[1]);
-      const memberId = decodeURIComponent(adminResetMatch[2]);
-      const members = await readClubMembers(env, clubId);
-      const member = members.find(m => m.id === memberId);
-      if (!member) return jsonResponse({ error: "Not found" }, 404, corsHeaders);
-      const existingHashes = new Set(members.filter(m => m.id !== memberId).map(m => m.pinHash));
-      let pin, pinHash;
-      do { pin = randomPin(); pinHash = await sha256Hex(pin); } while (existingHashes.has(pinHash));
-      member.pinHash = pinHash;
-      await writeClubMembers(env, clubId, members);
+      const userId = decodeURIComponent(adminResetMatch[2]);
+      const user = await readUser(env, userId);
+      if (!user) return jsonResponse({ error: "Not found" }, 404, corsHeaders);
+      const pin = randomPin();
+      user.pinHash = await sha256Hex(pin);
+      await writeUser(env, user);
       return jsonResponse({ pin }, 200, corsHeaders);
     }
 
     const adminDeleteMatch = path.match(/^\/api\/admin\/club-members\/([^/]+)\/([^/]+)\/?$/);
     if (adminDeleteMatch && request.method === "DELETE") {
       const clubId = decodeURIComponent(adminDeleteMatch[1]);
-      const memberId = decodeURIComponent(adminDeleteMatch[2]);
-      const members = await readClubMembers(env, clubId);
-      const member = members.find(m => m.id === memberId);
-      if (member && member.username) await releaseUsername(env, member.username);
-      await writeClubMembers(env, clubId, members.filter(m => m.id !== memberId));
+      const userId = decodeURIComponent(adminDeleteMatch[2]);
+      const memberIds = await readClubMemberIds(env, clubId);
+      await writeClubMemberIds(env, clubId, memberIds.filter(id => id !== userId));
+      // Only delete the global identity once they're not in any club anymore.
+      const remainingClubs = await allClubIdsContaining(env, userId);
+      if (!remainingClubs.length) {
+        const user = await readUser(env, userId);
+        if (user) await releaseUsername(env, user.username);
+        await deleteUser(env, userId);
+      }
       return jsonResponse({ ok: true }, 200, corsHeaders);
     }
 
