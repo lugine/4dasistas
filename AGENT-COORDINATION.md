@@ -79,6 +79,13 @@ npx wrangler deploy
 
 **Status:** IDLE
 **Last updated by:** Claude (chat)
+**Last updated:** 2026-08-30 (calendar controls fix)
+
+**2026-08-30 (calendar controls fix) — Claude (chat) — `index.html`** — Fixed the 3 top controls on the Events calendar (List/Calendar toggle, Day/Week/Month, Event Types) not aligning well. Root cause: 3 different implementations with different padding/border - List/Calendar used a bordered container with borderless buttons inside, Day/Week/Month was a native select dropdown with its own border, Event Types was a standalone button with yet another border width/color. Converted Day/Week/Month from a select dropdown into real buttons reusing the exact .view-toggle class (same container+button pattern as List/Calendar), and standardized Event Types' border/padding to match both. Added matching mobile-size overrides so alignment holds on phone too. Tested via runtime simulation - confirmed clicking Week correctly updates state and active class.
+
+
+**Status:** IDLE
+**Last updated by:** Claude (chat)
 **Last updated:** 2026-08-30 (club title wrap fix)
 
 **2026-08-30 (club title wrap fix) — Claude (chat) — `index.html`** — Fixed club card titles wrapping awkwardly on mobile (e.g. 'Adrenaline' breaking into two lines). Root cause: club-card titles had no mobile font-size reduction, unlike mental-health-grid and small-business-grid which already got this treatment - reduced to 14px on mobile to match that pattern.
