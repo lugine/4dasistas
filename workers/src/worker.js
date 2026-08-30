@@ -30,6 +30,7 @@
  *                                                                already exists (so the same person can join another club), else
  *                                                                creates a new global identity (name, username, optional exact 4-digit pin)
  *   PUT    /api/admin/club-members/:clubId/:id                - Edit a member's name/username/pin (any subset) — edits the global identity
+ *   PUT    /api/admin/users/:id/clubs                        - Set a member's full club list ({clubs:[clubId,...]}) — adds/removes as needed
  *   POST   /api/admin/club-members/:clubId/:id/reset-pin     - Issue a member a fresh random PIN
  *   DELETE /api/admin/club-members/:clubId/:id               - Remove a member from this club only (their identity/other memberships stay;
  *                                                                the global identity + username are only deleted once they're in zero clubs)
@@ -487,7 +488,7 @@ export default {
 
     // ---- Auth guard for editor and writes ----
 
-    const requiresAuth = path === "/editor" || (path.startsWith("/api/data/") && request.method === "POST") || path.startsWith("/api/admin/club-members") || path.startsWith("/api/admin/club-events");
+    const requiresAuth = path === "/editor" || (path.startsWith("/api/data/") && request.method === "POST") || path.startsWith("/api/admin/club-members") || path.startsWith("/api/admin/club-events") || path.startsWith("/api/admin/users/");
 
     if (requiresAuth) {
       const token = getSessionToken(request);
@@ -628,6 +629,35 @@ export default {
         await deleteUser(env, userId);
       }
       return jsonResponse({ ok: true }, 200, corsHeaders);
+    }
+
+    // Admin: change which clubs a member belongs to (add/remove any number at once)
+    const adminUserClubsMatch = path.match(/^\/api\/admin\/users\/([^/]+)\/clubs\/?$/);
+    if (adminUserClubsMatch && request.method === "PUT") {
+      const userId = decodeURIComponent(adminUserClubsMatch[1]);
+      let body;
+      try { body = await request.json(); } catch { return jsonResponse({ error: "Invalid request" }, 400, corsHeaders); }
+      if (!Array.isArray(body.clubs)) return jsonResponse({ error: "clubs must be an array of club ids" }, 400, corsHeaders);
+      const user = await readUser(env, userId);
+      if (!user) return jsonResponse({ error: "Not found" }, 404, corsHeaders);
+      const desired = new Set(body.clubs.map(String));
+      const current = new Set(await allClubIdsContaining(env, userId));
+      const toAdd = [...desired].filter(c => !current.has(c));
+      const toRemove = [...current].filter(c => !desired.has(c));
+      for (const clubId of toAdd) {
+        const ids = await readClubMemberIds(env, clubId);
+        if (!ids.includes(userId)) { ids.push(userId); await writeClubMemberIds(env, clubId, ids); }
+      }
+      for (const clubId of toRemove) {
+        const ids = await readClubMemberIds(env, clubId);
+        await writeClubMemberIds(env, clubId, ids.filter(id => id !== userId));
+      }
+      if (!desired.size) {
+        await releaseUsername(env, user.username);
+        await deleteUser(env, userId);
+        return jsonResponse({ ok: true, deleted: true }, 200, corsHeaders);
+      }
+      return jsonResponse({ ok: true, clubs: [...desired] }, 200, corsHeaders);
     }
 
     // Admin: create/list/delete per-club events

@@ -908,7 +908,7 @@ let state = {
   returnTab:'',
   calYear: today.getFullYear(), calMonth: today.getMonth(),
   clubMembersId:null, clubMembersTitle:'', cmView:'auth', cmError:'', cmMembers:[], cmMe:null,
-  cmEvents:[], cmEventData:null, cmEventMode:'mine', cmMySlots:[],
+  cmEvents:[], cmEventData:null, cmEventMode:'mine', cmMySlots:[], cmSuggestedSlots:[],
   cmAdminOpen:false, cmAdminLoggedIn:null, cmAdminError:'', cmAdminClub:null, cmAdminEvents:null,
   cmAdminAllMembers:null, cmAdminEditingId:null, cmAdminEditingClub:null, clubsLoginPickerOpen:false,
   clubsMyClubsPickerOpen:false, cmSessionClubs:[],
@@ -2179,15 +2179,17 @@ function renderDirectory(){
   } else if(state.tab === 'clubs'){
     document.getElementById('resourcePagination').innerHTML = '';
 el.innerHTML = `<button class="fall-cta-btn" data-hometab="fallsignup">🍂 Join the Fall Season</button>
-    <button type="button" class="club-guide-btn" id="clubsLoginOpenBtn" style="width:100%;margin-bottom:14px;text-align:center;">Log In</button>
+    <button type="button" class="club-guide-btn" id="clubsLoginOpenBtn" style="width:100%;margin-bottom:14px;text-align:center;">${(() => { const s = getCmSession(); return s ? `You're signed in as ${escapeCm(s.name)}` : 'Log In'; })()}</button>
     ${state.clubsLoginPickerOpen ? `
     <div class="rules-content" style="max-width:420px;margin:0 auto 18px;">
       ${state.clubsMyClubsPickerOpen ? `
-        <p style="font-size:13px;margin-bottom:10px;">You're in more than one club — which one do you want to open?</p>
-        ${(state.cmSessionClubs || []).map(cid => {
-          const club = clubsData.find(c => c.id === cid);
-          return `<button type="button" class="club-guide-btn clubs-my-club-btn" data-club-id="${cid}" style="width:100%;margin-bottom:8px;text-align:left;">${escapeCm(club ? club.title : cid)}</button>`;
-        }).join('')}
+        ${(state.cmSessionClubs || []).length ? `
+          <p style="font-size:13px;margin-bottom:10px;">Which club do you want to open?</p>
+          ${(state.cmSessionClubs || []).map(cid => {
+            const club = clubsData.find(c => c.id === cid);
+            return `<button type="button" class="club-guide-btn clubs-my-club-btn" data-club-id="${cid}" style="width:100%;margin-bottom:8px;text-align:left;">${escapeCm(club ? club.title : cid)}</button>`;
+          }).join('')}
+        ` : `<p style="font-size:13px;">You're not part of any club yet — ask an organizer to add you.</p>`}
       ` : `
         <p style="font-size:13px;margin-bottom:10px;">Sign in with the username and PIN an organizer gave you.</p>
         <div id="clubsLoginError" style="color:#c00;font-size:13px;margin-bottom:8px;"></div>
@@ -2223,6 +2225,21 @@ el.innerHTML = `<button class="fall-cta-btn" data-hometab="fallsignup">🍂 Join
     setTimeout(() => {
       const loginBtn = document.getElementById('clubsLoginOpenBtn');
       if(loginBtn) loginBtn.addEventListener('click', () => {
+        const session = getCmSession();
+        if(session){
+          const clubs = session.clubs || [];
+          if(clubs.length === 1){
+            const club = clubsData.find(c => c.id === clubs[0]);
+            openClubMembers(clubs[0], club ? club.title : '');
+            return;
+          }
+          state.cmSessionClubs = clubs;
+          state.clubsLoginPickerOpen = true;
+          state.clubsMyClubsPickerOpen = true;
+          render();
+          return;
+        }
+        state.cmSessionClubs = [];
         state.clubsLoginPickerOpen = !state.clubsLoginPickerOpen;
         state.clubsMyClubsPickerOpen = false;
         render();
@@ -3052,11 +3069,22 @@ function renderCmEventView(el){
     <div class="rules-content">
       <h2 style="margin-bottom:2px;">${escapeCm(event.title)}</h2>
       <p style="font-size:13px;margin-bottom:14px;">${escapeCm(event.startDate === event.endDate ? event.startDate : event.startDate + ' – ' + event.endDate)}${event.desc ? ' · ' + escapeCm(event.desc) : ''}</p>
-      <div style="display:flex;gap:8px;margin-bottom:14px;">
-        <button type="button" class="club-guide-btn cm-mode-btn" data-mode="mine" style="${mode==='mine' ? 'background:var(--charcoal);color:var(--cream);' : ''}">My availability</button>
-        <button type="button" class="club-guide-btn cm-mode-btn" data-mode="everyone" style="${mode==='everyone' ? 'background:var(--charcoal);color:var(--cream);' : ''}">Who's free</button>
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:10px;margin-bottom:14px;">
+        <div style="display:flex;gap:8px;">
+          <button type="button" class="club-guide-btn cm-mode-btn" data-mode="mine" style="${mode==='mine' ? 'background:var(--charcoal);color:var(--cream);' : ''}">My availability</button>
+          <button type="button" class="club-guide-btn cm-mode-btn" data-mode="everyone" style="${mode==='everyone' ? 'background:var(--charcoal);color:var(--cream);' : ''}">Who's free</button>
+        </div>
+        ${mode === 'everyone' ? `<div style="font-size:12px;font-weight:700;text-align:right;max-width:220px;">${escapeCm(cmBestSlotText(data.responses.aggregate))}</div>` : ''}
       </div>
       ${mode === 'mine' ? '<p style="font-size:12px;margin-bottom:8px;">Click a slot, or click-and-drag across several, to mark yourself free (30-min slots). Click again to unmark.</p>' : '<p style="font-size:12px;margin-bottom:8px;">Darker = more people free. Click a slot to see who.</p>'}
+      ${(mode === 'mine' && state.cmSuggestedSlots && state.cmSuggestedSlots.length) ? `
+      <div style="background:var(--lightblue);border:2px solid var(--charcoal);border-radius:10px;padding:10px;margin-bottom:10px;display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;">
+        <span style="font-size:12px;">You've marked yourself free at similar times before — apply that here?</span>
+        <div style="display:flex;gap:6px;">
+          <button type="button" class="club-guide-btn" id="cmApplySuggestedBtn" style="padding:6px 12px;font-size:12px;">Apply</button>
+          <button type="button" class="club-guide-btn" id="cmDismissSuggestedBtn" style="padding:6px 12px;font-size:12px;background:transparent;">Dismiss</button>
+        </div>
+      </div>` : ''}
       <div style="overflow-x:auto;" id="cmEventGridWrap">${cmEventGridHtml(event, mode, data)}</div>
       ${mode === 'mine' ? `<button class="club-guide-btn" id="cmSaveEventBtn" style="margin-top:14px;background:var(--charcoal);color:var(--cream);">Save my availability</button><span id="cmSaveStatus" style="margin-left:10px;font-size:12px;"></span>` : '<div id="cmSlotWho" style="margin-top:14px;font-size:13px;"></div>'}
     </div>`;
@@ -3068,6 +3096,14 @@ function renderCmEventView(el){
     if(mode === 'mine'){
       cmWireDragGrid(el);
       document.getElementById('cmSaveEventBtn').addEventListener('click', cmSaveEventAvailability);
+      const applyBtn = document.getElementById('cmApplySuggestedBtn');
+      if(applyBtn) applyBtn.addEventListener('click', () => {
+        state.cmMySlots = [...new Set([...(state.cmMySlots || []), ...state.cmSuggestedSlots])];
+        state.cmSuggestedSlots = [];
+        render();
+      });
+      const dismissBtn = document.getElementById('cmDismissSuggestedBtn');
+      if(dismissBtn) dismissBtn.addEventListener('click', () => { state.cmSuggestedSlots = []; render(); });
     } else {
       el.querySelectorAll('.cm-cell[data-slot]').forEach(cell => {
         cell.addEventListener('click', () => {
@@ -3080,6 +3116,20 @@ function renderCmEventView(el){
   }, 0);
 }
 
+function cmBestSlotText(aggregate){
+  const entries = Object.entries(aggregate || {});
+  if(!entries.length) return 'Nobody has marked availability yet.';
+  const maxCount = Math.max(...entries.map(([,c]) => c));
+  if(maxCount <= 0) return 'Nobody has marked availability yet.';
+  const bestSlots = entries.filter(([,c]) => c === maxCount).map(([slot]) => slot);
+  const [date, hStr] = bestSlots[0].split('|');
+  const h = Number(hStr);
+  const dayName = dayLabelsShort[new Date(date + 'T00:00:00Z').getUTCDay()];
+  const label = dayName + ' ' + date.slice(5) + ', ' + cmHalfHourLabel(h);
+  const extra = bestSlots.length > 1 ? ` (+${bestSlots.length - 1} more)` : '';
+  return `Best time: ${label}${extra} — ${maxCount} free`;
+}
+
 function cmEventGridHtml(event, mode, data){
   const rows = [];
   for(let h = event.startHour*2; h < event.endHour*2; h++) rows.push(h);
@@ -3087,7 +3137,7 @@ function cmEventGridHtml(event, mode, data){
   const aggregate = (data.responses && data.responses.aggregate) || {};
   const maxCount = Math.max(1, ...Object.values(aggregate));
   return `<table style="border-collapse:collapse;text-align:center;min-width:${80 + event.dates.length*46}px;">
-    <thead><tr><th></th>${event.dates.map(d => `<th style="padding:4px;font-size:11px;white-space:nowrap;">${d.slice(5)}</th>`).join('')}</tr></thead>
+    <thead><tr><th></th>${event.dates.map(d => `<th style="padding:4px;font-size:11px;white-space:nowrap;">${dayLabelsShort[new Date(d + 'T00:00:00Z').getUTCDay()]}<br>${d.slice(5)}</th>`).join('')}</tr></thead>
     <tbody>
       ${rows.map(h => `<tr><td style="font-size:10px;text-align:right;padding-right:6px;white-space:nowrap;">${h%2===0 ? cmHalfHourLabel(h) : ''}</td>${event.dates.map(d => {
         const slot = d + '|' + h;
@@ -3126,6 +3176,34 @@ function cmWireDragGrid(el){
   window.addEventListener('pointerup', () => { dragging = false; });
 }
 
+// Remembers which weekday+time-of-day slots this member has said they're free at,
+// across whatever events they've already answered — so a member juggling several
+// clubs' events isn't re-entering the same weekly pattern every single time.
+function cmPatternKey(){ return 'cmAvailPattern:' + (state.cmMe && state.cmMe.id); }
+function cmLoadPattern(){
+  try { return JSON.parse(localStorage.getItem(cmPatternKey()) || '{}'); } catch { return {}; }
+}
+function cmSavePatternFromSlots(slots){
+  const pattern = cmLoadPattern();
+  slots.forEach(slot => {
+    const [date, hStr] = slot.split('|');
+    const weekday = dayOrder[new Date(date + 'T00:00:00Z').getUTCDay()];
+    pattern[weekday + '|' + hStr] = true;
+  });
+  localStorage.setItem(cmPatternKey(), JSON.stringify(pattern));
+}
+function cmSuggestSlotsForEvent(event){
+  const pattern = cmLoadPattern();
+  const suggested = [];
+  event.dates.forEach(date => {
+    const weekday = dayOrder[new Date(date + 'T00:00:00Z').getUTCDay()];
+    for(let h = event.startHour * 2; h < event.endHour * 2; h++){
+      if(pattern[weekday + '|' + h]) suggested.push(date + '|' + h);
+    }
+  });
+  return suggested;
+}
+
 async function cmOpenEvent(eventId){
   const clubId = state.clubMembersId;
   state.cmView = 'loading'; render();
@@ -3134,6 +3212,10 @@ async function cmOpenEvent(eventId){
     const responses = await cmApi(encodeURIComponent(clubId) + '/events/' + encodeURIComponent(eventId) + '/responses');
     const mine = (responses.members || []).find(m => m.id === state.cmMe.id);
     state.cmMySlots = mine ? mine.slots.slice() : [];
+    state.cmSuggestedSlots = [];
+    if(!mine && (state.cmMe.clubs || []).length > 1){
+      state.cmSuggestedSlots = cmSuggestSlotsForEvent(event);
+    }
     state.cmEventData = { event, responses };
     state.cmEventMode = 'mine';
     state.cmView = 'event';
@@ -3157,6 +3239,7 @@ async function cmSaveEventAvailability(){
       body: JSON.stringify({ slots: state.cmMySlots })
     });
     state.cmMySlots = result.slots;
+    cmSavePatternFromSlots(state.cmMySlots);
     state.cmEventData.responses = await cmApi(encodeURIComponent(clubId) + '/events/' + encodeURIComponent(eventId) + '/responses');
     status.textContent = 'Saved ✓';
     setTimeout(() => { if(status) status.textContent = ''; }, 2500);
@@ -3324,6 +3407,7 @@ async function cmAdminSaveMemberEdit(clubId, id){
   const name = document.getElementById('cmAdminEditName').value.trim();
   const username = document.getElementById('cmAdminEditUsername').value.trim();
   const pin = document.getElementById('cmAdminEditPin').value.trim();
+  const selectedClubs = [...document.querySelectorAll('.cm-admin-edit-club-cb:checked')].map(cb => cb.value);
   const status = document.getElementById('cmAdminEditStatus');
   const body = { name, username };
   if(pin) body.pin = pin;
@@ -3334,6 +3418,14 @@ async function cmAdminSaveMemberEdit(clubId, id){
     });
     const data = await res.json();
     if(!res.ok) throw new Error(data.error || 'Could not save changes');
+
+    const clubsRes = await fetch('/api/admin/users/' + encodeURIComponent(id) + '/clubs', {
+      method:'PUT', headers:{'Content-Type':'application/json'}, credentials:'include',
+      body: JSON.stringify({ clubs: selectedClubs })
+    });
+    const clubsData2 = await clubsRes.json();
+    if(!clubsRes.ok) throw new Error(clubsData2.error || 'Could not update clubs');
+
     state.cmAdminEditingId = null;
     state.cmAdminEditingClub = null;
     await cmAdminLoadAllMembers();
@@ -3387,6 +3479,11 @@ async function cmAdminDeleteEvent(eventId){
   await cmAdminSelectClub(clubId);
 }
 
+function cmAdminMemberClubs(userId){
+  const data = state.cmAdminAllMembers || {};
+  return Object.keys(data).filter(clubId => (data[clubId] || []).some(m => m.id === userId));
+}
+
 function renderAdminAllMembersPanels(){
   const data = state.cmAdminAllMembers;
   if(data === null || data === undefined) return '<p style="font-size:13px;">Loading members…</p>';
@@ -3398,10 +3495,17 @@ function renderAdminAllMembersPanels(){
   return `<div class="clubs-grid">${rows.map(m => {
     const clubTitle = (clubsData.find(c => c.id === m.clubId) || {}).title || m.clubId;
     if(state.cmAdminEditingId === m.id && state.cmAdminEditingClub === m.clubId){
+      const memberClubs = new Set(cmAdminMemberClubs(m.id));
       return `<div class="panel-card" style="text-align:left;">
         <input id="cmAdminEditName" value="${escapeCm(m.name)}" placeholder="Name" style="width:100%;padding:8px;margin-bottom:6px;border-radius:8px;border:2px solid var(--charcoal);box-sizing:border-box;">
         <input id="cmAdminEditUsername" value="${escapeCm(m.username)}" placeholder="Username" style="width:100%;padding:8px;margin-bottom:6px;border-radius:8px;border:2px solid var(--charcoal);box-sizing:border-box;">
         <input id="cmAdminEditPin" placeholder="New 4-digit PIN (leave blank to keep current)" inputmode="numeric" maxlength="4" style="width:100%;padding:8px;margin-bottom:6px;border-radius:8px;border:2px solid var(--charcoal);box-sizing:border-box;">
+        <p style="font-size:11px;color:#776867;margin:6px 0 4px;">Clubs this member belongs to:</p>
+        <div id="cmAdminEditClubs" style="display:flex;flex-direction:column;gap:4px;margin-bottom:8px;max-height:140px;overflow-y:auto;">
+          ${clubsData.map(c => `<label style="display:flex;align-items:center;gap:6px;font-size:12px;">
+            <input type="checkbox" class="cm-admin-edit-club-cb" value="${c.id}" ${memberClubs.has(c.id) ? 'checked' : ''}> ${escapeCm(c.title)}
+          </label>`).join('')}
+        </div>
         <div style="display:flex;gap:8px;">
           <button class="cm-admin-save-member" data-club-id="${m.clubId}" data-member-id="${m.id}" style="flex:1;padding:8px;border-radius:8px;border:none;background:var(--charcoal);color:var(--cream);cursor:pointer;">Save</button>
           <button class="cm-admin-cancel-edit" style="flex:1;padding:8px;border-radius:8px;border:2px solid var(--charcoal);background:transparent;cursor:pointer;">Cancel</button>
