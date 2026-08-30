@@ -910,7 +910,7 @@ let state = {
   clubMembersId:null, clubMembersTitle:'', cmView:'auth', cmError:'', cmMembers:[], cmMe:null,
   cmEvents:[], cmEventData:null, cmEventMode:'mine', cmMySlots:[],
   cmAdminOpen:false, cmAdminLoggedIn:null, cmAdminError:'', cmAdminClub:null, cmAdminEvents:null,
-  cmAdminMembers:null, cmAdminEditingId:null, clubsLoginPickerOpen:false,
+  cmAdminAllMembers:null, cmAdminEditingId:null, cmAdminEditingClub:null, clubsLoginPickerOpen:false,
 };
 
 const introText = {
@@ -3171,6 +3171,7 @@ async function openClubAdmin(){
     const data = await res.json();
     state.cmAdminLoggedIn = !!data.loggedIn;
   } catch { state.cmAdminLoggedIn = false; }
+  if(state.cmAdminLoggedIn) await cmAdminLoadAllMembers();
   render();
 }
 
@@ -3182,6 +3183,7 @@ async function cmAdminLogin(){
     if(!res.ok) throw new Error(data.error || 'Login failed');
     state.cmAdminLoggedIn = true;
     state.cmAdminError = '';
+    await cmAdminLoadAllMembers();
   } catch(err){
     state.cmAdminError = err.message;
   }
@@ -3191,23 +3193,25 @@ async function cmAdminLogin(){
 async function cmAdminLogout(){
   await fetch('/api/admin/logout', { method:'POST', credentials:'include' }).catch(() => {});
   state.cmAdminLoggedIn = false;
+  state.cmAdminAllMembers = null;
   render();
+}
+
+async function cmAdminLoadAllMembers(){
+  try {
+    const res = await fetch('/api/admin/club-members', { credentials:'include' });
+    state.cmAdminAllMembers = await res.json();
+  } catch { state.cmAdminAllMembers = {}; }
 }
 
 async function cmAdminSelectClub(clubId){
   state.cmAdminClub = clubId;
   state.cmAdminEvents = null;
-  state.cmAdminMembers = null;
-  state.cmAdminEditingId = null;
   render();
   try {
-    const [eventsRes, membersRes] = await Promise.all([
-      fetch('/api/admin/club-events/' + encodeURIComponent(clubId), { credentials:'include' }),
-      fetch('/api/clubs/' + encodeURIComponent(clubId) + '/members'),
-    ]);
-    state.cmAdminEvents = (await eventsRes.json()).events || [];
-    state.cmAdminMembers = (await membersRes.json()).members || [];
-  } catch { state.cmAdminEvents = []; state.cmAdminMembers = []; }
+    const res = await fetch('/api/admin/club-events/' + encodeURIComponent(clubId), { credentials:'include' });
+    state.cmAdminEvents = (await res.json()).events || [];
+  } catch { state.cmAdminEvents = []; }
   render();
 }
 
@@ -3226,19 +3230,20 @@ async function cmAdminCreateMember(){
     if(!res.ok) throw new Error(data.error || 'Could not create member');
     status.textContent = '';
     alert('Created ' + data.name + ' (@' + data.username + ') with PIN ' + data.pin + ' — give this PIN to them so they can sign in.');
-    await cmAdminSelectClub(clubId);
+    await cmAdminLoadAllMembers();
+    render();
   } catch(err){
     status.textContent = 'Error: ' + err.message;
   }
 }
 
-function cmAdminEditMember(id){
+function cmAdminEditMember(clubId, id){
+  state.cmAdminEditingClub = clubId;
   state.cmAdminEditingId = id;
   render();
 }
 
-async function cmAdminSaveMemberEdit(id){
-  const clubId = state.cmAdminClub;
+async function cmAdminSaveMemberEdit(clubId, id){
   const name = document.getElementById('cmAdminEditName').value.trim();
   const username = document.getElementById('cmAdminEditUsername').value.trim();
   const pin = document.getElementById('cmAdminEditPin').value.trim();
@@ -3253,25 +3258,26 @@ async function cmAdminSaveMemberEdit(id){
     const data = await res.json();
     if(!res.ok) throw new Error(data.error || 'Could not save changes');
     state.cmAdminEditingId = null;
-    await cmAdminSelectClub(clubId);
+    state.cmAdminEditingClub = null;
+    await cmAdminLoadAllMembers();
+    render();
   } catch(err){
     if(status) status.textContent = 'Error: ' + err.message;
   }
 }
 
-async function cmAdminResetMemberPin(id){
-  const clubId = state.cmAdminClub;
+async function cmAdminResetMemberPin(clubId, id){
   const res = await fetch('/api/admin/club-members/' + encodeURIComponent(clubId) + '/' + encodeURIComponent(id) + '/reset-pin', { method:'POST', credentials:'include' });
   const data = await res.json();
   if(res.ok) alert('New PIN: ' + data.pin + '\n\nTell this member their new PIN so they can sign back in.');
   else alert('Error: ' + (data.error || res.status));
 }
 
-async function cmAdminDeleteMember(id){
+async function cmAdminDeleteMember(clubId, id){
   if(!confirm('Remove this member? This cannot be undone.')) return;
-  const clubId = state.cmAdminClub;
   await fetch('/api/admin/club-members/' + encodeURIComponent(clubId) + '/' + encodeURIComponent(id), { method:'DELETE', credentials:'include' });
-  await cmAdminSelectClub(clubId);
+  await cmAdminLoadAllMembers();
+  render();
 }
 
 async function cmAdminCreateEvent(){
@@ -3304,6 +3310,42 @@ async function cmAdminDeleteEvent(eventId){
   await cmAdminSelectClub(clubId);
 }
 
+function renderAdminAllMembersPanels(){
+  const data = state.cmAdminAllMembers;
+  if(data === null || data === undefined) return '<p style="font-size:13px;">Loading members…</p>';
+  const rows = [];
+  Object.keys(data).forEach(clubId => {
+    (data[clubId] || []).forEach(m => rows.push(Object.assign({ clubId }, m)));
+  });
+  if(!rows.length) return '<p style="font-size:13px;">No members yet across any club.</p>';
+  return `<div class="clubs-grid">${rows.map(m => {
+    const clubTitle = (clubsData.find(c => c.id === m.clubId) || {}).title || m.clubId;
+    if(state.cmAdminEditingId === m.id && state.cmAdminEditingClub === m.clubId){
+      return `<div class="panel-card" style="text-align:left;">
+        <input id="cmAdminEditName" value="${escapeCm(m.name)}" placeholder="Name" style="width:100%;padding:8px;margin-bottom:6px;border-radius:8px;border:2px solid var(--charcoal);box-sizing:border-box;">
+        <input id="cmAdminEditUsername" value="${escapeCm(m.username)}" placeholder="Username" style="width:100%;padding:8px;margin-bottom:6px;border-radius:8px;border:2px solid var(--charcoal);box-sizing:border-box;">
+        <input id="cmAdminEditPin" placeholder="New 4-digit PIN (leave blank to keep current)" inputmode="numeric" maxlength="4" style="width:100%;padding:8px;margin-bottom:6px;border-radius:8px;border:2px solid var(--charcoal);box-sizing:border-box;">
+        <div style="display:flex;gap:8px;">
+          <button class="cm-admin-save-member" data-club-id="${m.clubId}" data-member-id="${m.id}" style="flex:1;padding:8px;border-radius:8px;border:none;background:var(--charcoal);color:var(--cream);cursor:pointer;">Save</button>
+          <button class="cm-admin-cancel-edit" style="flex:1;padding:8px;border-radius:8px;border:2px solid var(--charcoal);background:transparent;cursor:pointer;">Cancel</button>
+        </div>
+        <span id="cmAdminEditStatus" style="font-size:12px;color:#c00;"></span>
+      </div>`;
+    }
+    return `<div class="panel-card" style="text-align:center;">
+      ${m.photo ? `<img src="${m.photo}" style="width:48px;height:48px;border-radius:50%;object-fit:cover;margin:0 auto 8px;display:block;">` : `<div class="monogram" style="margin:0 auto 8px;">${escapeCm((m.name || '?').charAt(0).toUpperCase())}</div>`}
+      <h4 style="font-size:14px;margin-bottom:2px;">${escapeCm(m.name)}</h4>
+      <div style="font-size:11px;color:#776867;margin-bottom:6px;">@${escapeCm(m.username)}</div>
+      <div class="owned-badge" style="display:inline-block;margin-bottom:10px;">${escapeCm(clubTitle)}</div>
+      <div style="display:flex;gap:6px;justify-content:center;flex-wrap:wrap;">
+        <button class="cm-admin-edit-member" data-club-id="${m.clubId}" data-member-id="${m.id}" style="padding:6px 10px;border-radius:8px;border:2px solid var(--charcoal);background:transparent;cursor:pointer;font-size:11px;">Edit</button>
+        <button class="cm-admin-reset-member-pin" data-club-id="${m.clubId}" data-member-id="${m.id}" style="padding:6px 10px;border-radius:8px;border:2px solid var(--charcoal);background:transparent;cursor:pointer;font-size:11px;">Reset PIN</button>
+        <button class="cm-admin-delete-member" data-club-id="${m.clubId}" data-member-id="${m.id}" style="padding:6px 10px;border-radius:8px;border:none;background:#c00;color:#fff;cursor:pointer;font-size:11px;">Delete</button>
+      </div>
+    </div>`;
+  }).join('')}</div>`;
+}
+
 function renderClubAdminPanel(){
   if(!state.cmAdminOpen) return '';
   if(state.cmAdminLoggedIn === undefined || state.cmAdminLoggedIn === null){
@@ -3318,40 +3360,20 @@ function renderClubAdminPanel(){
     </div>`;
   }
   const clubId = state.cmAdminClub;
-  return `<div class="rules-content" style="max-width:520px;margin:16px auto;">
+  return `<div class="rules-content" style="max-width:640px;margin:16px auto;">
     <div style="display:flex;justify-content:space-between;align-items:center;">
-      <h3 style="margin:0;">Club Events Admin</h3>
+      <h3 style="margin:0;">All Members</h3>
       <button class="club-guide-btn" id="cmAdminLogoutBtn" style="padding:6px 12px;font-size:12px;">Log Out</button>
     </div>
+    <div style="margin:14px 0 26px;">${renderAdminAllMembersPanels()}</div>
+
+    <h3>Club Events Admin</h3>
     <select id="cmAdminClubSelect" style="width:100%;padding:10px;margin:12px 0;border-radius:10px;border:2px solid var(--charcoal);">
       <option value="">-- Choose a club --</option>
       ${clubsData.map(c => `<option value="${c.id}" ${clubId===c.id?'selected':''}>${escapeCm(c.title)}</option>`).join('')}
     </select>
     ${clubId ? `
-      <h3 style="margin-top:6px;">Members</h3>
-      <div id="cmAdminMembersList">${state.cmAdminMembers === null ? 'Loading…' : (state.cmAdminMembers.length ? state.cmAdminMembers.map(m => {
-        if(state.cmAdminEditingId === m.id){
-          return `<div style="border:2px solid var(--charcoal);border-radius:10px;padding:10px;margin-bottom:8px;">
-            <input id="cmAdminEditName" value="${escapeCm(m.name)}" placeholder="Name" style="width:100%;padding:8px;margin-bottom:6px;border-radius:8px;border:2px solid var(--charcoal);box-sizing:border-box;">
-            <input id="cmAdminEditUsername" value="${escapeCm(m.username)}" placeholder="Username" style="width:100%;padding:8px;margin-bottom:6px;border-radius:8px;border:2px solid var(--charcoal);box-sizing:border-box;">
-            <input id="cmAdminEditPin" placeholder="New 4-digit PIN (leave blank to keep current)" inputmode="numeric" maxlength="4" style="width:100%;padding:8px;margin-bottom:6px;border-radius:8px;border:2px solid var(--charcoal);box-sizing:border-box;">
-            <div style="display:flex;gap:8px;">
-              <button class="cm-admin-save-member" data-member-id="${m.id}" style="flex:1;padding:8px;border-radius:8px;border:none;background:var(--charcoal);color:var(--cream);cursor:pointer;">Save</button>
-              <button class="cm-admin-cancel-edit" style="flex:1;padding:8px;border-radius:8px;border:2px solid var(--charcoal);background:transparent;cursor:pointer;">Cancel</button>
-            </div>
-            <span id="cmAdminEditStatus" style="font-size:12px;color:#c00;"></span>
-          </div>`;
-        }
-        return `<div style="display:flex;justify-content:space-between;align-items:center;border:2px solid var(--charcoal);border-radius:10px;padding:10px;margin-bottom:8px;flex-wrap:wrap;gap:6px;">
-          <div>${m.photo ? `<img src="${m.photo}" style="width:24px;height:24px;border-radius:50%;object-fit:cover;vertical-align:middle;margin-right:8px;">` : ''}<strong>${escapeCm(m.name)}</strong> <span style="color:#888;font-size:12px;">@${escapeCm(m.username)}</span></div>
-          <div style="display:flex;gap:6px;">
-            <button class="cm-admin-edit-member" data-member-id="${m.id}" style="padding:6px 10px;border-radius:8px;border:2px solid var(--charcoal);background:transparent;cursor:pointer;font-size:12px;">Edit</button>
-            <button class="cm-admin-reset-member-pin" data-member-id="${m.id}" style="padding:6px 10px;border-radius:8px;border:2px solid var(--charcoal);background:transparent;cursor:pointer;font-size:12px;">Reset PIN</button>
-            <button class="cm-admin-delete-member" data-member-id="${m.id}" style="padding:6px 10px;border-radius:8px;border:none;background:#c00;color:#fff;cursor:pointer;font-size:12px;">Delete</button>
-          </div>
-        </div>`;
-      }).join('') : '<p style="font-size:13px;">No members yet for this club.</p>')}</div>
-      <h4 style="margin-top:14px;">Create Member</h4>
+      <h4>Create Member</h4>
       <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:24px;">
         <input id="cmAdminMemberName" placeholder="Name" style="padding:10px;border-radius:10px;border:2px solid var(--charcoal);">
         <input id="cmAdminMemberUsername" placeholder="Username" style="padding:10px;border-radius:10px;border:2px solid var(--charcoal);">
@@ -3401,19 +3423,19 @@ function wireClubAdminPanel(){
   const memberCreateBtn = document.getElementById('cmAdminMemberCreateBtn');
   if(memberCreateBtn) memberCreateBtn.addEventListener('click', cmAdminCreateMember);
   document.querySelectorAll('.cm-admin-edit-member').forEach(btn => {
-    btn.addEventListener('click', () => cmAdminEditMember(btn.dataset.memberId));
+    btn.addEventListener('click', () => cmAdminEditMember(btn.dataset.clubId, btn.dataset.memberId));
   });
   document.querySelectorAll('.cm-admin-save-member').forEach(btn => {
-    btn.addEventListener('click', () => cmAdminSaveMemberEdit(btn.dataset.memberId));
+    btn.addEventListener('click', () => cmAdminSaveMemberEdit(btn.dataset.clubId, btn.dataset.memberId));
   });
   document.querySelectorAll('.cm-admin-cancel-edit').forEach(btn => {
-    btn.addEventListener('click', () => { state.cmAdminEditingId = null; render(); });
+    btn.addEventListener('click', () => { state.cmAdminEditingId = null; state.cmAdminEditingClub = null; render(); });
   });
   document.querySelectorAll('.cm-admin-reset-member-pin').forEach(btn => {
-    btn.addEventListener('click', () => cmAdminResetMemberPin(btn.dataset.memberId));
+    btn.addEventListener('click', () => cmAdminResetMemberPin(btn.dataset.clubId, btn.dataset.memberId));
   });
   document.querySelectorAll('.cm-admin-delete-member').forEach(btn => {
-    btn.addEventListener('click', () => cmAdminDeleteMember(btn.dataset.memberId));
+    btn.addEventListener('click', () => cmAdminDeleteMember(btn.dataset.clubId, btn.dataset.memberId));
   });
 }
 
