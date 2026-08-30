@@ -25,7 +25,9 @@
  *   POST   /api/admin/logout                                - JSON logout
  *   GET    /api/admin/session                                - { loggedIn }
  *   GET    /api/admin/club-members                          - All clubs' rosters
- *   POST   /api/admin/club-members/:clubId/:id/reset-pin     - Issue a member a new PIN
+ *   POST   /api/admin/club-members/:clubId                   - Create a member directly (name, username, optional exact 4-digit pin)
+ *   PUT    /api/admin/club-members/:clubId/:id                - Edit a member's name/username/pin (any subset)
+ *   POST   /api/admin/club-members/:clubId/:id/reset-pin     - Issue a member a fresh random PIN
  *   DELETE /api/admin/club-members/:clubId/:id               - Remove a member (also frees their username)
  *   GET    /api/admin/club-events/:clubId                    - This club's events (admin view)
  *   POST   /api/admin/club-events/:clubId                    - Create an event (title, desc, startDate, endDate, startHour, endHour)
@@ -526,6 +528,67 @@ export default {
         out[clubId] = (await readClubMembers(env, clubId)).map(publicMemberSummary);
       }
       return jsonResponse(out, 200, corsHeaders);
+    }
+
+    const adminClubMembersCreateMatch = path.match(/^\/api\/admin\/club-members\/([^/]+)\/?$/);
+    if (adminClubMembersCreateMatch && request.method === "POST") {
+      const clubId = decodeURIComponent(adminClubMembersCreateMatch[1]);
+      let body;
+      try { body = await request.json(); } catch { return jsonResponse({ error: "Invalid request" }, 400, corsHeaders); }
+      const name = String(body.name || "").trim().slice(0, 60);
+      const username = sanitizeUsername(body.username);
+      if (!name) return jsonResponse({ error: "Name is required" }, 400, corsHeaders);
+      if (!username) return jsonResponse({ error: "Username must be 3-20 characters: letters, numbers, underscore only" }, 400, corsHeaders);
+      if (await isUsernameTaken(env, username)) {
+        return jsonResponse({ error: "That username is already taken" }, 409, corsHeaders);
+      }
+      const members = await readClubMembers(env, clubId);
+      let pin = String(body.pin || "").trim();
+      if (pin && !/^\d{4}$/.test(pin)) return jsonResponse({ error: "PIN must be exactly 4 digits" }, 400, corsHeaders);
+      if (!pin) {
+        const existingHashes = new Set(members.map(m => m.pinHash));
+        let pinHash;
+        do { pin = randomPin(); pinHash = await sha256Hex(pin); } while (existingHashes.has(pinHash));
+      }
+      const pinHash = await sha256Hex(pin);
+      const member = { id: crypto.randomUUID(), name, username, pinHash, photo: null, createdAt: Date.now() };
+      members.push(member);
+      await writeClubMembers(env, clubId, members);
+      await reserveUsername(env, username, clubId, member.id);
+      return jsonResponse({ id: member.id, name: member.name, username: member.username, pin }, 201, corsHeaders);
+    }
+
+    const adminMemberByIdMatch = path.match(/^\/api\/admin\/club-members\/([^/]+)\/([^/]+)\/?$/);
+    if (adminMemberByIdMatch && request.method === "PUT") {
+      const clubId = decodeURIComponent(adminMemberByIdMatch[1]);
+      const memberId = decodeURIComponent(adminMemberByIdMatch[2]);
+      let body;
+      try { body = await request.json(); } catch { return jsonResponse({ error: "Invalid request" }, 400, corsHeaders); }
+      const members = await readClubMembers(env, clubId);
+      const member = members.find(m => m.id === memberId);
+      if (!member) return jsonResponse({ error: "Not found" }, 404, corsHeaders);
+      if (body.name !== undefined) {
+        const name = String(body.name || "").trim().slice(0, 60);
+        if (!name) return jsonResponse({ error: "Name is required" }, 400, corsHeaders);
+        member.name = name;
+      }
+      if (body.username !== undefined) {
+        const username = sanitizeUsername(body.username);
+        if (!username) return jsonResponse({ error: "Username must be 3-20 characters: letters, numbers, underscore only" }, 400, corsHeaders);
+        if (username !== member.username) {
+          if (await isUsernameTaken(env, username)) return jsonResponse({ error: "That username is already taken" }, 409, corsHeaders);
+          await releaseUsername(env, member.username);
+          await reserveUsername(env, username, clubId, member.id);
+          member.username = username;
+        }
+      }
+      if (body.pin !== undefined) {
+        const pin = String(body.pin || "").trim();
+        if (!/^\d{4}$/.test(pin)) return jsonResponse({ error: "PIN must be exactly 4 digits" }, 400, corsHeaders);
+        member.pinHash = await sha256Hex(pin);
+      }
+      await writeClubMembers(env, clubId, members);
+      return jsonResponse(publicMember(member), 200, corsHeaders);
     }
 
     const adminResetMatch = path.match(/^\/api\/admin\/club-members\/([^/]+)\/([^/]+)\/reset-pin\/?$/);
