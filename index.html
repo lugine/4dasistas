@@ -910,7 +910,7 @@ let state = {
   clubMembersId:null, clubMembersTitle:'', cmView:'auth', cmError:'', cmMembers:[], cmMe:null, cmRevealPin:'',
   cmEvents:[], cmEventData:null, cmEventMode:'mine', cmMySlots:[],
   cmAdminOpen:false, cmAdminLoggedIn:null, cmAdminError:'', cmAdminClub:null, cmAdminEvents:null,
-  cmAdminMembers:null, cmAdminEditingId:null,
+  cmAdminMembers:null, cmAdminEditingId:null, clubsLoginPickerOpen:false,
 };
 
 const introText = {
@@ -2178,10 +2178,16 @@ function renderDirectory(){
   } else if(state.tab === 'clubs'){
     document.getElementById('resourcePagination').innerHTML = '';
 el.innerHTML = `<button class="fall-cta-btn" data-hometab="fallsignup">🍂 Join the Fall Season</button>
-    <div class="club-guide-actions">
-      <button class="club-guide-btn" data-hometab="clubstart">How to Start a Club →</button>
-      <button class="club-guide-btn" data-hometab="clubjoin">How to Join a Club →</button>
-    </div>
+    <button type="button" class="club-guide-btn" id="clubsLoginOpenBtn" style="width:100%;margin-bottom:14px;text-align:center;">Log In</button>
+    ${state.clubsLoginPickerOpen ? `
+    <div class="rules-content" style="max-width:420px;margin:0 auto 18px;">
+      <p style="font-size:13px;margin-bottom:10px;">Which club is your profile in?</p>
+      <select id="clubsLoginPicker" style="width:100%;padding:10px;border-radius:10px;border:2px solid var(--charcoal);margin-bottom:10px;">
+        <option value="">-- Choose a club --</option>
+        ${clubsData.map(c => `<option value="${c.id}">${escapeCm(c.title)}</option>`).join('')}
+      </select>
+      <button class="club-guide-btn" id="clubsLoginContinueBtn" style="width:100%;background:var(--lightblue);">Continue →</button>
+    </div>` : ''}
     <div class="clubs-grid">${clubsData.map(c => {
       const col = clubColors[c.id] || {bg:'#373d3b', fg:'#fff7e6'};
       const monogramHtml = c.logo ? `<div class="monogram"><img src="${c.logo}" alt="${c.title} logo"></div>` : `<div class="monogram" style="background:${col.bg};color:${col.fg}">${c.title.charAt(0)}</div>`;
@@ -2198,11 +2204,26 @@ el.innerHTML = `<button class="fall-cta-btn" data-hometab="fallsignup">🍂 Join
         </div>
       </div>`;
     }).join('')}</div>
+    <div class="club-guide-actions" style="margin-top:18px;">
+      <button class="club-guide-btn" data-hometab="clubstart">How to Start a Club →</button>
+      <button class="club-guide-btn" data-hometab="clubjoin">How to Join a Club →</button>
+    </div>
     <div style="text-align:center;margin-top:18px;">
       <button type="button" class="link-btn secondary" id="clubAdminOpenBtn" style="font-size:11px;padding:6px 14px;opacity:0.65;">🔒 Admin</button>
     </div>
     ${renderClubAdminPanel()}`;
     setTimeout(() => {
+      const loginBtn = document.getElementById('clubsLoginOpenBtn');
+      if(loginBtn) loginBtn.addEventListener('click', () => { state.clubsLoginPickerOpen = !state.clubsLoginPickerOpen; render(); });
+      const loginContinueBtn = document.getElementById('clubsLoginContinueBtn');
+      if(loginContinueBtn) loginContinueBtn.addEventListener('click', () => {
+        const picker = document.getElementById('clubsLoginPicker');
+        const clubId = picker.value;
+        if(!clubId) return;
+        const club = clubsData.find(c => c.id === clubId);
+        state.clubsLoginPickerOpen = false;
+        openClubMembers(clubId, club ? club.title : '');
+      });
       const adminBtn = document.getElementById('clubAdminOpenBtn');
       if(adminBtn) adminBtn.addEventListener('click', openClubAdmin);
       wireClubAdminPanel();
