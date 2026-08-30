@@ -907,7 +907,7 @@ let state = {
   typeSel:[],
   returnTab:'',
   calYear: today.getFullYear(), calMonth: today.getMonth(),
-  clubMembersId:null, clubMembersTitle:'', cmView:'auth', cmError:'', cmMembers:[], cmMe:null, cmRevealPin:'',
+  clubMembersId:null, clubMembersTitle:'', cmView:'auth', cmError:'', cmMembers:[], cmMe:null,
   cmEvents:[], cmEventData:null, cmEventMode:'mine', cmMySlots:[],
   cmAdminOpen:false, cmAdminLoggedIn:null, cmAdminError:'', cmAdminClub:null, cmAdminEvents:null,
   cmAdminMembers:null, cmAdminEditingId:null, clubsLoginPickerOpen:false,
@@ -2909,45 +2909,17 @@ function renderClubMembersView(el){
       <button class="back-btn" data-hometab="clubs">← Back to GALS CLUBS</button>
       <div class="rules-content" style="max-width:420px;margin:0 auto;">
         <h2 style="margin-bottom:4px;">${title} — Club Members Schedule</h2>
-        <p class="rules-lead">Sign in to see who's around and share your own availability.</p>
+        <p class="rules-lead">Sign in with the username and PIN an organizer gave you.</p>
         ${state.cmError ? `<p style="color:#c00;margin-bottom:10px;">${escapeCm(state.cmError)}</p>` : ''}
-        <div style="display:flex; flex-direction:column; gap:10px;">
-          <input id="cmNameInput" placeholder="Your name" style="padding:12px;border-radius:10px;border:2px solid var(--charcoal);font-size:15px;">
-          <input id="cmUsernameInput" placeholder="Choose a username (letters/numbers/_, 3-20)" maxlength="20" style="padding:12px;border-radius:10px;border:2px solid var(--charcoal);font-size:15px;">
-          <input id="cmSignupPinInput" placeholder="Club PIN (ask an organizer)" inputmode="numeric" style="padding:12px;border-radius:10px;border:2px solid var(--charcoal);font-size:15px;">
-          <button class="club-guide-btn" id="cmCreateBtn" style="background:var(--blush);">Create My Profile (new member)</button>
-        </div>
-        <hr style="margin:18px 0;border:none;border-top:1px solid #ddd;">
         <div style="display:flex; flex-direction:column; gap:10px;">
           <input id="cmUsernameLoginInput" placeholder="Username" style="padding:12px;border-radius:10px;border:2px solid var(--charcoal);font-size:15px;">
           <input id="cmPinInput" placeholder="PIN" inputmode="numeric" maxlength="4" style="padding:12px;border-radius:10px;border:2px solid var(--charcoal);font-size:15px;">
-          <button class="club-guide-btn" id="cmSignInBtn" style="background:var(--lightblue);">Sign In (I already have a PIN)</button>
+          <button class="club-guide-btn" id="cmSignInBtn" style="background:var(--lightblue);">Sign In</button>
         </div>
-        <p style="font-size:11px;color:#776867;margin-top:12px;">You'll need the club PIN (ask an organizer) to create a profile. Once created, you get your own personal PIN to sign back in later — you'll only see it once, so write it down. Your username can't be taken by anyone else, in any club. You can add a profile picture later, once you're signed in.</p>
+        <p style="font-size:11px;color:#776867;margin-top:12px;">Don't have a login yet? Ask an organizer to add you.</p>
       </div>`;
     setTimeout(() => {
-      document.getElementById('cmCreateBtn').addEventListener('click', cmDoCreate);
       document.getElementById('cmSignInBtn').addEventListener('click', cmDoSignIn);
-    }, 0);
-    return;
-  }
-
-  if(state.cmView === 'pinReveal'){
-    el.innerHTML = `
-      <div class="rules-content" style="max-width:420px;margin:0 auto;text-align:center;">
-        <h2>You're in, ${escapeCm(state.cmMe.name)}! 🎉</h2>
-        <p class="rules-lead">Your personal PIN is:</p>
-        <div style="font-size:40px;font-weight:800;letter-spacing:8px;background:var(--blush);border:2px solid var(--charcoal);border-radius:14px;padding:16px;margin:14px 0;">${escapeCm(state.cmRevealPin)}</div>
-        <p style="font-size:13px;">Save this PIN — you'll need your username (@${escapeCm(state.cmMe.username)}) + this PIN to sign back in on another device or if you clear your browser.</p>
-        <button class="club-guide-btn" id="cmContinueBtn" style="margin-top:14px;background:var(--charcoal);color:var(--cream);">Continue →</button>
-      </div>`;
-    setTimeout(() => {
-      document.getElementById('cmContinueBtn').addEventListener('click', async () => {
-        state.cmView = 'loading'; render();
-        await cmLoadRoster(clubId);
-        await cmLoadEvents(clubId);
-        state.cmView = 'dashboard'; render();
-      });
     }, 0);
     return;
   }
@@ -3159,30 +3131,6 @@ function cmHandleProfilePhotoPick(input){
     img.src = reader.result;
   };
   reader.readAsDataURL(file);
-}
-
-async function cmDoCreate(){
-  const clubId = state.clubMembersId;
-  const name = document.getElementById('cmNameInput').value.trim();
-  const username = document.getElementById('cmUsernameInput').value.trim();
-  const signupPin = document.getElementById('cmSignupPinInput').value.trim();
-  if(!name){ state.cmError = 'Enter your name first.'; render(); return; }
-  if(!/^[a-zA-Z0-9_]{3,20}$/.test(username)){ state.cmError = 'Username must be 3-20 characters: letters, numbers, underscore only.'; render(); return; }
-  if(!signupPin){ state.cmError = 'Enter the club PIN — ask an organizer if you don\'t have it.'; render(); return; }
-  try {
-    const data = await cmApi(encodeURIComponent(clubId) + '/members', {
-      method:'POST',
-      body: JSON.stringify({ name, username, signupPin })
-    });
-    setCmSession(clubId, { id: data.id, token: data.token });
-    state.cmMe = { id: data.id, name: data.name, username: data.username, photo: null, token: data.token };
-    state.cmRevealPin = data.pin;
-    state.cmError = '';
-    state.cmView = 'pinReveal';
-  } catch(err){
-    state.cmError = err.message;
-  }
-  render();
 }
 
 async function cmDoSignIn(){
