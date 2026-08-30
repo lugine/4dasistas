@@ -624,7 +624,7 @@
   <button class="tab-btn" data-tab="clubs">GALS CLUBS</button>
   <button class="tab-btn" data-tab="resources">Resources</button>
   <button class="tab-btn" data-tab="travel">Travel</button>
-  <button class="tab-btn" data-tab="rules">FAQ</button>
+  <button class="tab-btn" data-tab="rules">About</button>
   <div class="top-search-wrap" id="globalSearchShell" style="display:none;">
     <div class="top-search-shell">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="6"></circle><path d="M16 16L21 21"></path></svg>
@@ -2652,7 +2652,56 @@ el.innerHTML = `<button class="fall-cta-btn" data-hometab="fallsignup">🍂 Join
           <li>Admins may speak separately with those involved, pause participation, remove content, appoint a new lead, or remove a member where necessary.</li>
           <li>Reports will be handled respectfully and as privately as practical, but confidentiality cannot be guaranteed where safety requires escalation.</li>
         </ol>
+      </div>
+      <div class="rules-content" style="margin-top:16px;">
+        <button class="link-btn primary" id="volunteerToggleBtn" type="button" style="width:100%; text-align:center;">Want to Volunteer? →</button>
+        <form id="volunteerForm" action="https://formspree.io/f/YOUR_FORM_ID" method="POST" style="display:none; margin-top:16px; flex-direction:column; gap:12px;">
+          <div>
+            <label style="display:block; font-size:13px; font-weight:600; margin-bottom:4px;">Name</label>
+            <input type="text" name="name" required style="width:100%; padding:10px 12px; border:1.5px solid var(--charcoal); border-radius:8px; font-size:14px; box-sizing:border-box;">
+          </div>
+          <div>
+            <label style="display:block; font-size:13px; font-weight:600; margin-bottom:4px;">Phone Number</label>
+            <input type="tel" name="phone" required style="width:100%; padding:10px 12px; border:1.5px solid var(--charcoal); border-radius:8px; font-size:14px; box-sizing:border-box;">
+          </div>
+          <div>
+            <label style="display:block; font-size:13px; font-weight:600; margin-bottom:4px;">Email</label>
+            <input type="email" name="email" required style="width:100%; padding:10px 12px; border:1.5px solid var(--charcoal); border-radius:8px; font-size:14px; box-sizing:border-box;">
+          </div>
+          <div>
+            <label style="display:block; font-size:13px; font-weight:600; margin-bottom:8px;">I'd like to help with:</label>
+            <label style="display:flex; align-items:center; gap:8px; font-size:14px; margin-bottom:8px;"><input type="checkbox" name="interests[]" value="Website development"> Website development</label>
+            <label style="display:flex; align-items:center; gap:8px; font-size:14px; margin-bottom:8px;"><input type="checkbox" name="interests[]" value="Social media content creation"> Social media content creation</label>
+            <label style="display:flex; align-items:center; gap:8px; font-size:14px; margin-bottom:8px;"><input type="checkbox" name="interests[]" value="Outreach & check for events"> Outreach &amp; check for events</label>
+            <label style="display:flex; align-items:center; gap:8px; font-size:14px; margin-bottom:6px;"><input type="checkbox" name="interests[]" value="Other" id="volOtherCheck"> Other:</label>
+            <input type="text" name="other_details" id="volOtherText" placeholder="Tell us more..." style="width:100%; padding:8px 10px; border:1.5px solid var(--charcoal); border-radius:8px; font-size:13px; box-sizing:border-box; display:none;">
+          </div>
+          <button type="submit" class="link-btn primary" style="width:100%; text-align:center;">Submit</button>
+        </form>
+        <p id="volunteerThanks" style="display:none; text-align:center; font-weight:600; margin-top:12px;">Thank you! We'll be in touch. 💛</p>
       </div>`;
+    document.getElementById('volunteerToggleBtn').addEventListener('click', () => {
+      const form = document.getElementById('volunteerForm');
+      form.style.display = form.style.display === 'none' ? 'flex' : 'none';
+    });
+    document.getElementById('volOtherCheck').addEventListener('change', (e) => {
+      document.getElementById('volOtherText').style.display = e.target.checked ? 'block' : 'none';
+    });
+    document.getElementById('volunteerForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const form = e.target;
+      try {
+        const res = await fetch(form.action, { method: 'POST', body: new FormData(form), headers: { 'Accept': 'application/json' } });
+        if(res.ok){
+          form.style.display = 'none';
+          document.getElementById('volunteerThanks').style.display = 'block';
+        } else {
+          alert('Something went wrong submitting the form — please try again.');
+        }
+      } catch(err) {
+        alert('Something went wrong submitting the form — please try again.');
+      }
+    });
   } else if(state.tab === 'homescreen'){
     document.getElementById('resourcePagination').innerHTML = '';
     el.innerHTML = `
