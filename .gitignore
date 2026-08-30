@@ -15,3 +15,7 @@ Thumbs.db
 .idea/
 *.swp
 *.swo
+
+# Wrangler local dev cache
+.wrangler/
+.dev.vars
