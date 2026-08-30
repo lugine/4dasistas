@@ -275,6 +275,7 @@
     .controls{ flex-wrap:nowrap; gap:8px; padding-left:12px; padding-right:12px; overflow-x:auto; -webkit-overflow-scrolling:touch; justify-content:center; }
     .view-toggle{ flex-shrink:0; }
     .view-toggle button{ padding:6px 10px; font-size:11.5px; }
+    .type-multi-btn{ padding:6px 10px; font-size:11.5px; }
     .map-legend{ gap:10px; font-size:11.5px; }
     .footer-btns{ gap:10px; flex-direction:row; flex-wrap:wrap; justify-content:center; }
     .wa-btn, .ig-btn, .tiktok-btn{ padding:0; width:44px; height:44px; gap:0; justify-content:center; }
@@ -548,7 +549,7 @@
   .hp-field{ position:absolute; left:-9999px; }
 /* Event-types multi-select dropdown */
 .type-multi-wrap{position:relative}
-.type-multi-btn{font-family:inherit;font-size:14px;background:#fff;border:1.5px solid #e4d7bd;color:#373d3b;font-weight:700;padding:9px 16px;border-radius:999px;cursor:pointer;display:inline-flex;align-items:center;gap:6px}
+.type-multi-btn{font-family:inherit;font-size:13px;background:#fff;border:2px solid var(--charcoal);color:#373d3b;font-weight:700;padding:7px 15px;border-radius:999px;cursor:pointer;display:inline-flex;align-items:center;gap:6px}
 .type-multi-btn:hover{border-color:#caaacd;background:#faf3e6}
 .type-multi-btn.active{background:#caaacd;border-color:#caaacd;color:#fff7e6}
 #typeMultiCount{font-size:.85em;opacity:.85}
@@ -643,9 +644,11 @@
     <button class="active" data-view="list">List view</button>
     <button data-view="calendar">Calendar view</button>
   </div>
-  <div class="today-filter" id="calViewFilter" style="display:none;"><label class="event-sort-label">View <select class="event-sort-select" id="calViewSelect" aria-label="Choose calendar view">
-    <option value="day">Day</option><option value="week">Week</option><option value="month" selected>Month</option>
-  </select></label></div>
+  <div class="view-toggle" id="calViewFilter" style="display:none;">
+    <button data-calview="day">Day</button>
+    <button data-calview="week">Week</button>
+    <button class="active" data-calview="month">Month</button>
+  </div>
   <div class="type-multi-wrap" id="typeMultiWrap">
     <button type="button" class="type-multi-btn" id="typeMultiBtn">Event types <span id="typeMultiCount"></span> ▾</button>
     <div class="type-multi-panel" id="typeMultiPanel">
@@ -3702,8 +3705,7 @@ function render(){
   if(eventSortLabel) eventSortLabel.style.display = state.view === 'calendar' ? 'none' : 'inline-flex';
   const calViewFilter = document.getElementById('calViewFilter');
   if(calViewFilter) calViewFilter.style.display = (!isDirectory && state.view === 'calendar') ? 'flex' : 'none';
-  const calViewSelect = document.getElementById('calViewSelect');
-  if(calViewSelect) calViewSelect.value = state.calViewMode;
+  if(calViewFilter) calViewFilter.querySelectorAll('button').forEach(b => b.classList.toggle('active', b.dataset.calview === state.calViewMode));
   document.getElementById('resourceControlsRow').style.display = state.tab === 'resources' && !['mentalhealth','legal','bakeries'].includes(state.resourceFilter) ? 'flex' : 'none';
   document.getElementById('list-view').style.display = 'none';
   document.getElementById('pagination').style.display = 'none';
@@ -3825,8 +3827,11 @@ document.getElementById('viewToggle').addEventListener('click', e => {
   render();
 });
 
-document.getElementById('calViewSelect').addEventListener('change', e => {
-  state.calViewMode = e.target.value;
+document.getElementById('calViewFilter').addEventListener('click', e => {
+  const btn = e.target.closest('[data-calview]');
+  if(!btn) return;
+  document.querySelectorAll('#calViewFilter button').forEach(b => b.classList.toggle('active', b === btn));
+  state.calViewMode = btn.dataset.calview;
   state.calDayOffset = 0;
   renderCalendar();
 });
