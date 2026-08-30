@@ -2892,6 +2892,7 @@ function renderClubMembersView(el){
         <div style="display:flex; flex-direction:column; gap:10px;">
           <input id="cmNameInput" placeholder="Your name" style="padding:12px;border-radius:10px;border:2px solid var(--charcoal);font-size:15px;">
           <input id="cmUsernameInput" placeholder="Choose a username (letters/numbers/_, 3-20)" maxlength="20" style="padding:12px;border-radius:10px;border:2px solid var(--charcoal);font-size:15px;">
+          <input id="cmSignupPinInput" placeholder="Club PIN (ask an organizer)" inputmode="numeric" style="padding:12px;border-radius:10px;border:2px solid var(--charcoal);font-size:15px;">
           <button class="club-guide-btn" id="cmCreateBtn" style="background:var(--blush);">Create My Profile (new member)</button>
         </div>
         <hr style="margin:18px 0;border:none;border-top:1px solid #ddd;">
@@ -2900,7 +2901,7 @@ function renderClubMembersView(el){
           <input id="cmPinInput" placeholder="PIN" inputmode="numeric" maxlength="4" style="padding:12px;border-radius:10px;border:2px solid var(--charcoal);font-size:15px;">
           <button class="club-guide-btn" id="cmSignInBtn" style="background:var(--lightblue);">Sign In (I already have a PIN)</button>
         </div>
-        <p style="font-size:11px;color:#776867;margin-top:12px;">Creating a profile gives you a personal PIN to sign back in later — you'll only see it once, so write it down. Your username can't be taken by anyone else, in any club. You can add a profile picture later, once you're signed in.</p>
+        <p style="font-size:11px;color:#776867;margin-top:12px;">You'll need the club PIN (ask an organizer) to create a profile. Once created, you get your own personal PIN to sign back in later — you'll only see it once, so write it down. Your username can't be taken by anyone else, in any club. You can add a profile picture later, once you're signed in.</p>
       </div>`;
     setTimeout(() => {
       document.getElementById('cmCreateBtn').addEventListener('click', cmDoCreate);
@@ -3142,12 +3143,14 @@ async function cmDoCreate(){
   const clubId = state.clubMembersId;
   const name = document.getElementById('cmNameInput').value.trim();
   const username = document.getElementById('cmUsernameInput').value.trim();
+  const signupPin = document.getElementById('cmSignupPinInput').value.trim();
   if(!name){ state.cmError = 'Enter your name first.'; render(); return; }
   if(!/^[a-zA-Z0-9_]{3,20}$/.test(username)){ state.cmError = 'Username must be 3-20 characters: letters, numbers, underscore only.'; render(); return; }
+  if(!signupPin){ state.cmError = 'Enter the club PIN — ask an organizer if you don\'t have it.'; render(); return; }
   try {
     const data = await cmApi(encodeURIComponent(clubId) + '/members', {
       method:'POST',
-      body: JSON.stringify({ name, username })
+      body: JSON.stringify({ name, username, signupPin })
     });
     setCmSession(clubId, { id: data.id, token: data.token });
     state.cmMe = { id: data.id, name: data.name, username: data.username, photo: null, token: data.token };

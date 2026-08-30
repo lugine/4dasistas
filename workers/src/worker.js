@@ -13,7 +13,7 @@
  *
  *   -- Club Members Schedule (per-club private sign-in + per-event availability) --
  *   GET    /api/clubs/:clubId/members                       - Roster (name, username, photo — no PINs)
- *   POST   /api/clubs/:clubId/members                       - Create a profile (name+username), returns a one-time PIN + session token
+ *   POST   /api/clubs/:clubId/members                       - Create a profile (name+username+the shared club signup PIN), returns a one-time personal PIN + session token
  *   POST   /api/clubs/:clubId/login                         - Sign in with username+PIN, returns a session token
  *   PUT    /api/clubs/:clubId/members/:id                   - Update own profile photo (Bearer session token required)
  *   GET    /api/clubs/:clubId/events                        - This club's admin-created events
@@ -30,6 +30,10 @@
  *   GET    /api/admin/club-events/:clubId                    - This club's events (admin view)
  *   POST   /api/admin/club-events/:clubId                    - Create an event (title, desc, startDate, endDate, startHour, endHour)
  *   DELETE /api/admin/club-events/:clubId/:eventId            - Remove an event and its responses
+ *
+ * Required secrets (wrangler secret put <name>):
+ *   ADMIN_PASSWORD    - admin login for /editor and the in-site Club Events admin panel
+ *   CLUB_SIGNUP_PIN   - shared PIN required to create a Club Members Schedule profile
  *
  * Deploy:
  *   wrangler deploy
@@ -197,6 +201,7 @@ const readTodayEvents = async (env) => {
 export default {
   async fetch(request, env, ctx) {
     const ADMIN_PASSWORD = env.ADMIN_PASSWORD; // REQUIRED Worker secret — auth fails closed when unset
+    const CLUB_SIGNUP_PIN = env.CLUB_SIGNUP_PIN; // REQUIRED Worker secret — creating a Club Members profile fails closed when unset
 
     const corsHeaders = {
       "Access-Control-Allow-Origin": "*",
@@ -253,6 +258,11 @@ export default {
       try { body = await request.json(); } catch { return jsonResponse({ error: "Invalid request" }, 400, corsHeaders); }
       const name = String(body.name || "").trim().slice(0, 60);
       const username = sanitizeUsername(body.username);
+      const signupPin = String(body.signupPin || "").trim();
+      // Fail closed: if the secret isn't configured, nobody can create a profile.
+      if (!CLUB_SIGNUP_PIN || signupPin !== CLUB_SIGNUP_PIN) {
+        return jsonResponse({ error: "Incorrect club PIN." }, 403, corsHeaders);
+      }
       if (!name) return jsonResponse({ error: "Name is required" }, 400, corsHeaders);
       if (!username) return jsonResponse({ error: "Username must be 3-20 characters: letters, numbers, underscore only" }, 400, corsHeaders);
       if (await isUsernameTaken(env, username)) {
