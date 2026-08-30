@@ -79,6 +79,13 @@ npx wrangler deploy
 
 **Status:** IDLE
 **Last updated by:** Claude (chat)
+**Last updated:** 2026-08-30 (club title wrap fix)
+
+**2026-08-30 (club title wrap fix) — Claude (chat) — `index.html`** — Fixed club card titles wrapping awkwardly on mobile (e.g. 'Adrenaline' breaking into two lines). Root cause: club-card titles had no mobile font-size reduction, unlike mental-health-grid and small-business-grid which already got this treatment - reduced to 14px on mobile to match that pattern.
+
+
+**Status:** IDLE
+**Last updated by:** Claude (chat)
 **Last updated:** 2026-08-30 (formspree connected)
 
 **2026-08-30 (formspree connected) — Claude (chat) — `index.html`** — Swapped the volunteer form's placeholder Formspree URL for Lujane's real endpoint (mkjnonrr). Form is now fully functional end to end.
