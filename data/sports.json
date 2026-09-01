@@ -437,6 +437,22 @@
     },
     {
       "section": "sports",
+      "eventDate": "2026-09-20",
+      "endTime": "12:30",
+      "alsoShowIn": [
+        "activities"
+      ],
+      "virtual": false,
+      "time": "10:00",
+      "location": "1191 Lawrence Ave E, North York, ON M3A 3P9, Canada",
+      "title": "🍂Take a Hike..Into Fall",
+      "organizedBy": "herhealingspaceto",
+      "link": "https://www.instagram.com/p/DctabYRFqZ7/?igsi=MTdrZDZhZTdrbGxucQ==",
+      "allDay": false,
+      "id": "🍂take-a-hike-into-fall"
+    },
+    {
+      "section": "sports",
       "eventDate": "2026-09-06",
       "alsoShowIn": [
         "activities",
