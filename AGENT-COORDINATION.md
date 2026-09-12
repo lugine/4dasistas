@@ -79,6 +79,13 @@ npx wrangler deploy
 
 **Status:** IDLE
 **Last updated by:** Claude (chat)
+**Last updated:** 2026-09-12 (audience classification pass)
+
+**2026-09-12 (audience classification pass) — Claude (chat) — `data/sports.json`, `data/gatherings.json`, `data/dayactivities.json`, `data/trips.json`, `data/mosquegatherings.json`** — Ran an automated keyword-based classification of audienceType across all 147 existing events. Caught and fixed my own first-pass bugs (missed standalone 'muslim'/'hijabi' as signals, causing things like MuslimFest itself to be misclassified) before pushing - went from 55 to 36 genuinely uncertain after the fix. Pushed confident classifications for ~111 events. 36 remain unclassified (empty or defaulted, flagged to Lujane directly) since I lack context a keyword search can't surface (e.g. knowing OnePath Travel or Ma'wa Collective are Muslim-focused despite their names not saying so) - asked Lujane to confirm these rather than guess. Also noticed 3 near-duplicate 'Boxing Program Launch' entries in sports.json (boxing-program-launch, -1, -2) - flagged as a possible separate duplicate issue, not yet resolved.
+
+
+**Status:** IDLE
+**Last updated by:** Claude (chat)
 **Last updated:** 2026-09-12 (audience type multi-select)
 
 **2026-09-12 (audience type multi-select) — Claude (chat) — `index.html`, `admin/config.yml`** — Changed Audience Type from single-select to multi-select per Lujane's clarification: Muslim Women and Hijabi Friendly are independently assessed, so an event can need both simultaneously. Updated pill rendering to show a stacked group of multiple pills (was single pill). Confirmed via runtime test with array data. Definitions now clear: Muslim Women (not auto-hijabi-friendly, must be separately confirmed), Hijabi Friendly (independent privacy/space classification), Family Event (includes men and children), Girls/Multi-Faith Audience (women, not necessarily Muslim). Still need to classify ~100+ existing events - proposing a scoped approach to Lujane rather than guessing at scale.
