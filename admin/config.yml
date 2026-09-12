@@ -154,7 +154,8 @@ collections:
   - label: Title
     name: title
     widget: string
-  - label: Audience Type (required) — shown as a small badge on the event
+  - label: Audience Type (required, select all that apply) — shown as pills on the
+      event
     name: audienceType
     widget: select
     options:
@@ -163,6 +164,7 @@ collections:
     - Family Event
     - Girls / Multi-Faith Audience
     required: true
+    multiple: true
   - label: Emoji override (optional - leave blank to auto-pick one based on the event,
       e.g. sport/hike/country)
     name: emoji
@@ -307,7 +309,8 @@ collections:
   - label: Title
     name: title
     widget: string
-  - label: Audience Type (required) — shown as a small badge on the event
+  - label: Audience Type (required, select all that apply) — shown as pills on the
+      event
     name: audienceType
     widget: select
     options:
@@ -316,6 +319,7 @@ collections:
     - Family Event
     - Girls / Multi-Faith Audience
     required: true
+    multiple: true
   - label: Emoji override (optional - leave blank to auto-pick one based on the event,
       e.g. sport/hike/country)
     name: emoji
@@ -445,7 +449,8 @@ collections:
   - label: Title
     name: title
     widget: string
-  - label: Audience Type (required) — shown as a small badge on the event
+  - label: Audience Type (required, select all that apply) — shown as pills on the
+      event
     name: audienceType
     widget: select
     options:
@@ -454,6 +459,7 @@ collections:
     - Family Event
     - Girls / Multi-Faith Audience
     required: true
+    multiple: true
   - label: Emoji override (optional - leave blank to auto-pick one based on the event,
       e.g. sport/hike/country)
     name: emoji
@@ -583,7 +589,8 @@ collections:
   - label: Title
     name: title
     widget: string
-  - label: Audience Type (required) — shown as a small badge on the event
+  - label: Audience Type (required, select all that apply) — shown as pills on the
+      event
     name: audienceType
     widget: select
     options:
@@ -592,6 +599,7 @@ collections:
     - Family Event
     - Girls / Multi-Faith Audience
     required: true
+    multiple: true
   - label: Emoji override (optional - leave blank to auto-pick one based on the event,
       e.g. sport/hike/country)
     name: emoji
@@ -720,7 +728,8 @@ collections:
   - label: Title
     name: title
     widget: string
-  - label: Audience Type (required) — shown as a small badge on the event
+  - label: Audience Type (required, select all that apply) — shown as pills on the
+      event
     name: audienceType
     widget: select
     options:
@@ -729,6 +738,7 @@ collections:
     - Family Event
     - Girls / Multi-Faith Audience
     required: true
+    multiple: true
   - label: Emoji override (optional - leave blank to auto-pick one based on the event,
       e.g. sport/hike/country)
     name: emoji
@@ -858,7 +868,8 @@ collections:
   - label: Title
     name: title
     widget: string
-  - label: Audience Type (required) — shown as a small badge on the event
+  - label: Audience Type (required, select all that apply) — shown as pills on the
+      event
     name: audienceType
     widget: select
     options:
@@ -867,6 +878,7 @@ collections:
     - Family Event
     - Girls / Multi-Faith Audience
     required: true
+    multiple: true
   - label: Emoji override (optional - leave blank to auto-pick one based on the event,
       e.g. sport/hike/country)
     name: emoji
