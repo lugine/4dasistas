@@ -9,7 +9,10 @@
       "time": "15:00",
       "link": "https://www.instagram.com/p/DcWSDlaliA_/?igsi=MXdqNjB2a25odXN4Yg==",
       "desc": "SISTERS RUN CLUB TORONTO | SEASON 01 RUN 02 | 5K FOR COLOMBIA 🏃🏻‍♀️🇨🇴 🤍\n\nJoin us on August 30 for a 5K run/walk for Colombia, a special fundraiser bringing women together through movement while supporting communities affected by the earthquake. \n\n📍 Downsview Park (Orchard Pavilion)\n🗓️ Sunday, August 30\n⏰ Meet at 3:00 PM\n\nFREE TO JOIN • PAY WHAT YOU CAN\n100% of donations will support earthquake relief efforts in Colombia 🇨🇴🤍\n\nEnjoy some fast chews by @saltstick to keep us energized before the run ❤️💥\n\nAfter the run, we’ll head to @goodbehaviour.to to relax, connect, and enjoy some delicious food together. When you join us, you’ll also receive 20% off ice cream or smash burgers!🍦🍔 \n\nWhether you run or walk, this is a space for everyone. All ages, backgrounds, and fitness levels are welcome. Come move at your own pace, meet your community, and help us give back 🤍\n\nSee you there, sisters! 🏃🏻‍♀️",
-      "id": "5k-for-columbia-sisters-run-club-toronto"
+      "id": "5k-for-columbia-sisters-run-club-toronto",
+      "audienceType": [
+        "Muslim Women"
+      ]
     },
     {
       "sportKey": "padel",
@@ -23,7 +26,10 @@
       "website": "https://www.sistersthroughfaith.ca/",
       "id": "Padel_SisterthroughFaith",
       "calDate": "2026-08-29",
-      "section": "sports"
+      "section": "sports",
+      "audienceType": [
+        "Muslim Women"
+      ]
     },
     {
       "contact": "647-292-4043",
@@ -47,7 +53,10 @@
       "registration": "Drop-in",
       "tag": "Badminton",
       "link": "https://form.jotform.com/252165014748254",
-      "id": "bad-thu"
+      "id": "bad-thu",
+      "audienceType": [
+        "Muslim Women"
+      ]
     },
     {
       "sportKey": "ball-hockey",
@@ -63,7 +72,10 @@
       "tag": "Ball Hockey",
       "website": "https://linktr.ee/MuslimahAthleticClub",
       "id": "ballhockey-open-practice",
-      "section": "sports"
+      "section": "sports",
+      "audienceType": [
+        "Girls / Multi-Faith Audience"
+      ]
     },
     {
       "section": "sports",
@@ -72,7 +84,10 @@
       "time": "12:00",
       "location": "1230 Sheppard Ave W Unit 2, North York, ON M3J 1Z4, Canada",
       "link": "https://www.instagram.com/p/DcJzINglkbh/?img_index=2&igsi=MXd3Z3Izb21pZXRveg==",
-      "id": "boxing-program-launch"
+      "id": "boxing-program-launch",
+      "audienceType": [
+        "Girls / Multi-Faith Audience"
+      ]
     },
     {
       "section": "sports",
@@ -81,7 +96,10 @@
       "time": "20:00",
       "location": "1230 Sheppard Ave W Unit 2, North York, ON M3J 1Z4, Canada",
       "link": "https://www.instagram.com/p/DcJzINglkbh/?img_index=2&igsi=MXd3Z3Izb21pZXRveg==",
-      "id": "boxing-program-launch-1"
+      "id": "boxing-program-launch-1",
+      "audienceType": [
+        "Girls / Multi-Faith Audience"
+      ]
     },
     {
       "section": "sports",
@@ -90,7 +108,10 @@
       "time": "12:00",
       "location": "1230 Sheppard Ave W Unit 2, North York, ON M3J 1Z4, Canada",
       "link": "https://www.instagram.com/p/DcJzINglkbh/?img_index=2&igsi=MXd3Z3Izb21pZXRveg==",
-      "id": "boxing-program-launch-2"
+      "id": "boxing-program-launch-2",
+      "audienceType": [
+        "Girls / Multi-Faith Audience"
+      ]
     },
     {
       "section": "sports",
@@ -105,7 +126,11 @@
       ],
       "title": "F-Series Strength Training | HijabiBallers",
       "link": "https://www.instagram.com/p/DcUbtA4xJIz/?igsi=MWxuNWExOXZ4NmJqcw==",
-      "id": "f-series-strength-training-hijabiballers"
+      "id": "f-series-strength-training-hijabiballers",
+      "audienceType": [
+        "Muslim Women",
+        "Hijabi Friendly"
+      ]
     },
     {
       "price": "$10 per person",
@@ -121,7 +146,10 @@
       "website": "https://centres.macnet.ca/icco/",
       "id": "hidayah-sisters-soccer-tournament-2026",
       "calDate": "2026-08-23",
-      "section": "sports"
+      "section": "sports",
+      "audienceType": [
+        "Muslim Women"
+      ]
     },
     {
       "eventDate": "2026-09-06",
@@ -142,7 +170,11 @@
       "tag": "Basketball",
       "website": "https://www.hijabiballers.com/fseries",
       "id": "hijabiballers-fseries-2026",
-      "section": "sports"
+      "section": "sports",
+      "audienceType": [
+        "Muslim Women",
+        "Hijabi Friendly"
+      ]
     },
     {
       "sportKey": "badminton",
@@ -157,7 +189,10 @@
       "website": "https://bit.ly/sisterlybadminton",
       "id": "ism-sisterly-badminton-aug15-2026",
       "calDate": "2026-08-15",
-      "section": "sports"
+      "section": "sports",
+      "audienceType": [
+        "Muslim Women"
+      ]
     },
     {
       "eventDate": "2026-09-13",
@@ -172,7 +207,11 @@
       "tag": "Running",
       "website": "https://isnacanada.com/run",
       "id": "isna-run-against-hunger-2026",
-      "section": "sports"
+      "section": "sports",
+      "audienceType": [
+        "Family Event",
+        "Muslim Women"
+      ]
     },
     {
       "section": "sports",
@@ -186,7 +225,10 @@
       "organizedBy": "mwja.mississauga",
       "link": "https://www.instagram.com/p/DcKHo5vydDa/?utm_source=ig_web_copy_link&igsi=MzRlODBiNWFlZA==",
       "allDay": false,
-      "id": "justice-is-islam-hike-🥾"
+      "id": "justice-is-islam-hike-🥾",
+      "audienceType": [
+        "Muslim Women"
+      ]
     },
     {
       "contact": "647-974-7848",
@@ -205,7 +247,10 @@
       "registration": "Women 18+",
       "tag": "Fitness",
       "id": "meadowvale-sisters-fitness-2026",
-      "section": "sports"
+      "section": "sports",
+      "audienceType": [
+        "Muslim Women"
+      ]
     },
     {
       "id": "mg-hia-sistersonthecourt",
@@ -217,7 +262,10 @@
       "desc": "24 May 24 Sisters Other Sisters on the Court Attention Youth Sisters, we’re taking over the basketball court! 🏀 ✨ Learn More Register Now",
       "website": "https://www.hia.live/event/sisters-on-the-court",
       "instagram": "https://www.instagram.com/masjidhalton/",
-      "section": "sports"
+      "section": "sports",
+      "audienceType": [
+        "Muslim Women"
+      ]
     },
     {
       "eventDate": "2026-08-20",
@@ -235,7 +283,10 @@
       "tag": "Pilates",
       "website": "https://www.wellnessliving.com/rs/schedule/musfit?k_business=423258&k_class_tab=52270&uid=0&id_class_tab=1",
       "id": "musfit-womens-reformer-pilates-2026",
-      "section": "sports"
+      "section": "sports",
+      "audienceType": [
+        "Girls / Multi-Faith Audience"
+      ]
     },
     {
       "eventDate": "2026-08-28",
@@ -248,7 +299,11 @@
       "registration": "Link in bio",
       "tag": "Pilates",
       "id": "muslimfest-pilates-workshop-2026",
-      "section": "sports"
+      "section": "sports",
+      "audienceType": [
+        "Muslim Women",
+        "Hijabi Friendly"
+      ]
     },
     {
       "alsoSportKeys": [
@@ -268,7 +323,10 @@
       "title": "🎀Pickleball & Pilates",
       "organizedBy": "thesidequestsclub.to",
       "link": "https://www.instagram.com/p/DcebiPWxJC7/?igsi=MWdraXF6bWd6Y2VraA==",
-      "id": "pickleball-pilates"
+      "id": "pickleball-pilates",
+      "audienceType": [
+        "Girls / Multi-Faith Audience"
+      ]
     },
     {
       "section": "sports",
@@ -282,7 +340,10 @@
       "organizedBy": "Ms Kay Fit",
       "link": "https://www.instagram.com/reel/DcWHd-bOnsV/?utm_source=ig_web_copy_link",
       "allDay": false,
-      "id": "pilates-in-pjs🍿"
+      "id": "pilates-in-pjs🍿",
+      "audienceType": [
+        "Girls / Multi-Faith Audience"
+      ]
     },
     {
       "eventDate": "2026-09-04",
@@ -295,7 +356,10 @@
       "registration": "Link in bio",
       "tag": "Pilates",
       "id": "pilates-pajamas-sept4-2026",
-      "section": "sports"
+      "section": "sports",
+      "audienceType": [
+        "Girls / Multi-Faith Audience"
+      ]
     },
     {
       "section": "sports",
@@ -312,7 +376,10 @@
       "tag": "Day Activity",
       "link": "https://www.tixtree.com/e/the-pilates-wellness-social-2d78703f634f",
       "id": "pilates-sisterscorner-aug29",
-      "calDate": "2026-08-29"
+      "calDate": "2026-08-29",
+      "audienceType": [
+        "Muslim Women"
+      ]
     },
     {
       "section": "sports",
@@ -325,7 +392,10 @@
       "organizedBy": "womensfitmississauga",
       "link": "https://www.instagram.com/p/DchSyYZiGGU/?utm_source=ig_web_copy_link&igsi=MzRlODBiNWFlZA==",
       "allDay": false,
-      "id": "pink-track-sunday"
+      "id": "pink-track-sunday",
+      "audienceType": [
+        "Girls / Multi-Faith Audience"
+      ]
     },
     {
       "sportKey": "tennis-pickleball",
@@ -341,7 +411,10 @@
       "tag": "Tennis & Pickleball",
       "website": "https://linktr.ee/MuslimahAthleticClub",
       "id": "rallyclub-tennis-pickleball",
-      "section": "sports"
+      "section": "sports",
+      "audienceType": [
+        "Muslim Women"
+      ]
     },
     {
       "partner": "Arab Run Club",
@@ -357,7 +430,10 @@
       "tag": "Running",
       "id": "run4sudan",
       "calDate": "2026-08-30",
-      "section": "sports"
+      "section": "sports",
+      "audienceType": [
+        "Muslim Women"
+      ]
     },
     {
       "eventDate": "2026-08-23",
@@ -376,7 +452,10 @@
       "tag": "Martial Arts",
       "website": "https://bit.ly/sisters-kickboxing",
       "id": "sisters-martial-arts-kickboxing-2026",
-      "section": "sports"
+      "section": "sports",
+      "audienceType": [
+        "Muslim Women"
+      ]
     },
     {
       "id": "sma-fitness-pilates-2026",
@@ -394,7 +473,10 @@
       "desc": "Returning women's fitness and pilates class. $60 for 8 classes.",
       "instagram": "https://www.instagram.com/scarborough_muslim_association/",
       "website": "https://smacanada.ca/",
-      "section": "sports"
+      "section": "sports",
+      "audienceType": [
+        "Muslim Women"
+      ]
     },
     {
       "eventDate": "2026-08-22",
@@ -412,7 +494,10 @@
       "registration": "RSVP via Instagram bio",
       "tag": "Running",
       "id": "sokoon-weekly-muslim-runs-2026",
-      "section": "sports"
+      "section": "sports",
+      "audienceType": [
+        "Muslim Women"
+      ]
     },
     {
       "sportKey": "running",
@@ -427,7 +512,10 @@
       "website": "https://linktr.ee/womensfitsauga",
       "id": "tcs-toronto-waterfront-womensfitsauga-2026",
       "calDate": "2026-10-17",
-      "section": "sports"
+      "section": "sports",
+      "audienceType": [
+        "Girls / Multi-Faith Audience"
+      ]
     },
     {
       "section": "sports",
@@ -442,7 +530,10 @@
       "organizedBy": "womenspadelhaus",
       "link": "https://www.instagram.com/p/Dce7-84ifhj/?utm_source=ig_web_copy_link&igsi=MzRlODBiNWFlZA==",
       "allDay": false,
-      "id": "womens-padel-social"
+      "id": "womens-padel-social",
+      "audienceType": [
+        "Girls / Multi-Faith Audience"
+      ]
     },
     {
       "alsoSportKeys": [
@@ -463,7 +554,10 @@
       "organizedBy": "Haba Sisters",
       "link": "https://www.instagram.com/p/Dcl5RG3xvmv/?igsi=MWhobjFtNnc5dDg0cw==",
       "allDay": false,
-      "id": "🌲don-valley-hike"
+      "id": "🌲don-valley-hike",
+      "audienceType": [
+        "Muslim Women"
+      ]
     },
     {
       "section": "sports",
@@ -479,7 +573,10 @@
       "organizedBy": "herhealingspaceto",
       "link": "https://www.instagram.com/p/DctabYRFqZ7/?igsi=MTdrZDZhZTdrbGxucQ==",
       "allDay": false,
-      "id": "🍂take-a-hike-into-fall"
+      "id": "🍂take-a-hike-into-fall",
+      "audienceType": [
+        "Girls / Multi-Faith Audience"
+      ]
     },
     {
       "section": "sports",
@@ -494,7 +591,10 @@
       "organizedBy": "wijhah initiative ",
       "link": "https://www.instagram.com/p/DcuHPBlxDwz/?igsi=MTR0bHNyNjlhZjRsMw==",
       "allDay": false,
-      "id": "🐾paws-pilates"
+      "id": "🐾paws-pilates",
+      "audienceType": [
+        "Girls / Multi-Faith Audience"
+      ]
     },
     {
       "section": "sports",
@@ -509,7 +609,10 @@
       "title": "🌲Hike",
       "organizedBy": "She Travels",
       "link": "https://www.instagram.com/reel/Dcbu84BRs05/?igsi=djRheGN6c28xb3My",
-      "id": "🥾she-travels-hike"
+      "id": "🥾she-travels-hike",
+      "audienceType": [
+        "Girls / Multi-Faith Audience"
+      ]
     }
   ]
 }
