@@ -77,6 +77,13 @@ npx wrangler deploy
 
 ## Current Status
 
+**Status:** IDLE
+**Last updated by:** Claude (chat)
+**Last updated:** 2026-09-12 (Knowledge rename + recategorization)
+
+**2026-09-12 (Knowledge rename + recategorization) — Claude (chat) — `index.html`, 20 `data/calendar/*.json` source files, `data/mosquegatherings.json`** — Renamed 'Mosque Programs' to 'Knowledge' everywhere (label, checkbox, scope note, code comment). Audited all 31 entries in this category per Lujane's request (triggered by Taste of Spice being miscategorized) - found 20 were general social events/festivals/fundraisers/crafts, not actual religious or educational content, just because a mosque happened to host them. Moved 14 to Functions, 4 to Activities, 2 to Sports, all fixed at the true data/calendar source. Discovered the auto-sync from source files to the generated per-category files (gatherings.json etc) does work, but with some delay/lag - caught and fixed one straggler (Taste of Mississauga) that hadn't synced out yet, confirmed no duplicate was created. Knowledge category now correctly has 11 entries, all genuinely religious/educational (Fiqh, Tafseer, Quran study, halaqas, convert support program).
+
+
 **Status:** IN PROGRESS
 **Last updated by:** Claude (chat)
 **Last updated:** 2026-09-12 (later) — touching index.html (rename Mosque Programs->Knowledge) and ~20 individual data/calendar/*.json files (recategorizing non-educational events out of this category into functions/activities/sports)
