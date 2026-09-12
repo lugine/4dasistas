@@ -78,6 +78,34 @@ npx wrangler deploy
 ## Current Status
 
 **Status:** IDLE
+**Last updated by:** Claude (chat)
+**Last updated:** 2026-08-30 (calendar controls fix)
+
+**2026-08-30 (calendar controls fix) — Claude (chat) — `index.html`** — Fixed the 3 top controls on the Events calendar (List/Calendar toggle, Day/Week/Month, Event Types) not aligning well. Root cause: 3 different implementations with different padding/border - List/Calendar used a bordered container with borderless buttons inside, Day/Week/Month was a native select dropdown with its own border, Event Types was a standalone button with yet another border width/color. Converted Day/Week/Month from a select dropdown into real buttons reusing the exact .view-toggle class (same container+button pattern as List/Calendar), and standardized Event Types' border/padding to match both. Added matching mobile-size overrides so alignment holds on phone too. Tested via runtime simulation - confirmed clicking Week correctly updates state and active class.
+
+
+**Status:** IDLE
+**Last updated by:** Claude (chat)
+**Last updated:** 2026-08-30 (club title wrap fix)
+
+**2026-08-30 (club title wrap fix) — Claude (chat) — `index.html`** — Fixed club card titles wrapping awkwardly on mobile (e.g. 'Adrenaline' breaking into two lines). Root cause: club-card titles had no mobile font-size reduction, unlike mental-health-grid and small-business-grid which already got this treatment - reduced to 14px on mobile to match that pattern.
+
+
+**Status:** IDLE
+**Last updated by:** Claude (chat)
+**Last updated:** 2026-08-30 (formspree connected)
+
+**2026-08-30 (formspree connected) — Claude (chat) — `index.html`** — Swapped the volunteer form's placeholder Formspree URL for Lujane's real endpoint (mkjnonrr). Form is now fully functional end to end.
+
+
+**Status:** IDLE
+**Last updated by:** Claude (chat)
+**Last updated:** 2026-08-30 (volunteer form)
+
+**2026-08-30 (volunteer form) — Claude (chat) — `index.html`** — Renamed FAQ tab label to About (internal data-tab='rules' unchanged, content unchanged - was already Community Rules content mislabeled as FAQ). Added a Want to Volunteer button at the bottom that reveals a form (name, phone, email, checkboxes for Website development/Social media/Outreach/Other-with-textbox), submitting via Formspree. IMPORTANT: uses a placeholder Formspree endpoint (https://formspree.io/f/YOUR_FORM_ID) - Lujane needs to create a real Formspree account/form and swap in her actual endpoint URL before this will actually deliver submissions anywhere. Tested via runtime simulation - confirmed tab label, form toggle, and Other-checkbox-reveals-textbox all work correctly.
+
+
+**Status:** IDLE
 **Last updated by:** Claude (chat) — see 2026-08-30 (Club Members Schedule: admin club editing, grid day labels, best-time, availability suggestions, signed-in button) below
 
 **2026-08-30 (Club Members Schedule: admin club editing, grid day labels, best-time, availability suggestions, signed-in button) — Claude (chat) — `workers/src/worker.js`, `index.html`** — Five requests. (1) Admin's per-member Edit form (in the All Members overview) now includes a checkbox list of every club — checking/unchecking and saving adds or removes that membership. New backend route `PUT /api/admin/users/:id/clubs` takes the full desired club-id list, diffs it against `allClubIdsContaining()`, adds/removes only what changed, and — consistent with the existing single-club delete behavior — fully releases the identity/username if the edit leaves them in zero clubs. (2) The event availability grid's header row now shows the weekday abbreviation above each date (e.g. "Sat 09-05"), not just the bare date. (3) The "Who's free" aggregate view now shows a top-right "Best time: <day date, time> — N free" line, computed from the response aggregate (ties show "+N more"). (4) **Availability suggestion for multi-club members** — clarified with Lujane that this should mean "reuse the weekday+time pattern from other events I've already answered," not a separate one-time template. Implemented as a client-side pattern cache (`localStorage`, keyed per member) built from every slot they've ever saved, keyed by weekday+half-hour rather than exact date; when a member who's in more than one club opens an event they haven't answered yet, if the pattern has any matches for that event's actual date range, a dismissible banner offers to apply them — never auto-fills silently. (5) The general "Log In" button now reads "You're signed in as {name}" once a session exists, and clicking it in that state skips the login form entirely — one club opens straight to its dashboard, multiple shows the existing "pick your club" list, zero explains they're not in any club yet. Verified all five end-to-end via curl + in-browser: admin add/remove-club via checkboxes confirmed against the live roster endpoints, grid header shows correct weekday for known dates, best-time text computed correctly from a seeded aggregate, the suggestion banner correctly proposed and applied a Saturday-evening slot saved on one club's event onto a different club's Saturday event, and the button label/behavior verified in both the signed-out and signed-in states.
