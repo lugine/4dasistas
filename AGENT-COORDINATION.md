@@ -77,6 +77,10 @@ npx wrangler deploy
 
 ## Current Status
 
+**Status:** IN PROGRESS
+**Last updated by:** Claude (chat)
+**Last updated:** 2026-09-12 (later) — touching index.html (rename Mosque Programs->Knowledge) and ~20 individual data/calendar/*.json files (recategorizing non-educational events out of this category into functions/activities/sports)
+
 **Status:** IDLE
 **Last updated by:** Claude (chat)
 **Last updated:** 2026-09-12 (stored XSS fix — member photo field)
