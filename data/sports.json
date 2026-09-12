@@ -208,6 +208,18 @@
       "section": "sports"
     },
     {
+      "id": "mg-hia-sistersonthecourt",
+      "tag": "Mosque Program",
+      "title": "Sisters on the Court",
+      "date": "Date TBD",
+      "location": "Halton Masjid, 4310 Fairview St, Burlington, ON",
+      "organizer": "Halton Islamic Association (HIA)",
+      "desc": "24 May 24 Sisters Other Sisters on the Court Attention Youth Sisters, we’re taking over the basketball court! 🏀 ✨ Learn More Register Now",
+      "website": "https://www.hia.live/event/sisters-on-the-court",
+      "instagram": "https://www.instagram.com/masjidhalton/",
+      "section": "sports"
+    },
+    {
       "eventDate": "2026-08-20",
       "sportKey": "fitness",
       "date": "Thursdays · 6:00–7:00 PM",
@@ -364,6 +376,24 @@
       "tag": "Martial Arts",
       "website": "https://bit.ly/sisters-kickboxing",
       "id": "sisters-martial-arts-kickboxing-2026",
+      "section": "sports"
+    },
+    {
+      "id": "sma-fitness-pilates-2026",
+      "tag": "Mosque Program",
+      "title": "Women's Fitness and Pilates Class",
+      "eventDate": "2026-06-06",
+      "date": "Saturdays 1:00–2:00 PM, June 6 – August 1, 2026",
+      "location": "Jam'e Abu Bakr Siddique Masjid (Scarborough Muslim Association)",
+      "organizer": "Scarborough Muslim Association, with Tasneem Mughal (Certified Fitness Trainer)",
+      "days": [
+        "sat"
+      ],
+      "recurStart": "2026-06-06",
+      "recurEnd": "2026-08-01",
+      "desc": "Returning women's fitness and pilates class. $60 for 8 classes.",
+      "instagram": "https://www.instagram.com/scarborough_muslim_association/",
+      "website": "https://smacanada.ca/",
       "section": "sports"
     },
     {
