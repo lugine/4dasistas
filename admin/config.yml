@@ -154,11 +154,23 @@ collections:
   - label: Title
     name: title
     widget: string
-  - label: Emoji override (optional - leave blank to auto-pick one based on the event, e.g. sport/hike/country)
+  - label: Audience Type (required) — shown as a small badge on the event
+    name: audienceType
+    widget: select
+    options:
+    - Muslim Women
+    - Hijabi Friendly
+    - Family Event
+    - Girls / Multi-Faith Audience
+    required: true
+  - label: Emoji override (optional - leave blank to auto-pick one based on the event,
+      e.g. sport/hike/country)
     name: emoji
     widget: string
     required: false
-    pattern: ['^.{1,8}$', 'One emoji only']
+    pattern:
+    - ^.{1,8}$
+    - One emoji only
   - label: Organized by (optional - shows in italics under the title on the website)
     name: organizedBy
     widget: string
@@ -295,11 +307,23 @@ collections:
   - label: Title
     name: title
     widget: string
-  - label: Emoji override (optional - leave blank to auto-pick one based on the event, e.g. sport/hike/country)
+  - label: Audience Type (required) — shown as a small badge on the event
+    name: audienceType
+    widget: select
+    options:
+    - Muslim Women
+    - Hijabi Friendly
+    - Family Event
+    - Girls / Multi-Faith Audience
+    required: true
+  - label: Emoji override (optional - leave blank to auto-pick one based on the event,
+      e.g. sport/hike/country)
     name: emoji
     widget: string
     required: false
-    pattern: ['^.{1,8}$', 'One emoji only']
+    pattern:
+    - ^.{1,8}$
+    - One emoji only
   - label: Organized by (optional - shows in italics under the title on the website)
     name: organizedBy
     widget: string
@@ -421,11 +445,23 @@ collections:
   - label: Title
     name: title
     widget: string
-  - label: Emoji override (optional - leave blank to auto-pick one based on the event, e.g. sport/hike/country)
+  - label: Audience Type (required) — shown as a small badge on the event
+    name: audienceType
+    widget: select
+    options:
+    - Muslim Women
+    - Hijabi Friendly
+    - Family Event
+    - Girls / Multi-Faith Audience
+    required: true
+  - label: Emoji override (optional - leave blank to auto-pick one based on the event,
+      e.g. sport/hike/country)
     name: emoji
     widget: string
     required: false
-    pattern: ['^.{1,8}$', 'One emoji only']
+    pattern:
+    - ^.{1,8}$
+    - One emoji only
   - label: Organized by (optional - shows in italics under the title on the website)
     name: organizedBy
     widget: string
@@ -547,11 +583,23 @@ collections:
   - label: Title
     name: title
     widget: string
-  - label: Emoji override (optional - leave blank to auto-pick one based on the event, e.g. sport/hike/country)
+  - label: Audience Type (required) — shown as a small badge on the event
+    name: audienceType
+    widget: select
+    options:
+    - Muslim Women
+    - Hijabi Friendly
+    - Family Event
+    - Girls / Multi-Faith Audience
+    required: true
+  - label: Emoji override (optional - leave blank to auto-pick one based on the event,
+      e.g. sport/hike/country)
     name: emoji
     widget: string
     required: false
-    pattern: ['^.{1,8}$', 'One emoji only']
+    pattern:
+    - ^.{1,8}$
+    - One emoji only
   - label: Organized by (optional - shows in italics under the title on the website)
     name: organizedBy
     widget: string
@@ -672,11 +720,23 @@ collections:
   - label: Title
     name: title
     widget: string
-  - label: Emoji override (optional - leave blank to auto-pick one based on the event, e.g. sport/hike/country)
+  - label: Audience Type (required) — shown as a small badge on the event
+    name: audienceType
+    widget: select
+    options:
+    - Muslim Women
+    - Hijabi Friendly
+    - Family Event
+    - Girls / Multi-Faith Audience
+    required: true
+  - label: Emoji override (optional - leave blank to auto-pick one based on the event,
+      e.g. sport/hike/country)
     name: emoji
     widget: string
     required: false
-    pattern: ['^.{1,8}$', 'One emoji only']
+    pattern:
+    - ^.{1,8}$
+    - One emoji only
   - label: Organized by (optional - shows in italics under the title on the website)
     name: organizedBy
     widget: string
@@ -798,11 +858,23 @@ collections:
   - label: Title
     name: title
     widget: string
-  - label: Emoji override (optional - leave blank to auto-pick one based on the event, e.g. sport/hike/country)
+  - label: Audience Type (required) — shown as a small badge on the event
+    name: audienceType
+    widget: select
+    options:
+    - Muslim Women
+    - Hijabi Friendly
+    - Family Event
+    - Girls / Multi-Faith Audience
+    required: true
+  - label: Emoji override (optional - leave blank to auto-pick one based on the event,
+      e.g. sport/hike/country)
     name: emoji
     widget: string
     required: false
-    pattern: ['^.{1,8}$', 'One emoji only']
+    pattern:
+    - ^.{1,8}$
+    - One emoji only
   - label: Organized by (optional - shows in italics under the title on the website)
     name: organizedBy
     widget: string
