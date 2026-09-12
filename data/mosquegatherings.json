@@ -17,7 +17,10 @@
       "instagram": "https://www.instagram.com/p/DbOyPO9iXQX/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==&igsi=MzRlODBiNWFlZA==",
       "website": "",
       "email": "",
-      "section": "mosqueprograms"
+      "section": "mosqueprograms",
+      "audienceType": [
+        "Muslim Women"
+      ]
     },
     {
       "id": "mg-hia-sisterstafseerclass",
@@ -29,7 +32,10 @@
       "desc": "15 Dec 15 Sisters Other Sisters Tafseer Class Engage in exclusive sessions tailored for women, exploring the profound teachings of the Quran Learn More Register Now",
       "website": "https://www.hia.live/event/sistertafseerclass",
       "instagram": "https://www.instagram.com/masjidhalton/",
-      "section": "mosqueprograms"
+      "section": "mosqueprograms",
+      "audienceType": [
+        "Muslim Women"
+      ]
     },
     {
       "id": "mg-isna-project-lina",
@@ -48,7 +54,10 @@
       "instagram": "https://www.instagram.com/isna_canada/",
       "website": "https://www.isnacanada.com/",
       "email": "",
-      "section": "mosqueprograms"
+      "section": "mosqueprograms",
+      "audienceType": [
+        "Muslim Women"
+      ]
     },
     {
       "id": "mg-isna-sisters-quran-tajweed",
@@ -67,7 +76,10 @@
       "instagram": "https://www.instagram.com/isna_canada/",
       "website": "https://www.isnacanada.com/",
       "email": "",
-      "section": "mosqueprograms"
+      "section": "mosqueprograms",
+      "audienceType": [
+        "Muslim Women"
+      ]
     },
     {
       "id": "mg-meadowvale-rise-and-fall-insaan-aug21-2026",
@@ -79,7 +91,10 @@
       "organizer": "Meadowvale Islamic Centre",
       "desc": "Girls youth event with Umme Ibrahim exploring lessons from Surah At-Teen. Presented in English.",
       "instagram": "https://www.instagram.com/meadowvaleislamiccentre/",
-      "section": "mosqueprograms"
+      "section": "mosqueprograms",
+      "audienceType": [
+        "Muslim Women"
+      ]
     },
     {
       "id": "mg-sisters-through-faith-fiqh-salah-aug23",
@@ -92,7 +107,10 @@
       "price": "Sisters 16+",
       "desc": "A halaqa on the fiqh of salah, with the remaining August sessions on Sundays at ISM Sisters.",
       "instagram": "https://www.instagram.com/sistersthroughfaith/",
-      "section": "mosqueprograms"
+      "section": "mosqueprograms",
+      "audienceType": [
+        "Muslim Women"
+      ]
     },
     {
       "id": "mg-sisters-through-faith-fiqh-salah-aug30",
@@ -105,7 +123,10 @@
       "price": "Sisters 16+",
       "desc": "A halaqa on the fiqh of salah, with the remaining August sessions on Sundays at ISM Sisters.",
       "instagram": "https://www.instagram.com/sistersthroughfaith/",
-      "section": "mosqueprograms"
+      "section": "mosqueprograms",
+      "audienceType": [
+        "Muslim Women"
+      ]
     },
     {
       "id": "mnn-friday-family-halaqah-2026",
@@ -123,7 +144,11 @@
         "fri"
       ],
       "recurStart": "2026-08-21",
-      "section": "mosqueprograms"
+      "section": "mosqueprograms",
+      "audienceType": [
+        "Family Event",
+        "Muslim Women"
+      ]
     },
     {
       "id": "mnn-sisters-tafseer-gems-aug26",
@@ -135,7 +160,10 @@
       "organizer": "MNN",
       "desc": "Outdoor tafseer circle for sisters, with chairs and snacks encouraged.",
       "instagram": "https://www.instagram.com/officialmnn/",
-      "section": "mosqueprograms"
+      "section": "mosqueprograms",
+      "audienceType": [
+        "Muslim Women"
+      ]
     },
     {
       "section": "mosqueprograms",
@@ -155,7 +183,10 @@
       "registration": "Ages 18–30",
       "tag": "Mosque Program",
       "link": "https://www.instagram.com/p/Db3zbsEvLri/?utm_source=ig_web_copy_link&igsi=NTc4MTIwNjQ2YQ==",
-      "id": "mnn-stand-firm-2026"
+      "id": "mnn-stand-firm-2026",
+      "audienceType": [
+        "Muslim Women"
+      ]
     },
     {
       "id": "mnn-stand-firm-launch-aug22",
@@ -167,7 +198,10 @@
       "organizer": "MNN",
       "desc": "Launch night for the Stand FIRM program.",
       "instagram": "https://www.instagram.com/officialmnn/",
-      "section": "mosqueprograms"
+      "section": "mosqueprograms",
+      "audienceType": [
+        "Muslim Women"
+      ]
     },
     {
       "id": "mnn-taste-of-mississauga-sept5-6-2026",
@@ -179,7 +213,10 @@
       "organizer": "MNN Mosque",
       "desc": "Two-day community festival at Ridgeway Plaza — halal food, local vendors, shopping, entertainment, and kids' activities.",
       "instagram": "https://www.instagram.com/officialmnn/",
-      "section": "mosqueprograms"
+      "section": "mosqueprograms",
+      "audienceType": [
+        "Muslim Women"
+      ]
     }
   ]
 }
