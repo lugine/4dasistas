@@ -3069,14 +3069,14 @@ function renderClubMembersView(el){
         <h2 style="margin-bottom:2px;">${title} — Club Members Schedule</h2>
         <p style="font-size:13px;margin-bottom:6px;">Signed in as <strong>${escapeCm(me.name)}</strong> (@${escapeCm(me.username)}) · <a href="#" id="cmSwitchLink">not you?</a></p>
         <div style="display:flex;align-items:center;gap:10px;margin-bottom:20px;">
-          ${me.photo ? `<img src="${me.photo}" alt="" style="width:44px;height:44px;border-radius:50%;object-fit:cover;">` : `<div class="monogram" style="width:44px;height:44px;">${escapeCm((me.name||'?').charAt(0).toUpperCase())}</div>`}
+          ${me.photo ? `<img src="${escapeCm(me.photo)}" alt="" style="width:44px;height:44px;border-radius:50%;object-fit:cover;">` : `<div class="monogram" style="width:44px;height:44px;">${escapeCm((me.name||'?').charAt(0).toUpperCase())}</div>`}
           <button type="button" class="club-guide-btn" id="cmPhotoBtn" style="padding:8px 14px;font-size:12px;">📷 ${me.photo ? 'Change' : 'Add'} profile picture</button>
           <input type="file" id="cmPhotoInput" accept="image/*" style="display:none;">
         </div>
         <h3>Members</h3>
         <div class="clubs-grid" id="cmRoster">${state.cmMembers.map(m => `
           <div class="panel-card club-card" style="text-align:center;">
-            ${m.photo ? `<img src="${m.photo}" alt="" style="width:56px;height:56px;border-radius:50%;object-fit:cover;margin:0 auto 8px;display:block;">` : `<div class="monogram" style="margin:0 auto 8px;">${escapeCm((m.name || '?').charAt(0).toUpperCase())}</div>`}
+            ${m.photo ? `<img src="${escapeCm(m.photo)}" alt="" style="width:56px;height:56px;border-radius:50%;object-fit:cover;margin:0 auto 8px;display:block;">` : `<div class="monogram" style="margin:0 auto 8px;">${escapeCm((m.name || '?').charAt(0).toUpperCase())}</div>`}
             <h4 style="font-size:14px;margin-bottom:2px;">${escapeCm(m.name)}${m.id === me.id ? ' (you)' : ''}</h4>
             <div style="font-size:11px;color:#776867;">@${escapeCm(m.username)}</div>
           </div>`).join('') || '<p>No members yet — you\'re the first!</p>'}
@@ -3567,7 +3567,7 @@ function renderAdminAllMembersPanels(){
       </div>`;
     }
     return `<div class="panel-card" style="text-align:center;">
-      ${m.photo ? `<img src="${m.photo}" style="width:48px;height:48px;border-radius:50%;object-fit:cover;margin:0 auto 8px;display:block;">` : `<div class="monogram" style="margin:0 auto 8px;">${escapeCm((m.name || '?').charAt(0).toUpperCase())}</div>`}
+      ${m.photo ? `<img src="${escapeCm(m.photo)}" style="width:48px;height:48px;border-radius:50%;object-fit:cover;margin:0 auto 8px;display:block;">` : `<div class="monogram" style="margin:0 auto 8px;">${escapeCm((m.name || '?').charAt(0).toUpperCase())}</div>`}
       <h4 style="font-size:14px;margin-bottom:2px;">${escapeCm(m.name)}</h4>
       <div style="font-size:11px;color:#776867;margin-bottom:6px;">@${escapeCm(m.username)}</div>
       <div class="owned-badge" style="display:inline-block;margin-bottom:10px;">${escapeCm(clubTitle)}</div>

@@ -61,9 +61,11 @@ const sha256Hex = async (input) => {
 
 const randomPin = () => String(Math.floor(1000 + Math.random() * 9000));
 
+const PHOTO_DATA_URL_RE = /^data:image\/(png|jpe?g|gif|webp);base64,[A-Za-z0-9+/]+=*$/;
+
 const sanitizePhoto = (photo) => {
   if (!photo) return null;
-  if (typeof photo !== "string" || !photo.startsWith("data:image/") || photo.length > CM_MAX_PHOTO_LEN) return null;
+  if (typeof photo !== "string" || photo.length > CM_MAX_PHOTO_LEN || !PHOTO_DATA_URL_RE.test(photo)) return null;
   return photo;
 };
 
@@ -804,7 +806,7 @@ export default {
         const members = data[clubId];
         return '<h3>' + escapeCmAdmin(clubId) + '</h3><table style="width:100%;border-collapse:collapse;margin-bottom:20px;">' +
           members.map(m => '<tr style="border-bottom:1px solid #ddd;"><td style="padding:6px;">' +
-            (m.photo ? '<img src="' + m.photo + '" style="width:28px;height:28px;border-radius:50%;object-fit:cover;vertical-align:middle;margin-right:8px;">' : '') +
+            (m.photo ? '<img src="' + escapeCmAdmin(m.photo) + '" style="width:28px;height:28px;border-radius:50%;object-fit:cover;vertical-align:middle;margin-right:8px;">' : '') +
             escapeCmAdmin(m.name) + ' <span style="color:#888;">@' + escapeCmAdmin(m.username || '?') + '</span></td>' +
             '<td style="padding:6px;text-align:right;"><button onclick="resetClubMemberPin(\\'' + clubId + '\\',\\'' + m.id + '\\')">Reset PIN</button> ' +
             '<button onclick="removeClubMember(\\'' + clubId + '\\',\\'' + m.id + '\\')" style="background:#c00;">Remove</button></td></tr>').join('') +
