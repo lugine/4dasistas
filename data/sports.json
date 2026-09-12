@@ -317,7 +317,7 @@
     {
       "section": "sports",
       "eventDate": "2026-09-20",
-      "endTime": "11:30",
+      "endTime": "09:30",
       "sportKey": "running",
       "virtual": false,
       "desc": "oin us for a special pre-event track session in support of the CIBC Run for the Cure, catered to those racing this fall and open anyone who misses our iconic track sessions!\n\nall paces are welcome.\n\n📍 Details on SweatPals\n📅 sunday, september 20\n⏰ 9:30 AM - 11:30 AM\n🎟️ $10\n🎀 dress code: ALL PINK",
@@ -325,8 +325,7 @@
       "organizedBy": "womensfitmississauga",
       "link": "https://www.instagram.com/p/DchSyYZiGGU/?utm_source=ig_web_copy_link&igsi=MzRlODBiNWFlZA==",
       "allDay": false,
-      "id": "pink-track-sunday",
-      "time": "09:30"
+      "id": "pink-track-sunday"
     },
     {
       "sportKey": "tennis-pickleball",
@@ -511,86 +510,6 @@
       "organizedBy": "She Travels",
       "link": "https://www.instagram.com/reel/Dcbu84BRs05/?igsi=djRheGN6c28xb3My",
       "id": "🥾she-travels-hike"
-    },
-    {
-      "id": "tcc-womens-pilates-fall2026",
-      "title": "Tawheed Women's Pilates",
-      "tag": "Pilates",
-      "sportKey": "pilates",
-      "eventDate": "2026-09-06",
-      "time": "10:00",
-      "endTime": "11:00",
-      "days": [
-        "sun"
-      ],
-      "recurStart": "2026-09-06",
-      "recurEnd": "2027-01-24",
-      "location": "Tawheed Community Centre (TCC)",
-      "desc": "Weekly Pilates program for women, all fitness levels welcome. 20 classes total. $250 full package or $20 drop-in. Black-out date: Dec 27 (no class that day).",
-      "registration": "https://tawheedcommunitycentre.com/pilates"
-    },
-    {
-      "id": "tcc-womens-badminton-fall2026",
-      "title": "Tawheed Women's Badminton",
-      "tag": "Badminton",
-      "sportKey": "badminton",
-      "eventDate": "2026-09-09",
-      "time": "18:00",
-      "endTime": "20:00",
-      "days": [
-        "wed"
-      ],
-      "recurStart": "2026-09-09",
-      "recurEnd": "2027-01-27",
-      "location": "Tawheed Community Centre (TCC)",
-      "desc": "Women's Badminton Drop-In Program, all skill levels welcome. 20 sessions. $80 for all sessions or $5 per drop-in (subject to availability). Blackout date: Dec 30.",
-      "registration": "https://tawheedcommunitycentre.com/womensbadminton"
-    },
-    {
-      "id": "tcc-womens-volleyball-fall2026",
-      "title": "Tawheed Women's Volleyball",
-      "tag": "Volleyball",
-      "sportKey": "volleyball",
-      "eventDate": "2026-09-22",
-      "time": "20:00",
-      "endTime": "22:30",
-      "days": [
-        "tue"
-      ],
-      "recurStart": "2026-09-22",
-      "recurEnd": "2027-01-19",
-      "location": "Tawheed Community Centre, 5585 McAdam Rd, Mississauga L4Z 1P1",
-      "desc": "Intermediate/Advanced Women's Volleyball League, hosted in collaboration with Time Out Sports Club. $1000/team or $130/person, max 8 players per team. Individual players will be added to teams.",
-      "registration": "https://tawheedcommunitycentre.com/womensvolleyball",
-      "instagram": "https://www.instagram.com/timeoutsportsclub/"
-    },
-    {
-      "id": "tcc-womens-pickleball-fall2026",
-      "title": "Tawheed Women's Pickleball",
-      "tag": "Pickleball",
-      "sportKey": "pickleball",
-      "eventDate": "2026-09-10",
-      "time": "19:00",
-      "endTime": "21:00",
-      "days": [
-        "thu"
-      ],
-      "recurStart": "2026-09-10",
-      "recurEnd": "2027-01-28",
-      "location": "Tawheed Community Centre (TCC)",
-      "desc": "Women's Pickleball drop-in program, all skill levels welcome. 19 sessions, $5 per drop-in (subject to availability). Black-out dates: Nov 26, Dec 31.",
-      "registration": "https://tawheedcommunitycentre.com/womenspickleball"
-    },
-    {
-      "id": "sip-and-sculpt-sept26-2026",
-      "title": "Sip & Sculpt",
-      "tag": "Pilates",
-      "sportKey": "pilates",
-      "eventDate": "2026-09-26",
-      "time": "13:00",
-      "location": "See Instagram for exact studio location",
-      "desc": "Reformer class followed by smoothies. 13 spots only, grip socks required. Note: this specific session is SOLD OUT, shown here for reference.",
-      "instagram": "https://www.instagram.com/p/DdG3pV2sweA/"
     }
   ]
 }
