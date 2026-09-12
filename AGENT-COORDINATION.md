@@ -56,7 +56,7 @@ on an old build.
 
 **One-time fix (do this once, then every push auto-deploys):**
 1. Cloudflare dashboard → Workers & Pages → `4dasistas` Worker → Settings → Build.
-2. Connect the `lugine/4dasistas` GitHub repo, branch `main`.
+2. Connect the `lujaneyaffa/4dasistas` GitHub repo, branch `main`.
 3. Build command: `python3 scripts/build_content.py && python3 scripts/generate_calendar.py`
    **(both scripts, in that order — build_content.py merges the per-entry
    `data/calendar/*.json` / `data/resources/*.json` files the CMS writes

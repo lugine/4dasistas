@@ -1,6 +1,6 @@
 backend:
   name: git-gateway
-  repo: lugine/4dasistas
+  repo: lujaneyaffa/4dasistas
   branch: main
   identity_url: https://auth.decapbridge.com/sites/0e272b00-698f-4375-beef-d82a66a2ca77
   gateway_url: https://gateway.decapbridge.com
