@@ -18,10 +18,7 @@
       "lat": 37.1773,
       "lng": -3.5986,
       "tripType": "international",
-      "section": "trips",
-      "audienceType": [
-        "Muslim Women"
-      ]
+      "section": "trips"
     },
     {
       "id": "deen-journeys-orlando-retreat-2026",
@@ -39,10 +36,7 @@
       "lat": 28.538336,
       "lng": -81.379234,
       "tripType": "international",
-      "section": "trips",
-      "audienceType": [
-        "Muslim Women"
-      ]
+      "section": "trips"
     },
     {
       "section": "trips",
@@ -55,10 +49,7 @@
       "link": "https://www.instagram.com/p/DcEk9pexpDh/?igsi=MWxmcHF3eWhjMmp0aQ==",
       "lat": 45.017,
       "lng": -79.5751,
-      "id": "lake-muskoka-writers-retreat",
-      "audienceType": [
-        "Girls / Multi-Faith Audience"
-      ]
+      "id": "lake-muskoka-writers-retreat"
     },
     {
       "section": "trips",
@@ -70,10 +61,7 @@
       "tripType": "international",
       "lat": 41.9981,
       "lng": 21.4254,
-      "id": "macedonia-kosovo",
-      "audienceType": [
-        "Girls / Multi-Faith Audience"
-      ]
+      "id": "macedonia-kosovo"
     },
     {
       "id": "mawa-jordan-2026",
@@ -89,10 +77,7 @@
       "lat": 31.9454,
       "lng": 35.9284,
       "tripType": "international",
-      "section": "trips",
-      "audienceType": [
-        "Girls / Multi-Faith Audience"
-      ]
+      "section": "trips"
     },
     {
       "id": "muslim-hikers-mount-toubkal-2026",
@@ -108,10 +93,7 @@
       "lat": 31.0595,
       "lng": -7.9151,
       "tripType": "international",
-      "section": "trips",
-      "audienceType": [
-        "Muslim Women"
-      ]
+      "section": "trips"
     },
     {
       "section": "trips",
@@ -128,10 +110,7 @@
       "id": "mwtg-jordan-2026",
       "calDate": "2026-05-17",
       "tripType": "international",
-      "lat": 31.9454,
-      "audienceType": [
-        "Muslim Women"
-      ]
+      "lat": 31.9454
     },
     {
       "id": "mwtg-oman-2026",
@@ -147,10 +126,7 @@
       "lat": 23.588,
       "lng": 58.3829,
       "tripType": "international",
-      "section": "trips",
-      "audienceType": [
-        "Muslim Women"
-      ]
+      "section": "trips"
     },
     {
       "id": "onepath-japan-2026",
@@ -166,10 +142,7 @@
       "lat": 35.6762,
       "lng": 139.6503,
       "tripType": "international",
-      "section": "trips",
-      "audienceType": [
-        "Girls / Multi-Faith Audience"
-      ]
+      "section": "trips"
     },
     {
       "id": "onepath-kyrgyzstan-2026",
@@ -185,10 +158,7 @@
       "lat": 41.2044,
       "lng": 74.7661,
       "tripType": "international",
-      "section": "trips",
-      "audienceType": [
-        "Muslim Women"
-      ]
+      "section": "trips"
     },
     {
       "id": "onepath-macedonia-kosovo-2026",
@@ -204,10 +174,7 @@
       "lat": 41.9981,
       "lng": 21.4254,
       "tripType": "international",
-      "section": "trips",
-      "audienceType": [
-        "Girls / Multi-Faith Audience"
-      ]
+      "section": "trips"
     },
     {
       "id": "sakinah-cappadocia-2026",
@@ -223,10 +190,7 @@
       "lat": 38.6431,
       "lng": 34.8289,
       "tripType": "international",
-      "section": "trips",
-      "audienceType": [
-        "Muslim Women"
-      ]
+      "section": "trips"
     },
     {
       "id": "sisters-camping-adventure-alberta-2026",
@@ -246,10 +210,7 @@
       "website": "https://www.eventbrite.com/e/1994984412080?aff=ebdiglgoogleliveevents",
       "lat": 53.9333,
       "lng": -116.5765,
-      "section": "trips",
-      "audienceType": [
-        "Muslim Women"
-      ]
+      "section": "trips"
     },
     {
       "id": "sisters-getaway-granada-2026",
@@ -265,10 +226,7 @@
       "lat": 37.1773,
       "lng": -3.5986,
       "tripType": "international",
-      "section": "trips",
-      "audienceType": [
-        "Muslim Women"
-      ]
+      "section": "trips"
     },
     {
       "id": "sisters-getaway-morocco-2026",
@@ -284,10 +242,7 @@
       "lat": 31.7917,
       "lng": -7.0926,
       "tripType": "international",
-      "section": "trips",
-      "audienceType": [
-        "Muslim Women"
-      ]
+      "section": "trips"
     },
     {
       "section": "trips",
@@ -301,10 +256,7 @@
       "tripType": "international",
       "lat": 25.0389,
       "lng": 102.7183,
-      "id": "🇨🇳a-deen-retreat-experience",
-      "audienceType": [
-        "Muslim Women"
-      ]
+      "id": "🇨🇳a-deen-retreat-experience"
     },
     {
       "section": "trips",
@@ -318,10 +270,7 @@
       "tripType": "international",
       "lat": 43.222,
       "lng": 76.8512,
-      "id": "🇰🇿kazakhstan-deen-dunya-retreats",
-      "audienceType": [
-        "Muslim Women"
-      ]
+      "id": "🇰🇿kazakhstan-deen-dunya-retreats"
     },
     {
       "section": "trips",
@@ -335,10 +284,7 @@
       "tripType": "international",
       "lat": 31.6295,
       "lng": -7.9811,
-      "id": "🇲🇦morocco-sisters-retreat-1",
-      "audienceType": [
-        "Muslim Women"
-      ]
+      "id": "🇲🇦morocco-sisters-retreat-1"
     },
     {
       "section": "trips",
@@ -353,10 +299,7 @@
       "link": "https://www.instagram.com/p/DcBp1ffjVGs/?utm_source=ig_web_copy_link&igsi=MzRlODBiNWFlZA==",
       "tripType": "international",
       "lat": 21.4340979443997,
-      "id": "🕋a-journey-home",
-      "audienceType": [
-        "Muslim Women"
-      ]
+      "id": "🕋a-journey-home"
     }
   ]
 }
