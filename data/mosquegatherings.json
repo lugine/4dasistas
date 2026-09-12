@@ -180,6 +180,70 @@
       "desc": "Two-day community festival at Ridgeway Plaza — halal food, local vendors, shopping, entertainment, and kids' activities.",
       "instagram": "https://www.instagram.com/officialmnn/",
       "section": "mosqueprograms"
+    },
+    {
+      "id": "masjidalezz-pearls-of-quran-tafsir",
+      "tag": "Mosque Gathering",
+      "title": "Pearls of the Quran — A Sisters' Tafsir Circle",
+      "eventDate": "2026-09-14",
+      "time": "19:00",
+      "endTime": "20:00",
+      "days": [
+        "mon"
+      ],
+      "recurStart": "2026-09-14",
+      "location": "Masjid Al-Ezz, 10 Falconer Dr #8, Mississauga, ON, L5N 3L8",
+      "organizer": "Shaykha Duaa",
+      "desc": "A weekly journey through the Quran with Shaykha Duaa, every Monday. Strengthen your relationship with the Quran in the company of sisters.",
+      "instagram": "https://www.instagram.com/p/DawjwuHCQ5o/"
+    },
+    {
+      "id": "alhuda-tafsir-quran-year2",
+      "tag": "Mosque Gathering",
+      "title": "Tafseer al-Qur'an Year 2",
+      "eventDate": "2026-09-19",
+      "time": "09:45",
+      "endTime": "13:00",
+      "days": [
+        "sat"
+      ],
+      "recurStart": "2026-09-19",
+      "location": "Um al-Qura Islamic School, 4th Floor, 265 Yorkland Blvd, North York (onsite) or online via Zoom",
+      "desc": "Year 2 of the Tafseer al-Qur'an course, covering recitation, word-for-word translation, and tafseer of Surah Aal-Imran and Surah An-Nisa. Onsite or online — brothers aged 15+ can attend online.",
+      "registration": "https://alhudainstitute.ca/tafq2"
+    },
+    {
+      "id": "alhuda-spiritual-bookclub-fall2026",
+      "tag": "Mosque Gathering",
+      "title": "Spiritual Book Club: Tazkiyah — Diseases of the Heart",
+      "eventDate": "2026-09-23",
+      "time": "19:00",
+      "endTime": "20:30",
+      "days": [
+        "wed"
+      ],
+      "recurStart": "2026-09-23",
+      "location": "Online via Zoom",
+      "virtual": true,
+      "desc": "Exploring Tazkiyah — diseases of the heart such as anger, envy, pride, and despair, and their remedies through the Qur'an, Hadith, and the teachings of Imam Al-Ghazali. Sisters 16+, free, registration required.",
+      "registration": "https://alhudainstitute.ca/bookclub"
+    },
+    {
+      "id": "alhuda-quran-translation-juz30",
+      "tag": "Mosque Gathering",
+      "title": "Quran Translation: Juz 30",
+      "eventDate": "2026-09-02",
+      "time": "12:00",
+      "endTime": "14:00",
+      "days": [
+        "wed"
+      ],
+      "recurStart": "2026-09-02",
+      "location": "Online via Zoom",
+      "virtual": true,
+      "organizer": "Sister Taimiyyah Zubair",
+      "desc": "Word-to-word translation, overview, and reflections on Juz 30 — the most memorized and frequently recited Juz of the Qur'an. Taught live by Sister Taimiyyah Zubair.",
+      "registration": "https://alhudainstitute.ca/qte1t2"
     }
   ]
 }
