@@ -79,6 +79,13 @@ npx wrangler deploy
 
 **Status:** IDLE
 **Last updated by:** Claude (chat)
+**Last updated:** 2026-09-12 (audience type multi-select)
+
+**2026-09-12 (audience type multi-select) — Claude (chat) — `index.html`, `admin/config.yml`** — Changed Audience Type from single-select to multi-select per Lujane's clarification: Muslim Women and Hijabi Friendly are independently assessed, so an event can need both simultaneously. Updated pill rendering to show a stacked group of multiple pills (was single pill). Confirmed via runtime test with array data. Definitions now clear: Muslim Women (not auto-hijabi-friendly, must be separately confirmed), Hijabi Friendly (independent privacy/space classification), Family Event (includes men and children), Girls/Multi-Faith Audience (women, not necessarily Muslim). Still need to classify ~100+ existing events - proposing a scoped approach to Lujane rather than guessing at scale.
+
+
+**Status:** IDLE
+**Last updated by:** Claude (chat)
 **Last updated:** 2026-09-12 (audience type field)
 
 **2026-09-12 (audience type field) — Claude (chat) — `index.html`, `admin/config.yml`** — Added required Audience Type field (Muslim Women / Hijabi Friendly / Family Event / Girls-Multi-Faith Audience) to CMS across all 6 event collections, and a small pill badge showing it top-right on the event detail page. NOT yet retroactively applied to existing events - need Lujane to clarify the exact meaning/boundaries of each category first (especially the difference between Muslim Women vs Hijabi Friendly, and what Girls-Multi-Faith Audience specifically means) before attempting to classify 100+ existing events with confidence.
